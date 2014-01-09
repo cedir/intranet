@@ -1,0 +1,57 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastOpenVersion>7.10.3077</LastOpenVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ReferencePath>C:\Archivos de programa\Archivos comunes\Business Objects\2.7\Managed\f:\windows\assembly\gac\crystaldecisions.reportsource\9.1.5000.0__692fbea5521e1304\;f:\windows\assembly\gac\crystaldecisions.crystalreports.engine\9.1.5000.0__692fbea5521e1304\;f:\windows\assembly\gac\crystaldecisions.shared\9.1.5000.0__692fbea5521e1304\;f:\windows\assembly\gac\system.web.services\1.0.5000.0__b03f5f7f11d50a3a\;F:\Documents and Settings\Walter\Mis documentos\Visual Studio Projects\CedirDataAccess\bin\;F:\Documents and Settings\Walter\Mis documentos\Visual Studio Projects\CedirNegocios\bin\;F:\Cedir Temp\Cedir\bin\;C:\XcopY\CedirTmp\Cedir\bin\;C:\XcopY\Cedir tmp\Cedir\bin\;c:\W-files\Cedir\Cedir Temp\Cedir\bin\;c:\W-files\Cedir\Cedir\bin\;c:\Files.W\Cedir\Cedir\bin\</ReferencePath>
+    <CopyProjectDestinationFolder>
+    </CopyProjectDestinationFolder>
+    <CopyProjectUncPath>
+    </CopyProjectUncPath>
+    <CopyProjectOption>0</CopyProjectOption>
+    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectTrust>0</ProjectTrust>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <EnableASPDebugging>false</EnableASPDebugging>
+    <EnableASPXDebugging>false</EnableASPXDebugging>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <EnableSQLServerDebugging>false</EnableSQLServerDebugging>
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+    <RemoteDebugMachine>
+    </RemoteDebugMachine>
+    <StartAction>Project</StartAction>
+    <StartArguments>
+    </StartArguments>
+    <StartPage>
+    </StartPage>
+    <StartProgram>
+    </StartProgram>
+    <StartURL>
+    </StartURL>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
+    <StartWithIE>true</StartWithIE>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <EnableASPDebugging>false</EnableASPDebugging>
+    <EnableASPXDebugging>false</EnableASPXDebugging>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <EnableSQLServerDebugging>false</EnableSQLServerDebugging>
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+    <RemoteDebugMachine>
+    </RemoteDebugMachine>
+    <StartAction>Project</StartAction>
+    <StartArguments>
+    </StartArguments>
+    <StartPage>
+    </StartPage>
+    <StartProgram>
+    </StartProgram>
+    <StartURL>
+    </StartURL>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
+    <StartWithIE>true</StartWithIE>
+  </PropertyGroup>
+</Project>

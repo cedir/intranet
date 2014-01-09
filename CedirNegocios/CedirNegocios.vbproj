@@ -1,0 +1,242 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9AA0C62A-8AD0-4049-BF13-5BA4624FE249}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>CedirNegocios</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>CedirNegocios</RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>Windows</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>CedirNegocios.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>CedirNegocios.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032</NoWarn>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Security, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <HintPath>..\..\branches\Cedir produccion\Singleton\bin\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7">
+      <HintPath>..\CedirDataAccess\NpgSQL\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\CedirDataAccess\CedirDataAccess.vbproj">
+      <Name>CedirDataAccess</Name>
+      <Project>{E55FABFC-3A00-4E9B-8C85-553D2695B7A6}</Project>
+      <Package>{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Arancel.vb" />
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditLog.vb" />
+    <Compile Include="Caja\MovimientoDeCaja.vb" />
+    <Compile Include="Caja\TipoDeMovimientoDeCaja.vb" />
+    <Compile Include="Catalogos\CatalogoArancelAnestesia.vb" />
+    <Compile Include="Catalogos\CatalogoDeComplejidades.vb" />
+    <Compile Include="Catalogos\CatalogoDeMovimientosDeCaja.vb" />
+    <Compile Include="Catalogos\CatalogoDeMovimientosStock.vb" />
+    <Compile Include="Catalogos\CatalogoDeTipoDeMovimientosDeCaja.vb" />
+    <Compile Include="Complejidades\ArancelAnestesia.vb" />
+    <Compile Include="Complejidades\Complejidad.vb" />
+    <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
+    <Compile Include="Catalogos\CatalogoDeAuditLogs.vb" />
+    <Compile Include="Catalogos\CatalogoDeComprobantes.vb" />
+    <Compile Include="Catalogos\CatalogoDeEstudios.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDePresentaciones.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDeGravados.vb" />
+    <Compile Include="Catalogos\CatalogoDeMedicamentos.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDeMedicos.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDeObrasSociales.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDePacientes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDePracticas.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDeTiposComprobante.vb" />
+    <Compile Include="Catalogos\CatalogoDeUsuarios.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Comprobante.vb" />
+    <Compile Include="Consulta.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CatalogoDeMensajes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Estudio.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Factura.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\CalculadorHonorariosComprobantes.vb" />
+    <Compile Include="Interfaces\CalculadorHonorariosPagoMedico.vb" />
+    <Compile Include="Interfaces\ICalculadorHonorarios.vb" />
+    <Compile Include="Interfaces\ICatalogoMovimientos.vb" />
+    <Compile Include="LineaPagoAnestesista.vb" />
+    <Compile Include="Movimiento.vb" />
+    <Compile Include="MovimientoStock.vb" />
+    <Compile Include="PagoAnestesista.vb" />
+    <Compile Include="Presentacion.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PresentacionAMR.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gravado.vb" />
+    <Compile Include="Grupo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helper.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineaDeComprobante.vb" />
+    <Compile Include="LineaDeFacturacion.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineaPagoMedico.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Medicacion.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Medicamento.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Medico.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mensaje.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ObraSocial.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Paciente.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PagoFacturacion.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PagoMedico.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Practica.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AMRAsociacion.vb" />
+    <Compile Include="Security.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TipoComprobante.vb" />
+    <Compile Include="Usuario.vb">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSScriptControl">
+      <Guid>{0E59F1D2-1FBE-11D0-8FF2-00A0D10038BC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

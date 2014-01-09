@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsMovimientosDeCaja" targetNamespace="http://tempuri.org/dsCajaMovimientos.xsd" xmlns:mstns="http://tempuri.org/dsCajaMovimientos.xsd" xmlns="http://tempuri.org/dsCajaMovimientos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsMovimientosDeCaja" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsMovimientosDeCaja" msprop:Generator_DataSetName="dsMovimientosDeCaja">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Movimientos" msprop:Generator_UserTableName="Movimientos" msprop:Generator_RowDeletedName="MovimientosRowDeleted" msprop:Generator_RowChangedName="MovimientosRowChanged" msprop:Generator_RowClassName="MovimientosRow" msprop:Generator_RowChangingName="MovimientosRowChanging" msprop:Generator_RowEvArgName="MovimientosRowChangeEvent" msprop:Generator_RowEvHandlerName="MovimientosRowChangeEventHandler" msprop:Generator_TableClassName="MovimientosDataTable" msprop:Generator_TableVarName="tableMovimientos" msprop:Generator_RowDeletingName="MovimientosRowDeleting" msprop:Generator_TablePropName="Movimientos">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:nullValue="_empty" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" type="xs:string" minOccurs="0" />
+              <xs:element name="concepto" msprop:Generator_UserColumnName="concepto" msprop:Generator_ColumnPropNameInRow="concepto" msprop:Generator_ColumnVarNameInTable="columnconcepto" msprop:Generator_ColumnPropNameInTable="conceptoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="monto" msprop:Generator_UserColumnName="monto" msprop:Generator_ColumnPropNameInRow="monto" msprop:Generator_ColumnVarNameInTable="columnmonto" msprop:Generator_ColumnPropNameInTable="montoColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="fecha" msprop:Generator_UserColumnName="fecha" msprop:Generator_ColumnPropNameInRow="fecha" msprop:Generator_ColumnVarNameInTable="columnfecha" msprop:Generator_ColumnPropNameInTable="fechaColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="hora" msprop:Generator_UserColumnName="hora" msprop:Generator_ColumnPropNameInRow="hora" msprop:Generator_ColumnVarNameInTable="columnhora" msprop:Generator_ColumnPropNameInTable="horaColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nombreUsuario" msprop:Generator_UserColumnName="nombreUsuario" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="nombreUsuario" msprop:Generator_ColumnPropNameInTable="nombreUsuarioColumn" msprop:Generator_ColumnVarNameInTable="columnnombreUsuario" type="xs:string" minOccurs="0" />
+              <xs:element name="nroEstudio" msprop:Generator_UserColumnName="nroEstudio" msprop:Generator_ColumnPropNameInRow="nroEstudio" msprop:Generator_ColumnVarNameInTable="columnnroEstudio" msprop:Generator_ColumnPropNameInTable="nroEstudioColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="montoAcumulado" msprop:Generator_UserColumnName="montoAcumulado" msprop:Generator_ColumnPropNameInRow="montoAcumulado" msprop:Generator_ColumnVarNameInTable="columnmontoAcumulado" msprop:Generator_ColumnPropNameInTable="montoAcumuladoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="tipoDeMovimiento" msprop:Generator_UserColumnName="tipoDeMovimiento" msprop:Generator_ColumnPropNameInRow="tipoDeMovimiento" msprop:Generator_ColumnVarNameInTable="columntipoDeMovimiento" msprop:Generator_ColumnPropNameInTable="tipoDeMovimientoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="nombreMedico" msprop:Generator_UserColumnName="nombreMedico" msprop:Generator_ColumnPropNameInRow="nombreMedico" msprop:Generator_ColumnVarNameInTable="columnnombreMedico" msprop:Generator_ColumnPropNameInTable="nombreMedicoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="paciente" msprop:Generator_UserColumnName="paciente" msprop:Generator_ColumnPropNameInRow="paciente" msprop:Generator_ColumnVarNameInTable="columnpaciente" msprop:Generator_ColumnPropNameInTable="pacienteColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="obraSocial" msprop:Generator_UserColumnName="obraSocial" msprop:Generator_ColumnPropNameInRow="obraSocial" msprop:Generator_ColumnVarNameInTable="columnobraSocial" msprop:Generator_ColumnPropNameInTable="obraSocialColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="practica" msprop:Generator_UserColumnName="practica" msprop:Generator_ColumnPropNameInRow="practica" msprop:Generator_ColumnVarNameInTable="columnpractica" msprop:Generator_ColumnPropNameInTable="practicaColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ultimoMonto" msprop:Generator_UserTableName="ultimoMonto" msprop:Generator_RowDeletedName="ultimoMontoRowDeleted" msprop:Generator_RowChangedName="ultimoMontoRowChanged" msprop:Generator_RowClassName="ultimoMontoRow" msprop:Generator_RowChangingName="ultimoMontoRowChanging" msprop:Generator_RowEvArgName="ultimoMontoRowChangeEvent" msprop:Generator_RowEvHandlerName="ultimoMontoRowChangeEventHandler" msprop:Generator_TableClassName="ultimoMontoDataTable" msprop:Generator_TableVarName="tableultimoMonto" msprop:Generator_RowDeletingName="ultimoMontoRowDeleting" msprop:Generator_TablePropName="ultimoMonto">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="montoAcumulado" msprop:Generator_UserColumnName="montoAcumulado" msprop:Generator_ColumnVarNameInTable="columnmontoAcumulado" msprop:Generator_ColumnPropNameInRow="montoAcumulado" msprop:Generator_ColumnPropNameInTable="montoAcumuladoColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

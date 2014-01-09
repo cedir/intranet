@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsComprobantes" targetNamespace="http://tempuri.org/dsComprobante.xsd" xmlns:mstns="http://tempuri.org/dsComprobante.xsd" xmlns="http://tempuri.org/dsComprobante.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsComprobantes" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsComprobantes" msprop:Generator_DataSetName="dsComprobantes">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Comprobantes" msprop:Generator_UserTableName="Comprobantes" msprop:Generator_RowDeletedName="ComprobantesRowDeleted" msprop:Generator_RowChangedName="ComprobantesRowChanged" msprop:Generator_RowClassName="ComprobantesRow" msprop:Generator_RowChangingName="ComprobantesRowChanging" msprop:Generator_RowEvArgName="ComprobantesRowChangeEvent" msprop:Generator_RowEvHandlerName="ComprobantesRowChangeEventHandler" msprop:Generator_TableClassName="ComprobantesDataTable" msprop:Generator_TableVarName="tableComprobantes" msprop:Generator_RowDeletingName="ComprobantesRowDeleting" msprop:Generator_TablePropName="Comprobantes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nroComprobante" msprop:Generator_UserColumnName="nroComprobante" msprop:Generator_ColumnPropNameInRow="nroComprobante" msprop:Generator_ColumnVarNameInTable="columnnroComprobante" msprop:Generator_ColumnPropNameInTable="nroComprobanteColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="tipoComprobante" msprop:Generator_UserColumnName="tipoComprobante" msprop:Generator_ColumnPropNameInRow="tipoComprobante" msprop:Generator_ColumnVarNameInTable="columntipoComprobante" msprop:Generator_ColumnPropNameInTable="tipoComprobanteColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="idComprobante" msprop:Generator_UserColumnName="idComprobante" msprop:Generator_ColumnPropNameInRow="idComprobante" msprop:Generator_ColumnVarNameInTable="columnidComprobante" msprop:Generator_ColumnPropNameInTable="idComprobanteColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="idTipoComprobante" msprop:Generator_UserColumnName="idTipoComprobante" msprop:Generator_ColumnVarNameInTable="columnidTipoComprobante" msprop:Generator_ColumnPropNameInRow="idTipoComprobante" msprop:Generator_ColumnPropNameInTable="idTipoComprobanteColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LineaDeComprobantes" msprop:Generator_UserTableName="LineaDeComprobantes" msprop:Generator_RowDeletedName="LineaDeComprobantesRowDeleted" msprop:Generator_RowChangedName="LineaDeComprobantesRowChanged" msprop:Generator_RowClassName="LineaDeComprobantesRow" msprop:Generator_RowChangingName="LineaDeComprobantesRowChanging" msprop:Generator_RowEvArgName="LineaDeComprobantesRowChangeEvent" msprop:Generator_RowEvHandlerName="LineaDeComprobantesRowChangeEventHandler" msprop:Generator_TableClassName="LineaDeComprobantesDataTable" msprop:Generator_TableVarName="tableLineaDeComprobantes" msprop:Generator_RowDeletingName="LineaDeComprobantesRowDeleting" msprop:Generator_TablePropName="LineaDeComprobantes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="concepto" msprop:Generator_UserColumnName="concepto" msprop:Generator_ColumnPropNameInRow="concepto" msprop:Generator_ColumnVarNameInTable="columnconcepto" msprop:Generator_ColumnPropNameInTable="conceptoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="subtotal" msprop:Generator_UserColumnName="subtotal" msprop:Generator_ColumnPropNameInRow="subtotal" msprop:Generator_ColumnVarNameInTable="columnsubtotal" msprop:Generator_ColumnPropNameInTable="subtotalColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="idComprobante" msprop:Generator_UserColumnName="idComprobante" msprop:Generator_ColumnPropNameInRow="idComprobante" msprop:Generator_ColumnVarNameInTable="columnidComprobante" msprop:Generator_ColumnPropNameInTable="idComprobanteColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TipoComprobantes" msprop:Generator_UserTableName="TipoComprobantes" msprop:Generator_RowDeletedName="TipoComprobantesRowDeleted" msprop:Generator_RowChangedName="TipoComprobantesRowChanged" msprop:Generator_RowClassName="TipoComprobantesRow" msprop:Generator_RowChangingName="TipoComprobantesRowChanging" msprop:Generator_RowEvArgName="TipoComprobantesRowChangeEvent" msprop:Generator_RowEvHandlerName="TipoComprobantesRowChangeEventHandler" msprop:Generator_TableClassName="TipoComprobantesDataTable" msprop:Generator_TableVarName="tableTipoComprobantes" msprop:Generator_RowDeletingName="TipoComprobantesRowDeleting" msprop:Generator_TablePropName="TipoComprobantes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="descripcion" msprop:Generator_UserColumnName="descripcion" msprop:Generator_ColumnVarNameInTable="columndescripcion" msprop:Generator_ColumnPropNameInRow="descripcion" msprop:Generator_ColumnPropNameInTable="descripcionColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="ComprobanteKey1">
+      <xs:selector xpath=".//mstns:Comprobantes" />
+      <xs:field xpath="mstns:idComprobante" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Comprobante_LineaDeComprobante" msdata:parent="Comprobantes" msdata:child="LineaDeComprobantes" msdata:parentkey="idComprobante" msdata:childkey="idComprobante" msprop:Generator_UserRelationName="Comprobante_LineaDeComprobante" msprop:Generator_RelationVarName="relationComprobante_LineaDeComprobante" msprop:Generator_UserChildTable="LineaDeComprobantes" msprop:Generator_UserParentTable="Comprobantes" msprop:Generator_ParentPropName="ComprobanteRow" msprop:Generator_ChildPropName="GetLineaDeComprobantesRows" />
+      <msdata:Relationship name="TipoComprobantes_Comprobantes" msdata:parent="TipoComprobantes" msdata:child="Comprobantes" msdata:parentkey="id" msdata:childkey="idTipoComprobante" msprop:Generator_UserRelationName="TipoComprobantes_Comprobantes" msprop:Generator_RelationVarName="relationTipoComprobantes_Comprobantes" msprop:Generator_UserChildTable="Comprobantes" msprop:Generator_UserParentTable="TipoComprobantes" msprop:Generator_ParentPropName="TipoComprobantesRow" msprop:Generator_ChildPropName="GetComprobantesRows" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
