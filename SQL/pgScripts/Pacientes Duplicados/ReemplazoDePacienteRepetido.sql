@@ -1,6 +1,7 @@
 ﻿-- Function: public.reemplazapac(smallint, smallint)
 
 --DROP FUNcTION public.reemplazapac(smallint, smallint);
+-- Este sql reemplaza un paciente por otro y lo brra
 
 create FUNCTION public.reemplazapac("argUno" smallint, "argDos" smallint)
   RETURNS character varying AS
