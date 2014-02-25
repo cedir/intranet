@@ -1091,15 +1091,17 @@ Public Class NuevoEstudio
             ' Declare an IDataObject to hold the data returned from the 
             ' clipboard.
             Dim iData As IDataObject
+            Dim shell As New Shell32.Shell
+            shell.MinimizeAll()
 
             ' If there is no data to spell check, then exit sub here.
             If Me.TxtInforme.Text = "" Then
                 Exit Sub
             End If
 
-            'objWord = New Word.Application()
-            'objTempDoc = objWord.Documents.Add
-            'objWord.Visible = False
+            objWord = New Word.Application()
+            objTempDoc = objWord.Documents.Add
+            objWord.Visible = False
 
             ' Position Word off the screen...this keeps Word invisible 
             ' throughout.
@@ -1139,6 +1141,9 @@ Public Class NuevoEstudio
                 "Corrector ortográfico", MessageBoxButtons.OK, _
                 MessageBoxIcon.Information)
 
+            shell.UndoMinimizeALL()
+            Me.Focus()
+            Me.WindowState = FormWindowState.Normal
 
 
         Catch Excep As Exception
