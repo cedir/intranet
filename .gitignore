@@ -1,5 +1,7 @@
 #files
 *.thumb
+*.suo
+*.vbproj
 
 #Directories
 /singleton
