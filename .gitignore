@@ -1,5 +1,17 @@
 #files
 *.thumb
+*.suo
+*.vbproj
 
 #Directories
 /singleton
+Cedir/bin
+Cedir/obj
+CedirDataAccess/bin
+CedirDataAccess/obj
+CedirNegocios/bin
+CedirNegocios/obj
+Cedir/Cedir.suo
+Cedir/Cedir.vbproj.user
+Setup/Debug
+Setup/Release
