@@ -4,7 +4,7 @@ inner join "cedirData"."AlmacenEstudios" as ale on  est."idEstudio" = ale."idEst
 inner join "cedirData"."tblPacientes" as p on  est."idPaciente" = p."id"
 where ale."idEstudio" IN (34,13,49,48)
 
-and est."fechaEstudio" between '2012/06/01' and '2013/06/30' 
+and est."fechaEstudio" between '2012/05/01' and '2013/06/30' 
 group by p.sexo
 
 /*
