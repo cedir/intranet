@@ -1,4 +1,17 @@
-﻿select count(est."nroEstudio") as "altos", p.sexo
+﻿/* RESUMEN : Este script realiza un control de la cantidad de estudios realizados por año en el CEDIR 
+
+Los estudios que se tienen en cuenta son los siguientes:
+
+alto : esofago gastroduodeno video endoscopia id's:(1,18,87,140) idem con polipectomia, idem con toma de biopsia,idem coagulacion con argon plasma
+
+bajo: colono video endoscopia id's:(2,19,86,92)
+
+colangios id's: (34,13,49,48)
+
+*/
+
+
+select count(est."nroEstudio") as "altos", p.sexo
 from "cedirData"."tblEstudios" as est  
 inner join "cedirData"."AlmacenEstudios" as ale on  est."idEstudio" = ale."idEstudio" 
 inner join "cedirData"."tblPacientes" as p on  est."idPaciente" = p."id"
@@ -18,11 +31,3 @@ and est."fechaEstudio" between '2005/06/01' and '2006/05/31'
 group by p.sexo
 
 
-/*
-alto : esofago gastroduodeno video endoscopia (1,18,87,140) idem con polipectomia, idem con toma de biopsia,idem coagulacion con argon plasma
-
-bajo: colono video endoscopia (2,19,86,92)
-
-colangios (34,13,49,48)
-
-*/
