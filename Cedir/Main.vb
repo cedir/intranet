@@ -104,6 +104,8 @@ Public Class Main
     Friend WithEvents Coseguro As System.Windows.Forms.ToolBarButton
     Friend WithEvents mnuReemplazarPaciente As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem6 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuItem8 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuItem7 As System.Windows.Forms.MenuItem
     Friend WithEvents itemAnestesitasPagos As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -170,6 +172,7 @@ Public Class Main
         Me.mnuMedicListadoMov = New System.Windows.Forms.MenuItem
         Me.mnuReportes = New System.Windows.Forms.MenuItem
         Me.itemHonorariosCedir = New System.Windows.Forms.MenuItem
+        Me.MenuItem6 = New System.Windows.Forms.MenuItem
         Me.mnuCaja = New System.Windows.Forms.MenuItem
         Me.mnuListadoCaja = New System.Windows.Forms.MenuItem
         Me.mnuMovimientoCaja = New System.Windows.Forms.MenuItem
@@ -177,7 +180,8 @@ Public Class Main
         Me.BarraEstado = New System.Windows.Forms.StatusBar
         Me.nfyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.tmrTemporizador = New System.Windows.Forms.Timer(Me.components)
-        Me.MenuItem6 = New System.Windows.Forms.MenuItem
+        Me.MenuItem7 = New System.Windows.Forms.MenuItem
+        Me.MenuItem8 = New System.Windows.Forms.MenuItem
         Me.SuspendLayout()
         '
         'ToolBar1
@@ -332,24 +336,24 @@ Public Class Main
         'itemUsuarios
         '
         Me.itemUsuarios.Index = 5
-        Me.itemUsuarios.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.itemUsuariosABM, Me.itemUsuariosLogIn, Me.itemUsuariosLogOut})
+        Me.itemUsuarios.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.itemUsuariosLogIn, Me.itemUsuariosLogOut, Me.MenuItem8, Me.itemUsuariosABM, Me.MenuItem7})
         Me.itemUsuarios.Text = "Usuarios"
         '
         'itemUsuariosABM
         '
         Me.itemUsuariosABM.Enabled = False
-        Me.itemUsuariosABM.Index = 0
-        Me.itemUsuariosABM.Text = "ABM Usuarios"
+        Me.itemUsuariosABM.Index = 3
+        Me.itemUsuariosABM.Text = "Cambiar Contraseña"
         '
         'itemUsuariosLogIn
         '
-        Me.itemUsuariosLogIn.Index = 1
+        Me.itemUsuariosLogIn.Index = 0
         Me.itemUsuariosLogIn.Text = "Log In"
         '
         'itemUsuariosLogOut
         '
         Me.itemUsuariosLogOut.Enabled = False
-        Me.itemUsuariosLogOut.Index = 2
+        Me.itemUsuariosLogOut.Index = 1
         Me.itemUsuariosLogOut.Text = "Log Out"
         '
         'itemSalir
@@ -593,6 +597,11 @@ Public Class Main
         Me.itemHonorariosCedir.Index = 0
         Me.itemHonorariosCedir.Text = "Honorarios Cedir"
         '
+        'MenuItem6
+        '
+        Me.MenuItem6.Index = 1
+        Me.MenuItem6.Text = "Estadisticas de estudios"
+        '
         'mnuCaja
         '
         Me.mnuCaja.Enabled = False
@@ -617,7 +626,7 @@ Public Class Main
         '
         'BarraEstado
         '
-        Me.BarraEstado.Location = New System.Drawing.Point(0, 460)
+        Me.BarraEstado.Location = New System.Drawing.Point(0, 440)
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
@@ -633,10 +642,15 @@ Public Class Main
         '
         Me.tmrTemporizador.Interval = 120000
         '
-        'MenuItem6
+        'MenuItem7
         '
-        Me.MenuItem6.Index = 1
-        Me.MenuItem6.Text = "Estadisticas de estudios"
+        Me.MenuItem7.Index = 4
+        Me.MenuItem7.Text = "-"
+        '
+        'MenuItem8
+        '
+        Me.MenuItem8.Index = 2
+        Me.MenuItem8.Text = "-"
         '
         'Main
         '
@@ -644,7 +658,7 @@ Public Class Main
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(978, 482)
+        Me.ClientSize = New System.Drawing.Size(978, 462)
         Me.Controls.Add(Me.BarraEstado)
         Me.Controls.Add(Me.ToolBar1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -1048,5 +1062,10 @@ Public Class Main
     Private Sub mnuReemplazarPaciente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuReemplazarPaciente.Click
         Dim f As New frmEliminarPaciente
         f.Show()
+    End Sub
+
+    Private Sub itemUsuariosABM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemUsuariosABM.Click
+        Dim f As New ABMUsuario
+        f.ShowDialog()
     End Sub
 End Class

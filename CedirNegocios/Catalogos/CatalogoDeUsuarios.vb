@@ -3,7 +3,6 @@ Imports Npgsql
 Imports System.Collections.Generic
 Public Class CatalogoDeUsuarios
 
-
     Dim com As String = """"
     Dim da As Consultas
     'Dim daNuevo As Nuevo
@@ -14,8 +13,7 @@ Public Class CatalogoDeUsuarios
     End Sub
     Public Function getUsuario(ByVal nombreUsuario As String, ByVal psw As String) As Usuario
         Dim cUsuario As Usuario
-        Dim drUsuarios As NpgsqlDataReader = da.Tabla("webData", "tblUsuarios", " where " & com & "nombreUsuario" & com & " = '" & nombreUsuario & "' and " & com & "password" & com & " = '" & psw & "'")
-
+        Dim drUsuarios As NpgsqlDataReader = da.Tabla("webData", "tblUsuarios", " where " & com & "nombreUsuario" & com & " = '" & nombreUsuario & "' and " & com & "password" & com & " = '" & psw & "' ")
         While drUsuarios.Read()
             cUsuario = New Usuario
             cUsuario.id = drUsuarios.Item(0)
@@ -43,5 +41,8 @@ Public Class CatalogoDeUsuarios
         Return arrUsers
 
     End Function
+
+   
+
 
 End Class
