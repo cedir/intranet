@@ -4,6 +4,7 @@ Public Class ABMUsuario
 
     Dim sSecurity As Security
     Dim cUsuario As Usuario
+    Dim cMdiForm As New Main
     Private Sub cargarUsuarioActual()
         sSecurity = Security.GetInstance()
         cUsuario = sSecurity.getLoggedUser()
@@ -11,35 +12,37 @@ Public Class ABMUsuario
 
     End Sub
     Private Sub cambiarDatosUsuario()
-        If validarPass() Then
+        If validarDatosIngresados() Then
             cUsuario.password = Me.txtPass.Text
             cUsuario.nombreUsuario = Me.txtNombreUsuario.Text
             cUsuario.update()
-            MessageBox.Show("Datos cambiados con éxito")
-        Else
-            MessageBox.Show("Por favor, valide los datos ingresados", "Error : ", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Los datos fueron cambiados con éxito")
         End If
-
     End Sub
-    Private Function validarPass() As Boolean
+    Private Function validarDatosIngresados() As Boolean
         If (Me.txtPass.Text = "") Then
             MessageBox.Show("El password no puede estar vacío", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
         End If
 
-        If (Me.txtPass.Text = Me.txtConfirmPass.Text) Then
-            Dim cCatalogoDeUsuarios As New CatalogoDeUsuarios
-            Dim usuarioAValidar As Usuario = cCatalogoDeUsuarios.getUsuario(Me.txtNombreUsuario.Text.ToLower(), Me.txtPass.Text.ToLower())
-
-            If usuarioAValidar IsNot Nothing Then 'si el objeto usuario esta vacío, es porque el catalogo no hayó ninguna coincidencia
-                MessageBox.Show("El usuario y la contraseña ya existen. Ingrese nuevamente los datos")
-                Return False
-            End If
-            Return True
-        Else
+        If (Me.txtPass.Text <> Me.txtConfirmPass.Text) Then
             MessageBox.Show("No coinciden las passwords")
             Return False
         End If
+
+
+        Dim cCatalogoDeUsuarios As New CatalogoDeUsuarios
+        cCatalogoDeUsuarios.usuarioActual = cUsuario
+
+        If (Me.txtNombreUsuario.Text <> Me.cUsuario.nombreUsuario) Then 'el usuario intenta cambiar su nombre
+            If cCatalogoDeUsuarios.nameExists(Me.txtNombreUsuario.Text) Then
+                MessageBox.Show("El nombre ya fue elegido. Por favor, seleccione otro nombre")
+                Return False
+            End If
+        End If
+
+        Return True
+
     End Function
     Private Sub cancelar()
         sSecurity = Nothing
@@ -49,6 +52,7 @@ Public Class ABMUsuario
 
     Private Sub AMB_Usuario_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         cargarUsuarioActual()
+        cMdiForm = Me.MdiParent
     End Sub
 
     Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
@@ -62,6 +66,8 @@ Public Class ABMUsuario
             cambiarDatosUsuario()
         End If
 
+        Me.cMdiForm.Text = " CEDIR - USUARIO:  " & Me.cUsuario.nombreUsuario
+        Me.cUsuario = Nothing
         Me.Close()
 
     End Sub

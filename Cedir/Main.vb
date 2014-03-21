@@ -1066,6 +1066,7 @@ Public Class Main
 
     Private Sub itemUsuariosABM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemUsuariosABM.Click
         Dim f As New ABMUsuario
-        f.ShowDialog()
+        f.MdiParent = Me
+        f.Show()
     End Sub
 End Class
