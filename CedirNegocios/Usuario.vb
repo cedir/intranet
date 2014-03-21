@@ -78,4 +78,21 @@ Public Class Usuario
         Return True
     End Function
 
+    Public Function update() As String
+        Dim upd As New CedirDataAccess.Nuevo
+        Dim resp As String
+
+        Dim uptString1 As String = com & "password" & com & " = " & "'" & Me.password & "'"
+        Dim uptString2 As String = com & "nombreUsuario" & com & " = " & "'" & Me.nombreUsuario & "'"
+        resp = upd.update(com & "webData" & com & "." & com & "tblUsuarios" & com, uptString1 & ", " & uptString2, " where " & com & "idUsuario" & com & " = " & Me.id)
+        Return resp
+
+
+
+
+        Return True
+
+    End Function
+
+
 End Class

@@ -102,20 +102,20 @@ Public Class LogIn
 #End Region
 
     Dim cCatalogoDeUsuarios As New CatalogoDeUsuarios
+    Dim cMdiForm As New Main
+
+
+
     Private Sub LogIn_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-
-
-
+        cMdiForm = Me.MdiParent
     End Sub
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
         Dim cUsuario As Usuario = cCatalogoDeUsuarios.getUsuario(txtUsuario.Text.ToLower(), txtPassword.Text.ToLower())
         If cUsuario Is Nothing Then
             MsgBox("Usuario o password incorrecto, intentelo nuevamente", MsgBoxStyle.Critical)
         Else
-
             habilitarAcciones(cUsuario)
-            Dim cMdiForm As Main = Me.MdiParent
+
             cMdiForm.itemUsuariosLogIn.Enabled = False
             cMdiForm.itemUsuariosLogOut.Enabled = True
             cMdiForm.Text = "Cedir - Usuario actual :      " & cUsuario.nombreUsuario.ToUpper()
@@ -147,7 +147,14 @@ Public Class LogIn
                 _habilitarTecnicos()
             End If
         Next
+        _habilitacionComunParaTodos()
+
     End Sub
+
+    Private Sub _habilitacionComunParaTodos()
+        cMdiForm.itemUsuariosABM.Enabled = True
+    End Sub
+
     Private Sub _habilitarAdministradores()
         _habilitarTecnicos()
         _habilitarFacturacion()
@@ -157,7 +164,6 @@ Public Class LogIn
 
         _habilitarRecepcion()
 
-        Dim cMdiForm As Main = Me.MdiParent
         cMdiForm.itemMedicosNuevoPago.Enabled = True
         cMdiForm.itemMedicosMiCuenta.Enabled = True
 
@@ -172,7 +178,7 @@ Public Class LogIn
         cMdiForm.mnuReportes.Enabled = True
     End Sub
     Private Sub _habilitarRecepcion()
-        Dim cMdiForm As Main = Me.MdiParent
+
         cMdiForm.mnuCaja.Enabled = True
         cMdiForm.itemComprobantes.Enabled = True
         cMdiForm.itemEstudiosBuscar.Enabled = True
@@ -192,14 +198,13 @@ Public Class LogIn
         _habilitarMedico()
     End Sub
     Private Sub _habilitarMedico()
-        Dim cMdiForm As Main = Me.MdiParent
+
         cMdiForm.itemMedicosMiCuenta.Enabled = True
         cMdiForm.itemEstudiosBuscar.Enabled = True
         cMdiForm.itemMedicosMiCuenta.Enabled = True
     End Sub
     Private Sub _habilitarTecnicos()
         'por ahora, les damos los mismos permisos que a los medicos
-        Dim cMdiForm As Main = Me.MdiParent
         _habilitarMedico()
         cMdiForm.itemMedicacion.Enabled = True
         cMdiForm.mnuMedicacion.Enabled = True
