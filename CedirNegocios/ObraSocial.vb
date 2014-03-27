@@ -109,7 +109,6 @@ Public Class ObraSocial
             cArancel.practica.codigoMedico = drAranceles.Item(2)
             cArancel.Precio = drAranceles.Item(3)
             cArancel.fecha = drAranceles.Item(4)
-            cArancel.precioAnestesia = drAranceles.Item(5)
             getAranaceles.Add(cArancel)
         End While
         drAranceles.Close()
@@ -125,7 +124,6 @@ Public Class ObraSocial
             getAranacel.practica.codigoMedico = drAranceles.Item(2)
             getAranacel.precio = drAranceles.Item(3)
             getAranacel.fecha = drAranceles.Item(4)
-            getAranacel.precioAnestesia = drAranceles.Item(5)
         End While
         drAranceles.Close()
     End Function
@@ -135,7 +133,6 @@ Public Class ObraSocial
         Dim cArancel As New Arancel
         cArancel.practica = cPractica
         cArancel.precio = precio
-        cArancel.precioAnestesia = precioAnestesia
         cArancel.fecha = Today.Date
 
         Dim oldArancel As Arancel = Me.getAranacel(cPractica.idEstudio)

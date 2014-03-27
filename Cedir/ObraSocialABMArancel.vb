@@ -279,7 +279,7 @@ Public Class ObraSocialABMArancel
             NewRow("Estudio") = cArancel.practica.Estudio
             NewRow("Fecha") = cArancel.fecha
             NewRow("Precio") = Math.Round(cArancel.precio, 2)
-            NewRow("Anestesia") = Math.Round(cArancel.precioAnestesia, 2)
+            '  NewRow("Anestesia") = Math.Round(cArancel.precioAnestesia, 2)
             myTable.Rows.Add(NewRow)
         Next
 
@@ -330,7 +330,6 @@ Public Class ObraSocialABMArancel
             cArancel = arrAranceles(i)
             If cArancel.practica.idEstudio = cPractica.idEstudio Then
                 txtPrecio.Text = cArancel.precio
-                txtAnestesia.Text = cArancel.precioAnestesia
                 Exit For
             End If
         Next
