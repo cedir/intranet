@@ -1,7 +1,7 @@
 #files
 *.thumb
+*.user
 *.suo
-*.vbproj
 
 #Directories
 /singleton
@@ -11,7 +11,5 @@ CedirDataAccess/bin
 CedirDataAccess/obj
 CedirNegocios/bin
 CedirNegocios/obj
-Cedir/Cedir.suo
-Cedir/Cedir.vbproj.user
 Setup/Debug
 Setup/Release
