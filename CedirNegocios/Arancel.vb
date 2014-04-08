@@ -3,12 +3,11 @@ Public Class Arancel
     Private m_Practica As New practica
     Private m_precio As Single
     Private m_fecha As Date
-    'Public precioAnestesia As Single
-    Public Property practica() As practica
+    Public Property practica() As Practica
         Get
             practica = m_Practica
         End Get
-        Set(ByVal Value As practica)
+        Set(ByVal Value As Practica)
             m_Practica = Value
         End Set
     End Property
@@ -47,7 +46,13 @@ Public Class Arancel
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fecha)
         Dim fechaOptimizada As String = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
-        resp = upd.insert(com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "idEstudio" & com & ", " & com & "idObraSocial" & com & ", " & com & "Precio" & com & ", " & com & "fecha" & com & ", " & com & "precioAnestesia" & com, "'" & Me.practica.idEstudio & "', '" & obraSocial.idObraSocial & "', '" & Me.precio & "', '" & fechaOptimizada & "' ")
+        resp = upd.insert(com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "idEstudio" & com & ", " & com & "idObraSocial" & com & ", " & com & "Precio" & com & ", " & com & "fecha" & com & "  ", "'" & Me.practica.idEstudio & "', '" & obraSocial.idObraSocial & "', '" & Me.precio & "', '" & fechaOptimizada & "' ")
         Return resp
     End Function
+
+    'nota:
+    'se elimina en DB columna "precioAnestesia" de la tabla AlmacenPreciosEstOS.
+    'esta columna se corresponde con el atributo obsoleto arancelAnestesia
+
+
 End Class

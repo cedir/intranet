@@ -380,10 +380,8 @@ Public Class CatalogoDeEstudios
 
             If (drEstudios.Item("Precio") Is DBNull.Value) Then
                 vEstudio.ImportePorObraSocial = 0
-                vEstudio.importeAnestesia = 0
             Else
                 vEstudio.ImportePorObraSocial = drEstudios.Item("Precio")
-                vEstudio.importeAnestesia = drEstudios.Item("precioAnestesia")
             End If
 
             vEstudio.ArancelAnestesia = drEstudios.Item("arancelAnestesia")

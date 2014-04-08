@@ -97,20 +97,7 @@ Public Class CalculadorHonorariosComprobantes
 
     End Sub
 
-    'Private Function getImporteAnestesia(ByVal estudio As Estudio) As Decimal
-    '    Dim i As Integer = 0
-    '    For i = 0 To estudio.arrMedicacion.Count() - 1
-    '        Dim m As Medicacion
-    '        m = estudio.arrMedicacion(i)
-    '        'checkeamos si el estudio contiene la medicacion correspondiente a 
-    '        'pago de anestesia
-
-    '    Next
-
-
-    '    Return 0
-    'End Function
-
+  
     Private Function getImporteMedicacionSinMaterialEspecifico(ByVal estudio As Estudio) As Decimal
         Dim arr As New ArrayList
         arr = estudio.arrMedicacion
