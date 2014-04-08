@@ -170,6 +170,7 @@ Public Class Main
         Me.mnuMedicListadoMov = New System.Windows.Forms.MenuItem
         Me.mnuReportes = New System.Windows.Forms.MenuItem
         Me.itemHonorariosCedir = New System.Windows.Forms.MenuItem
+        Me.MenuItem6 = New System.Windows.Forms.MenuItem
         Me.mnuCaja = New System.Windows.Forms.MenuItem
         Me.mnuListadoCaja = New System.Windows.Forms.MenuItem
         Me.mnuMovimientoCaja = New System.Windows.Forms.MenuItem
@@ -177,7 +178,6 @@ Public Class Main
         Me.BarraEstado = New System.Windows.Forms.StatusBar
         Me.nfyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.tmrTemporizador = New System.Windows.Forms.Timer(Me.components)
-        Me.MenuItem6 = New System.Windows.Forms.MenuItem
         Me.SuspendLayout()
         '
         'ToolBar1
@@ -593,6 +593,11 @@ Public Class Main
         Me.itemHonorariosCedir.Index = 0
         Me.itemHonorariosCedir.Text = "Honorarios Cedir"
         '
+        'MenuItem6
+        '
+        Me.MenuItem6.Index = 1
+        Me.MenuItem6.Text = "Estadisticas de estudios"
+        '
         'mnuCaja
         '
         Me.mnuCaja.Enabled = False
@@ -621,7 +626,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.27- Fecha: 30/12/2013        "
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.28- Fecha: 08/4/2014        "
         '
         'nfyIcon
         '
@@ -632,11 +637,6 @@ Public Class Main
         'tmrTemporizador
         '
         Me.tmrTemporizador.Interval = 120000
-        '
-        'MenuItem6
-        '
-        Me.MenuItem6.Index = 1
-        Me.MenuItem6.Text = "Estadisticas de estudios"
         '
         'Main
         '
