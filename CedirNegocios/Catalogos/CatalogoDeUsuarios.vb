@@ -44,4 +44,22 @@ Public Class CatalogoDeUsuarios
 
     End Function
 
+
+    Public Function nameExists(ByVal usuarioLogged As Usuario, ByVal nombreUsuarioAValidar As String) As Boolean
+        nameExists = False
+
+        'ahora validamos la regla de negocio:
+        '"no existen dos usuarios con el mismo nombre. "
+        '"pueden existir usuarios con el mismo password"
+
+        Dim drUsuarios As NpgsqlDataReader = da.Tabla("webData", "tblUsuarios", " where " & com & "nombreUsuario" & com & _
+                         " = '" & nombreUsuarioAValidar.ToLower() & "' and " & com & "idUsuario" & com & " <> " & _
+                         usuarioLogged.id)
+        If drUsuarios.Read() Then
+            nameExists = True
+        End If
+
+    End Function
+
+
 End Class
