@@ -2,6 +2,9 @@
 DECLARE @resultado1;
 DECLARE @resultado2;
 DECLARE @resultado3;
+DECLARE @resultado4;
+DECLARE @resultado5;
+DECLARE @resultado6;
 DECLARE @idMedicoAeliminar;
 DECLARE @idMedicoReemplazante;
 
@@ -29,8 +32,17 @@ SET @resultado3 = update "cedirData"."turnos_disponibilidad_medicos"
 set "medico_id" = @idMedicoReemplazante
 where "medico_id" = @idMedicoAeliminar;
 
-SET @resultado4 = delete from "cedirData"."tblMedicosAct" 
-where "id" = @idMedicoAeliminar;
+
+SET @resultado4 = update "cedirData"."tblCajaMovimientos" 
+set "medico_id" = @idMedicoReemplazante
+where "medico_id" = @idMedicoAeliminar;
+
+
+SET @resultado5 = delete from "cedirData"."tblMedicoSol" 
+where "idMedicoSol" = @idMedicoAeliminar;
+
+SET @resultado6 = delete from "cedirData"."tblMedicosAct" 
+where "idMedicoAct" = @idMedicoAeliminar;
 
 
 
