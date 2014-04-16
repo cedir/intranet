@@ -41,6 +41,7 @@ Partial Class ABMUsuario
         '
         Me.txtPass.Location = New System.Drawing.Point(202, 57)
         Me.txtPass.Name = "txtPass"
+        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPass.Size = New System.Drawing.Size(100, 20)
         Me.txtPass.TabIndex = 1
         '
@@ -48,6 +49,7 @@ Partial Class ABMUsuario
         '
         Me.txtConfirmPass.Location = New System.Drawing.Point(202, 102)
         Me.txtConfirmPass.Name = "txtConfirmPass"
+        Me.txtConfirmPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtConfirmPass.Size = New System.Drawing.Size(100, 20)
         Me.txtConfirmPass.TabIndex = 2
         '
