@@ -37,7 +37,7 @@ Public Class ABMUsuario
         If (Me.txtNombreUsuario.Text.ToLower() <> usuarioLogged.nombreUsuario.ToLower()) Then
             'el usuario intenta cambiar su nombre.
             'tenemos que averiguar si existe algun usuario utilizando ese nombre 
-            If cCatalogoDeUsuarios.nameExists(Me.usuarioLogged, Me.txtNombreUsuario.Text) Then
+            If cCatalogoDeUsuarios.nameExists(Me.txtNombreUsuario.Text) Then
                 MessageBox.Show("El nombre de usuario ya ha sido elejido", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
