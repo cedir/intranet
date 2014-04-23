@@ -136,6 +136,12 @@
     <Compile Include="ABMPracticas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ABMUsuario.Designer.vb">
+      <DependentUpon>ABMUsuario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ABMUsuario.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AgragarMedicacion.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -453,6 +459,10 @@
     <EmbeddedResource Include="ABMPracticas.resx">
       <DependentUpon>ABMPracticas.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABMUsuario.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ABMUsuario.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AgragarMedicacion.resx">
       <DependentUpon>AgragarMedicacion.vb</DependentUpon>
@@ -773,6 +783,14 @@
     </COMReference>
     <COMReference Include="MSScriptControl">
       <Guid>{0E59F1D2-1FBE-11D0-8FF2-00A0D10038BC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Shell32">
+      <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
