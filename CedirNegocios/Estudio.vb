@@ -12,7 +12,6 @@ Public Class Estudio
     Private m_ImporteEstudio As Single
     Private m_ImporteMedicacion As Decimal
     Public ImportePorObraSocial As Single
-    Public importeAnestesia As Single
     Private m_PagoContraFactura As Single
     Private m_DiferenciaPaciente As Single
     Public pension As Single
