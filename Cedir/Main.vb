@@ -626,7 +626,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.28- Fecha: 08/4/2014        "
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.28- Fecha: 16/04/2013        "
         '
         'nfyIcon
         '
@@ -877,6 +877,8 @@ Public Class Main
         Me.mnuCaja.Enabled = False
         Me.itemComprobantes.Enabled = False
 
+        Me.itemUsuariosABM.Enabled = False
+
         Me.ToolBar1.Visible = False
     End Sub
 
@@ -1048,5 +1050,13 @@ Public Class Main
     Private Sub mnuReemplazarPaciente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuReemplazarPaciente.Click
         Dim f As New frmEliminarPaciente
         f.Show()
+    End Sub
+
+    Private Sub itemUsuariosABM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemUsuariosABM.Click
+        Dim f As New ABMUsuario
+        f.MdiParent = Me
+        f.Show()
+
+
     End Sub
 End Class

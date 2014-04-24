@@ -146,6 +146,7 @@ Public Class LogIn
             ElseIf cGrupo.nombre = "tecnicos" Then
                 _habilitarTecnicos()
             End If
+            _habilitarCommons()
         Next
     End Sub
     Private Sub _habilitarAdministradores()
@@ -203,6 +204,11 @@ Public Class LogIn
         _habilitarMedico()
         cMdiForm.itemMedicacion.Enabled = True
         cMdiForm.mnuMedicacion.Enabled = True
+    End Sub
+    Private Sub _habilitarCommons()
+        'por ahora, les damos los mismos permisos que a los medicos
+        Dim cMdiForm As Main = Me.MdiParent
+        cMdiForm.itemUsuariosABM.Enabled = True
     End Sub
     Private Sub txtPassword_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtPassword.KeyDown
         If e.KeyCode = Keys.Enter Then

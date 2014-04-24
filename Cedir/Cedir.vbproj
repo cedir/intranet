@@ -136,6 +136,12 @@
     <Compile Include="ABMPracticas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ABMUsuario.Designer.vb">
+      <DependentUpon>ABMUsuario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ABMUsuario.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AgragarMedicacion.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -453,6 +459,10 @@
     <EmbeddedResource Include="ABMPracticas.resx">
       <DependentUpon>ABMPracticas.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABMUsuario.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ABMUsuario.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AgragarMedicacion.resx">
       <DependentUpon>AgragarMedicacion.vb</DependentUpon>
