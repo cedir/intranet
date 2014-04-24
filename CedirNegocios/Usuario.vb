@@ -1,3 +1,4 @@
+Imports CedirDataAccess
 Public Class Usuario
 
     Private m_id As Integer
@@ -77,5 +78,16 @@ Public Class Usuario
         End If
         Return True
     End Function
+
+    Public Function update() As String
+        Dim com As String = """"
+        Dim cDatos As New Nuevo
+
+        Return cDatos.update(com & "webData" & com & "." & com & "tblUsuarios" & com, com & "nombreUsuario" & com & " = '" & Me.nombreUsuario & "', " & com & "password" & com & " = '" & Me.password & "' ", " where " & _
+                             com & "idUsuario" & com & " = " & id)
+
+    End Function
+
+
 
 End Class
