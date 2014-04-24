@@ -37,11 +37,15 @@ SET @resultado4 = update "cedirData"."tblCajaMovimientos"
 set "medico_id" = @idMedicoReemplazante
 where "medico_id" = @idMedicoAeliminar;
 
+SET @resultado5 = update "cedirData"."tblDetalleEstudio"
+set "idMedicoSolicitante" = @idMedicoReemplazante
+where "idMedicoSolicitante" = @idMedicoAeliminar;
 
-SET @resultado5 = delete from "cedirData"."tblMedicoSol" 
+
+SET @resultado6 = delete from "cedirData"."tblMedicoSol" 
 where "idMedicoSol" = @idMedicoAeliminar;
 
-SET @resultado6 = delete from "cedirData"."tblMedicosAct" 
+SET @resultado7 = delete from "cedirData"."tblMedicosAct" 
 where "idMedicoAct" = @idMedicoAeliminar;
 
 
