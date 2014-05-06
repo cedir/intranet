@@ -154,10 +154,17 @@ Public Class CatalogoDeComprobantes
             Dim filtro1 As String
             filtro1 = " WHERE UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "responsable" & com & ") = '" & responsable.ToUpper() & "' and UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "subTipo" & com & ") = '" & subtipo.ToUpper() & "'"
             Dim filtro3 As String
-            filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in( " & idTipo & " )"
+            filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(1,3)"
+
+            If nroTerminal = 90 Then
+                filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in( " & idTipo & " )"
+            End If
+
             Dim filtro4 As String
             filtro4 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "nroTerminal" & com & " = " & nroTerminal
+            
             Dim filtroTotal As String
+
             If idTipo <> 2 Then 'No es liquidacion
                 filtroTotal = filtro & filtro1 & filtro3 & filtro4
             Else : filtroTotal = filtro & " where " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(2)"
