@@ -199,12 +199,10 @@ Public Class ObraSocialABMArancel
         Dim clest As New DataColumn("Estudio", Type.GetType("System.String"))
         Dim clprecio As New DataColumn("Precio", Type.GetType("System.Double"))
         Dim clFecha As New DataColumn("Fecha", Type.GetType("System.String"))
-        Dim clAnestesia As New DataColumn("Anestesia", Type.GetType("System.Double"))
 
 
         myTable.Columns.Add(clest)
         myTable.Columns.Add(clprecio)
-        myTable.Columns.Add(clAnestesia)
         myTable.Columns.Add(clFecha)
 
         Dim ts1 As New DataGridTableStyle
@@ -221,22 +219,14 @@ Public Class ObraSocialABMArancel
         Dim TextCol0 As New DataGridTextBoxColumn
         TextCol0.MappingName = "Estudio"
         TextCol0.HeaderText = "Estudio"
-        TextCol0.Width = 400
+        TextCol0.Width = 450
         ts1.GridColumnStyles.Add(TextCol0)
 
         Dim TextCol3 As New DataGridTextBoxColumn
         TextCol3.MappingName = "Precio"
         TextCol3.HeaderText = "Precio"
-        TextCol3.Width = 45
+        TextCol3.Width = 50
         ts1.GridColumnStyles.Add(TextCol3)
-
-
-        Dim TextCol5 As New DataGridTextBoxColumn
-        TextCol5.MappingName = "Anestesia"
-        TextCol5.HeaderText = "Anestesia"
-        TextCol5.Width = 65
-        ts1.GridColumnStyles.Add(TextCol5)
-
 
         Dim TextCol8 As New DataGridTextBoxColumn
         TextCol8.MappingName = "Fecha"
@@ -247,11 +237,7 @@ Public Class ObraSocialABMArancel
         DataGrid1.TableStyles.Add(ts1)
 
         Label1.Text = cObraSocial.ObraSocial
-        'Label2.Text = "Dirección: " & cObraSocial.direccion & " - (" & cObraSocial.CodigoPostal & " - " & cObraSocial.localidad & ")"
-        'Label3.Text = "Teléfono: " & cObraSocial.tel
-        'Label4.Text = "Nro de cuit: " & cObraSocial.nroCuit
-        'Label5.Text = "Condición fiscal: " & cObraSocial.CondicionFiscal
-
+        
         Dim cPractica As Practica
         Dim i As Integer
         Dim catalogoPracticas As New CatalogoDePracticas
@@ -263,7 +249,6 @@ Public Class ObraSocialABMArancel
         Next
         cmbPracticas.SelectedIndex = 0
 
-        'Me.Text = cObraSocial.ObraSocial
         cargarGrilla()
     End Sub
     Private Sub cargarGrilla()
@@ -279,7 +264,6 @@ Public Class ObraSocialABMArancel
             NewRow("Estudio") = cArancel.practica.Estudio
             NewRow("Fecha") = cArancel.fecha
             NewRow("Precio") = Math.Round(cArancel.precio, 2)
-            NewRow("Anestesia") = Math.Round(cArancel.precioAnestesia, 2)
             myTable.Rows.Add(NewRow)
         Next
 
@@ -330,7 +314,6 @@ Public Class ObraSocialABMArancel
             cArancel = arrAranceles(i)
             If cArancel.practica.idEstudio = cPractica.idEstudio Then
                 txtPrecio.Text = cArancel.precio
-                txtAnestesia.Text = cArancel.precioAnestesia
                 Exit For
             End If
         Next
