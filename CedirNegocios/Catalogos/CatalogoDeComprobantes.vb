@@ -154,7 +154,7 @@ Public Class CatalogoDeComprobantes
             Dim filtro1 As String
             filtro1 = " WHERE UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "responsable" & com & ") = '" & responsable.ToUpper() & "' and UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "subTipo" & com & ") = '" & subtipo.ToUpper() & "'"
             Dim filtro3 As String
-            filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(1,3)"
+            filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(1,3,4)"
 
             If nroTerminal = 90 Then
                 filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in( " & idTipo & " )"
