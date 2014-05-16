@@ -13,14 +13,14 @@ Public Class dgrDatagridTextBoxColumn
         MyBase.NullText = ""
         AddHandler MyBase.TextBox.KeyDown, AddressOf HandleKeydown
     End Sub
-    Private Function HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) As Boolean
+    Private Sub HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         Try
             t()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
 
-    End Function
+    End Sub
 
     Private Function t() As Boolean
         Return True

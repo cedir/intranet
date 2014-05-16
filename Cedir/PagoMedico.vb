@@ -730,8 +730,9 @@ Public Class PagoMedico
         'myTable.Rows(fila).EndEdit()
         myTable.AcceptChanges()
 
-        setLabelsHonorarios()
         Me.WallyGrid1.Select(WallyGrid1.CurrentCell.RowNumber)
+        setLabelsHonorarios()
+
     End Sub
 
     Private Sub WallyGrid1_DoubleClick_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.DoubleClick
