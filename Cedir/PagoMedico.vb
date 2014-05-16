@@ -1,4 +1,5 @@
 Imports CedirNegocios
+Imports System.Windows.Forms
 Public Class PagoMedico
     Inherits System.Windows.Forms.Form
 
@@ -66,7 +67,6 @@ Public Class PagoMedico
         Me.btnVer = New System.Windows.Forms.Button
         Me.dtFecha = New System.Windows.Forms.DateTimePicker
         Me.Button1 = New System.Windows.Forms.Button
-        Me.WallyGrid1 = New Cedir.wallyGrid
         Me.lblTotalHonorariosExentos = New System.Windows.Forms.Label
         Me.lblTotalHonorarios105 = New System.Windows.Forms.Label
         Me.lblTotalHonorarios21 = New System.Windows.Forms.Label
@@ -79,8 +79,9 @@ Public Class PagoMedico
         Me.lblIVA21 = New System.Windows.Forms.Label
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.btnAgregarObservacion = New System.Windows.Forms.Button
-        CType(Me.WallyGrid1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.WallyGrid1 = New Cedir.wallyGrid
         Me.GroupBox1.SuspendLayout()
+        CType(Me.WallyGrid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cmbMedicoAct
@@ -176,15 +177,6 @@ Public Class PagoMedico
         Me.Button1.Text = "Agregar Estudios"
         Me.Button1.UseVisualStyleBackColor = True
         Me.Button1.Visible = False
-        '
-        'WallyGrid1
-        '
-        Me.WallyGrid1.DataMember = ""
-        Me.WallyGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.WallyGrid1.Location = New System.Drawing.Point(12, 66)
-        Me.WallyGrid1.Name = "WallyGrid1"
-        Me.WallyGrid1.Size = New System.Drawing.Size(1044, 345)
-        Me.WallyGrid1.TabIndex = 12
         '
         'lblTotalHonorariosExentos
         '
@@ -300,6 +292,16 @@ Public Class PagoMedico
         Me.btnAgregarObservacion.TabIndex = 24
         Me.btnAgregarObservacion.Text = "Agregar Descripcion de totales"
         '
+        'WallyGrid1
+        '
+        Me.WallyGrid1.AllowSorting = False
+        Me.WallyGrid1.DataMember = ""
+        Me.WallyGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
+        Me.WallyGrid1.Location = New System.Drawing.Point(12, 66)
+        Me.WallyGrid1.Name = "WallyGrid1"
+        Me.WallyGrid1.Size = New System.Drawing.Size(1044, 345)
+        Me.WallyGrid1.TabIndex = 12
+        '
         'PagoMedico
         '
         Me.AllowDrop = True
@@ -321,8 +323,8 @@ Public Class PagoMedico
         Me.Name = "PagoMedico"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Nuevo pago a Médico"
-        CType(Me.WallyGrid1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.WallyGrid1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -388,109 +390,34 @@ Public Class PagoMedico
         myTable.Columns.Add(clTotalConIVA)
 
 
-        Dim ts1 As New DataGridTableStyle
-        ts1.MappingName = "myTable"
-        ts1.BackColor = Color.LightGray
-        ts1.ForeColor = Color.SlateBlue
-        ts1.AlternatingBackColor = Color.White
-        ts1.AllowSorting = False
 
-        ts1.HeaderForeColor = Color.MediumSlateBlue
-        ts1.HeaderBackColor = Color.WhiteSmoke
-        ts1.GridLineColor = Color.MediumPurple
+        ''''''
+        Dim tbl As New DataGridTableStyle
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha", "Fecha", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Paciente", "Paciente", 100, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Obra Social", "Obra Social", 100, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Práctica", "Práctica", 100, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Actuante", "Actuante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Solicitante", "Solicitante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Cobrado", "Cobrado", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("G.A.", "G.A.", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Importe", "Importe", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%RetencionCedir", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Pago", "Pago", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 50, 50, String.Empty, HorizontalAlignment.Center, False))
 
-        Dim TextCol1 As New DataGridTextBoxColumn
-        TextCol1.MappingName = "Fecha"
-        TextCol1.HeaderText = "Fecha"
-        TextCol1.Width = 65
-        ts1.GridColumnStyles.Add(TextCol1)
-        Dim TextCol2 As New DataGridTextBoxColumn
-        TextCol2.MappingName = "Paciente"
-        TextCol2.HeaderText = "Paciente"
-        TextCol2.Width = 95
-        ts1.GridColumnStyles.Add(TextCol2)
-        Dim TextCol3 As New DataGridTextBoxColumn
-        TextCol3.MappingName = "Obra Social"
-        TextCol3.HeaderText = "Obra Social"
-        TextCol3.Width = 135
-        ts1.GridColumnStyles.Add(TextCol3)
-        Dim TextCol4 As New DataGridTextBoxColumn
-        TextCol4.MappingName = "Práctica"
-        TextCol4.HeaderText = "Práctica"
-        TextCol4.Width = 100
-        ts1.GridColumnStyles.Add(TextCol4)
-
-        Dim TextCol5 As New DataGridTextBoxColumn
-        TextCol5.MappingName = "Actuante"
-        TextCol5.HeaderText = "Actuante"
-        TextCol5.Width = 87
-        ts1.GridColumnStyles.Add(TextCol5)
-
-        Dim TextCol6 As New DataGridTextBoxColumn
-        TextCol6.MappingName = "Solicitante"
-        TextCol6.HeaderText = "Solicitante"
-        TextCol6.Width = 87
-        ts1.GridColumnStyles.Add(TextCol6)
-        Dim TextCol7 As New DataGridTextBoxColumn
-        TextCol7.MappingName = "Cobrado"
-        TextCol7.HeaderText = "Cobrado"
-        TextCol7.Width = 65
-        ts1.GridColumnStyles.Add(TextCol7)
-
-        Dim TextCol8 As New DataGridTextBoxColumn
-        TextCol8.MappingName = "Fecha Cobro"
-        TextCol8.HeaderText = "Fecha Cobro"
-        TextCol8.Width = 65
-        ts1.GridColumnStyles.Add(TextCol8)
-
-        Dim TextCol9 As New DataGridTextBoxColumn
-        TextCol9.MappingName = "G.A."
-        TextCol9.HeaderText = "G.A."
-        TextCol9.Width = 40
-        ts1.GridColumnStyles.Add(TextCol9)
-
-        Dim TextCol10 As New DataGridTextBoxColumn
-        TextCol10.MappingName = "Importe"
-        TextCol10.HeaderText = "Importe"
-        TextCol10.Width = 43
-        ts1.GridColumnStyles.Add(TextCol10)
-
-        Dim TextCol11 As New DataGridTextBoxColumn
-        TextCol11.MappingName = "%RetencionCedir"
-        TextCol11.HeaderText = "%RetencionCedir"
-        TextCol11.Width = 25
-        ts1.GridColumnStyles.Add(TextCol11)
-
-        Dim TextCol12 As New DataGridTextBoxColumn
-        TextCol12.MappingName = "Pago"
-        TextCol12.HeaderText = "Pago"
-        TextCol12.Width = 43
-        ts1.GridColumnStyles.Add(TextCol12)
-
-        Dim TextCol13 As New DataGridTextBoxColumn
-        TextCol13.MappingName = "MontoIVA10.5Estudio"
-        TextCol13.HeaderText = "IVA10.5 Estudio"
-        TextCol13.Width = 43
-        ts1.GridColumnStyles.Add(TextCol13)
-
-        Dim TextCol14 As New DataGridTextBoxColumn
-        TextCol14.MappingName = "MontoIVA21Estudio"
-        TextCol14.HeaderText = "IVA21 Estudio"
-        TextCol14.Width = 43
-        ts1.GridColumnStyles.Add(TextCol14)
-
-        Dim TextCol15 As New DataGridTextBoxColumn
-        TextCol15.MappingName = "Total"
-        TextCol15.HeaderText = "Total"
-        TextCol15.Width = 43
-        ts1.GridColumnStyles.Add(TextCol15)
-
-        WallyGrid1.TableStyles.Add(ts1)
-
+        tbl.MappingName = "myTable"
+        WallyGrid1.TableStyles.Clear()
+        WallyGrid1.TableStyles.Add(tbl)
+      
         cargarCombo()
 
         btnAceptar.Enabled = False
         btnImprimir.Enabled = False
+
     End Sub
 
     Private Sub cmbMedicoAct_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbMedicoAct.SelectedIndexChanged
@@ -584,6 +511,7 @@ Public Class PagoMedico
                 porcentaje = cLinea.getPorcentaje() 'obtengo el porcentaje que le corresponde al medico
                 pagoDelCorrespondiente = importeEstudio * porcentaje / 100
 
+                'Si es Conuslta, ElectroCardograma y solo para enjuto 
                 'If ((est.practica.idEstudio = CONSULTA Or est.practica.idEstudio = ELECTROCARDEOGRAMA) And currentMedico.idMedico = DRENJUTO) Then
                 '    pagoDelCorrespondiente = 22.5
                 'End If ESTO SE COMENTA YA QUE AHORA ENJUTO COBRA COMO CUALQUIERA
@@ -634,6 +562,8 @@ Public Class PagoMedico
         Next
 
         myTable.AcceptChanges()
+
+
         WallyGrid1.DataSource = myTable
         setLabelsHonorarios()
     End Sub
@@ -739,8 +669,6 @@ Public Class PagoMedico
 
     End Sub
 
-
-
     Private Sub WallyGrid1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim cLinea As LineaPagoMedico
         Dim i As Integer = WallyGrid1.CurrentRowIndex
@@ -764,16 +692,6 @@ Public Class PagoMedico
         End If
     End Sub
 
-    'Private Function getFacturacionEnCache(ByVal id As Integer) As Presentacion
-    '    ' Esta funcion es para evitar traer la misma Facturacion mas de una vez
-    '    For i As Integer = 0 To arrFacturaciones.Count - 1
-    '        If arrFacturaciones(i).idPresentacion = id Then
-    '            Return arrFacturaciones(i)
-    '        End If
-    '    Next
-    '    Return Nothing
-    'End Function
-
     Private Sub btnCerrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCerrar.Click
         Me.Close()
     End Sub
@@ -784,10 +702,8 @@ Public Class PagoMedico
         f.Show()
     End Sub
 
-
-
-
     Private Sub WallyGrid1_CurrentCellChanged_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.CurrentCellChanged
+
         ''recalculamo   s las celdas de iva y total a pagar, ya que el evento se dispara cuando cambian la celda de "Pago"
         If Me.WallyGrid1.CurrentCell.ColumnNumber < 11 Or Me.WallyGrid1.CurrentCell.RowNumber > arrl.Count - 1 Then
             Exit Sub
@@ -813,11 +729,10 @@ Public Class PagoMedico
         myTable.Rows(fila).Item("Total") = pago + Convert.ToDecimal(myTable.Rows(fila).Item("MontoIVA21Estudio")) + Convert.ToDecimal(myTable.Rows(fila).Item("MontoIVA10.5Estudio"))
         'myTable.Rows(fila).EndEdit()
         myTable.AcceptChanges()
+
         setLabelsHonorarios()
+        Me.WallyGrid1.Select(WallyGrid1.CurrentCell.RowNumber)
     End Sub
-
-
-
 
     Private Sub WallyGrid1_DoubleClick_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.DoubleClick
         Dim cLinea As LineaPagoMedico
@@ -837,4 +752,19 @@ Public Class PagoMedico
 
         Me.txtObservaciones.Text = Me.txtObservaciones.Text & vbCrLf & recuadroInscriptos
     End Sub
+
+    Private Sub WallyGrid1_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles WallyGrid1.KeyDown
+       
+    End Sub
+
+    Private Sub HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+        Try
+            MsgBox(e.KeyCode.ToString)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+
 End Class

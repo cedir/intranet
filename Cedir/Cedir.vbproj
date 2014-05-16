@@ -148,6 +148,9 @@
     <Compile Include="AgregarEstudioAFacturacion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="dgrDatagridTextBoxColumn.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Pacientes\AltaPaciente.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -470,6 +473,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AgregarEstudioAFacturacion.resx">
       <DependentUpon>AgregarEstudioAFacturacion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dgrDatagridTextBoxColumn.resx">
+      <DependentUpon>dgrDatagridTextBoxColumn.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pacientes\AltaPaciente.resx">
