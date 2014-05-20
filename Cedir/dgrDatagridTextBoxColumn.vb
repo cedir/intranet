@@ -14,15 +14,18 @@ Public Class dgrDatagridTextBoxColumn
         AddHandler MyBase.TextBox.KeyDown, AddressOf HandleKeydown
     End Sub
     Private Sub HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+        'este metodo lo vamos a utilizar para detectar algun error en tipeo. 
         Try
-            t()
+
+            ' functionCatchError()
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
 
     End Sub
 
-    Private Function t() As Boolean
+    Private Function functionCatchError() As Boolean
         Return True
     End Function
 

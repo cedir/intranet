@@ -11,8 +11,8 @@ Public Class PagoMedico
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
-        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
 
+        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
     End Sub
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -180,7 +180,7 @@ Public Class PagoMedico
         '
         'lblTotalHonorariosExentos
         '
-        Me.lblTotalHonorariosExentos.Location = New System.Drawing.Point(172, 16)
+        Me.lblTotalHonorariosExentos.Location = New System.Drawing.Point(227, 16)
         Me.lblTotalHonorariosExentos.Name = "lblTotalHonorariosExentos"
         Me.lblTotalHonorariosExentos.Size = New System.Drawing.Size(160, 24)
         Me.lblTotalHonorariosExentos.TabIndex = 13
@@ -189,7 +189,7 @@ Public Class PagoMedico
         '
         'lblTotalHonorarios105
         '
-        Me.lblTotalHonorarios105.Location = New System.Drawing.Point(172, 40)
+        Me.lblTotalHonorarios105.Location = New System.Drawing.Point(227, 40)
         Me.lblTotalHonorarios105.Name = "lblTotalHonorarios105"
         Me.lblTotalHonorarios105.Size = New System.Drawing.Size(160, 24)
         Me.lblTotalHonorarios105.TabIndex = 14
@@ -198,7 +198,7 @@ Public Class PagoMedico
         '
         'lblTotalHonorarios21
         '
-        Me.lblTotalHonorarios21.Location = New System.Drawing.Point(172, 63)
+        Me.lblTotalHonorarios21.Location = New System.Drawing.Point(227, 63)
         Me.lblTotalHonorarios21.Name = "lblTotalHonorarios21"
         Me.lblTotalHonorarios21.Size = New System.Drawing.Size(160, 24)
         Me.lblTotalHonorarios21.TabIndex = 15
@@ -207,7 +207,7 @@ Public Class PagoMedico
         '
         'lblTotalIVA105
         '
-        Me.lblTotalIVA105.Location = New System.Drawing.Point(172, 87)
+        Me.lblTotalIVA105.Location = New System.Drawing.Point(227, 87)
         Me.lblTotalIVA105.Name = "lblTotalIVA105"
         Me.lblTotalIVA105.Size = New System.Drawing.Size(160, 24)
         Me.lblTotalIVA105.TabIndex = 16
@@ -216,7 +216,7 @@ Public Class PagoMedico
         '
         'lblTotalIVA21
         '
-        Me.lblTotalIVA21.Location = New System.Drawing.Point(172, 109)
+        Me.lblTotalIVA21.Location = New System.Drawing.Point(227, 109)
         Me.lblTotalIVA21.Name = "lblTotalIVA21"
         Me.lblTotalIVA21.Size = New System.Drawing.Size(160, 24)
         Me.lblTotalIVA21.TabIndex = 17
@@ -276,9 +276,9 @@ Public Class PagoMedico
         Me.GroupBox1.Controls.Add(Me.lblTotalIVA105)
         Me.GroupBox1.Controls.Add(Me.lblTotalIVA21)
         Me.GroupBox1.Controls.Add(Me.lblTotal)
-        Me.GroupBox1.Location = New System.Drawing.Point(652, 439)
+        Me.GroupBox1.Location = New System.Drawing.Point(757, 443)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(404, 167)
+        Me.GroupBox1.Size = New System.Drawing.Size(437, 167)
         Me.GroupBox1.TabIndex = 23
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Totales"
@@ -299,14 +299,14 @@ Public Class PagoMedico
         Me.WallyGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
         Me.WallyGrid1.Location = New System.Drawing.Point(12, 66)
         Me.WallyGrid1.Name = "WallyGrid1"
-        Me.WallyGrid1.Size = New System.Drawing.Size(1044, 345)
+        Me.WallyGrid1.Size = New System.Drawing.Size(1182, 345)
         Me.WallyGrid1.TabIndex = 12
         '
         'PagoMedico
         '
         Me.AllowDrop = True
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(1069, 617)
+        Me.ClientSize = New System.Drawing.Size(1202, 624)
         Me.Controls.Add(Me.btnAgregarObservacion)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.WallyGrid1)
@@ -393,31 +393,33 @@ Public Class PagoMedico
 
         ''''''
         Dim tbl As New DataGridTableStyle
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha", "Fecha", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha", "Fecha", 65, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Paciente", "Paciente", 100, 50, String.Empty, HorizontalAlignment.Center, True))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Obra Social", "Obra Social", 100, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Práctica", "Práctica", 100, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Práctica", "Práctica", 150, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Actuante", "Actuante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Solicitante", "Solicitante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Cobrado", "Cobrado", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 65, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("G.A.", "G.A.", 50, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Importe", "Importe", 50, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%RetencionCedir", 50, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Pago", "Pago", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 60, 50, String.Empty, HorizontalAlignment.Center, False))
 
         tbl.MappingName = "myTable"
         WallyGrid1.TableStyles.Clear()
         WallyGrid1.TableStyles.Add(tbl)
-      
+
         cargarCombo()
 
         btnAceptar.Enabled = False
         btnImprimir.Enabled = False
 
+        'AddHandler myTable.RowChanged, New DataRowChangeEventHandler(AddressOf Row_Changed)
+        AddHandler myTable.ColumnChanged, New DataColumnChangeEventHandler(AddressOf Column_Changed)
     End Sub
 
     Private Sub cmbMedicoAct_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbMedicoAct.SelectedIndexChanged
@@ -653,14 +655,13 @@ Public Class PagoMedico
                 Case Convert.ToDecimal(Me.myTable.Rows(i).Item("MontoIVA21Estudio")) <> 0
                     honorario21 += Convert.ToDecimal(Me.myTable.Rows(i).Item("Pago"))
                 Case Else
-                    exento += CSng(Me.WallyGrid1.Item(i, 14))
+                    exento += Convert.ToDecimal(Me.myTable.Rows(i).Item("Pago"))
             End Select
-            total += CSng(Me.WallyGrid1.Item(i, 14))
+            total = total + Convert.ToDecimal(Me.myTable.Rows(i).Item("Total"))
             iva10 = iva10 + Convert.ToDecimal(Me.myTable.Rows(i).Item("MontoIVA10.5Estudio"))
             iva21 = iva21 + Convert.ToDecimal(Me.myTable.Rows(i).Item("MontoIVA21Estudio"))
         Next
-
-        Me.lblTotal.Text = "Total a pagar: $ " & Math.Round(total, 2)
+        Me.lblTotal.Text = "Total a pagar: $ " & Format(total, "############0.00")
         Me.lblTotalIVA105.Text = Format(iva10, "############0.00")
         Me.lblTotalIVA21.Text = Format(iva21, "############0.00")
         Me.lblTotalHonorarios21.Text = Format(honorario21, "############0.00")
@@ -702,8 +703,35 @@ Public Class PagoMedico
         f.Show()
     End Sub
 
-    Private Sub WallyGrid1_CurrentCellChanged_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.CurrentCellChanged
+    Private Sub WallyGrid1_DoubleClick_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.DoubleClick
+        Dim cLinea As LineaPagoMedico
+        Dim i As Integer = WallyGrid1.CurrentRowIndex
+        cLinea = cPago.getLineas(i)
 
+        Dim frm As New DetalleEstudio(cLinea.estudio)
+        frm.MdiParent = Me.Parent.Parent
+        frm.Show()
+    End Sub
+
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarObservacion.Click
+        Dim recuadroInscriptos As String
+        recuadroInscriptos = Me.lblHonorariosExentos.Text & Me.lblTotalHonorariosExentos.Text & ",  " & vbCrLf & Me.lblGravadosAl_21.Text & Me.lblTotalHonorarios21.Text & vbCrLf & _
+        Me.lblGravadosAl10_5.Text & Me.lblTotalHonorarios105.Text & ",  " & vbCrLf & Me.lblIVA10_5.Text & Me.lblTotalIVA105.Text & ",  " & vbCrLf & Me.lblIVA21.Text & Me.lblTotalIVA21.Text
+
+
+        Me.txtObservaciones.Text = Me.txtObservaciones.Text & vbCrLf & recuadroInscriptos
+    End Sub
+
+    Private Sub HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+        Try
+            MsgBox(e.KeyCode.ToString)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub calcularImporteDeColumnas()
         ''recalculamo   s las celdas de iva y total a pagar, ya que el evento se dispara cuando cambian la celda de "Pago"
         If Me.WallyGrid1.CurrentCell.ColumnNumber < 11 Or Me.WallyGrid1.CurrentCell.RowNumber > arrl.Count - 1 Then
             Exit Sub
@@ -726,45 +754,18 @@ Public Class PagoMedico
                     myTable.Rows(fila).Item("MontoIVA10.5Estudio") = 0
             End Select
         End If
+
         myTable.Rows(fila).Item("Total") = pago + Convert.ToDecimal(myTable.Rows(fila).Item("MontoIVA21Estudio")) + Convert.ToDecimal(myTable.Rows(fila).Item("MontoIVA10.5Estudio"))
-        'myTable.Rows(fila).EndEdit()
-        myTable.AcceptChanges()
-
-        Me.WallyGrid1.Select(WallyGrid1.CurrentCell.RowNumber)
-        setLabelsHonorarios()
-
+        'este cambio tiene que suceder cuando el usuario presiona enter
     End Sub
 
-    Private Sub WallyGrid1_DoubleClick_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WallyGrid1.DoubleClick
-        Dim cLinea As LineaPagoMedico
-        Dim i As Integer = WallyGrid1.CurrentRowIndex
-        cLinea = cPago.getLineas(i)
-
-        Dim frm As New DetalleEstudio(cLinea.estudio)
-        frm.MdiParent = Me.Parent.Parent
-        frm.Show()
-    End Sub
-
-    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarObservacion.Click
-        Dim recuadroInscriptos As String
-        recuadroInscriptos = Me.lblHonorariosExentos.Text & Me.lblTotalHonorariosExentos.Text & ",  " & vbCrLf & Me.lblGravadosAl_21.Text & Me.lblTotalHonorarios21.Text & vbCrLf & _
-        Me.lblGravadosAl10_5.Text & Me.lblTotalHonorarios105.Text & ",  " & vbCrLf & Me.lblIVA10_5.Text & Me.lblTotalIVA105.Text & ",  " & vbCrLf & Me.lblIVA21.Text & Me.lblTotalIVA21.Text
-
-
-        Me.txtObservaciones.Text = Me.txtObservaciones.Text & vbCrLf & recuadroInscriptos
-    End Sub
-
-    Private Sub WallyGrid1_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles WallyGrid1.KeyDown
-       
-    End Sub
-
-    Private Sub HandleKeydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
-        Try
-            MsgBox(e.KeyCode.ToString)
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
+    Private Sub Column_Changed(ByVal sender As Object, ByVal e As DataColumnChangeEventArgs)
+        'Como la columna de Total, cambia al cambiar las otras celdas, tenemos que evitar que se tenga en cuenta su cambio
+        'para el calculo de valores. Sólo nos interesa detectar el cambio en otras celdas.
+        If myTable.Rows.Count > 0 And e.Column.ColumnName <> "Total" And Not e.Row.IsNull("Total") Then
+            calcularImporteDeColumnas()
+            setLabelsHonorarios()
+        End If
     End Sub
 
 
