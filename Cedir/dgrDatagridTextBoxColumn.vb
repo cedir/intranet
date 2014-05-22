@@ -7,7 +7,7 @@ Public Class dgrDatagridTextBoxColumn
         MyBase.Width = intColWidth
         MyBase.TextBox.MaxLength = intMaxLength
         MyBase.Format = strFormat
-        MyBase.Alignment = strAlignment
+        MyBase.Alignment = HorizontalAlignment.Left
         MyBase.ReadOnly = blnIsReadOnly
         MyBase.TextBox.Enabled = True
         MyBase.NullText = ""

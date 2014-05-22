@@ -410,6 +410,17 @@ Public Class PagoMedico
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 60, 50, String.Empty, HorizontalAlignment.Center, False))
 
         tbl.MappingName = "myTable"
+        tbl.BackColor = Color.LightGray
+        tbl.ForeColor = Color.SlateBlue
+        tbl.AlternatingBackColor = Color.White
+        tbl.AllowSorting = False
+
+        tbl.HeaderForeColor = Color.MediumSlateBlue
+        tbl.HeaderBackColor = Color.WhiteSmoke
+        tbl.GridLineColor = Color.MediumPurple
+
+
+
         WallyGrid1.TableStyles.Clear()
         WallyGrid1.TableStyles.Add(tbl)
 
@@ -762,7 +773,7 @@ Public Class PagoMedico
     Private Sub Column_Changed(ByVal sender As Object, ByVal e As DataColumnChangeEventArgs)
         'Como la columna de Total, cambia al cambiar las otras celdas, tenemos que evitar que se tenga en cuenta su cambio
         'para el calculo de valores. Sólo nos interesa detectar el cambio en otras celdas.
-        If myTable.Rows.Count > 0 And e.Column.ColumnName <> "Total" And Not e.Row.IsNull("Total") Then
+        If myTable.Rows.Count > 0 And e.Column.ColumnName = "Pago" And Not e.Row.IsNull("Total") Then
             calcularImporteDeColumnas()
             setLabelsHonorarios()
         End If
