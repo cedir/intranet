@@ -551,7 +551,10 @@ Public Class BuscarPresentacion
         Else
             fecha = Nothing
         End If
-
+        If Me.chkEstado.Checked = False And Me.cmbAño.SelectedIndex < 1 Then
+            MessageBox.Show("Por razones de rendimiento, debe seleccionar un año para buscar presentaciones cobradas")
+            Exit Sub
+        End If
         arrPresentaciones = catalogoPresentaciones.traerPresentaciones(cIdObraSocial, Me.txtNroComprobante.Text, Me.cmbTipoComprobante.SelectedItem, fecha, Me.chkEstado.Checked, , Me.txtNroRemito.Text, Me.cmbTipoPresentacion.SelectedItem)
 
         cargarGrilla()

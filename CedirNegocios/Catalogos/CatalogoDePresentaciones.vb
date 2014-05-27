@@ -73,13 +73,13 @@ Public Class CatalogoDePresentaciones
             If condicion <> "" Then
                 condicion &= " and "
             End If
-            condicion &= com & "fechaFacturacion" & com & " >= '" & fecha & "'AND " & com & "fechaFacturacion" & com & " <=(date '" & fecha & "' + INTERVAL '1 year') "
+            condicion &= com & "fechaFacturacion" & com & " >= ('" & fecha & "') AND " & com & "fechaFacturacion" & com & " <=(date '" & fecha & "' + INTERVAL '1 year') "
         Else
             ' por default, traemos solo presentaciones que sean MAYORES A 2 AÑOS, 
             If condicion <> "" Then
                 condicion &= " and "
             End If
-            condicion &= com & "fechaFacturacion" & com & " >= (date '" & Date.Today.Date & "' - INTERVAL '2 year') AND " & com & "fechaFacturacion" & com & " <= '" & Date.Today.Date & "'"
+            condicion &= com & "fechaFacturacion" & com & " >= (date '" & Date.Today.Date & "' - INTERVAL '6 year') AND " & com & "fechaFacturacion" & com & " <= ('" & Date.Today.Date & "')"
         End If
 
         If tipoDePresentacion = "Directa" Then
@@ -148,73 +148,73 @@ Public Class CatalogoDePresentaciones
         Dim vPresentacion As Presentacion
 
         drPresentacion = da.getPresentaciones(condicion, order)
-        Try
-            While drPresentacion.Read()
-                vPresentacion = New Presentacion
+        'Try
+        While drPresentacion.Read()
+            vPresentacion = New Presentacion
 
-                vPresentacion.idPresentacion = drPresentacion.Item("idFacturacion")
-                vPresentacion.obraSocial.idObraSocial = Convert.ToInt32(drPresentacion.Item("idObraSocial"))
-                vPresentacion.obraSocial.ObraSocial = Convert.ToString(drPresentacion.Item("obraSocial"))
-                vPresentacion.obraSocial.direccion = Convert.ToString(drPresentacion.Item("direccion"))
-                vPresentacion.obraSocial.tel = Convert.ToString(drPresentacion.Item("telefono"))
-                vPresentacion.obraSocial.localidad = Convert.ToString(drPresentacion.Item("localidad"))
-                vPresentacion.obraSocial.CodigoPostal = Convert.ToInt32(drPresentacion.Item("codigoPostal"))
-                vPresentacion.obraSocial.CondicionFiscal = Convert.ToString(drPresentacion.Item("osCondicionFiscal"))
-                vPresentacion.obraSocial.nroCuit = Convert.ToString(drPresentacion.Item("cuitOS"))
-                vPresentacion.obraSocial.observaciones = Convert.ToString(drPresentacion.Item("observaciones"))
-                vPresentacion.obraSocial.sePresentaPorAMR = Convert.ToInt32(drPresentacion.Item("sePresentaPorAMR"))
-                vPresentacion.obraSocial.sePresentaPorARA = Convert.ToInt32(drPresentacion.Item("sePresentaPorARA"))
+            vPresentacion.idPresentacion = drPresentacion.Item("idFacturacion")
+            vPresentacion.obraSocial.idObraSocial = Convert.ToInt32(drPresentacion.Item("idObraSocial"))
+            vPresentacion.obraSocial.ObraSocial = Convert.ToString(drPresentacion.Item("obraSocial"))
+            vPresentacion.obraSocial.direccion = Convert.ToString(drPresentacion.Item("direccion"))
+            vPresentacion.obraSocial.tel = Convert.ToString(drPresentacion.Item("telefono"))
+            vPresentacion.obraSocial.localidad = Convert.ToString(drPresentacion.Item("localidad"))
+            vPresentacion.obraSocial.CodigoPostal = Convert.ToInt32(drPresentacion.Item("codigoPostal"))
+            vPresentacion.obraSocial.CondicionFiscal = Convert.ToString(drPresentacion.Item("osCondicionFiscal"))
+            vPresentacion.obraSocial.nroCuit = Convert.ToString(drPresentacion.Item("cuitOS"))
+            vPresentacion.obraSocial.observaciones = Convert.ToString(drPresentacion.Item("observaciones"))
+            vPresentacion.obraSocial.sePresentaPorAMR = Convert.ToInt32(drPresentacion.Item("sePresentaPorAMR"))
+            vPresentacion.obraSocial.sePresentaPorARA = Convert.ToInt32(drPresentacion.Item("sePresentaPorARA"))
 
-                vPresentacion.fechaFacturacion = drPresentacion.Item("fechaFacturacion")
+            vPresentacion.fechaFacturacion = drPresentacion.Item("fechaFacturacion")
 
-                'aca tenemos que controlar si la presentacion fue guardada o si fue ya facturada
-                If (drPresentacion.Item("idComprobante") IsNot DBNull.Value) Then
+            'aca tenemos que controlar si la presentacion fue guardada o si fue ya facturada
+            If (drPresentacion.Item("idComprobante") IsNot DBNull.Value) Then
 
 
-                    vPresentacion.comprobante.IdComprobante = Convert.ToInt32(drPresentacion.Item("id"))
-                    vPresentacion.comprobante.NroTerminal = Convert.ToInt32(drPresentacion.Item("nroTerminal"))
+                vPresentacion.comprobante.IdComprobante = Convert.ToInt32(drPresentacion.Item("id"))
+                vPresentacion.comprobante.NroTerminal = Convert.ToInt32(drPresentacion.Item("nroTerminal"))
 
-                    vPresentacion.comprobante.NroComprobante = Convert.ToInt32(drPresentacion.Item("nroComprobante"))
-                    vPresentacion.comprobante.NombreCliente = Convert.ToString(drPresentacion.Item("nombreCliente"))
-                    vPresentacion.comprobante.DomicilioCliente = Convert.ToString(drPresentacion.Item("domicilioCliente"))
-                    vPresentacion.comprobante.NroCuit = Convert.ToString(drPresentacion.Item("nroCuit"))
-                    vPresentacion.comprobante.CondicionFiscal = Convert.ToString(drPresentacion.Item("condicionFiscal"))
-                    vPresentacion.comprobante.TipoComprobante.Id = Convert.ToInt32(drPresentacion.Item("idTipoComprobante"))
-                    vPresentacion.comprobante.TipoComprobante.Descripcion = Convert.ToString(drPresentacion.Item("tipoComprobante"))
-                    vPresentacion.comprobante.FechaEmision = Convert.ToDateTime(drPresentacion.Item("fechaEmision"))
-                    vPresentacion.comprobante.FechaRecepcion = Convert.ToDateTime(drPresentacion.Item("fechaRecepcion"))
-                    vPresentacion.comprobante.Estado = Convert.ToString(drPresentacion.Item("estado"))
-                    vPresentacion.comprobante.TotalFacturado = Convert.ToDecimal(drPresentacion.Item("totalFacturado"))
-                    vPresentacion.comprobante.TotalCobrado = Convert.ToDecimal(drPresentacion.Item("totalCobrado"))
+                vPresentacion.comprobante.NroComprobante = Convert.ToInt32(drPresentacion.Item("nroComprobante"))
+                vPresentacion.comprobante.NombreCliente = Convert.ToString(drPresentacion.Item("nombreCliente"))
+                vPresentacion.comprobante.DomicilioCliente = Convert.ToString(drPresentacion.Item("domicilioCliente"))
+                vPresentacion.comprobante.NroCuit = Convert.ToString(drPresentacion.Item("nroCuit"))
+                vPresentacion.comprobante.CondicionFiscal = Convert.ToString(drPresentacion.Item("condicionFiscal"))
+                vPresentacion.comprobante.TipoComprobante.Id = Convert.ToInt32(drPresentacion.Item("idTipoComprobante"))
+                vPresentacion.comprobante.TipoComprobante.Descripcion = Convert.ToString(drPresentacion.Item("tipoComprobante"))
+                vPresentacion.comprobante.FechaEmision = Convert.ToDateTime(drPresentacion.Item("fechaEmision"))
+                vPresentacion.comprobante.FechaRecepcion = Convert.ToDateTime(drPresentacion.Item("fechaRecepcion"))
+                vPresentacion.comprobante.Estado = Convert.ToString(drPresentacion.Item("estado"))
+                vPresentacion.comprobante.TotalFacturado = Convert.ToDecimal(drPresentacion.Item("totalFacturado"))
+                vPresentacion.comprobante.TotalCobrado = Convert.ToDecimal(drPresentacion.Item("totalCobrado"))
 
-                    'tambien tenemos que discriminar datos si el comprobante es una liquidacion
-                    If (Convert.ToString(drPresentacion.Item("tipoComprobante")).ToUpper() <> "LIQUIDACION") Then
+                'tambien tenemos que discriminar datos si el comprobante es una liquidacion
+                If (Convert.ToString(drPresentacion.Item("tipoComprobante")).ToUpper() <> "LIQUIDACION") Then
 
-                        vPresentacion.comprobante.Responsable = Convert.ToString(drPresentacion.Item("responsable"))
-                        vPresentacion.comprobante.SubTipo = Convert.ToString(drPresentacion.Item("subTipo"))
-                        If drPresentacion.Item("idFactura") IsNot DBNull.Value Then
-                            vPresentacion.comprobante.Factura.IdComprobante = Convert.ToInt32(drPresentacion.Item("idFactura"))
-                        End If
-                        vPresentacion.comprobante.Gravado.id = Convert.ToInt32(drPresentacion.Item("idGravado"))
-                        vPresentacion.comprobante.Gravado.descripcion = Convert.ToString(drPresentacion.Item("descripcionGravado"))
-                        vPresentacion.comprobante.Gravado.porcentaje = Convert.ToDecimal(drPresentacion.Item("porcentajeGravado"))
-
+                    vPresentacion.comprobante.Responsable = Convert.ToString(drPresentacion.Item("responsable"))
+                    vPresentacion.comprobante.SubTipo = Convert.ToString(drPresentacion.Item("subTipo"))
+                    If drPresentacion.Item("idFactura") IsNot DBNull.Value And vPresentacion.comprobante.Factura IsNot Nothing Then
+                        vPresentacion.comprobante.Factura.IdComprobante = Convert.ToInt32(drPresentacion.Item("idFactura"))
                     End If
+                    vPresentacion.comprobante.Gravado.id = Convert.ToInt32(drPresentacion.Item("idGravado"))
+                    vPresentacion.comprobante.Gravado.descripcion = Convert.ToString(drPresentacion.Item("descripcionGravado"))
+                    vPresentacion.comprobante.Gravado.porcentaje = Convert.ToDecimal(drPresentacion.Item("porcentajeGravado"))
+
                 End If
+            End If
 
-                vPresentacion.pagado = Convert.ToInt32(drPresentacion.Item("pagado"))
-                vPresentacion.periodo = Convert.ToString(drPresentacion.Item("periodo"))
-                vPresentacion.total = Convert.ToSingle(drPresentacion.Item("total"))
-                vPresentacion.totalFacturado = Convert.ToSingle(drPresentacion.Item("totalFacturadoPresentacion"))
-                loadPresentaciones.Add(vPresentacion)
+            vPresentacion.pagado = Convert.ToInt32(drPresentacion.Item("pagado"))
+            vPresentacion.periodo = Convert.ToString(drPresentacion.Item("periodo"))
+            vPresentacion.total = Convert.ToSingle(drPresentacion.Item("total"))
+            vPresentacion.totalFacturado = Convert.ToSingle(drPresentacion.Item("totalFacturadoPresentacion"))
+            loadPresentaciones.Add(vPresentacion)
 
 
-            End While
-        Catch ex As Exception
+        End While
+        'Catch ex As Exception
+        '    Return ex.Message
+        '  Finally
 
-        Finally
-
-        End Try
+        'End Try
 
         drPresentacion.Close()
     End Function
