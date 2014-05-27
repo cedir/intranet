@@ -517,7 +517,7 @@ Public Class rptViewer
             r("nombrePractica") = dt.Rows(i).Item("Práctica").ToString()
             r("medicoActuante") = dt.Rows(i).Item("Actuante").ToString()
             r("medicoSolicitante") = dt.Rows(i).Item("Solicitante").ToString()
-            r("pagoFechaCobro") = dt.Rows(i).Item("Fecha").ToString.Remove(10)
+            r("pagoFechaCobro") = dt.Rows(i).Item("Fecha Cobro").ToString.Remove(10)
             If dt.Rows(i).Item("Importe").ToString() <> "" Then
                 r("pagoImporte") = dt.Rows(i).Item("Importe").ToString()
             Else
