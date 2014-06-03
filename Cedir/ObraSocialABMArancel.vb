@@ -37,30 +37,22 @@ Public Class ObraSocialABMArancel
     Friend WithEvents DataGrid1 As wallyGrid
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents cmbPracticas As System.Windows.Forms.ComboBox
     Friend WithEvents btnGuardar As System.Windows.Forms.Button
     Friend WithEvents btnImprimir As System.Windows.Forms.Button
     Friend WithEvents btnCerrar As System.Windows.Forms.Button
     Friend WithEvents txtPrecio As System.Windows.Forms.TextBox
-    Friend WithEvents txtAnestesia As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.DataGrid1 = New Cedir.wallyGrid
         Me.Label1 = New System.Windows.Forms.Label
         Me.cmbPracticas = New System.Windows.Forms.ComboBox
         Me.txtPrecio = New System.Windows.Forms.TextBox
-        Me.txtAnestesia = New System.Windows.Forms.TextBox
         Me.Label2 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
         Me.btnGuardar = New System.Windows.Forms.Button
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label8 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
         CType(Me.DataGrid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -93,15 +85,8 @@ Public Class ObraSocialABMArancel
         '
         Me.txtPrecio.Location = New System.Drawing.Point(120, 80)
         Me.txtPrecio.Name = "txtPrecio"
+        Me.txtPrecio.Size = New System.Drawing.Size(100, 20)
         Me.txtPrecio.TabIndex = 3
-        Me.txtPrecio.Text = ""
-        '
-        'txtAnestesia
-        '
-        Me.txtAnestesia.Location = New System.Drawing.Point(320, 80)
-        Me.txtAnestesia.Name = "txtAnestesia"
-        Me.txtAnestesia.TabIndex = 5
-        Me.txtAnestesia.Text = ""
         '
         'Label2
         '
@@ -111,18 +96,11 @@ Public Class ObraSocialABMArancel
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Importe:"
         '
-        'Label4
-        '
-        Me.Label4.Location = New System.Drawing.Point(248, 80)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(64, 23)
-        Me.Label4.TabIndex = 9
-        Me.Label4.Text = "Anestesia:"
-        '
         'btnGuardar
         '
         Me.btnGuardar.Location = New System.Drawing.Point(120, 112)
         Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(75, 23)
         Me.btnGuardar.TabIndex = 11
         Me.btnGuardar.Text = "Guardar"
         '
@@ -130,6 +108,7 @@ Public Class ObraSocialABMArancel
         '
         Me.btnImprimir.Location = New System.Drawing.Point(480, 392)
         Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(75, 23)
         Me.btnImprimir.TabIndex = 12
         Me.btnImprimir.Text = "Imprimir"
         '
@@ -137,6 +116,7 @@ Public Class ObraSocialABMArancel
         '
         Me.btnCerrar.Location = New System.Drawing.Point(576, 392)
         Me.btnCerrar.Name = "btnCerrar"
+        Me.btnCerrar.Size = New System.Drawing.Size(75, 23)
         Me.btnCerrar.TabIndex = 15
         Me.btnCerrar.Text = "Cerrar"
         '
@@ -148,36 +128,15 @@ Public Class ObraSocialABMArancel
         Me.Label8.TabIndex = 20
         Me.Label8.Text = "Práctica:"
         '
-        'Label3
-        '
-        Me.Label3.Location = New System.Drawing.Point(16, 376)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(392, 40)
-        Me.Label3.TabIndex = 21
-        Me.Label3.Text = "*(1) Nota: importe es el arancel para facturar a la obra social. Anestesia es el " & _
-        "importe fijado por el ARA para el cobro al anestesista."
-        '
-        'Label5
-        '
-        Me.Label5.Location = New System.Drawing.Point(432, 80)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(32, 23)
-        Me.Label5.TabIndex = 22
-        Me.Label5.Text = "*(1)"
-        '
         'ObraSocialABMArancel
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(664, 424)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.btnCerrar)
         Me.Controls.Add(Me.btnImprimir)
         Me.Controls.Add(Me.btnGuardar)
-        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.txtAnestesia)
         Me.Controls.Add(Me.txtPrecio)
         Me.Controls.Add(Me.cmbPracticas)
         Me.Controls.Add(Me.Label1)
@@ -187,6 +146,7 @@ Public Class ObraSocialABMArancel
         Me.Text = "Aranceles"
         CType(Me.DataGrid1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -237,7 +197,7 @@ Public Class ObraSocialABMArancel
         DataGrid1.TableStyles.Add(ts1)
 
         Label1.Text = cObraSocial.ObraSocial
-        
+
         Dim cPractica As Practica
         Dim i As Integer
         Dim catalogoPracticas As New CatalogoDePracticas
@@ -274,9 +234,9 @@ Public Class ObraSocialABMArancel
 
     Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
         Dim resp As String
-        If txtPrecio.Text <> "" And txtAnestesia.Text <> "" And cmbPracticas.SelectedIndex > 0 Then
+        If txtPrecio.Text <> "" And cmbPracticas.SelectedIndex > 0 Then
             Dim cPractica As Practica = arrPracticas(cmbPracticas.SelectedIndex - 1)
-            resp = cObraSocial.createOrUpdateArancel(cPractica, txtPrecio.Text, txtAnestesia.Text)
+            resp = cObraSocial.createOrUpdateArancel(cPractica, txtPrecio.Text)
             If resp = "ok" Then
                 MsgBox("Los cambios se han guardado")
                 cargarGrilla()
@@ -301,8 +261,6 @@ Public Class ObraSocialABMArancel
 
     Private Sub cmbPracticas_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbPracticas.SelectedIndexChanged
         txtPrecio.Text = ""
-        txtAnestesia.Text = ""
-
         If cmbPracticas.SelectedIndex = 0 Then
             Exit Sub
         End If
