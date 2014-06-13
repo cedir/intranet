@@ -74,12 +74,7 @@ Public Class CatalogoDePresentaciones
                 condicion &= " and "
             End If
             condicion &= com & "fechaFacturacion" & com & " >= ('" & fecha & "') AND " & com & "fechaFacturacion" & com & " <=(date '" & fecha & "' + INTERVAL '1 year') "
-        Else
-            ' por default, traemos solo presentaciones que sean MAYORES A 2 AÑOS, 
-            If condicion <> "" Then
-                condicion &= " and "
-            End If
-            condicion &= com & "fechaFacturacion" & com & " >= (date '" & Date.Today.Date & "' - INTERVAL '6 year') AND " & com & "fechaFacturacion" & com & " <= ('" & Date.Today.Date & "')"
+           
         End If
 
         If tipoDePresentacion = "Directa" Then
