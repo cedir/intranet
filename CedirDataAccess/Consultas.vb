@@ -91,14 +91,27 @@ Public Class Consultas
         com & "," & com & "fechaNacimiento" & com & "," & com & "nombres" & com & "," & com & "apellido" & com & "," & _
         com & "sexo" & com & "," & com & "nroAfiliado" & com & "," & com & "tel" & com & ", p." & com & _
         "direccion" & com & " as " & com & "direPaciente" & com & " , " & com & "nombreMedicoAct" & com & ", med." & com & "nroMatricula" & com & "," & com & _
-        "apellidoMedicoAct" & com & "," & com & "nombreMedicoSol" & com & "," & com & "apellidoMedicoSol" & com & "," & com & "obraSocial" & com & ", " & com & "Precio" & com & ", " & com & "esPagoContraFactura" & com & ", est." & com & "idEstudio" & com & ", " & com & "sePresentaPorAMR" & com & ", " & com & "sePresentaPorARA" & com & ", pce." & com & "arancelAnestesia" & com & ", pce." & com & "importeCobradoPension" & com & ", pce." & com & "importeEstudioCobrado" & com & ", pce." & com & "importeCobradoArancelAnestesia" & com & ", pce." & com & "importeMedicacionCobrado" & com & ", ale." & com & "abreviatura" & com & ", ale." & com & "codigoMedicoOSDE" & com & " from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " as est "
+        "medAnestesista" & com & "." & com & "nombreMedicoAn" & com & " , " & com & "medAnestesista" & com & "." & com & "apellidoMedicoAn" & com & ", " & com & "medAnestesista" & com & "." & com & "nroMatricula" & com & _
+        ", " & com & "apellidoMedicoAct" & com & "," & com & "nombreMedicoSol" & com & "," & com & "apellidoMedicoSol" & com & "," & com & "obraSocial" & com & ", " & com & "Precio" & com & ", " & com & "esPagoContraFactura" & com & ", est." & com & "idEstudio" & com & ", " & com & "sePresentaPorAMR" & com & ", " & com & "sePresentaPorARA" & com & ", pce." & com & "arancelAnestesia" & com & ", pce." & com & "importeCobradoPension" & com & ", pce." & com & "importeEstudioCobrado" & com & ", pce." & com & "importeCobradoArancelAnestesia" & com & ", pce." & com & "importeMedicacionCobrado" & com & ", ale." & com & "abreviatura" & com & ", ale." & com & "codigoMedicoOSDE" & com & " from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " as est "
+
         Dim inners As String = " inner join " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & _
         " as det on est." & com & "nroEstudio" & com & " = det." & com & "nroEstudio" & com & " inner join " & com & _
         "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com & " as pce on est." & com & "nroEstudio" & com & _
         " = pce." & com & "nroEstudio" & com & " inner join " & com & "cedirData" & com & "." & com & _
         "AlmacenEstudios" & com & " as ale on  est." & com & "idEstudio" & com & " = ale." & com & "idEstudio" & com & _
-        " inner join " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " as p on est." & com & "idPaciente" & com & " = p." & com & "id" & com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosAct" & com & " as med on det." & com & "idMedicoActuante" & com & " = med." & com & "idMedicoAct" & com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & com & " as meds on det." & com & "idMedicoSolicitante" & com & " = meds." & com & "idMedicoSol" & com & " inner join " & com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com & " as alos on det." & com & "idObraSocial" & com & " = alos." & com & "idObraSocial" & com & " left join " & com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com & " as eo on est." & com & "idEstudio" & com & " = eo." & com & "idEstudio" & com & " and det." & com & "idObraSocial" & com & " = eo." & com & "idObraSocial" & com
+        " inner join " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " as p on est." & com & "idPaciente" & _
+        com & " = p." & com & "id" & com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosAct" & _
+        com & " as med on det." & com & "idMedicoActuante" & com & " = med." & com & "idMedicoAct" & com & " inner join " & _
+com & "cedirData" & com & "." & com & "tblMedicosAnestesistas" & com & " as " & com & "medAnestesista" & com & " on det." & com & "idAnestesista" & com & " = " & com & "medAnestesista" & com & "." & com & "idMedicoAn" & _
+com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & com & " as meds on det." & com & "idMedicoSolicitante" & _
+        com & " = meds." & com & "idMedicoSol" & com & " inner join " & com & "cedirData" & com & "." & _
+        com & "AlmacenObraSocial" & com & " as alos on det." & com & "idObraSocial" & com & " = alos." & com & "idObraSocial" & _
+        com & " left join " & com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com & " as eo on est." & _
+        com & "idEstudio" & com & " = eo." & com & "idEstudio" & com & " and det." & com & "idObraSocial" & com & " = eo." & _
+        com & "idObraSocial" & com
+
         Dim order As String = ""
+
         If filtro = "paciente" Then
             order = " order by " & com & "fechaEstudio" & com & ", p." & com & "apellido" & com & ", p." & com & "nombres" & com & " ASC "
         Else

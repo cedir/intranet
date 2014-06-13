@@ -151,6 +151,9 @@
     <Compile Include="dgrDatagridTextBoxColumn.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NuevoEstudioRapidoPaso2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Pacientes\AltaPaciente.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -357,9 +360,6 @@
     <Compile Include="NuevoEstudioRapido.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NuevoEstudioRapidoPaso2.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ObraSocialABMArancel.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -477,6 +477,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dgrDatagridTextBoxColumn.resx">
       <DependentUpon>dgrDatagridTextBoxColumn.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevoEstudioRapidoPaso2.resx">
+      <DependentUpon>NuevoEstudioRapidoPaso2.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pacientes\AltaPaciente.resx">
@@ -635,10 +639,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NuevoEstudioRapido.resx">
       <DependentUpon>NuevoEstudioRapido.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NuevoEstudioRapidoPaso2.resx">
-      <DependentUpon>NuevoEstudioRapidoPaso2.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ObraSocialABMArancel.resx">

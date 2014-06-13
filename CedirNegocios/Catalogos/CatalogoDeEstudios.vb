@@ -323,7 +323,7 @@ Public Class CatalogoDeEstudios
             vEstudio.nroOrden = drEstudios.Item("nroDeOrden")
             'vEstudio.lugar = drEstudios.Item(8)
             vEstudio.idFacturacion = drEstudios.Item("idFacturacion")
-            vEstudio.Anestesista.idMedico = drEstudios.Item("idAnestesista")
+
             'ESTA ES LA FECHA DE tblPagoCobroEstudio
             If drEstudios.Item("fechaCobro") Is DBNull.Value Then
                 'vEstudio.fechaCobro = Today
@@ -366,6 +366,12 @@ Public Class CatalogoDeEstudios
             vEstudio.paciente.nroAfiliado = drEstudios.Item("nroAfiliado")
             vEstudio.paciente.direccion = drEstudios.Item("direPaciente")
             vEstudio.paciente.tel = drEstudios.Item("tel")
+            '-----
+            vEstudio.Anestesista.idMedico = drEstudios.Item("idAnestesista")
+            vEstudio.Anestesista.nombre = drEstudios.Item("nombreMedicoAn")
+            vEstudio.Anestesista.nombre = drEstudios.Item("apellidoMedicoAn")
+
+            '-----
 
             vEstudio.medicoActuante.nombre = drEstudios.Item("nombreMedicoAct")
             vEstudio.medicoActuante.apellido = drEstudios.Item("apellidoMedicoAct")

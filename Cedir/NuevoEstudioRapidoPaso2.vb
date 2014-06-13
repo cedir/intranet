@@ -4,6 +4,8 @@ Public Class NuevoEstudioRapidoPaso2
     Dim currentPaciente As Paciente
     Dim agregarPac As Boolean
     Friend WithEvents dtpDate As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents cmbMedicoAnestesista As System.Windows.Forms.ComboBox
     Dim currentOS As String
 #Region " Código generado por el Diseñador de Windows Forms "
 
@@ -58,6 +60,8 @@ Public Class NuevoEstudioRapidoPaso2
     Friend WithEvents Label11 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.Label12 = New System.Windows.Forms.Label
+        Me.cmbMedicoAnestesista = New System.Windows.Forms.ComboBox
         Me.dtpDate = New System.Windows.Forms.DateTimePicker
         Me.Label11 = New System.Windows.Forms.Label
         Me.cmbObraSocial = New System.Windows.Forms.ComboBox
@@ -85,6 +89,8 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.Label12)
+        Me.GroupBox2.Controls.Add(Me.cmbMedicoAnestesista)
         Me.GroupBox2.Controls.Add(Me.dtpDate)
         Me.GroupBox2.Controls.Add(Me.Label11)
         Me.GroupBox2.Controls.Add(Me.cmbObraSocial)
@@ -99,17 +105,35 @@ Public Class NuevoEstudioRapidoPaso2
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.cmbMedicoAct)
         Me.GroupBox2.Controls.Add(Me.cmbEstudio)
-        Me.GroupBox2.Location = New System.Drawing.Point(24, 128)
+        Me.GroupBox2.Location = New System.Drawing.Point(8, 128)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(446, 278)
+        Me.GroupBox2.Size = New System.Drawing.Size(479, 298)
         Me.GroupBox2.TabIndex = 2
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Estudio"
         '
+        'Label12
+        '
+        Me.Label12.Location = New System.Drawing.Point(6, 199)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(120, 18)
+        Me.Label12.TabIndex = 15
+        Me.Label12.Text = "Médico Anestesista:"
+        '
+        'cmbMedicoAnestesista
+        '
+        Me.cmbMedicoAnestesista.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+        Me.cmbMedicoAnestesista.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbMedicoAnestesista.Location = New System.Drawing.Point(132, 196)
+        Me.cmbMedicoAnestesista.Name = "cmbMedicoAnestesista"
+        Me.cmbMedicoAnestesista.Size = New System.Drawing.Size(280, 21)
+        Me.cmbMedicoAnestesista.TabIndex = 7
+        Me.cmbMedicoAnestesista.Text = "Seleccione..."
+        '
         'dtpDate
         '
         Me.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpDate.Location = New System.Drawing.Point(106, 24)
+        Me.dtpDate.Location = New System.Drawing.Point(132, 24)
         Me.dtpDate.Name = "dtpDate"
         Me.dtpDate.Size = New System.Drawing.Size(84, 20)
         Me.dtpDate.TabIndex = 1
@@ -118,7 +142,7 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'Label11
         '
-        Me.Label11.Location = New System.Drawing.Point(6, 242)
+        Me.Label11.Location = New System.Drawing.Point(78, 59)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(48, 16)
         Me.Label11.TabIndex = 13
@@ -128,22 +152,22 @@ Public Class NuevoEstudioRapidoPaso2
         '
         Me.cmbObraSocial.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbObraSocial.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbObraSocial.Location = New System.Drawing.Point(104, 88)
+        Me.cmbObraSocial.Location = New System.Drawing.Point(132, 91)
         Me.cmbObraSocial.Name = "cmbObraSocial"
-        Me.cmbObraSocial.Size = New System.Drawing.Size(336, 21)
-        Me.cmbObraSocial.TabIndex = 3
+        Me.cmbObraSocial.Size = New System.Drawing.Size(341, 21)
+        Me.cmbObraSocial.TabIndex = 4
         Me.cmbObraSocial.Text = "error"
         '
         'txtCodigo
         '
-        Me.txtCodigo.Location = New System.Drawing.Point(104, 239)
+        Me.txtCodigo.Location = New System.Drawing.Point(132, 56)
         Me.txtCodigo.Name = "txtCodigo"
         Me.txtCodigo.Size = New System.Drawing.Size(72, 20)
-        Me.txtCodigo.TabIndex = 7
+        Me.txtCodigo.TabIndex = 2
         '
         'Label10
         '
-        Me.Label10.Location = New System.Drawing.Point(6, 209)
+        Me.Label10.Location = New System.Drawing.Point(6, 232)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(72, 23)
         Me.Label10.TabIndex = 11
@@ -151,14 +175,14 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'txtNroOrden
         '
-        Me.txtNroOrden.Location = New System.Drawing.Point(104, 206)
+        Me.txtNroOrden.Location = New System.Drawing.Point(132, 229)
         Me.txtNroOrden.Name = "txtNroOrden"
         Me.txtNroOrden.Size = New System.Drawing.Size(104, 20)
-        Me.txtNroOrden.TabIndex = 6
+        Me.txtNroOrden.TabIndex = 8
         '
         'Label9
         '
-        Me.Label9.Location = New System.Drawing.Point(6, 170)
+        Me.Label9.Location = New System.Drawing.Point(6, 165)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(100, 16)
         Me.Label9.TabIndex = 9
@@ -168,11 +192,11 @@ Public Class NuevoEstudioRapidoPaso2
         '
         Me.cmbMedicoSol.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbMedicoSol.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbMedicoSol.Location = New System.Drawing.Point(106, 167)
+        Me.cmbMedicoSol.Location = New System.Drawing.Point(132, 162)
         Me.cmbMedicoSol.Name = "cmbMedicoSol"
         Me.cmbMedicoSol.Size = New System.Drawing.Size(280, 21)
-        Me.cmbMedicoSol.TabIndex = 5
-        Me.cmbMedicoSol.Text = "error"
+        Me.cmbMedicoSol.TabIndex = 6
+        Me.cmbMedicoSol.Text = "Seleccione..."
         '
         'Label4
         '
@@ -184,7 +208,7 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(10, 130)
+        Me.Label3.Location = New System.Drawing.Point(6, 130)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(96, 16)
         Me.Label3.TabIndex = 5
@@ -192,15 +216,15 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(8, 54)
+        Me.Label2.Location = New System.Drawing.Point(8, 59)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(48, 23)
+        Me.Label2.Size = New System.Drawing.Size(64, 23)
         Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Práctica:"
+        Me.Label2.Text = "Práctica :"
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(8, 91)
+        Me.Label1.Location = New System.Drawing.Point(6, 94)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(57, 16)
         Me.Label1.TabIndex = 3
@@ -210,25 +234,25 @@ Public Class NuevoEstudioRapidoPaso2
         '
         Me.cmbMedicoAct.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbMedicoAct.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbMedicoAct.Location = New System.Drawing.Point(106, 127)
+        Me.cmbMedicoAct.Location = New System.Drawing.Point(132, 127)
         Me.cmbMedicoAct.Name = "cmbMedicoAct"
         Me.cmbMedicoAct.Size = New System.Drawing.Size(280, 21)
-        Me.cmbMedicoAct.TabIndex = 4
-        Me.cmbMedicoAct.Text = "error"
+        Me.cmbMedicoAct.TabIndex = 5
+        Me.cmbMedicoAct.Text = "Seleccione..."
         '
         'cmbEstudio
         '
         Me.cmbEstudio.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbEstudio.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbEstudio.Location = New System.Drawing.Point(106, 51)
+        Me.cmbEstudio.Location = New System.Drawing.Point(217, 56)
         Me.cmbEstudio.Name = "cmbEstudio"
         Me.cmbEstudio.Size = New System.Drawing.Size(256, 21)
-        Me.cmbEstudio.TabIndex = 2
+        Me.cmbEstudio.TabIndex = 3
         Me.cmbEstudio.Text = "error"
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(32, 8)
+        Me.Label5.Location = New System.Drawing.Point(16, 8)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(100, 23)
         Me.Label5.TabIndex = 3
@@ -236,7 +260,7 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(144, 8)
+        Me.Label6.Location = New System.Drawing.Point(128, 8)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(224, 16)
         Me.Label6.TabIndex = 4
@@ -244,27 +268,27 @@ Public Class NuevoEstudioRapidoPaso2
         '
         'btnFinalizar
         '
-        Me.btnFinalizar.Location = New System.Drawing.Point(142, 412)
+        Me.btnFinalizar.Location = New System.Drawing.Point(162, 432)
         Me.btnFinalizar.Name = "btnFinalizar"
         Me.btnFinalizar.Size = New System.Drawing.Size(72, 23)
-        Me.btnFinalizar.TabIndex = 8
+        Me.btnFinalizar.TabIndex = 9
         Me.btnFinalizar.Text = "Finalizar"
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(238, 412)
+        Me.Button1.Location = New System.Drawing.Point(258, 432)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 9
+        Me.Button1.TabIndex = 10
         Me.Button1.Text = "Cancelar"
         '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Controls.Add(Me.Label7)
-        Me.GroupBox1.Location = New System.Drawing.Point(24, 40)
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 40)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(446, 80)
+        Me.GroupBox1.Size = New System.Drawing.Size(479, 80)
         Me.GroupBox1.TabIndex = 8
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Paciente"
@@ -288,7 +312,7 @@ Public Class NuevoEstudioRapidoPaso2
         'NuevoEstudioRapidoPaso2
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(499, 447)
+        Me.ClientSize = New System.Drawing.Size(496, 460)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnFinalizar)
@@ -308,6 +332,7 @@ Public Class NuevoEstudioRapidoPaso2
 #End Region
     Dim arrMedicos As New ArrayList
     Dim arrObraSocial As New ArrayList
+    Dim arrAnestesistas As ArrayList
     Dim arrEstudiosP As New ArrayList
     Private Sub NuevoEstudioRapidoPaso2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Label7.Text = "Dni:" & currentPaciente.dni
@@ -325,9 +350,10 @@ Public Class NuevoEstudioRapidoPaso2
             MsgBox("No se pueden guardar los cambios ya que no se ha especificado una Obra Social y/o un Estudio y/o la fecha.")
         Else
             Dim sObraSocial As ObraSocial = arrObraSocial(cmbObraSocial.SelectedIndex - 1)
-            'Dim sPractica As Practica = arrEstudiosP(cmbEstudio.SelectedIndex - 1)
             Dim sMedicoActuante As Medico = arrMedicos(cmbMedicoAct.SelectedIndex)
             Dim sMedicoSolicitante As Medico = arrMedicos(cmbMedicoSol.SelectedIndex)
+            Dim sMedicoAnestesista As Medico = Nothing
+            sMedicoAnestesista = Me.arrAnestesistas(Me.cmbMedicoAnestesista.SelectedIndex)
 
             Dim est As New Estudio
             est.motivoEstudio = ""
@@ -335,13 +361,14 @@ Public Class NuevoEstudioRapidoPaso2
             est.practica.idEstudio = getPracticaId(cmbEstudio.Text)
             est.medicoActuante = sMedicoActuante
             est.medicoSolicitante = sMedicoSolicitante
+            est.Anestesista = sMedicoAnestesista
+
             est.paciente = currentPaciente
             est.obraSocial = sObraSocial
-            est.ImporteMedicacion = 0
+            est.importeMedicacion = 0
             est.pension = 0
             est.fechaEstudio = Me.dtpDate.Value 'txtFecha.Text
             est.nroOrden = txtNroOrden.Text
-            est.Anestesista.idMedico = 1
             resp = est.AltaEstudio(agregarPac)
 
             If resp = "ok" Then
@@ -400,6 +427,15 @@ Public Class NuevoEstudioRapidoPaso2
 
             cmbMedicoSol.Items.Add(med.nombreCompleto)
         Next
+
+        arrAnestesistas = catalogoMedicos.TodosLosAnestesistas()
+        cmbMedicoAnestesista.Items.Clear()
+        For i = 0 To arrAnestesistas.Count - 1
+            med = arrAnestesistas(i)
+            cmbMedicoAnestesista.Items.Add(med.nombreCompleto)
+        Next
+
+        cmbMedicoAnestesista.SelectedIndex = cmbMedicoAnestesista.FindString("Sin anestesia")
 
         cmbObraSocial.Items.Clear()
         arrObraSocial = catalogoObraSocial.TodosLasObrasSociales
@@ -479,5 +515,9 @@ Public Class NuevoEstudioRapidoPaso2
         If e.KeyCode = Keys.Enter Then
             Me.btnFinalizar.PerformClick()
         End If
+    End Sub
+
+    Private Sub cmbMedicoAnestesista_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbMedicoAnestesista.SelectedIndexChanged
+
     End Sub
 End Class

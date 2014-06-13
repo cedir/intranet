@@ -59,7 +59,6 @@ Public Class Main
     Friend WithEvents itemEstudios As System.Windows.Forms.MenuItem
     Friend WithEvents itemEstudiosDeHoy As System.Windows.Forms.MenuItem
     Friend WithEvents itemEstudiosBuscar As System.Windows.Forms.MenuItem
-    Friend WithEvents itemEstudiosCrearRapido As System.Windows.Forms.MenuItem
     Friend WithEvents itemEstudiosBuscarAvanzado As System.Windows.Forms.MenuItem
     Friend WithEvents itemMedicos As System.Windows.Forms.MenuItem
     Friend WithEvents itemMedicosABM As System.Windows.Forms.MenuItem
@@ -104,6 +103,7 @@ Public Class Main
     Friend WithEvents Coseguro As System.Windows.Forms.ToolBarButton
     Friend WithEvents mnuReemplazarPaciente As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem6 As System.Windows.Forms.MenuItem
+    Friend WithEvents itemEstudiosCrearRapido As System.Windows.Forms.MenuItem
     Friend WithEvents itemAnestesitasPagos As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
