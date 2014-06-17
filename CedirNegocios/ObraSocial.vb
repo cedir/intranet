@@ -128,7 +128,7 @@ Public Class ObraSocial
         drAranceles.Close()
     End Function
 
-    Public Function createOrUpdateArancel(ByVal cPractica As Practica, ByVal precio As String, ByVal precioAnestesia As String) As String
+    Public Function createOrUpdateArancel(ByVal cPractica As Practica, ByVal precio As String) As String
         Dim resp As String
         Dim cArancel As New Arancel
         cArancel.practica = cPractica
