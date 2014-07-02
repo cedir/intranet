@@ -669,7 +669,14 @@ Public Class FacturacionDetalle
     End Sub
 
     Private Sub btnImprimirDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimirDetalle.Click
-        prepareImprimirDetalle()
+        Dim imprimir As New ImprimirDetalle
+        imprimir.esFacturacionDetalle = True
+        imprimir.presentacion = cPresentacion
+        imprimir.Datagrid1 = Me.DataGrid1
+        imprimir.prepareImprimirDetalle()
+
+
+        '  prepareImprimirDetalle()
     End Sub
 
 
