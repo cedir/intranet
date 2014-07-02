@@ -559,8 +559,8 @@ Public Class BuscarPresentacion
 
         cargarGrilla()
 
-        DataGrid1.CaptionText = "Resultado de la búsqueda ( " & CStr(arrPresentaciones.Count) & " )"
-
+        DataGrid1.CaptionText = "Resultado de la búsqueda : " & CStr(arrPresentaciones.Count) & "           --- ATENCIÓN:   RESULTADOS SÓLO PARA EL AÑO " & Me.cmbAnio.SelectedItem.ToString() & "   --- "
+        DataGrid1.CaptionForeColor = Color.AliceBlue
     End Sub
 
     Private Sub btnCobro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCobro.Click
