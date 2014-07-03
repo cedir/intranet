@@ -100,6 +100,10 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <ProjectReference Include="..\CedirDataAccess\CedirDataAccess.vbproj">
+      <Project>{E55FABFC-3A00-4E9B-8C85-553D2695B7A6}</Project>
+      <Name>CedirDataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CedirNegocios\CedirNegocios.vbproj">
       <Name>CedirNegocios</Name>
       <Project>{9AA0C62A-8AD0-4049-BF13-5BA4624FE249}</Project>
