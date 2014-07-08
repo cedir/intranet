@@ -240,6 +240,7 @@ Public Class Estudio
 #End Region
 
     Public Function AltaEstudio() As String
+        'este metodo se llama desde el cuadro "buscarPaciente -> nuevoEstudio"
         Dim resp As String
 
         Dim upd As New CedirDataAccess.Nuevo

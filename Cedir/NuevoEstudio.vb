@@ -16,7 +16,6 @@ Imports Microsoft.Office.Interop
 Public Class NuevoEstudio
     Inherits System.Windows.Forms.Form
 
-    Dim bandera As Integer
     Dim currentEst As Estudio
     Dim saveChanges As Boolean = False
     Dim defaultInforme As String
@@ -686,6 +685,7 @@ Public Class NuevoEstudio
             cmbObraSocial.SelectedItem = currentEst.obraSocial.ObraSocial
             cmbMedicoAct.SelectedItem = currentEst.medicoActuante.nombreCompleto
             cmbMedicoSol.SelectedItem = currentEst.medicoSolicitante.nombreCompleto
+            Me.cmbAnestesistas.SelectedItem = currentEst.Anestesista.nombreCompleto
             cmbEstudio.SelectedItem = currentEst.practica.Estudio
 
 
