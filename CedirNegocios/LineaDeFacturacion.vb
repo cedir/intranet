@@ -1,6 +1,6 @@
 Imports CedirDataAccess
 Public Class LineaDeFacturacion
-    Private m_objecto As Object
+    Private m_estudio As Object
     Private m_importe As Single
     Private m_pension As Single
     Private m_diferenciaPaciente As Single
@@ -11,15 +11,23 @@ Public Class LineaDeFacturacion
     Public Sub New()
 
     End Sub
-    Public Property objeto() As Object
+    'Public Property objeto() As Object
+    '    Get
+    '        objeto = m_objecto
+    '    End Get
+    '    Set(ByVal Value As Object)
+    '        m_objecto = Value
+    '    End Set
+    'End Property
+
+    Public Property estudio() As Estudio
         Get
-            objeto = m_objecto
+            Return m_estudio
         End Get
-        Set(ByVal Value As Object)
-            m_objecto = Value
+        Set(ByVal Value As Estudio)
+            m_estudio = Value
         End Set
     End Property
-
     Public Property importe() As Single
         Get
             importe = m_importe
@@ -57,35 +65,15 @@ Public Class LineaDeFacturacion
     Public Function guardar(ByVal idFacturacion As Integer) As String
         Dim com As String = """"
         Dim upd As New Nuevo
-        Select Case objeto.GetType.ToString
-            Case "CedirNegocios.Estudio"
-                Dim resp As String
-                resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "nroDeOrden" & com & " = '" & objeto.nroOrden & "', " & com & "idFacturacion" & com & " = " & idFacturacion, " where " & com & "nroEstudio" & com & " = " & objeto.nroEstudio)
-                resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "importeEstudio" & com & " = " & importe & ", " & com & "diferenciaPaciente" & com & " = " & diferenciaPaciente & ", " & com & "pension" & com & " = " & pension & ", " & com & "arancelAnestesia" & com & " = " & objeto.ArancelAnestesia & ", " & com & "importeMedicacion" & com & " = " & objeto.importeMedicacion, " where " & com & "nroEstudio" & com & " = " & objeto.nroEstudio)
-                Return resp
-            Case "CedirNegocios.Consulta"
-                Dim resp As String
-                If estado = "estaEnFacturacion" Then
-                    'actualizar importe
-                    resp = upd.update(com & "cedirData" & com & "." & com & "Facturaciones-Consultas" & com, com & "importe" & com & " = " & Me.importe, " where " & com & "idFacturacion" & com & " = " & idFacturacion & " and " & com & "idConsulta" & com & " = " & objeto.id)
-                    Return resp
-                ElseIf estado = "noEstaEnFacturacion" Then
-                    'insertar linea de consulta
-                    resp = upd.insert(com & "cedirData" & com & "." & com & "Facturaciones-Consultas" & com, com & "idFacturacion" & com & ", " & com & "idConsulta" & com & ", " & com & "importe" & com, idFacturacion & ", " & objeto.id & ", " & Me.importe)
-                    Return resp
-                End If
-
-        End Select
+        Dim resp As String
+        resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "nroDeOrden" & com & " = '" & estudio.nroOrden & "', " & com & "idFacturacion" & com & " = " & idFacturacion, " where " & com & "nroEstudio" & com & " = " & estudio.nroEstudio)
+        resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "importeEstudio" & com & " = " & importe & ", " & com & "diferenciaPaciente" & com & " = " & diferenciaPaciente & ", " & com & "pension" & com & " = " & pension & ", " & com & "arancelAnestesia" & com & " = " & estudio.ArancelAnestesia & ", " & com & "importeMedicacion" & com & " = " & estudio.importeMedicacion, " where " & com & "nroEstudio" & com & " = " & estudio.nroEstudio)
+        Return resp
 
     End Function
     Public Function getSubtotal() As Single
         Dim subTotal As Single = 0
-        Select Case objeto.GetType.ToString
-            Case "CedirNegocios.Estudio"
-                subTotal = Me.importe + Me.pension + Me.objeto.getTotalMedicacion - Me.diferenciaPaciente + Me.objeto.ArancelAnestesia
-            Case "CedirNegocios.Consulta"
-                subTotal = Me.importe
-        End Select
+        subTotal = Me.importe + Me.pension + Me.estudio.getTotalMedicacion - Me.diferenciaPaciente + Me.estudio.ArancelAnestesia
 
         Return subTotal
     End Function

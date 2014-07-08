@@ -268,7 +268,7 @@ Public Class Presentacion
         Dim cLinea As LineaDeFacturacion
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
-            If cLinea.objeto.nroEstudio = linea.objeto.nroEstudio Then
+            If cLinea.estudio.nroEstudio = linea.estudio.nroEstudio Then
                 Return False
             End If
         Next
@@ -301,11 +301,11 @@ Public Class Presentacion
         Dim cLinea As LineaDeFacturacion
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
-            Dim importeEstudioCobrado As Single = cLinea.objeto.importeEstudioCobrado
-            Dim importeMedicacionCobrado As Single = cLinea.objeto.importeCobradoMedicacion
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "fechaCobro" & com & " = '" & cFecha & "', " & com & "importeEstudioCobrado" & com & " = '" & importeEstudioCobrado & "', " & com & "importeMedicacionCobrado" & com & " = '" & importeMedicacionCobrado & "', " & com & "importeCobradoPension" & com & " = '" & cLinea.objeto.importeCobradoPension & "', " & com & "importeCobradoArancelAnestesia" & com & " = '" & cLinea.objeto.importeCobradoArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & cLinea.objeto.nroEstudio)
+            Dim importeEstudioCobrado As Single = cLinea.estudio.importeEstudioCobrado
+            Dim importeMedicacionCobrado As Single = cLinea.estudio.ImporteCobradoMedicacion
+            resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "fechaCobro" & com & " = '" & cFecha & "', " & com & "importeEstudioCobrado" & com & " = '" & importeEstudioCobrado & "', " & com & "importeMedicacionCobrado" & com & " = '" & importeMedicacionCobrado & "', " & com & "importeCobradoPension" & com & " = '" & cLinea.estudio.importeCobradoPension & "', " & com & "importeCobradoArancelAnestesia" & com & " = '" & cLinea.estudio.importeCobradoArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & cLinea.estudio.nroEstudio)
 
-            importeTotal += importeEstudioCobrado + cLinea.objeto.importeCobradoPension + importeMedicacionCobrado + cLinea.objeto.importeCobradoArancelAnestesia
+            importeTotal += importeEstudioCobrado + cLinea.estudio.importeCobradoPension + importeMedicacionCobrado + cLinea.estudio.importeCobradoArancelAnestesia
         Next
 
         Me.pagado = 1
@@ -380,7 +380,7 @@ Public Class Presentacion
         Dim cLinea As LineaDeFacturacion
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
-            totalMedicacion += cLinea.objeto.getTotalMedicacion()
+            totalMedicacion += cLinea.estudio.getTotalMedicacion()
         Next
 
         Return totalMedicacion
@@ -425,7 +425,7 @@ Public Class Presentacion
         For i = 0 To arrEstudios.Count - 1
             vEstudio = arrEstudios(i)
             Dim cLinea As New LineaDeFacturacion
-            cLinea.objeto = vEstudio
+            cLinea.estudio = vEstudio
             If estado = "estaEnFacturacion" Then
                 cLinea.importe = vEstudio.ImporteEstudio
             ElseIf estado = "noEstaEnFacturacion" Then

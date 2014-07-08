@@ -108,13 +108,13 @@ Public Class ImprimirDetalle
         Dim cSize As Single = Me.getLineaSize(cLinea)
         Dim estimateY As Single = CurrentY + cSize
         While (estimateY <= pageMaxHeight And cPrintingEsudioLineIndex < cPresentacion.getLineasDeFacturacionEstudios.Count)
-            Dim cEstudio As Estudio = cLinea.objeto
+            Dim cEstudio As Estudio = cLinea.estudio
             'Fecha
             e.Graphics.DrawString("Fecha: " & cEstudio.fechaEstudio, reportFont, Brushes.Black, leftMarge, CurrentY)
             CurrentY = CurrentY + 20
 
             'Paciente
-            Dim strPaciente As String = "Paciente: " & cLinea.objeto.paciente.nombreCompleto
+            Dim strPaciente As String = "Paciente: " & cLinea.estudio.paciente.nombreCompleto
             If DataGrid1.Item(cPrintingEsudioLineIndex, 3) <> "" Then
                 'Si tiene nroAfiliado ponerlo
                 strPaciente &= " - Nro de afiliado: " & DataGrid1.Item(cPrintingEsudioLineIndex, 3)
@@ -122,13 +122,13 @@ Public Class ImprimirDetalle
             e.Graphics.DrawString(strPaciente, reportFont, Brushes.Black, leftMarge, CurrentY)
 
             'Nro de orden y nro matricula medico
-            If cLinea.objeto.nroOrden <> "" Then
+            If cLinea.estudio.nroOrden <> "" Then
                 CurrentY = CurrentY + 20
-                e.Graphics.DrawString("Nro de orden: " & cLinea.objeto.nroOrden, reportFont, Brushes.Black, leftMarge, CurrentY)
+                e.Graphics.DrawString("Nro de orden: " & cLinea.estudio.nroOrden, reportFont, Brushes.Black, leftMarge, CurrentY)
             End If
             If (cEstudio.medicoActuante.nroMatricula <> "" And (cEstudio.obraSocial.idObraSocial = 79 Or cEstudio.obraSocial.idObraSocial = 3)) Then
                 'tenemos que considerar que baje de renglon si no hay nro orden
-                If cLinea.objeto.nroOrden = "" Then
+                If cLinea.estudio.nroOrden = "" Then
                     CurrentY = CurrentY + 20
                     e.Graphics.DrawString("Nro. Mat. Profesional: " & cEstudio.medicoActuante.nroMatricula, reportFont, Brushes.Black, leftMarge, CurrentY)
                 Else
@@ -148,7 +148,7 @@ Public Class ImprimirDetalle
             startLine = CurrentY
 
             Dim codigoPractica As String = ""
-            If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
+            If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
                 codigoPractica = cEstudio.practica.codigoMedicoOSDE & " "
             End If
             e.Graphics.DrawString(codigoPractica & "Práctica  ", reportFont, Brushes.Black, leftMarge, CurrentY)
@@ -166,7 +166,7 @@ Public Class ImprimirDetalle
                 CurrentY = CurrentY + 20
 
                 Dim codigoPension As String
-                If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
+                If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
                     codigoPension = "430185  "
                 Else
                     codigoPension = ""
@@ -175,10 +175,10 @@ Public Class ImprimirDetalle
                 e.Graphics.DrawString("  $" & CStr(cLinea.pension), reportFont, Brushes.Black, 460, CurrentY)
             End If
 
-            If cLinea.objeto.ArancelAnestesia <> 0 Then
+            If cLinea.estudio.ArancelAnestesia <> 0 Then
                 CurrentY = CurrentY + 20
-                e.Graphics.DrawString("Anestesia valor IAPOS: " & Me.obtenerDescripcionAnestesiaEnImpresion(cLinea.objeto), reportFont, Brushes.Black, leftMarge, CurrentY)
-                e.Graphics.DrawString("  $ " & CStr(cLinea.objeto.ArancelAnestesia), reportFont, Brushes.Black, 460, CurrentY)
+                e.Graphics.DrawString("Anestesia valor IAPOS: " & Me.obtenerDescripcionAnestesiaEnImpresion(cLinea.estudio), reportFont, Brushes.Black, leftMarge, CurrentY)
+                e.Graphics.DrawString("  $ " & CStr(cLinea.estudio.ArancelAnestesia), reportFont, Brushes.Black, 460, CurrentY)
             End If
 
 
@@ -204,7 +204,7 @@ Public Class ImprimirDetalle
 
                         'si es osde u osde cedir
                         Dim codigoMedicamento As String = ""
-                        If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
+                        If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
                             codigoMedicamento = med.medicamento.codigoMedicoOSDE & " "
                         End If
                         e.Graphics.DrawString(codigoMedicamento & "•" & med.medicamento.descripcion, reportFont, Brushes.Black, rectMedicacion)
@@ -233,7 +233,7 @@ Public Class ImprimirDetalle
                     Next
 
                     Dim codigoMedicacion As String = ""
-                    If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
+                    If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
                         codigoMedicacion = "922501 "
                     End If
 
@@ -297,8 +297,8 @@ Public Class ImprimirDetalle
         'pasado como parametro
         For i = 0 To arr.Count - 1
             cLinea = arr(i)
-            If es.fechaEstudio() = cLinea.objeto.fechaEstudio() And es.paciente.Id = cLinea.objeto.paciente.id Then
-                estudios.Add(cLinea.objeto)
+            If es.fechaEstudio() = cLinea.estudio.fechaEstudio() And es.paciente.Id = cLinea.estudio.paciente.Id Then
+                estudios.Add(cLinea.estudio)
             End If
         Next
 
@@ -324,7 +324,7 @@ Public Class ImprimirDetalle
         'Paciente
         totalSize += 20
         'Nro de orden: podría no tener
-        If linea.objeto.nroOrden <> "" Then
+        If linea.estudio.nroOrden <> "" Then
             totalSize += 20
         End If
 
@@ -341,8 +341,8 @@ Public Class ImprimirDetalle
             totalSize += 20
         End If
         'Medicacion (lineas y total): podría no tener
-        If linea.objeto.arrMedicacion.Count > 0 Then
-            totalSize += (20 * linea.objeto.arrMedicacion.Count)
+        If linea.estudio.arrMedicacion.Count > 0 Then
+            totalSize += (20 * linea.estudio.arrMedicacion.Count)
             'Total neurolepto
             totalSize += 20
         End If

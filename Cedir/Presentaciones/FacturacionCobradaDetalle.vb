@@ -431,33 +431,33 @@ Public Class FacturacionCobradaDetalle
         For i = 0 To arrLineasEstudios.Count - 1
             cLineaEstudio = arrLineasEstudios(i)
             NewRow = myTable.NewRow()
-            NewRow("IdEstudio") = cLineaEstudio.objeto.nroestudio
-            NewRow("Fecha") = cLineaEstudio.objeto.fechaEstudio
-            NewRow("Paciente") = cLineaEstudio.objeto.paciente.apellido & ", " & cLineaEstudio.objeto.paciente.nombres
-            NewRow("Práctica") = cLineaEstudio.objeto.practica.Estudio
-            NewRow("Actuante") = cLineaEstudio.objeto.medicoActuante.apellido & ", " & cLineaEstudio.objeto.medicoActuante.nombre
-            If cLineaEstudio.objeto.importeEstudioCobrado > 0 Then
-                NewRow("Importe") = cLineaEstudio.objeto.importeEstudioCobrado
+            NewRow("IdEstudio") = cLineaEstudio.estudio.nroestudio
+            NewRow("Fecha") = cLineaEstudio.estudio.fechaEstudio
+            NewRow("Paciente") = cLineaEstudio.estudio.paciente.apellido & ", " & cLineaEstudio.estudio.paciente.nombres
+            NewRow("Práctica") = cLineaEstudio.estudio.practica.Estudio
+            NewRow("Actuante") = cLineaEstudio.estudio.medicoActuante.apellido & ", " & cLineaEstudio.estudio.medicoActuante.nombre
+            If cLineaEstudio.estudio.importeEstudioCobrado > 0 Then
+                NewRow("Importe") = cLineaEstudio.estudio.importeEstudioCobrado
             Else
                 NewRow("Importe") = cLineaEstudio.importe
             End If
-            If cLineaEstudio.objeto.importeCobradoPension > 0 Then
-                NewRow("Pensión") = cLineaEstudio.objeto.importeCobradoPension
+            If cLineaEstudio.estudio.importeCobradoPension > 0 Then
+                NewRow("Pensión") = cLineaEstudio.estudio.importeCobradoPension
             Else
                 NewRow("Pensión") = cLineaEstudio.pension
             End If
 
 
-            NewRow("Nro Afiliado") = cLineaEstudio.objeto.paciente.nroAfiliado
-            If cLineaEstudio.objeto.ImporteCobradoMedicacion > 0 Then
-                NewRow("Medicacion") = cLineaEstudio.objeto.ImporteCobradoMedicacion
+            NewRow("Nro Afiliado") = cLineaEstudio.estudio.paciente.nroAfiliado
+            If cLineaEstudio.estudio.ImporteCobradoMedicacion > 0 Then
+                NewRow("Medicacion") = cLineaEstudio.estudio.ImporteCobradoMedicacion
             Else
-                NewRow("Medicacion") = cLineaEstudio.objeto.ImporteMedicacion
+                NewRow("Medicacion") = cLineaEstudio.estudio.ImporteMedicacion
             End If
 
-            NewRow("Anestesia") = cLineaEstudio.objeto.importeCobradoArancelAnestesia
+            NewRow("Anestesia") = cLineaEstudio.estudio.importeCobradoArancelAnestesia
             myTable.Rows.Add(NewRow)
-            totEstudios += Convert.ToDecimal(NewRow("Importe")) + Convert.ToDecimal(NewRow("Pensión")) + Convert.ToDecimal(NewRow("Medicacion")) + Convert.ToDecimal(NewRow("Anestesia")) - cLineaEstudio.objeto.DiferenciaPaciente
+            totEstudios += Convert.ToDecimal(NewRow("Importe")) + Convert.ToDecimal(NewRow("Pensión")) + Convert.ToDecimal(NewRow("Medicacion")) + Convert.ToDecimal(NewRow("Anestesia")) - cLineaEstudio.estudio.DiferenciaPaciente
 
         Next
 
@@ -483,7 +483,7 @@ Public Class FacturacionCobradaDetalle
     End Sub
 
     Private Sub btnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimir.Click
-        
+
         'Imprimir estudios
         Dim arrWidth(9) As Single
         arrWidth(0) = 80
@@ -537,7 +537,7 @@ Public Class FacturacionCobradaDetalle
             MsgBox("No se ha seleccionado ningún estudio", MsgBoxStyle.Critical)
         Else
             Dim est As Estudio
-            est = cPresentacion.getLineasDeFacturacionEstudios(i).objeto
+            est = cPresentacion.getLineasDeFacturacionEstudios(i).estudio
             Dim frm As New AgragarMedicacion(est, False)
             frm.MdiParent = Me.Parent.Parent
             frm.Show()

@@ -62,7 +62,7 @@ Public Class CalculadorHonorariosComprobantes
                         Dim linea As New LineaDeFacturacion
                         Dim estudio As New Estudio
                         linea = arrLineasPresentacionEstudios(i)
-                        estudio = linea.objeto
+                        estudio = linea.estudio
                         Dim lineaPago As New LineaPagoMedico
                         lineaPago.estudio = estudio
                         lineaPago.idMedico = estudio.medicoActuante.idMedico

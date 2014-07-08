@@ -618,23 +618,23 @@ Public Class CobroPresentacion
         For i = 0 To arrLineasEstudios.Count - 1
             cLineaEstudio = arrLineasEstudios(i)
             NewRow = myTable.NewRow()
-            NewRow("Fecha") = cLineaEstudio.objeto.fechaEstudio
-            NewRow("Paciente") = cLineaEstudio.objeto.paciente.apellido & ", " & cLineaEstudio.objeto.paciente.nombres
-            NewRow("Práctica") = cLineaEstudio.objeto.practica.Estudio
-            NewRow("Actuante") = cLineaEstudio.objeto.medicoActuante.apellido & ", " & cLineaEstudio.objeto.medicoActuante.nombre
+            NewRow("Fecha") = cLineaEstudio.estudio.fechaEstudio
+            NewRow("Paciente") = cLineaEstudio.estudio.paciente.apellido & ", " & cLineaEstudio.estudio.paciente.nombres
+            NewRow("Práctica") = cLineaEstudio.estudio.practica.Estudio
+            NewRow("Actuante") = cLineaEstudio.estudio.medicoActuante.apellido & ", " & cLineaEstudio.estudio.medicoActuante.nombre
             NewRow("Importe") = cLineaEstudio.importe - cLineaEstudio.diferenciaPaciente
-            NewRow("Nro Afiliado") = cLineaEstudio.objeto.paciente.nroAfiliado
+            NewRow("Nro Afiliado") = cLineaEstudio.estudio.paciente.nroAfiliado
             NewRow("Pensión") = cLineaEstudio.pension
-            Dim totalParcialMedicacion As Single = cLineaEstudio.objeto.getTotalMedicacion
+            Dim totalParcialMedicacion As Single = cLineaEstudio.estudio.getTotalMedicacion
             NewRow("Medicacion") = totalParcialMedicacion
-            NewRow("Anestesia") = cLineaEstudio.objeto.ArancelAnestesia
+            NewRow("Anestesia") = cLineaEstudio.estudio.ArancelAnestesia
             myTable.Rows.Add(NewRow)
-            totEstudios += cLineaEstudio.importe - cLineaEstudio.diferenciaPaciente + cLineaEstudio.pension + totalParcialMedicacion + cLineaEstudio.objeto.ArancelAnestesia
+            totEstudios += cLineaEstudio.importe - cLineaEstudio.diferenciaPaciente + cLineaEstudio.pension + totalParcialMedicacion + cLineaEstudio.estudio.ArancelAnestesia
         Next
         myTable.AcceptChanges()
         DataGrid1.DataSource = myTable
 
-    
+
 
         'Si no hay estudios, sa carga la solapa consultas
         If arrLineasEstudios.Count = 0 Then
@@ -658,13 +658,13 @@ Public Class CobroPresentacion
             'estudios
             While (i < cPresentacion.getLineasDeFacturacionEstudios.Count)
                 cLinea = cPresentacion.getLineasDeFacturacionEstudios(i)
-                cLinea.objeto.importeEstudioCobrado = CSng(DataGrid1.Item(i, 5))
-                cLinea.objeto.importeCobradoPension = CSng(DataGrid1.Item(i, 6))
-                cLinea.objeto.ImporteCobradoMedicacion = CSng(DataGrid1.Item(i, 7))
-                cLinea.objeto.importeCobradoArancelAnestesia = CSng(DataGrid1.Item(i, 8))
+                cLinea.estudio.importeEstudioCobrado = CSng(DataGrid1.Item(i, 5))
+                cLinea.estudio.importeCobradoPension = CSng(DataGrid1.Item(i, 6))
+                cLinea.estudio.ImporteCobradoMedicacion = CSng(DataGrid1.Item(i, 7))
+                cLinea.estudio.importeCobradoArancelAnestesia = CSng(DataGrid1.Item(i, 8))
                 i += 1
             End While
-           
+
 
             'Si bien guardamos el porcentaje correspondiente en la presentacion, esto es deditable. Entonces aca
             'vamos a tomar lo que haya puesto el usuario
@@ -853,7 +853,7 @@ Public Class CobroPresentacion
             DataGrid1.imprimirSubTitleInferior2 = "Nro de recibo: " & txtNroRecivo.Text & " - Gastos Administrativos: " & txtGasto.Text & " %"
             DataGrid1.imprimir(cPresentacion.getLineasDeFacturacionEstudios.Count, 8)
 
-          
+
 
         End If
     End Sub
@@ -865,7 +865,7 @@ Public Class CobroPresentacion
             MsgBox("No se ha seleccionado ningún estudio", MsgBoxStyle.Critical)
         Else
             Dim est As Estudio
-            est = cPresentacion.getLineasDeFacturacionEstudios(i).objeto
+            est = cPresentacion.getLineasDeFacturacionEstudios(i).estudio
             Dim frm As New AgragarMedicacion(est, False)
             'frm.MdiParent = Me.Parent.Parent
             frm.ShowDialog()

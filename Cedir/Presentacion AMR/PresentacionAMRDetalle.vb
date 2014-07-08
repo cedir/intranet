@@ -356,7 +356,7 @@ Public Class PresentacionAMRDetalle
                 xAcum = leftMarge
 
                 Dim cLinea As LineaDeFacturacion = arrEstudiosToprint(j)
-                cEstudio = cLinea.objeto
+                cEstudio = cLinea.estudio
 
                 'nro afiliado
                 drawRect.Width = columnsWidth(0)

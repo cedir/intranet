@@ -565,20 +565,20 @@ Public Class FacturacionDetalle
         For i = 0 To arrLineasEstudios.Count - 1
             cLineaEstudio = arrLineasEstudios(i)
             NewRow = myTable.NewRow()
-            NewRow("IdEstudio") = cLineaEstudio.objeto.nroestudio
-            NewRow("Fecha") = cLineaEstudio.objeto.fechaEstudio
-            NewRow("Orden") = cLineaEstudio.objeto.nroOrden
-            NewRow("Paciente") = cLineaEstudio.objeto.paciente.apellido & ", " & cLineaEstudio.objeto.paciente.nombres
-            NewRow("Práctica") = cLineaEstudio.objeto.practica.Estudio
-            NewRow("Actuante") = cLineaEstudio.objeto.medicoActuante.apellido & ", " & cLineaEstudio.objeto.medicoActuante.nombre
-            NewRow("Importe") = cLineaEstudio.objeto.ImporteEstudio
-            NewRow("Nro Afiliado") = cLineaEstudio.objeto.paciente.nroAfiliado
-            NewRow("Pensión") = cLineaEstudio.objeto.pension
-            NewRow("Dif. Paciente") = cLineaEstudio.objeto.DiferenciaPaciente
+            NewRow("IdEstudio") = cLineaEstudio.estudio.nroestudio
+            NewRow("Fecha") = cLineaEstudio.estudio.fechaEstudio
+            NewRow("Orden") = cLineaEstudio.estudio.nroOrden
+            NewRow("Paciente") = cLineaEstudio.estudio.paciente.apellido & ", " & cLineaEstudio.estudio.paciente.nombres
+            NewRow("Práctica") = cLineaEstudio.estudio.practica.Estudio
+            NewRow("Actuante") = cLineaEstudio.estudio.medicoActuante.apellido & ", " & cLineaEstudio.estudio.medicoActuante.nombre
+            NewRow("Importe") = cLineaEstudio.estudio.ImporteEstudio
+            NewRow("Nro Afiliado") = cLineaEstudio.estudio.paciente.nroAfiliado
+            NewRow("Pensión") = cLineaEstudio.estudio.pension
+            NewRow("Dif. Paciente") = cLineaEstudio.estudio.DiferenciaPaciente
 
-            Dim totalParcialMedicacion As Single = cLineaEstudio.objeto.getTotalMedicacion()
+            Dim totalParcialMedicacion As Single = cLineaEstudio.estudio.getTotalMedicacion()
             NewRow("Medicacion") = totalParcialMedicacion
-            NewRow("Anestesia") = cLineaEstudio.objeto.ArancelAnestesia
+            NewRow("Anestesia") = cLineaEstudio.estudio.ArancelAnestesia
             myTable.Rows.Add(NewRow)
 
             totalEstudios += cLineaEstudio.getSubtotal
@@ -680,275 +680,277 @@ Public Class FacturacionDetalle
     End Sub
 
 
-    Private Sub prepareImprimirDetalle()
-        Dim SalesReport As New PrintDocument
-        AddHandler SalesReport.PrintPage, AddressOf imprimirDetalleFacturacion
+    'Private Sub prepareImprimirDetalle()
+    '    Dim SalesReport As New PrintDocument
+    '    AddHandler SalesReport.PrintPage, AddressOf imprimirDetalleFacturacion
 
-        'Pedir periodo
-        Dim mes As String = InputBox("Ingrese el mes correspondiente a la facturación", "Ingresar mes de facturación", cPresentacion.periodo)
-        If cPresentacion.periodo <> mes Then
-            cPresentacion.periodo = mes
-            'Acturalizar
-        End If
+    '    'Pedir periodo
+    '    Dim mes As String = InputBox("Ingrese el mes correspondiente a la facturación", "Ingresar mes de facturación", cPresentacion.periodo)
+    '    If cPresentacion.periodo <> mes Then
+    '        cPresentacion.periodo = mes
+    '        'Acturalizar
+    '    End If
 
-        'Imprimir
-        cPrintingEsudioLineIndex = 0
-        Dim pss As New PrintDialog
-        Dim bp As DialogResult
-        pss.Document = SalesReport
-        bp = pss.ShowDialog
-        If bp = DialogResult.OK Then
-            SalesReport.Print()
-        End If
-
-
-    End Sub
-    Sub imprimirDetalleFacturacion(ByVal sender As Object, ByVal e As PrintPageEventArgs)
-
-        Dim tituloFacturacion As New Font("Arial", 12, FontStyle.Bold)
-        Dim subTitulo As New Font("Arial", 10, FontStyle.Regular)
-        Dim totalFont As New Font("Arial", 10, FontStyle.Bold)
-        Dim reportFont As New Font("Arial", 9, FontStyle.Regular)
-        Dim reportFontHeight As Integer = reportFont.GetHeight(e.Graphics)
-
-        'default page settings
-        Dim leftMarge As Single = 100
-        Dim pageMaxHeight As Integer = 1000
-        Dim yStart As Integer = 230
-        Dim CurrentY As Integer = yStart
-
-        Dim color As New Color
-        Dim myPen As New System.Drawing.Pen(color.Black)
-        myPen.Alignment = Drawing2D.PenAlignment.Center
-        myPen.Width = 1
-
-        'Dim height As Single = 100.0F
-        Dim drawRect As New RectangleF
-        drawRect.X = leftMarge
-        drawRect.Width = 700.0F
-        drawRect.Height = reportFontHeight
-
-        Dim rectMedicacion As New RectangleF
-        rectMedicacion.X = leftMarge
-        rectMedicacion.Width = 300 - leftMarge
-        rectMedicacion.Height = reportFontHeight
-
-        'Encabezado de detalle
-        If cPrintingEsudioLineIndex = 0 Then
-            Dim rectTitulo As New RectangleF
-            rectTitulo.X = leftMarge
-            rectTitulo.Width = 700.0F
-            rectTitulo.Height = 18
-            'Obra social
-            rectTitulo.Y = CurrentY - reportFontHeight
-            e.Graphics.DrawString("Obra Social: " & cPresentacion.obraSocial.ObraSocial, tituloFacturacion, Brushes.Black, rectTitulo)
-
-            'Descripcion
-            CurrentY = CurrentY + 30
-            drawRect.Y = CurrentY - reportFontHeight
-            e.Graphics.DrawString("Detalle de Facturación correspondiente al mes de " & cPresentacion.periodo, subTitulo, Brushes.Black, drawRect)
-
-            'fecha
-            CurrentY = CurrentY + 20
-            drawRect.Y = CurrentY - reportFontHeight
-            e.Graphics.DrawString("Fecha: " & cPresentacion.fechaFacturacion, subTitulo, Brushes.Black, drawRect)
-
-            'Linea horizontal
-            CurrentY = CurrentY + 20
-            e.Graphics.DrawLine(myPen, 100, CurrentY, 700, CurrentY)
-
-            CurrentY = CurrentY + 15
-        End If
-
-        '<----------------------------------------------------------->
-
-        Dim i, j As Integer
-        Dim cLinea As LineaDeFacturacion
-
-        'calcular tamaño linea
-        cLinea = cPresentacion.getLineasDeFacturacionEstudios(cPrintingEsudioLineIndex)
-        Dim cSize As Single = Me.getLineaSize(cLinea)
-        Dim estimateY As Single = CurrentY + cSize
-        While (estimateY <= pageMaxHeight And cPrintingEsudioLineIndex < cPresentacion.getLineasDeFacturacionEstudios.Count)
-            Dim cEstudio As Estudio = cLinea.objeto
-            'Fecha
-            e.Graphics.DrawString("Fecha: " & cEstudio.fechaEstudio, reportFont, Brushes.Black, leftMarge, CurrentY)
-            CurrentY = CurrentY + 20
-
-            'Paciente
-            Dim strPaciente As String = "Paciente: " & cLinea.objeto.paciente.nombreCompleto
-            If DataGrid1.Item(cPrintingEsudioLineIndex, 3) <> "" Then
-                'Si tiene nroAfiliado ponerlo
-                strPaciente &= " - Nro de afiliado: " & cLinea.objeto.paciente.nroAfiliado     'DataGrid1.Item(cPrintingEsudioLineIndex, 3)
-            End If
-            e.Graphics.DrawString(strPaciente, reportFont, Brushes.Black, leftMarge, CurrentY)
-
-            'Nro de orden y nro matricula medico
-            If cLinea.objeto.nroOrden <> "" Then
-                CurrentY = CurrentY + 20
-                e.Graphics.DrawString("Nro de orden: " & cLinea.objeto.nroOrden, reportFont, Brushes.Black, leftMarge, CurrentY)
-            End If
-            If cEstudio.medicoActuante.nroMatricula <> "" And (cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3) Then
-                'tenemos que considerar que baje de renglon si no hay nro orden
-                If cLinea.objeto.nroOrden = "" Then
-                    CurrentY = CurrentY + 20
-                    e.Graphics.DrawString("Nro. Mat. Profesional: " & cEstudio.medicoActuante.nroMatricula, reportFont, Brushes.Black, leftMarge, CurrentY)
-                Else
-                    e.Graphics.DrawString("Nro. Mat. Profesional: " & cEstudio.medicoActuante.nroMatricula, reportFont, Brushes.Black, 350, CurrentY)
-                End If
-
-            End If
+    '    'Imprimir
+    '    cPrintingEsudioLineIndex = 0
+    '    Dim pss As New PrintDialog
+    '    Dim bp As DialogResult
+    '    pss.Document = SalesReport
+    '    bp = pss.ShowDialog
+    '    If bp = DialogResult.OK Then
+    '        SalesReport.Print()
+    '    End If
 
 
-            'Practica
-            CurrentY = CurrentY + 20
-            drawRect.Y = CurrentY
-            e.Graphics.DrawString("Práctica: " & cEstudio.practica.Estudio, reportFont, Brushes.Black, drawRect)
+    'End Sub
+    'Sub imprimirDetalleFacturacion(ByVal sender As Object, ByVal e As PrintPageEventArgs)
 
-            Dim startLine As Integer
-            'Importe practica
-            CurrentY = CurrentY + 28
-            startLine = CurrentY
-            Dim codigoPractica As String = ""
-            If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
-                codigoPractica = cEstudio.practica.codigoMedicoOSDE & " "
-            End If
+    '    Dim tituloFacturacion As New Font("Arial", 12, FontStyle.Bold)
+    '    Dim subTitulo As New Font("Arial", 10, FontStyle.Regular)
+    '    Dim totalFont As New Font("Arial", 10, FontStyle.Bold)
+    '    Dim reportFont As New Font("Arial", 9, FontStyle.Regular)
+    '    Dim reportFontHeight As Integer = reportFont.GetHeight(e.Graphics)
 
-            e.Graphics.DrawString(codigoPractica & "Práctica  ", reportFont, Brushes.Black, leftMarge, CurrentY)
-            e.Graphics.DrawString(" $" & CStr(cLinea.importe), reportFont, Brushes.Black, 460, CurrentY)
+    '    'default page settings
+    '    Dim leftMarge As Single = 100
+    '    Dim pageMaxHeight As Integer = 1000
+    '    Dim yStart As Integer = 230
+    '    Dim CurrentY As Integer = yStart
 
-            'Diferencia Paciente
-            If cLinea.diferenciaPaciente <> 0 Then
-                CurrentY = CurrentY + 20
-                e.Graphics.DrawString("A cargo del paciente", reportFont, Brushes.Black, leftMarge, CurrentY)
-                e.Graphics.DrawString(" $" & cLinea.diferenciaPaciente, reportFont, Brushes.Black, 460, CurrentY)
-            End If
+    '    Dim color As New Color
+    '    Dim myPen As New System.Drawing.Pen(color.Black)
+    '    myPen.Alignment = Drawing2D.PenAlignment.Center
+    '    myPen.Width = 1
 
-            'Pension
-            If cLinea.pension <> 0 Then
-                CurrentY = CurrentY + 20
-                'si es osde u osde cedir
-                Dim codigoPension As String
+    '    'Dim height As Single = 100.0F
+    '    Dim drawRect As New RectangleF
+    '    drawRect.X = leftMarge
+    '    drawRect.Width = 700.0F
+    '    drawRect.Height = reportFontHeight
 
-                If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
-                    codigoPension = "430185  "
-                Else
-                    codigoPension = ""
-                End If
-                e.Graphics.DrawString(codigoPension & "Pensión  ", reportFont, Brushes.Black, leftMarge, CurrentY)
-                e.Graphics.DrawString(" $" & CStr(cLinea.pension), reportFont, Brushes.Black, 460, CurrentY)
-            End If
+    '    Dim rectMedicacion As New RectangleF
+    '    rectMedicacion.X = leftMarge
+    '    rectMedicacion.Width = 300 - leftMarge
+    '    rectMedicacion.Height = reportFontHeight
 
-            'Arancel Anestesia
-            If cLinea.objeto.ArancelAnestesia <> 0 Then
-                CurrentY = CurrentY + 20
-                e.Graphics.DrawString("Anestesia", reportFont, Brushes.Black, leftMarge, CurrentY)
-                e.Graphics.DrawString(" $" & CStr(cLinea.objeto.ArancelAnestesia), reportFont, Brushes.Black, 460, CurrentY)
-            End If
+    '    'Encabezado de detalle
+    '    If cPrintingEsudioLineIndex = 0 Then
+    '        Dim rectTitulo As New RectangleF
+    '        rectTitulo.X = leftMarge
+    '        rectTitulo.Width = 700.0F
+    '        rectTitulo.Height = 18
+    '        'Obra social
+    '        rectTitulo.Y = CurrentY - reportFontHeight
+    '        e.Graphics.DrawString("Obra Social: " & cPresentacion.obraSocial.ObraSocial, tituloFacturacion, Brushes.Black, rectTitulo)
 
+    '        'Descripcion
+    '        CurrentY = CurrentY + 30
+    '        drawRect.Y = CurrentY - reportFontHeight
+    '        e.Graphics.DrawString("Detalle de Facturación correspondiente al mes de " & cPresentacion.periodo, subTitulo, Brushes.Black, drawRect)
 
+    '        'fecha
+    '        CurrentY = CurrentY + 20
+    '        drawRect.Y = CurrentY - reportFontHeight
+    '        e.Graphics.DrawString("Fecha: " & cPresentacion.fechaFacturacion, subTitulo, Brushes.Black, drawRect)
 
-            'Medicacion y material especifico
-            If cEstudio.arrMedicacion.Count > 0 Then
+    '        'Linea horizontal
+    '        CurrentY = CurrentY + 20
+    '        e.Graphics.DrawLine(myPen, 100, CurrentY, 700, CurrentY)
 
+    '        CurrentY = CurrentY + 15
+    '    End If
 
-                Dim med As Medicacion
-                Dim arrMedicacionSinMaterialEspecifico As New ArrayList
-                Dim arrMaterialEspecifico As New ArrayList
-                arrMedicacionSinMaterialEspecifico = cEstudio.getMedicacionSinMaterialEspecifico()
-                arrMaterialEspecifico = cEstudio.getMaterialEspecifico()
-                Dim totalMaterialEspecifico As Decimal = 0.0
+    '    '<----------------------------------------------------------->
 
-                'Material Especifico
-                If arrMaterialEspecifico.Count > 0 Then
-                    CurrentY = CurrentY + 20
-                    e.Graphics.DrawString("Material Especifico: ", reportFont, Brushes.Black, leftMarge, CurrentY)
-                    For j = 0 To arrMaterialEspecifico.Count - 1
-                        CurrentY = CurrentY + 20
-                        med = arrMaterialEspecifico(j)
-                        totalMaterialEspecifico = totalMaterialEspecifico + med.importe
+    '    Dim i, j As Integer
+    '    Dim cLinea As LineaDeFacturacion
 
-                        rectMedicacion.Y = CurrentY
+    '    'calcular tamaño linea
+    '    cLinea = cPresentacion.getLineasDeFacturacionEstudios(cPrintingEsudioLineIndex)
+    '    Dim cSize As Single = Me.getLineaSize(cLinea)
+    '    Dim estimateY As Single = CurrentY + cSize
+    '    While (estimateY <= pageMaxHeight And cPrintingEsudioLineIndex < cPresentacion.getLineasDeFacturacionEstudios.Count)
+    '        Dim cEstudio As Estudio = cLinea.estudio
+    '        'Fecha
+    '        e.Graphics.DrawString("Fecha: " & cEstudio.fechaEstudio, reportFont, Brushes.Black, leftMarge, CurrentY)
+    '        CurrentY = CurrentY + 20
 
-                        'si es osde u osde cedir
-                        Dim codigoMedicamento As String = ""
+    '        'Paciente
+    '        Dim strPaciente As String = "Paciente: " & cLinea.estudio.paciente.nombreCompleto
+    '        If DataGrid1.Item(cPrintingEsudioLineIndex, 3) <> "" Then
+    '            'Si tiene nroAfiliado ponerlo
+    '            strPaciente &= " - Nro de afiliado: " & cLinea.estudio.paciente.nroAfiliado     'DataGrid1.Item(cPrintingEsudioLineIndex, 3)
+    '        End If
+    '        e.Graphics.DrawString(strPaciente, reportFont, Brushes.Black, leftMarge, CurrentY)
 
-                        If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
-                            codigoMedicamento = med.medicamento.codigoMedicoOSDE & " "
-                        End If
-                        e.Graphics.DrawString(codigoMedicamento & "•" & med.medicamento.descripcion, reportFont, Brushes.Black, rectMedicacion)
-                        e.Graphics.DrawString("  $" & med.importe, reportFont, Brushes.Black, 360, CurrentY)
-                    Next
+    '        'Nro de orden y nro matricula medico
+    '        If cLinea.estudio.nroOrden <> "" Then
+    '            CurrentY = CurrentY + 20
+    '            e.Graphics.DrawString("Nro de orden: " & cLinea.estudio.nroOrden, reportFont, Brushes.Black, leftMarge, CurrentY)
+    '        End If
+    '        If cEstudio.medicoActuante.nroMatricula <> "" And (cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3) Then
+    '            'tenemos que considerar que baje de renglon si no hay nro orden
+    '            If cLinea.estudio.nroOrden = "" Then
+    '                CurrentY = CurrentY + 20
+    '                e.Graphics.DrawString("Nro. Mat. Profesional: " & cEstudio.medicoActuante.nroMatricula, reportFont, Brushes.Black, leftMarge, CurrentY)
+    '            Else
+    '                e.Graphics.DrawString("Nro. Mat. Profesional: " & cEstudio.medicoActuante.nroMatricula, reportFont, Brushes.Black, 350, CurrentY)
+    '            End If
 
-                    CurrentY = CurrentY + 20
-                    e.Graphics.DrawString("  Total Material especifico*", reportFont, Brushes.Black, leftMarge, CurrentY)
-                    e.Graphics.DrawString("  $" & Format(totalMaterialEspecifico, "############0.00").ToString(), reportFont, Brushes.Black, 460, CurrentY)
-                End If
-
-                If arrMedicacionSinMaterialEspecifico.Count > 0 Then
-                    CurrentY = CurrentY + 20
-                    e.Graphics.DrawString("Medicación:", reportFont, Brushes.Black, leftMarge, CurrentY)
-
-
-                    For j = 0 To arrMedicacionSinMaterialEspecifico.Count - 1
-                        med = arrMedicacionSinMaterialEspecifico(j)
-                        CurrentY = CurrentY + 20
-                        rectMedicacion.Y = CurrentY
-                        e.Graphics.DrawString("  • " & med.medicamento.descripcion, reportFont, Brushes.Black, rectMedicacion)
-                        e.Graphics.DrawString("  $" & med.importe, reportFont, Brushes.Black, 360, CurrentY)
-
-                    Next
+    '        End If
 
 
-                    Dim codigoMedicacion As String = ""
-                    If cLinea.objeto.obraSocial.idObraSocial = 79 Or cLinea.objeto.obraSocial.idObraSocial = 3 Then
-                        codigoMedicacion = "922501 "
-                    End If
-                    CurrentY = CurrentY + 20
-                    e.Graphics.DrawString(codigoMedicacion & "Total Medicación*", reportFont, Brushes.Black, leftMarge, CurrentY)
-                    e.Graphics.DrawString("  $" & CStr(cEstudio.getTotalMedicacion - totalMaterialEspecifico) & "  * Valorizada de acuerdo al Vademecum Kairos", reportFont, Brushes.Black, 460, CurrentY)
-                End If
+    '        'Practica
+    '        CurrentY = CurrentY + 20
+    '        drawRect.Y = CurrentY
+    '        e.Graphics.DrawString("Práctica: " & cEstudio.practica.Estudio, reportFont, Brushes.Black, drawRect)
 
-            End If
+    '        Dim startLine As Integer
+    '        'Importe practica
+    '        CurrentY = CurrentY + 28
+    '        startLine = CurrentY
+    '        Dim codigoPractica As String = ""
+    '        If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
+    '            codigoPractica = cEstudio.practica.codigoMedicoOSDE & " "
+    '        End If
+
+    '        e.Graphics.DrawString(codigoPractica & "Práctica  ", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '        e.Graphics.DrawString(" $" & CStr(cLinea.importe), reportFont, Brushes.Black, 460, CurrentY)
+
+    '        'Diferencia Paciente
+    '        If cLinea.diferenciaPaciente <> 0 Then
+    '            CurrentY = CurrentY + 20
+    '            e.Graphics.DrawString("A cargo del paciente", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '            e.Graphics.DrawString(" $" & cLinea.diferenciaPaciente, reportFont, Brushes.Black, 460, CurrentY)
+    '        End If
+
+    '        'Pension
+    '        If cLinea.pension <> 0 Then
+    '            CurrentY = CurrentY + 20
+    '            'si es osde u osde cedir
+    '            Dim codigoPension As String
+
+    '            If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
+    '                codigoPension = "430185  "
+    '            Else
+    '                codigoPension = ""
+    '            End If
+    '            e.Graphics.DrawString(codigoPension & "Pensión  ", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '            e.Graphics.DrawString(" $" & CStr(cLinea.pension), reportFont, Brushes.Black, 460, CurrentY)
+    '        End If
+
+    '        'Arancel Anestesia
+    '        If cLinea.estudio.ArancelAnestesia <> 0 Then
+    '            CurrentY = CurrentY + 20
+    '            e.Graphics.DrawString("Anestesia", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '            e.Graphics.DrawString(" $" & CStr(cLinea.estudio.ArancelAnestesia), reportFont, Brushes.Black, 460, CurrentY)
+    '        End If
 
 
-            'Lineas verticales de los totales
-            e.Graphics.DrawLine(myPen, 340, startLine, 340, CurrentY + reportFontHeight)
-            e.Graphics.DrawLine(myPen, 440, startLine, 440, CurrentY + reportFontHeight)
 
-            'Total
-            CurrentY = CurrentY + 25
-            e.Graphics.DrawString("Total del estudio", reportFont, Brushes.Black, leftMarge, CurrentY)
-            e.Graphics.DrawString(" $" & CStr(cLinea.getSubtotal), reportFont, Brushes.Black, 460, CurrentY)
+    '        'Medicacion y material especifico
+    '        If cEstudio.arrMedicacion.Count > 0 Then
 
-            'Linea horizontal de fin de estudio
-            CurrentY = CurrentY + 20
-            e.Graphics.DrawLine(myPen, 100, CurrentY, 700, CurrentY)
 
-            'Seteo espacio para el siguiente estudio
-            CurrentY = CurrentY + 15
+    '            Dim med As Medicacion
+    '            Dim arrMedicacionSinMaterialEspecifico As New ArrayList
+    '            Dim arrMaterialEspecifico As New ArrayList
+    '            arrMedicacionSinMaterialEspecifico = cEstudio.getMedicacionSinMaterialEspecifico()
+    '            arrMaterialEspecifico = cEstudio.getMaterialEspecifico()
+    '            Dim totalMaterialEspecifico As Decimal = 0.0
 
-            cPrintingEsudioLineIndex = cPrintingEsudioLineIndex + 1
-            If cPrintingEsudioLineIndex < cPresentacion.getLineasDeFacturacionEstudios.Count Then
-                cLinea = cPresentacion.getLineasDeFacturacionEstudios(cPrintingEsudioLineIndex)
-                cSize = Me.getLineaSize(cLinea)
-                estimateY = CurrentY + cSize
-            End If
+    '            'Material Especifico
+    '            If arrMaterialEspecifico.Count > 0 Then
+    '                CurrentY = CurrentY + 20
+    '                e.Graphics.DrawString("Material Especifico: ", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '                For j = 0 To arrMaterialEspecifico.Count - 1
+    '                    CurrentY = CurrentY + 20
+    '                    med = arrMaterialEspecifico(j)
+    '                    totalMaterialEspecifico = totalMaterialEspecifico + med.importe
 
-        End While
+    '                    rectMedicacion.Y = CurrentY
 
-        'Pregunto si quedan estudios por imprimir
-        If cPrintingEsudioLineIndex = cPresentacion.getLineasDeFacturacionEstudios.Count Then
-            'No hay mas estudios
-            CurrentY = CurrentY + 10
-            drawRect.Y = CurrentY
-            e.Graphics.DrawString("Total: $ " & CStr(cPresentacion.total), totalFont, Brushes.Black, drawRect)
-            e.HasMorePages = False
-        Else
-            e.HasMorePages = True
-        End If
+    '                    'si es osde u osde cedir
+    '                    Dim codigoMedicamento As String = ""
 
-    End Sub
+    '                    If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
+    '                        codigoMedicamento = med.medicamento.codigoMedicoOSDE & " "
+    '                    End If
+    '                    e.Graphics.DrawString(codigoMedicamento & "•" & med.medicamento.descripcion, reportFont, Brushes.Black, rectMedicacion)
+    '                    e.Graphics.DrawString("  $" & med.importe, reportFont, Brushes.Black, 360, CurrentY)
+    '                Next
+
+    '                CurrentY = CurrentY + 20
+    '                e.Graphics.DrawString("  Total Material especifico*", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '                e.Graphics.DrawString("  $" & Format(totalMaterialEspecifico, "############0.00").ToString(), reportFont, Brushes.Black, 460, CurrentY)
+    '            End If
+
+    '            If arrMedicacionSinMaterialEspecifico.Count > 0 Then
+    '                CurrentY = CurrentY + 20
+    '                e.Graphics.DrawString("Medicación:", reportFont, Brushes.Black, leftMarge, CurrentY)
+
+
+    '                For j = 0 To arrMedicacionSinMaterialEspecifico.Count - 1
+    '                    med = arrMedicacionSinMaterialEspecifico(j)
+    '                    CurrentY = CurrentY + 20
+    '                    rectMedicacion.Y = CurrentY
+    '                    e.Graphics.DrawString("  • " & med.medicamento.descripcion, reportFont, Brushes.Black, rectMedicacion)
+    '                    e.Graphics.DrawString("  $" & med.importe, reportFont, Brushes.Black, 360, CurrentY)
+
+    '                Next
+
+
+    '                Dim codigoMedicacion As String = ""
+    '                If cLinea.estudio.obraSocial.idObraSocial = 79 Or cLinea.estudio.obraSocial.idObraSocial = 3 Then
+    '                    codigoMedicacion = "922501 "
+    '                End If
+    '                CurrentY = CurrentY + 20
+    '                e.Graphics.DrawString(codigoMedicacion & "Total Medicación*", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '                e.Graphics.DrawString("  $" & CStr(cEstudio.getTotalMedicacion - totalMaterialEspecifico) & "  * Valorizada de acuerdo al Vademecum Kairos", reportFont, Brushes.Black, 460, CurrentY)
+    '            End If
+
+    '        End If
+
+
+    '        'Lineas verticales de los totales
+    '        e.Graphics.DrawLine(myPen, 340, startLine, 340, CurrentY + reportFontHeight)
+    '        e.Graphics.DrawLine(myPen, 440, startLine, 440, CurrentY + reportFontHeight)
+
+    '        'Total
+    '        CurrentY = CurrentY + 25
+    '        e.Graphics.DrawString("Total del estudio", reportFont, Brushes.Black, leftMarge, CurrentY)
+    '        e.Graphics.DrawString(" $" & CStr(cLinea.getSubtotal), reportFont, Brushes.Black, 460, CurrentY)
+
+    '        'Linea horizontal de fin de estudio
+    '        CurrentY = CurrentY + 20
+    '        e.Graphics.DrawLine(myPen, 100, CurrentY, 700, CurrentY)
+
+    '        'Seteo espacio para el siguiente estudio
+    '        CurrentY = CurrentY + 15
+
+    '        cPrintingEsudioLineIndex = cPrintingEsudioLineIndex + 1
+    '        If cPrintingEsudioLineIndex < cPresentacion.getLineasDeFacturacionEstudios.Count Then
+    '            cLinea = cPresentacion.getLineasDeFacturacionEstudios(cPrintingEsudioLineIndex)
+    '            cSize = Me.getLineaSize(cLinea)
+    '            estimateY = CurrentY + cSize
+    '        End If
+
+    '    End While
+
+    '    'Pregunto si quedan estudios por imprimir
+    '    If cPrintingEsudioLineIndex = cPresentacion.getLineasDeFacturacionEstudios.Count Then
+    '        'No hay mas estudios
+    '        CurrentY = CurrentY + 10
+    '        drawRect.Y = CurrentY
+    '        e.Graphics.DrawString("Total: $ " & CStr(cPresentacion.total), totalFont, Brushes.Black, drawRect)
+    '        e.HasMorePages = False
+    '    Else
+    '        e.HasMorePages = True
+    '    End If
+
+    'End Sub
+
+
     Private Function getLineaSize(ByVal linea As LineaDeFacturacion) As Single
         'Dim reportFontHeight As Single = 14 'ojo, cambiar este valor si se cambia el tamaño del font de la letra
         'Dim rowSize As Single = reportFontHeight
@@ -960,7 +962,7 @@ Public Class FacturacionDetalle
         'Paciente
         totalSize += 20
         'Nro de orden: podría no tener
-        If linea.objeto.nroOrden <> "" Then
+        If linea.estudio.nroOrden <> "" Then
             totalSize += 20
         End If
 
@@ -977,8 +979,8 @@ Public Class FacturacionDetalle
             totalSize += 20
         End If
         'Medicacion (lineas y total): podría no tener
-        If linea.objeto.arrMedicacion.Count > 0 Then
-            totalSize += (20 * linea.objeto.arrMedicacion.Count)
+        If linea.estudio.arrMedicacion.Count > 0 Then
+            totalSize += (20 * linea.estudio.arrMedicacion.Count)
             'Total neurolepto
             totalSize += 20
         End If
@@ -990,99 +992,99 @@ Public Class FacturacionDetalle
         Return totalSize
     End Function
 
-    Private Sub prepareImprimirFactura()
+    'Private Sub prepareImprimirFactura()
 
-        Dim facturaReport As New PrintDocument
-        AddHandler facturaReport.PrintPage, AddressOf imprimirFactura
-        'Pedir periodo
-        If cPresentacion.periodo = "" Then
-            Dim mes As String = InputBox("Ingrese el mes correspondiente a la facturación", "Ingresar mes de facturación", cPresentacion.periodo)
-            If cPresentacion.periodo <> mes Then
-                cPresentacion.periodo = mes
-                'Acturalizar
-            End If
-        End If
+    '    Dim facturaReport As New PrintDocument
+    '    AddHandler facturaReport.PrintPage, AddressOf imprimirFactura
+    '    'Pedir periodo
+    '    If cPresentacion.periodo = "" Then
+    '        Dim mes As String = InputBox("Ingrese el mes correspondiente a la facturación", "Ingresar mes de facturación", cPresentacion.periodo)
+    '        If cPresentacion.periodo <> mes Then
+    '            cPresentacion.periodo = mes
+    '            'Acturalizar
+    '        End If
+    '    End If
 
-        'Imprimir
-        Dim pss As New PrintDialog
-        Dim bp As DialogResult
-        pss.Document = facturaReport
-        bp = pss.ShowDialog
-        If bp = DialogResult.OK Then
-            facturaReport.Print()
-        End If
-    End Sub
-    Sub imprimirFactura(ByVal sender As Object, ByVal e As PrintPageEventArgs)
-        Dim x As Single = 100.0F
-        Dim y As Single = 150.0F
-        Dim width As Single = 700.0F
-        Dim height As Single = 100.0F
-        Dim drawRect As New RectangleF(x, y, width, height)
+    '    'Imprimir
+    '    Dim pss As New PrintDialog
+    '    Dim bp As DialogResult
+    '    pss.Document = facturaReport
+    '    bp = pss.ShowDialog
+    '    If bp = DialogResult.OK Then
+    '        facturaReport.Print()
+    '    End If
+    'End Sub
+    'Sub imprimirFactura(ByVal sender As Object, ByVal e As PrintPageEventArgs)
+    '    Dim x As Single = 100.0F
+    '    Dim y As Single = 150.0F
+    '    Dim width As Single = 700.0F
+    '    Dim height As Single = 100.0F
+    '    Dim drawRect As New RectangleF(x, y, width, height)
 
-        Dim CurrentY As Integer = 130
-        Dim CurrentX As Integer = 100
-        Dim ReportFont As New Font("Arial", 10, FontStyle.Regular)
-        Dim ReportFontHeight As Integer = ReportFont.GetHeight(e.Graphics)
-        Dim resaltaText As New Font("Arial", 11, FontStyle.Bold)
-        Dim leyendaFont As New Font("Arial", 10, FontStyle.Italic)
+    '    Dim CurrentY As Integer = 130
+    '    Dim CurrentX As Integer = 100
+    '    Dim ReportFont As New Font("Arial", 10, FontStyle.Regular)
+    '    Dim ReportFontHeight As Integer = ReportFont.GetHeight(e.Graphics)
+    '    Dim resaltaText As New Font("Arial", 11, FontStyle.Bold)
+    '    Dim leyendaFont As New Font("Arial", 10, FontStyle.Italic)
 
-        Dim os As ObraSocial
-        os = cPresentacion.obraSocial
+    '    Dim os As ObraSocial
+    '    os = cPresentacion.obraSocial
 
-        drawRect.Y = CurrentY - ReportFontHeight
-        CurrentX = 650
-        e.Graphics.DrawString("Fecha: " & Today.Date, ReportFont, Brushes.Black, CurrentX, CurrentY)
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    CurrentX = 650
+    '    e.Graphics.DrawString("Fecha: " & Today.Date, ReportFont, Brushes.Black, CurrentX, CurrentY)
 
-        CurrentY = CurrentY + 82
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Institución: " & os.ObraSocial, ReportFont, Brushes.Black, drawRect)
+    '    CurrentY = CurrentY + 82
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Institución: " & os.ObraSocial, ReportFont, Brushes.Black, drawRect)
 
-        CurrentY = CurrentY + 20
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Domicilio: " & os.direccion & " - " & os.localidad & " (CP: " & os.CodigoPostal & ")", ReportFont, Brushes.Black, drawRect)
+    '    CurrentY = CurrentY + 20
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Domicilio: " & os.direccion & " - " & os.localidad & " (CP: " & os.CodigoPostal & ")", ReportFont, Brushes.Black, drawRect)
 
-        CurrentY = CurrentY + 20
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Cuit: " & os.nroCuit & "     -     I.V.A: " & os.CondicionFiscal, ReportFont, Brushes.Black, 100, CurrentY - ReportFontHeight)
+    '    CurrentY = CurrentY + 20
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Cuit: " & os.nroCuit & "     -     I.V.A: " & os.CondicionFiscal, ReportFont, Brushes.Black, 100, CurrentY - ReportFontHeight)
 
-        Dim descTot As String
-        descTot = InputBox("Ingrese el total en letras", "Ingrese el total en letras")
+    '    Dim descTot As String
+    '    descTot = InputBox("Ingrese el total en letras", "Ingrese el total en letras")
 
-        CurrentY = CurrentY + 20
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Concepto", resaltaText, Brushes.Black, 100, CurrentY)
-        e.Graphics.DrawString("Total", resaltaText, Brushes.Black, 650, CurrentY)
+    '    CurrentY = CurrentY + 20
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Concepto", resaltaText, Brushes.Black, 100, CurrentY)
+    '    e.Graphics.DrawString("Total", resaltaText, Brushes.Black, 650, CurrentY)
 
-        CurrentY = CurrentY + 120
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Facturación mes de " & cPresentacion.periodo & " según detalle adjunto", ReportFont, Brushes.Black, drawRect)
-        e.Graphics.DrawString(CStr(cPresentacion.total), ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
+    '    CurrentY = CurrentY + 120
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Facturación mes de " & cPresentacion.periodo & " según detalle adjunto", ReportFont, Brushes.Black, drawRect)
+    '    e.Graphics.DrawString(CStr(cPresentacion.total), ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
 
-        CurrentY = CurrentY + 50
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("I.V.A (" & cPresentacion.comprobante.Gravado.porcentaje & "%)", ReportFont, Brushes.Black, drawRect)
-        e.Graphics.DrawString(cPresentacion.getImporteIva, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
+    '    CurrentY = CurrentY + 50
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("I.V.A (" & cPresentacion.comprobante.Gravado.porcentaje & "%)", ReportFont, Brushes.Black, drawRect)
+    '    e.Graphics.DrawString(cPresentacion.getImporteIva, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
 
-        CurrentY = CurrentY + 80
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Total", ReportFont, Brushes.Black, drawRect)
-        e.Graphics.DrawString(cPresentacion.getTotalFactura, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
-
-
-        CurrentY = CurrentY + 70
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString(descTot, resaltaText, Brushes.Black, drawRect)
-
-        'Leyenda
-        CurrentY = CurrentY + 40
-        drawRect.Y = CurrentY - ReportFontHeight
-        e.Graphics.DrawString("Esta factura contiene honorarios por cuenta y orden de médicos.", leyendaFont, Brushes.Black, drawRect)
+    '    CurrentY = CurrentY + 80
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Total", ReportFont, Brushes.Black, drawRect)
+    '    e.Graphics.DrawString(cPresentacion.getTotalFactura, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
 
 
-        e.HasMorePages = False
+    '    CurrentY = CurrentY + 70
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString(descTot, resaltaText, Brushes.Black, drawRect)
+
+    '    'Leyenda
+    '    CurrentY = CurrentY + 40
+    '    drawRect.Y = CurrentY - ReportFontHeight
+    '    e.Graphics.DrawString("Esta factura contiene honorarios por cuenta y orden de médicos.", leyendaFont, Brushes.Black, drawRect)
 
 
-    End Sub
+    '    e.HasMorePages = False
+
+
+    'End Sub
     Private Sub mostrarDatosComprobante()
 
         Me.txtNroComprobante.Text = cPresentacion.comprobante.NroComprobante
@@ -1115,7 +1117,7 @@ Public Class FacturacionDetalle
             MsgBox("No se ha seleccionado ningún estudio", MsgBoxStyle.Critical)
         Else
             Dim est As Estudio
-            est = cPresentacion.getLineasDeFacturacionEstudios(i).objeto
+            est = cPresentacion.getLineasDeFacturacionEstudios(i).estudio
             Dim frm As New AgragarMedicacion(est, False)
             'frm.MdiParent = Me.Parent.Parent
             frm.ShowDialog()
