@@ -621,10 +621,6 @@ Public Class BuscarPresentacion
         'Luego setiar el nuevo arreglo de tamaños
         DataGrid1.columnsWidth = arrWidth
 
-        'Dim arrColumnsNotToPrint(0) As Integer
-        ' arrColumnsNotToPrint(0) = 0
-        'DataGrid1.columnNotToPrintIndexes = arrColumnsNotToPrint
-
         DataGrid1.imprimirTitle = "Listado de presentaciones"
         DataGrid1.imprimirSubTitleSuperior1 = "Fecha: " & CStr(Today.Now)
         DataGrid1.imprimirSubTitleInferior1 = Me.lblTotalPresentaciones.Text

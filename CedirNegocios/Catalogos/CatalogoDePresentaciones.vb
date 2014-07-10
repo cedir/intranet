@@ -205,12 +205,6 @@ Public Class CatalogoDePresentaciones
 
 
         End While
-        'Catch ex As Exception
-        '    Return ex.Message
-        '  Finally
-
-        'End Try
-
         drPresentacion.Close()
     End Function
 
