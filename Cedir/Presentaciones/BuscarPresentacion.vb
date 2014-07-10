@@ -52,14 +52,14 @@ Public Class BuscarPresentacion
     Friend WithEvents chkEstado As System.Windows.Forms.CheckBox
     Friend WithEvents lblTotalPresentaciones As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents cmbAño As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbAnio As System.Windows.Forms.ComboBox
     Friend WithEvents cmbTipoPresentacion As System.Windows.Forms.ComboBox
     Friend WithEvents btnImprimir As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.btnFacturar = New System.Windows.Forms.Button
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.Label5 = New System.Windows.Forms.Label
-        Me.cmbAño = New System.Windows.Forms.ComboBox
+        Me.cmbAnio = New System.Windows.Forms.ComboBox
         Me.chkEstado = New System.Windows.Forms.CheckBox
         Me.Label2 = New System.Windows.Forms.Label
         Me.Label3 = New System.Windows.Forms.Label
@@ -99,7 +99,7 @@ Public Class BuscarPresentacion
         'GroupBox3
         '
         Me.GroupBox3.Controls.Add(Me.Label5)
-        Me.GroupBox3.Controls.Add(Me.cmbAño)
+        Me.GroupBox3.Controls.Add(Me.cmbAnio)
         Me.GroupBox3.Controls.Add(Me.chkEstado)
         Me.GroupBox3.Controls.Add(Me.Label2)
         Me.GroupBox3.Controls.Add(Me.Label3)
@@ -120,15 +120,15 @@ Public Class BuscarPresentacion
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Año :"
         '
-        'cmbAño
+        'cmbAnio
         '
-        Me.cmbAño.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
-        Me.cmbAño.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbAño.FormattingEnabled = True
-        Me.cmbAño.Location = New System.Drawing.Point(95, 52)
-        Me.cmbAño.Name = "cmbAño"
-        Me.cmbAño.Size = New System.Drawing.Size(107, 21)
-        Me.cmbAño.TabIndex = 11
+        Me.cmbAnio.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+        Me.cmbAnio.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbAnio.FormattingEnabled = True
+        Me.cmbAnio.Location = New System.Drawing.Point(95, 52)
+        Me.cmbAnio.Name = "cmbAnio"
+        Me.cmbAnio.Size = New System.Drawing.Size(107, 21)
+        Me.cmbAnio.TabIndex = 11
         '
         'chkEstado
         '
@@ -470,14 +470,14 @@ Public Class BuscarPresentacion
     End Sub
 
     Private Sub cargarComboAño()
-        cmbAño.Items.Insert(0, "Seleccione año...")
-        cmbAño.Items.Add("2010")
-        cmbAño.Items.Add("2011")
-        cmbAño.Items.Add("2012")
-        cmbAño.Items.Add("2013")
-        cmbAño.Items.Add("2014")
-        cmbAño.Items.Add("2015")
-        cmbAño.SelectedIndex = 0
+        cmbAnio.Items.Insert(0, "Seleccione año...")
+        cmbAnio.Items.Add("2010")
+        cmbAnio.Items.Add("2011")
+        cmbAnio.Items.Add("2012")
+        cmbAnio.Items.Add("2013")
+        cmbAnio.Items.Add("2014")
+        cmbAnio.Items.Add("2015")
+        cmbAnio.SelectedIndex = 0
     End Sub
 
     Private Sub cargarGrilla()
@@ -546,18 +546,21 @@ Public Class BuscarPresentacion
             cIdObraSocial = cObraSocial.idObraSocial
         End If
         Dim fecha As Date
-        If cmbAño.SelectedIndex > 0 Then
-            fecha = New Date(Convert.ToInt16(cmbAño.SelectedItem), 1, 1)
+        If cmbAnio.SelectedIndex > 0 Then
+            fecha = New Date(Convert.ToInt16(cmbAnio.SelectedItem), 1, 1)
         Else
             fecha = Nothing
         End If
-
+        If Me.chkEstado.Checked = False And Me.cmbAnio.SelectedIndex < 1 Then
+            MessageBox.Show("Por razones de rendimiento, debe seleccionar un año para buscar presentaciones cobradas")
+            Exit Sub
+        End If
         arrPresentaciones = catalogoPresentaciones.traerPresentaciones(cIdObraSocial, Me.txtNroComprobante.Text, Me.cmbTipoComprobante.SelectedItem, fecha, Me.chkEstado.Checked, , Me.txtNroRemito.Text, Me.cmbTipoPresentacion.SelectedItem)
 
         cargarGrilla()
 
-        DataGrid1.CaptionText = "Resultado de la búsqueda ( " & CStr(arrPresentaciones.Count) & " )"
-
+        DataGrid1.CaptionText = "Resultado de la búsqueda : " & CStr(arrPresentaciones.Count) & "           --- ATENCIÓN:   RESULTADOS SÓLO PARA EL AÑO " & Me.cmbAnio.SelectedItem.ToString() & "   --- "
+        DataGrid1.CaptionForeColor = Color.Aqua
     End Sub
 
     Private Sub btnCobro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCobro.Click
@@ -617,10 +620,6 @@ Public Class BuscarPresentacion
 
         'Luego setiar el nuevo arreglo de tamaños
         DataGrid1.columnsWidth = arrWidth
-
-        'Dim arrColumnsNotToPrint(0) As Integer
-        ' arrColumnsNotToPrint(0) = 0
-        'DataGrid1.columnNotToPrintIndexes = arrColumnsNotToPrint
 
         DataGrid1.imprimirTitle = "Listado de presentaciones"
         DataGrid1.imprimirSubTitleSuperior1 = "Fecha: " & CStr(Today.Now)
