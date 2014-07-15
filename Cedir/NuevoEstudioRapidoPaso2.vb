@@ -387,7 +387,7 @@ Public Class NuevoEstudioRapidoPaso2
                     End If
                 End If
 
-                Me.Close()
+                Me.RecargarFormulario()
             Else
                 'error
                 MsgBox(resp)
@@ -403,6 +403,15 @@ Public Class NuevoEstudioRapidoPaso2
 
     End Sub
 
+    Private Sub recargarFormulario()
+        Dim dr As DialogResult = MessageBox.Show("Desea crear un nuevo estudio", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+        If dr = Windows.Forms.DialogResult.Yes Then
+            cmbEstudio.SelectedIndex = 0
+        Else
+            Me.Close()
+        End If
+
+    End Sub
 
 
     Private Sub cargarCombos()
