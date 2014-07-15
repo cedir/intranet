@@ -626,7 +626,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.31- Fecha: 27/05/2014        PRUEBASSSS"
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.7.32- Fecha: 15/06/2014      "
         '
         'nfyIcon
         '
@@ -652,7 +652,7 @@ Public Class Main
         Me.Menu = Me.MainMenu1
         Me.Name = "Main"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Cedir - PRUEBASSSSSS"
+        Me.Text = "Cedir - "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 
