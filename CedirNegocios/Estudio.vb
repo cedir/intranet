@@ -39,6 +39,10 @@ Public Class Estudio
     Private m_movCaja As List(Of MovimientoDeCaja)
     Private m_presentacion As Presentacion
 
+    Private m_videoEstudio As VideoEstudio
+
+
+
     Dim com As String = """"
 
     Public Sub New()
@@ -236,6 +240,18 @@ Public Class Estudio
             m_porcentajeIVAPagoMedicoActuante = value
         End Set
     End Property
+
+    Public Property VideoEstudio() As VideoEstudio
+        Get
+            Return Me.m_videoEstudio
+        End Get
+        Set(ByVal value As VideoEstudio)
+            m_videoEstudio = value
+        End Set
+    End Property
+
+
+
 
 #End Region
 

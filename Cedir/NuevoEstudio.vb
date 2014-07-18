@@ -23,6 +23,13 @@ Public Class NuevoEstudio
     Friend WithEvents btnOrtografia As System.Windows.Forms.Button
     Friend WithEvents btnGramatica As System.Windows.Forms.Button
     Friend WithEvents TxtInforme As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents txtLink As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents btnLink As System.Windows.Forms.Button
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Dim pAddFromSelectedEstudio As Boolean = False
 
 #Region " Constructor"
@@ -135,12 +142,24 @@ Public Class NuevoEstudio
         Me.btnOrtografia = New System.Windows.Forms.Button
         Me.btnGramatica = New System.Windows.Forms.Button
         Me.TxtInforme = New System.Windows.Forms.TextBox
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.txtLink = New System.Windows.Forms.TextBox
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox
+        Me.btnLink = New System.Windows.Forms.Button
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblDni
         '
         Me.lblDni.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDni.Location = New System.Drawing.Point(24, 8)
+        Me.lblDni.Location = New System.Drawing.Point(10, 20)
         Me.lblDni.Name = "lblDni"
         Me.lblDni.Size = New System.Drawing.Size(272, 16)
         Me.lblDni.TabIndex = 0
@@ -148,7 +167,7 @@ Public Class NuevoEstudio
         '
         'TxtMotivo
         '
-        Me.TxtMotivo.Location = New System.Drawing.Point(154, 224)
+        Me.TxtMotivo.Location = New System.Drawing.Point(144, 29)
         Me.TxtMotivo.Multiline = True
         Me.TxtMotivo.Name = "TxtMotivo"
         Me.TxtMotivo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
@@ -159,7 +178,7 @@ Public Class NuevoEstudio
         '
         Me.cmbEstudio.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbEstudio.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbEstudio.Location = New System.Drawing.Point(78, 72)
+        Me.cmbEstudio.Location = New System.Drawing.Point(93, 16)
         Me.cmbEstudio.Name = "cmbEstudio"
         Me.cmbEstudio.Size = New System.Drawing.Size(378, 21)
         Me.cmbEstudio.TabIndex = 0
@@ -168,7 +187,7 @@ Public Class NuevoEstudio
         '
         Me.cmbObraSocial.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbObraSocial.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbObraSocial.Location = New System.Drawing.Point(78, 128)
+        Me.cmbObraSocial.Location = New System.Drawing.Point(93, 56)
         Me.cmbObraSocial.Name = "cmbObraSocial"
         Me.cmbObraSocial.Size = New System.Drawing.Size(378, 21)
         Me.cmbObraSocial.TabIndex = 1
@@ -177,7 +196,7 @@ Public Class NuevoEstudio
         '
         Me.cmbMedicoAct.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbMedicoAct.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbMedicoAct.Location = New System.Drawing.Point(584, 72)
+        Me.cmbMedicoAct.Location = New System.Drawing.Point(599, 16)
         Me.cmbMedicoAct.Name = "cmbMedicoAct"
         Me.cmbMedicoAct.Size = New System.Drawing.Size(168, 21)
         Me.cmbMedicoAct.TabIndex = 2
@@ -186,7 +205,7 @@ Public Class NuevoEstudio
         '
         Me.cmbMedicoSol.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbMedicoSol.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbMedicoSol.Location = New System.Drawing.Point(584, 128)
+        Me.cmbMedicoSol.Location = New System.Drawing.Point(599, 56)
         Me.cmbMedicoSol.Name = "cmbMedicoSol"
         Me.cmbMedicoSol.Size = New System.Drawing.Size(168, 21)
         Me.cmbMedicoSol.TabIndex = 3
@@ -194,7 +213,7 @@ Public Class NuevoEstudio
         'lblNombre
         '
         Me.lblNombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblNombre.Location = New System.Drawing.Point(24, 32)
+        Me.lblNombre.Location = New System.Drawing.Point(10, 44)
         Me.lblNombre.Name = "lblNombre"
         Me.lblNombre.Size = New System.Drawing.Size(440, 16)
         Me.lblNombre.TabIndex = 9
@@ -202,7 +221,7 @@ Public Class NuevoEstudio
         '
         'btnAceptar
         '
-        Me.btnAceptar.Location = New System.Drawing.Point(128, 432)
+        Me.btnAceptar.Location = New System.Drawing.Point(6, 19)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(75, 23)
         Me.btnAceptar.TabIndex = 7
@@ -210,7 +229,7 @@ Public Class NuevoEstudio
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(20, 72)
+        Me.Label2.Location = New System.Drawing.Point(15, 19)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 16)
         Me.Label2.TabIndex = 12
@@ -218,7 +237,7 @@ Public Class NuevoEstudio
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(0, 128)
+        Me.Label3.Location = New System.Drawing.Point(15, 59)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(72, 16)
         Me.Label3.TabIndex = 13
@@ -226,7 +245,7 @@ Public Class NuevoEstudio
         '
         'btnCerrar
         '
-        Me.btnCerrar.Location = New System.Drawing.Point(552, 432)
+        Me.btnCerrar.Location = New System.Drawing.Point(263, 19)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(72, 24)
         Me.btnCerrar.TabIndex = 14
@@ -235,7 +254,7 @@ Public Class NuevoEstudio
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(488, 72)
+        Me.Label1.Location = New System.Drawing.Point(479, 19)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(96, 16)
         Me.Label1.TabIndex = 16
@@ -243,7 +262,7 @@ Public Class NuevoEstudio
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(480, 128)
+        Me.Label4.Location = New System.Drawing.Point(479, 56)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(104, 24)
         Me.Label4.TabIndex = 17
@@ -251,7 +270,7 @@ Public Class NuevoEstudio
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(346, 208)
+        Me.Label5.Location = New System.Drawing.Point(336, 13)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(100, 16)
         Me.Label5.TabIndex = 18
@@ -259,7 +278,7 @@ Public Class NuevoEstudio
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(370, 272)
+        Me.Label6.Location = New System.Drawing.Point(360, 77)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(56, 16)
         Me.Label6.TabIndex = 19
@@ -267,7 +286,7 @@ Public Class NuevoEstudio
         '
         'btnImprimir
         '
-        Me.btnImprimir.Location = New System.Drawing.Point(216, 432)
+        Me.btnImprimir.Location = New System.Drawing.Point(94, 19)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(72, 24)
         Me.btnImprimir.TabIndex = 8
@@ -275,7 +294,7 @@ Public Class NuevoEstudio
         '
         'Label8
         '
-        Me.Label8.Location = New System.Drawing.Point(52, 392)
+        Me.Label8.Location = New System.Drawing.Point(141, 16)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(76, 16)
         Me.Label8.TabIndex = 24
@@ -283,7 +302,7 @@ Public Class NuevoEstudio
         '
         'btnFotos
         '
-        Me.btnFotos.Location = New System.Drawing.Point(304, 432)
+        Me.btnFotos.Location = New System.Drawing.Point(182, 19)
         Me.btnFotos.Name = "btnFotos"
         Me.btnFotos.Size = New System.Drawing.Size(75, 23)
         Me.btnFotos.TabIndex = 9
@@ -291,14 +310,14 @@ Public Class NuevoEstudio
         '
         'txtNroOrden
         '
-        Me.txtNroOrden.Location = New System.Drawing.Point(128, 392)
+        Me.txtNroOrden.Location = New System.Drawing.Point(232, 13)
         Me.txtNroOrden.Name = "txtNroOrden"
         Me.txtNroOrden.Size = New System.Drawing.Size(100, 20)
         Me.txtNroOrden.TabIndex = 29
         '
         'lblFecha
         '
-        Me.lblFecha.Location = New System.Drawing.Point(609, 18)
+        Me.lblFecha.Location = New System.Drawing.Point(624, 22)
         Me.lblFecha.Name = "lblFecha"
         Me.lblFecha.Size = New System.Drawing.Size(40, 14)
         Me.lblFecha.TabIndex = 30
@@ -308,14 +327,14 @@ Public Class NuevoEstudio
         '
         Me.cmbAnestesistas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmbAnestesistas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbAnestesistas.Location = New System.Drawing.Point(584, 184)
+        Me.cmbAnestesistas.Location = New System.Drawing.Point(599, 94)
         Me.cmbAnestesistas.Name = "cmbAnestesistas"
         Me.cmbAnestesistas.Size = New System.Drawing.Size(168, 21)
         Me.cmbAnestesistas.TabIndex = 4
         '
         'Label7
         '
-        Me.Label7.Location = New System.Drawing.Point(464, 184)
+        Me.Label7.Location = New System.Drawing.Point(479, 94)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(120, 16)
         Me.Label7.TabIndex = 32
@@ -324,7 +343,7 @@ Public Class NuevoEstudio
         'dtpFechaEstudio
         '
         Me.dtpFechaEstudio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFechaEstudio.Location = New System.Drawing.Point(656, 16)
+        Me.dtpFechaEstudio.Location = New System.Drawing.Point(670, 20)
         Me.dtpFechaEstudio.Name = "dtpFechaEstudio"
         Me.dtpFechaEstudio.Size = New System.Drawing.Size(96, 20)
         Me.dtpFechaEstudio.TabIndex = 33
@@ -332,15 +351,15 @@ Public Class NuevoEstudio
         '
         'btnAltaNormal
         '
-        Me.btnAltaNormal.Location = New System.Drawing.Point(24, 288)
+        Me.btnAltaNormal.Location = New System.Drawing.Point(6, 93)
         Me.btnAltaNormal.Name = "btnAltaNormal"
-        Me.btnAltaNormal.Size = New System.Drawing.Size(120, 24)
+        Me.btnAltaNormal.Size = New System.Drawing.Size(128, 24)
         Me.btnAltaNormal.TabIndex = 34
         Me.btnAltaNormal.Text = "Alta Normal -->"
         '
         'btnGastritis
         '
-        Me.btnGastritis.Location = New System.Drawing.Point(16, 320)
+        Me.btnGastritis.Location = New System.Drawing.Point(6, 125)
         Me.btnGastritis.Name = "btnGastritis"
         Me.btnGastritis.Size = New System.Drawing.Size(128, 24)
         Me.btnGastritis.TabIndex = 35
@@ -348,7 +367,7 @@ Public Class NuevoEstudio
         '
         'btnColonoNormal
         '
-        Me.btnColonoNormal.Location = New System.Drawing.Point(16, 352)
+        Me.btnColonoNormal.Location = New System.Drawing.Point(6, 157)
         Me.btnColonoNormal.Name = "btnColonoNormal"
         Me.btnColonoNormal.Size = New System.Drawing.Size(128, 24)
         Me.btnColonoNormal.TabIndex = 36
@@ -357,7 +376,7 @@ Public Class NuevoEstudio
         '
         'btnAgregarPolipectomia
         '
-        Me.btnAgregarPolipectomia.Location = New System.Drawing.Point(664, 288)
+        Me.btnAgregarPolipectomia.Location = New System.Drawing.Point(654, 93)
         Me.btnAgregarPolipectomia.Name = "btnAgregarPolipectomia"
         Me.btnAgregarPolipectomia.Size = New System.Drawing.Size(112, 23)
         Me.btnAgregarPolipectomia.TabIndex = 37
@@ -366,16 +385,16 @@ Public Class NuevoEstudio
         '
         'btnColangioNormal
         '
-        Me.btnColangioNormal.Location = New System.Drawing.Point(32, 288)
+        Me.btnColangioNormal.Location = New System.Drawing.Point(14, 93)
         Me.btnColangioNormal.Name = "btnColangioNormal"
-        Me.btnColangioNormal.Size = New System.Drawing.Size(112, 23)
+        Me.btnColangioNormal.Size = New System.Drawing.Size(120, 23)
         Me.btnColangioNormal.TabIndex = 38
         Me.btnColangioNormal.TabStop = False
         Me.btnColangioNormal.Text = "Colangio Normal"
         '
         'btnColangioConCalclulo
         '
-        Me.btnColangioConCalclulo.Location = New System.Drawing.Point(24, 320)
+        Me.btnColangioConCalclulo.Location = New System.Drawing.Point(14, 125)
         Me.btnColangioConCalclulo.Name = "btnColangioConCalclulo"
         Me.btnColangioConCalclulo.Size = New System.Drawing.Size(120, 23)
         Me.btnColangioConCalclulo.TabIndex = 39
@@ -384,9 +403,9 @@ Public Class NuevoEstudio
         '
         'btnOrtografia
         '
-        Me.btnOrtografia.Location = New System.Drawing.Point(664, 321)
+        Me.btnOrtografia.Location = New System.Drawing.Point(654, 126)
         Me.btnOrtografia.Name = "btnOrtografia"
-        Me.btnOrtografia.Size = New System.Drawing.Size(108, 23)
+        Me.btnOrtografia.Size = New System.Drawing.Size(112, 23)
         Me.btnOrtografia.TabIndex = 40
         Me.btnOrtografia.TabStop = False
         Me.btnOrtografia.Text = "Revisar ortografía"
@@ -395,9 +414,9 @@ Public Class NuevoEstudio
         '
         'btnGramatica
         '
-        Me.btnGramatica.Location = New System.Drawing.Point(664, 350)
+        Me.btnGramatica.Location = New System.Drawing.Point(654, 155)
         Me.btnGramatica.Name = "btnGramatica"
-        Me.btnGramatica.Size = New System.Drawing.Size(108, 23)
+        Me.btnGramatica.Size = New System.Drawing.Size(112, 23)
         Me.btnGramatica.TabIndex = 41
         Me.btnGramatica.TabStop = False
         Me.btnGramatica.Text = "Revisar gramatica"
@@ -406,54 +425,126 @@ Public Class NuevoEstudio
         '
         'TxtInforme
         '
-        Me.TxtInforme.Location = New System.Drawing.Point(154, 288)
+        Me.TxtInforme.Location = New System.Drawing.Point(144, 93)
         Me.TxtInforme.Multiline = True
         Me.TxtInforme.Name = "TxtInforme"
         Me.TxtInforme.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtInforme.Size = New System.Drawing.Size(496, 88)
+        Me.TxtInforme.Size = New System.Drawing.Size(496, 110)
         Me.TxtInforme.TabIndex = 6
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.lblDni)
+        Me.GroupBox1.Controls.Add(Me.lblNombre)
+        Me.GroupBox1.Controls.Add(Me.lblFecha)
+        Me.GroupBox1.Controls.Add(Me.dtpFechaEstudio)
+        Me.GroupBox1.Location = New System.Drawing.Point(9, 2)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(776, 83)
+        Me.GroupBox1.TabIndex = 42
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Datos del paciente"
+        '
+        'txtLink
+        '
+        Me.txtLink.Location = New System.Drawing.Point(232, 39)
+        Me.txtLink.Name = "txtLink"
+        Me.txtLink.Size = New System.Drawing.Size(288, 20)
+        Me.txtLink.TabIndex = 43
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Controls.Add(Me.cmbEstudio)
+        Me.GroupBox2.Controls.Add(Me.cmbMedicoAct)
+        Me.GroupBox2.Controls.Add(Me.cmbMedicoSol)
+        Me.GroupBox2.Controls.Add(Me.Label3)
+        Me.GroupBox2.Controls.Add(Me.cmbObraSocial)
+        Me.GroupBox2.Controls.Add(Me.Label1)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Controls.Add(Me.cmbAnestesistas)
+        Me.GroupBox2.Location = New System.Drawing.Point(9, 91)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(776, 128)
+        Me.GroupBox2.TabIndex = 44
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Datos generales"
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Label5)
+        Me.GroupBox3.Controls.Add(Me.btnColonoNormal)
+        Me.GroupBox3.Controls.Add(Me.btnGastritis)
+        Me.GroupBox3.Controls.Add(Me.btnAltaNormal)
+        Me.GroupBox3.Controls.Add(Me.btnGramatica)
+        Me.GroupBox3.Controls.Add(Me.Label6)
+        Me.GroupBox3.Controls.Add(Me.btnOrtografia)
+        Me.GroupBox3.Controls.Add(Me.TxtMotivo)
+        Me.GroupBox3.Controls.Add(Me.btnColangioConCalclulo)
+        Me.GroupBox3.Controls.Add(Me.TxtInforme)
+        Me.GroupBox3.Controls.Add(Me.btnColangioNormal)
+        Me.GroupBox3.Controls.Add(Me.btnAgregarPolipectomia)
+        Me.GroupBox3.Location = New System.Drawing.Point(9, 225)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(776, 209)
+        Me.GroupBox3.TabIndex = 45
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Detalle"
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.btnLink)
+        Me.GroupBox4.Controls.Add(Me.Label8)
+        Me.GroupBox4.Controls.Add(Me.txtNroOrden)
+        Me.GroupBox4.Controls.Add(Me.txtLink)
+        Me.GroupBox4.Location = New System.Drawing.Point(9, 440)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(776, 74)
+        Me.GroupBox4.TabIndex = 46
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "GroupBox4"
+        '
+        'btnLink
+        '
+        Me.btnLink.Location = New System.Drawing.Point(142, 36)
+        Me.btnLink.Name = "btnLink"
+        Me.btnLink.Size = New System.Drawing.Size(86, 23)
+        Me.btnLink.TabIndex = 47
+        Me.btnLink.Text = "Pegar enlace"
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.btnAceptar)
+        Me.GroupBox5.Controls.Add(Me.btnCerrar)
+        Me.GroupBox5.Controls.Add(Me.btnImprimir)
+        Me.GroupBox5.Controls.Add(Me.btnFotos)
+        Me.GroupBox5.Location = New System.Drawing.Point(221, 520)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(343, 53)
+        Me.GroupBox5.TabIndex = 47
+        Me.GroupBox5.TabStop = False
         '
         'NuevoEstudio
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(784, 462)
-        Me.Controls.Add(Me.btnGramatica)
-        Me.Controls.Add(Me.btnOrtografia)
-        Me.Controls.Add(Me.btnColangioConCalclulo)
-        Me.Controls.Add(Me.btnColangioNormal)
-        Me.Controls.Add(Me.btnAgregarPolipectomia)
-        Me.Controls.Add(Me.dtpFechaEstudio)
-        Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.cmbAnestesistas)
-        Me.Controls.Add(Me.lblFecha)
-        Me.Controls.Add(Me.txtNroOrden)
-        Me.Controls.Add(Me.TxtInforme)
-        Me.Controls.Add(Me.TxtMotivo)
-        Me.Controls.Add(Me.btnFotos)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.btnImprimir)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.btnCerrar)
-        Me.Controls.Add(Me.cmbObraSocial)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.btnAceptar)
-        Me.Controls.Add(Me.lblNombre)
-        Me.Controls.Add(Me.cmbMedicoSol)
-        Me.Controls.Add(Me.cmbMedicoAct)
-        Me.Controls.Add(Me.cmbEstudio)
-        Me.Controls.Add(Me.lblDni)
-        Me.Controls.Add(Me.btnAltaNormal)
-        Me.Controls.Add(Me.btnGastritis)
-        Me.Controls.Add(Me.btnColonoNormal)
+        Me.ClientSize = New System.Drawing.Size(792, 582)
+        Me.Controls.Add(Me.GroupBox5)
+        Me.Controls.Add(Me.GroupBox4)
+        Me.Controls.Add(Me.GroupBox3)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Name = "NuevoEstudio"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -1171,5 +1262,11 @@ Public Class NuevoEstudio
 
     Private Sub NuevoEstudio_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         'Me.btnAceptar.PerformClick()
+    End Sub
+
+    Private Sub btnLink_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLink.Click
+        If Clipboard.ContainsText() Then
+            Me.txtLink.Text = Clipboard.GetText()
+        End If
     End Sub
 End Class
