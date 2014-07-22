@@ -251,7 +251,7 @@ Public Class ObraSocialABMArancel
         DataGrid1.imprimirSubTitleSuperior2 = "Teléfono: " & cObraSocial.tel
         DataGrid1.imprimirSubTitleSuperior3 = "Cuit: " & cObraSocial.nroCuit & " Condición fiscal: " & cObraSocial.CondicionFiscal
         DataGrid1.imprimirSubTitleInferior1 = "Fecha de impresión: " & CStr(Today.Now)
-        DataGrid1.imprimir(arrAranceles.Count, 4)
+        DataGrid1.imprimir(arrAranceles.Count, 3)
     End Sub
 
     Private Sub btnCerrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCerrar.Click
