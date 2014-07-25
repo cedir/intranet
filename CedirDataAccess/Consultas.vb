@@ -81,6 +81,7 @@ Public Class Consultas
         Dim StringPuto As String = "select est." & com & "nroEstudio" & com & ", alos.*, " & com & "fechaEstudio" & com & "," & _
         com & "motivoEstudio" & com & "," & com & "informe" & com & "," & " det." & com & "idObraSocial" & com & _
         ",det." & com & "idMedicoActuante" & com & ",det." & com & "idMedicoSolicitante" & com & ", " & com & _
+        "enlaceVideo" & com & "," & com & _
         "nroDeOrden" & com & "," & com & "lugar" & com & "," & com & _
         "idFacturacion" & com & ", " & com & "idAnestesista" & com & "," & com & "fechaCobro" & com & "," & com & _
         "importeEstudio" & com & "," & com & "importeMedicacion" & com & "," & com & "pagoContraFactura" & com & _

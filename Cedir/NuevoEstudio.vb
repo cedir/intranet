@@ -611,6 +611,7 @@ Public Class NuevoEstudio
             currentEst.informe = TxtInforme.Text
             currentEst.nroOrden = txtNroOrden.Text
             currentEst.fechaEstudio = dtpFechaEstudio.Value
+            currentEst.VideoEstudio.enlaceMega = Me.txtLink.Text
 
 
 
@@ -808,6 +809,7 @@ Public Class NuevoEstudio
             txtNroOrden.Text = currentEst.nroOrden
             defaultInforme = currentEst.informe
             defaultMotivo = currentEst.motivoEstudio
+            Me.txtLink.Text = currentEst.VideoEstudio.enlaceMega
 
         End If
 

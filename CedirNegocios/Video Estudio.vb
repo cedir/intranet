@@ -7,21 +7,13 @@ Public Class VideoEstudio
 
 #Region "VARIABLES"
 
-    Private m_id As Integer
+
     Private m_enlace As String
 
 #End Region
 
 #Region "Propiedades"
 
-    Public Property id() As Integer
-        Get
-            Return m_id
-        End Get
-        Set(ByVal value As Integer)
-            m_id = value
-        End Set
-    End Property
     Public Property enlaceMega() As String
         Get
             Return m_enlace
@@ -33,6 +25,9 @@ Public Class VideoEstudio
 
 #End Region
 
+    Public Sub New()
+        Me.enlaceMega = ""
+    End Sub
 
 
 End Class

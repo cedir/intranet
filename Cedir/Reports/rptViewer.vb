@@ -299,6 +299,7 @@ Public Class rptViewer
         r3("informe") = estudio.informe
         r3("fecha") = estudio.fechaEstudio.ToString().Remove(10)
         r3("medicoSolicitante") = estudio.medicoSolicitante.nombreCompleto
+        r3("enlaceVideo") = estudio.VideoEstudio.enlaceMega
         ds.Tables("estudio").Rows.Add(r3)
 
 
