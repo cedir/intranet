@@ -448,6 +448,7 @@ Public Class NuevoEstudio
         'txtLink
         '
         Me.txtLink.Location = New System.Drawing.Point(232, 39)
+        Me.txtLink.MaxLength = 256
         Me.txtLink.Name = "txtLink"
         Me.txtLink.Size = New System.Drawing.Size(288, 20)
         Me.txtLink.TabIndex = 43
