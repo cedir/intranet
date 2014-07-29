@@ -8,7 +8,7 @@ Public Class VideoEstudio
 #Region "VARIABLES"
 
 
-    Private m_enlace As String
+    <VBFixedString(256)> Private m_enlace As String
 
 #End Region
 
