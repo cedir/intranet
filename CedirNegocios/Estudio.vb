@@ -262,7 +262,7 @@ Public Class Estudio
 
         Dim upd As New CedirDataAccess.Nuevo
         'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega)
+        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
         Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
 
         'Log the action
@@ -316,7 +316,7 @@ Public Class Estudio
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fechaEstudio)
         fechaOptimizada = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
         resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idMedicoActuante" & com & " = " & Me.medicoActuante.idMedico & " , " & com & "idMedicoSolicitante" & com & " = " & Me.medicoSolicitante.idMedico & " , " & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " , " & com & "nroDeOrden" & com & " = " & "'" & Me.nroOrden & "', " & com & "idAnestesista" & com & " = " & Me.Anestesista.idMedico, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
 
         Return resp

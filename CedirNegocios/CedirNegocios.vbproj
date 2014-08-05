@@ -218,7 +218,7 @@
     <Compile Include="Usuario.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Video Estudio.vb" />
+    <Compile Include="VideoEstudio.vb" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MSScriptControl">
