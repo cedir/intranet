@@ -19,7 +19,7 @@ Public Class VideoEstudio
             Return m_enlace
         End Get
         Set(ByVal value As String)
-            m_enlace = value
+            m_enlace = value.Trim()
         End Set
     End Property
 
