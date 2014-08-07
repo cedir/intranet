@@ -1036,8 +1036,8 @@ Public Class NuevoEstudio
         "ESTOMAGO: Mucosa de características normales. Por retroflexión se observa el techo gástrico con un buen cierre cardial." & vbCrLf & _
         "PILORO: Permeable" & vbCrLf & _
         "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf & _
-        "CONCLUSION DIAGNOSTICA: ESOFAGO GASTRO DUODENO DE CARACTERISTICAS NORMALES." & vbCrLf & _
-        "Las principales imágenes se registran en formato de DVD que acompañan el presente informe"
+        "CONCLUSION DIAGNOSTICA: ESOFAGO GASTRO DUODENO DE CARACTERISTICAS NORMALES." & vbCrLf
+
         If TxtInforme.Text <> "" Then
             Dim r As Integer = MsgBox("El informe no esta vacío, ¿ desea reemplazarlo ?", MsgBoxStyle.YesNo, "Completar informe simil")
             If r = 6 Then
@@ -1053,8 +1053,8 @@ Public Class NuevoEstudio
         "ESTOMAGO: Mucosa antral difusamente congestiva eritematosa a predominio pre pilórico." & vbCrLf & _
         "PILORO: Permeable" & vbCrLf & _
         "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf & _
-        "CONCLUSION DIAGNOSTICA: GASTRITIS SUPERFICIAL NO EROSIVA DE ANTRO GASTRICO." & vbCrLf & _
-        "Las principales imágenes se registran en formato de DVD que acompañan el presente informe"
+        "CONCLUSION DIAGNOSTICA: GASTRITIS SUPERFICIAL NO EROSIVA DE ANTRO GASTRICO." & vbCrLf
+
 
 
         If TxtInforme.Text <> "" Then
@@ -1071,8 +1071,8 @@ Public Class NuevoEstudio
         Dim informe As String = "Ampolla rectal sin lesión mucosa." & vbCrLf & _
         "Se franquea el ángulo recto sigmoides observando el colon sigmoides de características normales ." & vbCrLf & _
         "Se progresa por el colon descendente hasta franquear el ángulo esplénico observando el colon transverso , ángulo hepático y colon ascendente sin evidenciar lesión mucosa." & vbCrLf & _
-        "CONCLUSION DIAGNOSTICA: AMPOLLA RECTAL Y MARCO COLONICO VISUALIZADO HASTA CIEGO  DE CARACTERISTICAS NORMALES." & vbCrLf & _
-        "Las principales imágenes se registran en formato de DVD que acompañan el presente informe"
+        "CONCLUSION DIAGNOSTICA: AMPOLLA RECTAL Y MARCO COLONICO VISUALIZADO HASTA CIEGO  DE CARACTERISTICAS NORMALES." & vbCrLf
+
 
         If TxtInforme.Text <> "" Then
             Dim r As Integer = MsgBox("El informe no esta vacío, ¿ desea reemplazarlo ?", MsgBoxStyle.YesNo, "Completar informe simil")
@@ -1126,7 +1126,6 @@ Public Class NuevoEstudio
         "La vía biliar extra hepática presenta tanto el conducto hepático como el colédoco de aspecto y calibre normal." & vbCrLf & _
         "No se observan imágenes radiolucidas en su interior y el drenaje de la sustancia de contraste se realiza en tiempo aceptable. " & vbCrLf & _
         "Buena tolerancia al procedimiento." & vbCrLf & _
-        "Las imágenes endoscópicas son grabadas en formato de D.V.D." & vbCrLf & _
         "Las imágenes radioscópicas son digitalizadas e impresas en papel , acompañando el presente informe." & vbCrLf
 
         If TxtInforme.Text <> "" Then
@@ -1145,7 +1144,6 @@ Public Class NuevoEstudio
         "La vía biiliar extra hepática se observa dilatada de aproximadamente 20 mm en promedio con una imagen radiolúcida en su interior con limites netos que podría corresponder a un lito coledociano." & vbCrLf & _
         "Se realiza papilotomía ámplia y con canastilla de dormia se extrae un lito con las características descriptas en al imagen radiológica." & vbCrLf & _
         "Buena tolerancia al procedimiento." & vbCrLf & _
-        "Las imágenes endocópicas son grabadas en formato de D.V.D." & vbCrLf & _
         "Las imágenes radioscópicas son digitalizadas e impresas en papel que acompañan al presente informe. " & vbCrLf
 
         If TxtInforme.Text <> "" Then
