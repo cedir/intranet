@@ -299,10 +299,11 @@ Public Class rptViewer
         r3("informe") = estudio.informe
         r3("fecha") = estudio.fechaEstudio.ToString().Remove(10)
         r3("medicoSolicitante") = estudio.medicoSolicitante.nombreCompleto
+        r3("enlaceVideo") = estudio.VideoEstudio.enlaceMega
         ds.Tables("estudio").Rows.Add(r3)
-
-
-
+        If estudio.VideoEstudio.enlaceMega = "" Then
+            rep.Section4.SectionFormat.EnableSuppress = True
+        End If
         rep.SetDataSource(ds)
         Me.CrystalReportViewer1.ReportSource = rep
         Me.CrystalReportViewer1.PrintReport()

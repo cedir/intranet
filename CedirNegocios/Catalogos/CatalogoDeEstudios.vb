@@ -321,7 +321,7 @@ Public Class CatalogoDeEstudios
             vEstudio.medicoActuante.idMedico = drEstudios.Item("idMedicoActuante")
             vEstudio.medicoSolicitante.idMedico = drEstudios.Item("idMedicoSolicitante")
             vEstudio.nroOrden = drEstudios.Item("nroDeOrden")
-            'vEstudio.lugar = drEstudios.Item(8)
+            vEstudio.VideoEstudio.enlaceMega = drEstudios.Item("enlaceVideo")
             vEstudio.idFacturacion = drEstudios.Item("idFacturacion")
 
             'ESTA ES LA FECHA DE tblPagoCobroEstudio

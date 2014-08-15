@@ -39,6 +39,10 @@ Public Class Estudio
     Private m_movCaja As List(Of MovimientoDeCaja)
     Private m_presentacion As Presentacion
 
+    Private m_videoEstudio As VideoEstudio
+
+
+
     Dim com As String = """"
 
     Public Sub New()
@@ -46,6 +50,7 @@ Public Class Estudio
         Me.importeCobradoArancelAnestesia = 0
         Me.importeCobradoPension = 0
         MovimientosDeCaja = New List(Of MovimientoDeCaja)
+        Me.VideoEstudio = New VideoEstudio
     End Sub
 
 #Region "Propiedades"
@@ -237,6 +242,18 @@ Public Class Estudio
         End Set
     End Property
 
+    Public Property VideoEstudio() As VideoEstudio
+        Get
+            Return Me.m_videoEstudio
+        End Get
+        Set(ByVal value As VideoEstudio)
+            m_videoEstudio = value
+        End Set
+    End Property
+
+
+
+
 #End Region
 
     Public Function AltaEstudio() As String
@@ -245,7 +262,7 @@ Public Class Estudio
 
         Dim upd As New CedirDataAccess.Nuevo
         'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico)
+        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
         Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
 
         'Log the action
@@ -272,7 +289,7 @@ Public Class Estudio
         End If
 
         If resp = "ok" Then
-            resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico)
+            resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega)
             Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
         Else
             Return resp
@@ -299,7 +316,7 @@ Public Class Estudio
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fechaEstudio)
         fechaOptimizada = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
         resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idMedicoActuante" & com & " = " & Me.medicoActuante.idMedico & " , " & com & "idMedicoSolicitante" & com & " = " & Me.medicoSolicitante.idMedico & " , " & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " , " & com & "nroDeOrden" & com & " = " & "'" & Me.nroOrden & "', " & com & "idAnestesista" & com & " = " & Me.Anestesista.idMedico, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
 
         Return resp
