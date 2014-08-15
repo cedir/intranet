@@ -504,7 +504,6 @@ Public Class NuevoEstudio
         Me.GroupBox4.Size = New System.Drawing.Size(776, 74)
         Me.GroupBox4.TabIndex = 46
         Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "GroupBox4"
         '
         'btnLink
         '
