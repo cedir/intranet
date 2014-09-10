@@ -256,13 +256,39 @@ Public Class Estudio
 
 #End Region
 
-    Public Function AltaEstudio() As String
-        'este metodo se llama desde el cuadro "buscarPaciente -> nuevoEstudio"
+    Public Function AltaEstudio(Optional ByVal insertarPaciente As Boolean = False) As String
+
+        Dim resp As String = "ok"
+
+        If insertarPaciente = True Then
+            resp = Me.paciente.AltaPaciente()
+        End If
+
+        If resp = "ok" Then
+            Return crearEstudio()
+        End If
+
+
+        Return "Error"
+
+
+
+    End Function
+    Private Function obtenerPublicID() As String
+        Return ""
+
+
+    End Function
+
+
+    Private Function crearEstudio() As String
         Dim resp As String
 
         Dim upd As New CedirDataAccess.Nuevo
+        Dim publicId As String = Me.obtenerPublicID()
+
         'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
         Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
 
         'Log the action
@@ -277,37 +303,10 @@ Public Class Estudio
 
 
         Return resp
-
     End Function
-    Public Function AltaEstudio(ByVal insertarPaciente As Boolean) As String
-        'este se llama desde estudio Rapido 2 
-        Dim upd As New CedirDataAccess.Nuevo
-        Dim resp As String = "ok"
 
-        If insertarPaciente = True Then
-            resp = Me.paciente.AltaPaciente()
-        End If
 
-        If resp = "ok" Then
-            resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega)
-            Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
-        Else
-            Return resp
-        End If
 
-        'Log the action
-        Dim sSecurity As Security = Security.GetInstance()
-        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
-        Dim vLog As New AuditLog
-        vLog.usuario = cUsuario
-        vLog.objectId = Me.nroEstudio
-        vLog.objectTypeId = 1
-        vLog.userActionId = 1
-        vLog.create()
-
-        Return resp
-
-    End Function
     Public Function actualizaEstudio() As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String

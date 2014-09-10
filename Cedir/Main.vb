@@ -104,6 +104,7 @@ Public Class Main
     Friend WithEvents mnuReemplazarPaciente As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem6 As System.Windows.Forms.MenuItem
     Friend WithEvents itemEstudiosCrearRapido As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuItem7 As System.Windows.Forms.MenuItem
     Friend WithEvents itemAnestesitasPagos As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -178,6 +179,7 @@ Public Class Main
         Me.BarraEstado = New System.Windows.Forms.StatusBar
         Me.nfyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.tmrTemporizador = New System.Windows.Forms.Timer(Me.components)
+        Me.MenuItem7 = New System.Windows.Forms.MenuItem
         Me.SuspendLayout()
         '
         'ToolBar1
@@ -411,6 +413,7 @@ Public Class Main
         '
         Me.itemEstudiosCrearRapido.Enabled = False
         Me.itemEstudiosCrearRapido.Index = 2
+        Me.itemEstudiosCrearRapido.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem7})
         Me.itemEstudiosCrearRapido.Shortcut = System.Windows.Forms.Shortcut.CtrlE
         Me.itemEstudiosCrearRapido.Text = "Crear estudio rápido"
         '
@@ -637,6 +640,11 @@ Public Class Main
         'tmrTemporizador
         '
         Me.tmrTemporizador.Interval = 120000
+        '
+        'MenuItem7
+        '
+        Me.MenuItem7.Index = 0
+        Me.MenuItem7.Text = "generar id "
         '
         'Main
         '
@@ -1056,6 +1064,13 @@ Public Class Main
         Dim f As New ABMUsuario
         f.MdiParent = Me
         f.Show()
+
+
+    End Sub
+
+    Private Sub MenuItem7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem7.Click
+        Dim cNegocio As New Helper
+        MessageBox.Show(cNegocio.generarPublicID())
 
 
     End Sub
