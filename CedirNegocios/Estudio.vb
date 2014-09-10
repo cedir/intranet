@@ -260,7 +260,7 @@ Public Class Estudio
 
         Dim resp As String = "ok"
 
-        If insertarPaciente = True Then
+        If insertarPaciente Then
             resp = Me.paciente.AltaPaciente()
         End If
 
@@ -274,18 +274,29 @@ Public Class Estudio
 
 
     End Function
-    Private Function obtenerPublicID() As String
-        Return ""
+ 
+    Private Function obtenerNuevoPublicID() As String
 
+        'generamos un nuevo publicID y vemos si no existe
+        Dim consultar As New Consultas
+
+        Dim help As New Helper
+        Dim bandera As Boolean = False
+        Dim posibleID As String = help.generarPublicID()
+
+        Do While consultar.ExisteEstudioNuevoPublicID(posibleID)
+            posibleID = help.generarPublicID()
+        Loop
+
+        Return posibleID
 
     End Function
-
 
     Private Function crearEstudio() As String
         Dim resp As String
 
         Dim upd As New CedirDataAccess.Nuevo
-        Dim publicId As String = Me.obtenerPublicID()
+        Dim publicId As String = Me.obtenerNuevoPublicID()
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
         resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
@@ -301,13 +312,13 @@ Public Class Estudio
         vLog.userActionId = 1
         vLog.create()
 
-
         Return resp
     End Function
 
 
 
     Public Function actualizaEstudio() As String
+
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
         Dim fechaOptimizada As String

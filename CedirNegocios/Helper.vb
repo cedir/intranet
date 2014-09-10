@@ -111,7 +111,7 @@ Public Class Helper
         'Dim sGUID As String
         Dim arr As New List(Of String)
         For i As Integer = 0 To 10000
-            For j As Integer = 1 To 3
+            For j As Integer = 1 To 2
                 Dim idx As Integer = r.Next(0, caracteresValidos.Length() - 1) 'el largo de caracteresValidos
                 sb.Append(caracteresValidos.Substring(idx, 1))
             Next

@@ -140,6 +140,7 @@ Public Class Main
         Me.itemEstudiosDeHoy = New System.Windows.Forms.MenuItem
         Me.itemEstudiosBuscar = New System.Windows.Forms.MenuItem
         Me.itemEstudiosCrearRapido = New System.Windows.Forms.MenuItem
+        Me.MenuItem7 = New System.Windows.Forms.MenuItem
         Me.itemEstudiosBuscarAvanzado = New System.Windows.Forms.MenuItem
         Me.itemMedicos = New System.Windows.Forms.MenuItem
         Me.itemMedicosABM = New System.Windows.Forms.MenuItem
@@ -179,7 +180,6 @@ Public Class Main
         Me.BarraEstado = New System.Windows.Forms.StatusBar
         Me.nfyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.tmrTemporizador = New System.Windows.Forms.Timer(Me.components)
-        Me.MenuItem7 = New System.Windows.Forms.MenuItem
         Me.SuspendLayout()
         '
         'ToolBar1
@@ -417,6 +417,11 @@ Public Class Main
         Me.itemEstudiosCrearRapido.Shortcut = System.Windows.Forms.Shortcut.CtrlE
         Me.itemEstudiosCrearRapido.Text = "Crear estudio rápido"
         '
+        'MenuItem7
+        '
+        Me.MenuItem7.Index = 0
+        Me.MenuItem7.Text = "generar id "
+        '
         'itemEstudiosBuscarAvanzado
         '
         Me.itemEstudiosBuscarAvanzado.Enabled = False
@@ -640,11 +645,6 @@ Public Class Main
         'tmrTemporizador
         '
         Me.tmrTemporizador.Interval = 120000
-        '
-        'MenuItem7
-        '
-        Me.MenuItem7.Index = 0
-        Me.MenuItem7.Text = "generar id "
         '
         'Main
         '
