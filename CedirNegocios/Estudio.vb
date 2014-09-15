@@ -300,7 +300,7 @@ Public Class Estudio
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
         resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-        Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
+
 
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()

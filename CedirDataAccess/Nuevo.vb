@@ -85,14 +85,14 @@ Public Class Nuevo
 
    
 
-    Public Function nuevoEstudio(ByVal publicId As Integer, ByVal idPaciente As Integer, ByVal idPractica As Integer, ByVal motivoEstudio As String, ByVal informe As String, ByVal IdMedicoActuante As Integer, ByVal IdMedicoSolicitante As Integer, ByVal IdObraSocial As Integer, ByVal fecha As Date, ByVal nroDeOrden As String, ByVal idAnestesista As Integer, ByVal enlaceVideo As String) As String
+    Public Function nuevoEstudio(ByVal publicId As String, ByVal idPaciente As Integer, ByVal idPractica As Integer, ByVal motivoEstudio As String, ByVal informe As String, ByVal IdMedicoActuante As Integer, ByVal IdMedicoSolicitante As Integer, ByVal IdObraSocial As Integer, ByVal fecha As Date, ByVal nroDeOrden As String, ByVal idAnestesista As Integer, ByVal enlaceVideo As String) As String
 
 
         Dim stringInsert1 As String
         Dim stringInsert2 As String
         Dim stringInsert3 As String
 
-        stringInsert1 = "insert into " & com & "cedirData" & com & "." & com & "tblEstudios" & com & "(" & com & "publicID" & com & ", " & com & "idPaciente" & com & "," & com & "fechaEstudio" & com & "," & com & "idEstudio" & com & "," & com & "motivoEstudio" & com & "," & com & "informe" & com & "," & com & "enlaceVideo" & com & ") values (@idPaciente,@fechaEstudio,@idEstudio,@motivoEstudio,@informe, @enlaceVideo) "
+        stringInsert1 = "insert into " & com & "cedirData" & com & "." & com & "tblEstudios" & com & "(" & com & "publicID" & com & ", " & com & "idPaciente" & com & "," & com & "fechaEstudio" & com & "," & com & "idEstudio" & com & "," & com & "motivoEstudio" & com & "," & com & "informe" & com & "," & com & "enlaceVideo" & com & ") values (@publicID,@idPaciente,@fechaEstudio,@idEstudio,@motivoEstudio,@informe, @enlaceVideo) "
         stringInsert2 = "insert into " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & "(" & com & "idMedicoActuante" & com & "," & com & "idObraSocial" & com & "," & com & "idMedicoSolicitante" & com & ", " & com & "idFacturacion" & com & ", " & com & "nroDeOrden" & com & ", " & com & "idAnestesista" & com & ") values (@IdMedicoActuante,@IdObraSocial,@IdMedicoSolicitante,0,@nroDeOrden,@idAnestesista)"
         stringInsert3 = "insert into " & com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com & "(" & com & "importeEstudio" & com & "," & com & "importeMedicacion" & com & ", " & com & "diferenciaPaciente" & com & "," & com & "pagoContraFactura" & com & ", " & com & "pension" & com & ", " & com & "importePagoMedico" & com & ", " & com & "importePagoMedicoSol" & com & ")  values(0, 0, 0, 0, 0, 0, 0)"
 

@@ -575,22 +575,12 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
 
+
     Public Function ExisteEstudioNuevoPublicID(ByVal posiblePublicID As String) As Boolean
-
-
         Dim com As String = """"
-
-        'WALTER: OBSERVAR ESTE CODIGO COMO MEJORA LA SINTAXIS, SIN TENER QUE HACER USO ABUSIVO DE LA VARIABLE COMM "" ,
-        ' Y SOLO LA USAMOS PARA HACER REFERENCIAS EN LOS NOMBRES DE LAS TABLAS o los campos
-        Dim cmd As New NpgsqlCommand("select id from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
-        " where " & com & "publicID" & com & "  = :posiblePublicID", myConnection)
+        Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
+        " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
         Try
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add(New NpgsqlParameter("@posiblePublicID", DbType.Int32))
-            cmd.Parameters("@posiblePublicID").Value = posiblePublicID
-
-
-
             Dim id As Integer = cmd.ExecuteScalar()
 
             If id > 0 Then
@@ -598,19 +588,10 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
             End If
 
         Catch ex As ExecutionEngineException
-            Return ex.Message
-
+            Return "METODO: ExisteEstudioNuevoPublicID DE LA CLASE Consultas . " & ex.Message
         Finally
-
-
         End Try
-
         Return False
-
-
-
-
-
     End Function
 
 
