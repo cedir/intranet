@@ -101,14 +101,14 @@ Public Class Helper
     End Function
 
     Public Function generarPublicID() As String
-        Dim caracteresValidos As String = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789-+@="
+        Dim caracteresValidos As String = "-+@=ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789*/"
         Dim r As New Random
         Dim sb As New StringBuilder
         
 
         'Dim sGUID As String
         Dim arr As New List(Of String)
-        For i As Integer = 1 To 5
+        For i As Integer = 1 To 6
             Dim idx As Integer = r.Next(0, caracteresValidos.Length() - 1) 'el largo de caracteresValidos
             sb.Append(caracteresValidos.Substring(idx, 1))
         Next
