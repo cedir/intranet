@@ -495,6 +495,7 @@ Public Class ConsultaEstudiosPro
         Dim clMedSolicitante As New DataColumn("Médico Solicitante", Type.GetType("System.String"))
         Dim clFechaEstudio As New DataColumn("Fecha", Type.GetType("System.DateTime"))
         Dim clEstado As New DataColumn("Estado", Type.GetType("System.String"))
+        Dim clPublicID As New DataColumn("PublicID", Type.GetType("System.String"))
 
         myTable.Columns.Add(clIdEstudio)
         myTable.Columns.Add(clFechaEstudio)
@@ -505,6 +506,7 @@ Public Class ConsultaEstudiosPro
         myTable.Columns.Add(clMedActuante)
         myTable.Columns.Add(clMedSolicitante)
         myTable.Columns.Add(clEstado)
+        myTable.Columns.Add(clPublicID)
 
         Dim ts1 As New DataGridTableStyle
         ts1.MappingName = "myTable"
@@ -572,7 +574,11 @@ Public Class ConsultaEstudiosPro
         TextCol7.Width = 60
         ts1.GridColumnStyles.Add(TextCol7)
 
-
+        Dim TextCol8 As New DataGridTextBoxColumn
+        TextCol7.MappingName = "PublicID"
+        TextCol7.HeaderText = "PublicID"
+        TextCol7.Width = 60
+        ts1.GridColumnStyles.Add(TextCol7)
 
         btnEliminiar.Visible = False
 
@@ -656,6 +662,7 @@ Public Class ConsultaEstudiosPro
                     estado = "Sin presentar"
                 End If
                 NewRow("Estado") = estado
+                NewRow("PublicID") = est.id
                 myTable.Rows.Add(NewRow)
             Next
 
