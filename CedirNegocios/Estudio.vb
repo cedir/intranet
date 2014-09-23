@@ -34,6 +34,7 @@ Public Class Estudio
     Public arrMedicacion As New ArrayList
     Private m_importeCobradoMedicacion As Decimal
     Private m_porcentajeIVAPagoMedicoActuante As Decimal
+    Private m_publicID As String
 
     'implementamos caja
     Private m_movCaja As List(Of MovimientoDeCaja)
@@ -54,6 +55,14 @@ Public Class Estudio
     End Sub
 
 #Region "Propiedades"
+    Public Property publicID() As String
+        Get
+            Return Me.m_publicID
+        End Get
+        Set(ByVal value As String)
+            Me.m_publicID = value
+        End Set
+    End Property
     Public Property fechaCobro() As Date
         Get
             fechaCobro = m_FechaCobro

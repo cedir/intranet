@@ -662,7 +662,7 @@ Public Class ConsultaEstudiosPro
                     estado = "Sin presentar"
                 End If
                 NewRow("Estado") = estado
-                NewRow("PublicID") = est.id
+                NewRow("PublicID") = est.publicID
                 myTable.Rows.Add(NewRow)
             Next
 
