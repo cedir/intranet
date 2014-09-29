@@ -4,6 +4,7 @@ Public Class DetalleEstudio
     Inherits System.Windows.Forms.Form
     Dim cEstudio As Estudio
     Friend WithEvents lblCreateUser As System.Windows.Forms.Label
+    Friend WithEvents lblPublicID As System.Windows.Forms.Label
     Dim cFacturacion As Presentacion
 #Region " Código generado por el Diseñador de Windows Forms "
 
@@ -72,6 +73,7 @@ Public Class DetalleEstudio
         Me.btnEditar = New System.Windows.Forms.Button
         Me.lblPractica = New System.Windows.Forms.Label
         Me.lblFecha = New System.Windows.Forms.Label
+        Me.lblPublicID = New System.Windows.Forms.Label
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -80,7 +82,7 @@ Public Class DetalleEstudio
         '
         'btnCerrar
         '
-        Me.btnCerrar.Location = New System.Drawing.Point(136, 401)
+        Me.btnCerrar.Location = New System.Drawing.Point(133, 435)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(72, 23)
         Me.btnCerrar.TabIndex = 3
@@ -91,10 +93,10 @@ Public Class DetalleEstudio
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Location = New System.Drawing.Point(32, 74)
+        Me.TabControl1.Location = New System.Drawing.Point(29, 99)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(480, 321)
+        Me.TabControl1.Size = New System.Drawing.Size(480, 330)
         Me.TabControl1.TabIndex = 4
         '
         'TabPage1
@@ -108,7 +110,7 @@ Public Class DetalleEstudio
         Me.TabPage1.Controls.Add(Me.lblObraSocial)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(472, 295)
+        Me.TabPage1.Size = New System.Drawing.Size(472, 304)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Estudio"
         '
@@ -226,7 +228,7 @@ Public Class DetalleEstudio
         '
         'btnEditar
         '
-        Me.btnEditar.Location = New System.Drawing.Point(32, 401)
+        Me.btnEditar.Location = New System.Drawing.Point(29, 435)
         Me.btnEditar.Name = "btnEditar"
         Me.btnEditar.Size = New System.Drawing.Size(75, 23)
         Me.btnEditar.TabIndex = 5
@@ -250,10 +252,20 @@ Public Class DetalleEstudio
         Me.lblFecha.TabIndex = 7
         Me.lblFecha.Text = "fecha"
         '
+        'lblPublicID
+        '
+        Me.lblPublicID.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPublicID.Location = New System.Drawing.Point(32, 62)
+        Me.lblPublicID.Name = "lblPublicID"
+        Me.lblPublicID.Size = New System.Drawing.Size(384, 16)
+        Me.lblPublicID.TabIndex = 8
+        Me.lblPublicID.Text = "Public ID .................:   "
+        '
         'DetalleEstudio
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(544, 432)
+        Me.ClientSize = New System.Drawing.Size(552, 483)
+        Me.Controls.Add(Me.lblPublicID)
         Me.Controls.Add(Me.lblFecha)
         Me.Controls.Add(Me.lblPractica)
         Me.Controls.Add(Me.btnEditar)
@@ -277,6 +289,7 @@ Public Class DetalleEstudio
         'SI ESTA COBRADO, QUE MUESTRE EL IMPORTE DE MEDICACION (SIRVE PARA PAGO A MEDICO)
 
         lblFecha.Text = "Fecha del estudio: " & cEstudio.fechaEstudio
+        Me.lblPublicID.Text = Me.lblPublicID.Text & cEstudio.publicID
         lblPractica.Text = cEstudio.practica.Estudio
         lblObraSocial.Text = "Obra Social: " & cEstudio.obraSocial.ObraSocial
         lblMedicoActuante.Text = "Médico Actuante: " & cEstudio.medicoActuante.apellido & ", " & cEstudio.medicoActuante.nombre
