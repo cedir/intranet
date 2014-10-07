@@ -104,7 +104,6 @@ Public Class Main
     Friend WithEvents mnuReemplazarPaciente As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem6 As System.Windows.Forms.MenuItem
     Friend WithEvents itemEstudiosCrearRapido As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuItem7 As System.Windows.Forms.MenuItem
     Friend WithEvents itemAnestesitasPagos As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -140,7 +139,6 @@ Public Class Main
         Me.itemEstudiosDeHoy = New System.Windows.Forms.MenuItem
         Me.itemEstudiosBuscar = New System.Windows.Forms.MenuItem
         Me.itemEstudiosCrearRapido = New System.Windows.Forms.MenuItem
-        Me.MenuItem7 = New System.Windows.Forms.MenuItem
         Me.itemEstudiosBuscarAvanzado = New System.Windows.Forms.MenuItem
         Me.itemMedicos = New System.Windows.Forms.MenuItem
         Me.itemMedicosABM = New System.Windows.Forms.MenuItem
@@ -413,14 +411,8 @@ Public Class Main
         '
         Me.itemEstudiosCrearRapido.Enabled = False
         Me.itemEstudiosCrearRapido.Index = 2
-        Me.itemEstudiosCrearRapido.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem7})
         Me.itemEstudiosCrearRapido.Shortcut = System.Windows.Forms.Shortcut.CtrlE
         Me.itemEstudiosCrearRapido.Text = "Crear estudio rápido"
-        '
-        'MenuItem7
-        '
-        Me.MenuItem7.Index = 0
-        Me.MenuItem7.Text = "generar id "
         '
         'itemEstudiosBuscarAvanzado
         '
@@ -1064,14 +1056,6 @@ Public Class Main
         Dim f As New ABMUsuario
         f.MdiParent = Me
         f.Show()
-
-
     End Sub
 
-    Private Sub MenuItem7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem7.Click
-        Dim cNegocio As New Helper
-        MessageBox.Show(cNegocio.generarPublicID())
-
-
-    End Sub
 End Class
