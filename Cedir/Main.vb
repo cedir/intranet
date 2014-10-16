@@ -3,17 +3,25 @@ Imports System.Collections.Generic
 
 
 Public Class Main
+
+
     Inherits System.Windows.Forms.Form
+
+
 
 #Region " Código generado por el Diseñador de Windows Forms "
 
     Public Sub New()
         MyBase.New()
 
+        
+
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
         'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+       
+
 
     End Sub
 
@@ -656,6 +664,8 @@ Public Class Main
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 
+
+
     End Sub
 
 #End Region
@@ -939,11 +949,6 @@ Public Class Main
 
 #Region "Eventos"
 
-
-    Public Sub actualizarEstudiosHoy()
-
-    End Sub
-
     Public Sub mostrarMensajesNoLeidos()
 
         Dim c As New CatalogoDeMensajes
@@ -968,6 +973,11 @@ Public Class Main
         Me.nti.Visible = False
         Me.mnuMensajeria.PerformClick()
     End Sub
+
+
+
+    
+
 
 #End Region
 
@@ -1057,5 +1067,45 @@ Public Class Main
         f.MdiParent = Me
         f.Show()
     End Sub
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
+
+
+    Private Class CustomExceptionHandler
+
+        ' Handles the exception event.
+        Public Sub OnThreadException(ByVal sender As Object, ByVal t As Threading.ThreadExceptionEventArgs)
+            Dim result As DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Try
+                result = Me.ShowThreadExceptionDialog(t.Exception)
+            Catch
+                Try
+                    MessageBox.Show("Fatal Error", "Fatal Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop)
+                Finally
+                    Application.Exit()
+                End Try
+            End Try
+
+            ' Exits the program when the user clicks Abort.
+            If (result = System.Windows.Forms.DialogResult.Abort) Then
+                Application.Exit()
+            End If
+        End Sub
+
+        ' Creates the error message and displays it.
+        Private Function ShowThreadExceptionDialog(ByVal e As Exception) As DialogResult
+            Dim errorMsg As IO.StringWriter = New IO.StringWriter()
+            errorMsg.WriteLine("An error occurred please contact the adminstrator with the following information:")
+            errorMsg.WriteLine("")
+            errorMsg.WriteLine(e.Message)
+            errorMsg.WriteLine("")
+            errorMsg.WriteLine("Stack Trace:")
+            errorMsg.WriteLine(e.StackTrace)
+            Return MessageBox.Show(errorMsg.ToString(), "Application Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop)
+        End Function
+    End Class
+
 
 End Class

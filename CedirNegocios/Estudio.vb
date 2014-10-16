@@ -293,33 +293,62 @@ Public Class Estudio
         Dim bandera As Boolean = False
         Dim posibleID As String = help.generarPublicID()
 
-        Do While consultar.ExisteEstudioNuevoPublicID(posibleID)
+        Do While (consultar.ExisteEstudioNuevoPublicID(posibleID))
+
+
             posibleID = help.generarPublicID()
+
+
         Loop
 
         Return posibleID
 
+
+
+
+
+
+
     End Function
 
     Private Function crearEstudio() As String
-        Dim resp As String
+        Dim resp As String = ""
 
         Dim upd As New CedirDataAccess.Nuevo
-        Dim publicId As String = Me.obtenerNuevoPublicID()
+        Try
 
-        'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+            Dim publicId As String = Me.obtenerNuevoPublicID()
+
+            'Al modificar esto, revisar código btnAnunciar en Turnos
+            resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
 
 
-        'Log the action
-        Dim sSecurity As Security = Security.GetInstance()
-        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
-        Dim vLog As New AuditLog
-        vLog.usuario = cUsuario
-        vLog.objectId = Me.nroEstudio
-        vLog.objectTypeId = 1
-        vLog.userActionId = 1
-        vLog.create()
+
+            'Log the action
+            Dim sSecurity As Security = Security.GetInstance()
+            Dim cUsuario As Usuario = sSecurity.getLoggedUser()
+            Dim vLog As New AuditLog
+            vLog.usuario = cUsuario
+            vLog.objectId = Me.nroEstudio
+            vLog.objectTypeId = 1
+            vLog.userActionId = 1
+            vLog.create()
+        Catch ex As IO.IOException
+            Return "error conexion base de datos" & ex.Message
+        Catch ex As Npgsql.NpgsqlException
+            Return "error en la consulta SQL" & ex.ErrorSql
+        Catch ex As Exception
+            Return ex.Message
+        
+
+
+
+
+           
+
+
+        End Try
+
 
         Return resp
     End Function

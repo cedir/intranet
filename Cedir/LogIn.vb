@@ -103,10 +103,6 @@ Public Class LogIn
 
     Dim cCatalogoDeUsuarios As New CatalogoDeUsuarios
     Private Sub LogIn_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-
-
-
     End Sub
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
         Dim cUsuario As Usuario = cCatalogoDeUsuarios.getUsuario(txtUsuario.Text.ToLower(), txtPassword.Text.ToLower())

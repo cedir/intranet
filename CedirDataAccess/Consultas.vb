@@ -582,26 +582,19 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
         " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
 
-        Try
-            Dim id As Integer = cmd.ExecuteScalar()
 
-            If id > 0 Then
-                Return True
-            End If
+        Dim id As Integer = cmd.ExecuteScalar()
 
-        Catch ex As ExecutionEngineException
-            Return "METODO: ExisteEstudioNuevoPublicID DE LA CLASE Consultas . " & ex.Message
+        If id > 0 Then
+            Return True
+        End If
 
-        Catch ex As NpgsqlException
-            Return "METODO: ExisteEstudioNuevoPublicID DE LA CLASE Consultas . " & ex.Detail & _
-            vbCrLf & "Error SQL : ..... " & ex.ErrorSql
-
-        End Try
-
+        'si hay una excepcion se devuelve false.
         Return False
+
     End Function
 
-
+    
 
     '--------------------------------General Function----------------------------------------
 

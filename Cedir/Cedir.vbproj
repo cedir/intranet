@@ -6,8 +6,7 @@
     <ProjectGuid>{129946C5-B138-42E5-9602-F3A30E1ACF22}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Icons\misc05.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Cedir</AssemblyName>
@@ -23,10 +22,10 @@
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>Off</OptionStrict>
     <RootNamespace>Cedir</RootNamespace>
-    <StartupObject>Cedir.Main</StartupObject>
+    <StartupObject>Cedir.My.MyApplication</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>WindowsForms</MyType>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
   </PropertyGroup>
@@ -152,8 +151,13 @@
     <Compile Include="AgregarEstudioAFacturacion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="dgrDatagridTextBoxColumn.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="NuevoEstudioRapidoPaso2.vb">
       <SubType>Form</SubType>
@@ -441,6 +445,12 @@
     <Compile Include="Reports\rptViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SplashScreen1.Designer.vb">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisorDeImagenes.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -703,6 +713,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>rptViewer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VisorDeImagenes.resx">
       <DependentUpon>VisorDeImagenes.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -816,6 +830,13 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\misc05.ico" />
+    <Content Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\DataSources\" />
