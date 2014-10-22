@@ -673,7 +673,13 @@ Public Class NuevoEstudio
                 frm.Show()
             End If
             Me.Close()
+        Else
+
+            MessageBox.Show(resp)
+
         End If
+
+
     End Sub
 
 

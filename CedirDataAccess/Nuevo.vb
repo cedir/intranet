@@ -139,9 +139,11 @@ Public Class Nuevo
             cmd.ExecuteNonQuery() 'Al modificar esto, revisar código btnAnunciar en Turnos
 
             Return "ok"
-        Catch ex As SqlException
-            Return ex.ToString
-
+        
+        Catch ex As Npgsql.NpgsqlException
+            Return "error en la consulta SQL .... " & ex.ErrorSql
+        Catch ex As Exception
+            Return ex.Message
         End Try
 
     End Function
@@ -253,7 +255,9 @@ Public Class Nuevo
             cmd.ExecuteNonQuery()
             Return "ok"
         Catch ex As NpgsqlException
-            Return ex.ToString
+            Return (ex.ErrorSql & vbCrLf & "Reinicie la aplicación.")
+        Catch ex As IO.IOException
+            Return (ex.Message & vbCrLf & "Reinicie la aplicación.")
         End Try
     End Function
 

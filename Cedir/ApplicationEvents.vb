@@ -1,4 +1,4 @@
-Imports Npgsql
+
 Namespace My
 
     ' Los siguientes eventos están disponibles para MyApplication:
@@ -13,17 +13,23 @@ Namespace My
 
     Partial Friend Class MyApplication
 
+        ''' <summary>
+        ''' Este metodo detecta un cambio en la red , y si se desconecta el cable. 
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        ''' <remarks></remarks>
         Private Sub MyApplication_NetworkAvailabilityChanged( _
             ByVal sender As Object, _
             ByVal e As Microsoft.VisualBasic.Devices.NetworkAvailableEventArgs _
         ) Handles Me.NetworkAvailabilityChanged
-            MessageBox.Show("Disponibilidad de red....:" & e.IsNetworkAvailable.ToString() & "   Se ha desconectado la red. Por favor, corrobore la conexion de red. (cable descontectado?)")
-            e.IsNetworkAvailable.ToString()
+            MessageBox.Show("Disponibilidad de red....:" & e.IsNetworkAvailable.ToString() & "   Se ha desconectado la red. Por favor, corrobore la conexion de red. (cable descontectado?)" & vbCrLf & _
+                            "Cierre y vuelva a abrir la aplicacion.")
+          
+         
         End Sub
 
-        Private Sub MyApplication_UnhandledException( _
-            ByVal sender As Object, _
-            ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs _
+        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs _
         ) Handles Me.UnhandledException
 
             Try
@@ -62,6 +68,7 @@ Namespace My
 
     End Class
 
+   
 
 End Namespace
 

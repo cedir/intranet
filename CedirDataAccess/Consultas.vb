@@ -31,26 +31,26 @@ Public Class Consultas
         End Try
     End Function
     Public Function Tabla(ByVal NombreTabla As String, ByVal condicion As String) As NpgsqlDataReader
-        Try
-            Dim com As String = """"
-            Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com & condicion, myConnection)
-            myCommand.CommandType = CommandType.Text
-            Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-            Return myDataReader
-        Catch ex As Exception
-            Throw New Exception(ex.ToString)
-        End Try
+        '  Try
+        Dim com As String = """"
+        Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com & condicion, myConnection)
+        myCommand.CommandType = CommandType.Text
+        Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
+        Return myDataReader
+        ' Catch ex As Exception
+        'Th'row New Exception(ex.ToString)
+        ' End Try
     End Function
     Public Function Tabla(ByVal schema As String, ByVal NombreTabla As String, ByVal condicion As String) As NpgsqlDataReader
-        Try
-            Dim com As String = """"
-            Dim myCommand As New NpgsqlCommand("select * from " & com & schema & com & "." & com & NombreTabla & com & condicion, myConnection)
-            myCommand.CommandType = CommandType.Text
-            Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-            Return myDataReader
-        Catch ex As Exception
-            Throw New Exception(ex.ToString)
-        End Try
+        ' Try
+        Dim com As String = """"
+        Dim myCommand As New NpgsqlCommand("select * from " & com & schema & com & "." & com & NombreTabla & com & condicion, myConnection)
+        myCommand.CommandType = CommandType.Text
+        Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
+        Return myDataReader
+        'Catch ex As Exception
+        '    Throw New Exception(ex.ToString)
+        ' End Try
     End Function
     Public Function EjecutarSelect(ByVal Sqlquery As String) As NpgsqlDataReader
         Try
@@ -577,20 +577,27 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
 
 
-    Public Function ExisteEstudioNuevoPublicID(ByVal posiblePublicID As String) As Boolean
+    Public Function existeEstudioNuevoPublicID(ByVal posiblePublicID As String) As Boolean
         Dim com As String = """"
         Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
         " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
+        Try
+
+            Dim id As Integer = cmd.ExecuteScalar()
+
+            If id > 0 Then
+                Return True
+            Else
+                Return False
+            End If
 
 
-        Dim id As Integer = cmd.ExecuteScalar()
+        Catch ex As NpgsqlException
+            MsgBox(ex.ErrorSql & vbCrLf & "Reinicie la aplicación.")
+        Catch ex As IO.IOException
+            MsgBox(ex.Message & vbCrLf & "Reinicie la aplicación.")
+        End Try
 
-        If id > 0 Then
-            Return True
-        End If
-
-        'si hay una excepcion se devuelve false.
-        Return False
 
     End Function
 

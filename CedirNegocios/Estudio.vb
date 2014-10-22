@@ -285,7 +285,6 @@ Public Class Estudio
     End Function
  
     Private Function obtenerNuevoPublicID() As String
-
         'generamos un nuevo publicID y vemos si no existe
         Dim consultar As New Consultas
 
@@ -293,21 +292,20 @@ Public Class Estudio
         Dim bandera As Boolean = False
         Dim posibleID As String = help.generarPublicID()
 
-        Do While (consultar.ExisteEstudioNuevoPublicID(posibleID))
+        Try
+            Do While (consultar.existeEstudioNuevoPublicID(posibleID))
+
+                posibleID = help.generarPublicID()
+
+            Loop
+
+            Return posibleID
 
 
-            posibleID = help.generarPublicID()
-
-
-        Loop
-
-        Return posibleID
-
-
-
-
-
-
+        Finally
+            help = Nothing
+            consultar = Nothing
+        End Try
 
     End Function
 
@@ -315,42 +313,29 @@ Public Class Estudio
         Dim resp As String = ""
 
         Dim upd As New CedirDataAccess.Nuevo
-        Try
 
-            Dim publicId As String = Me.obtenerNuevoPublicID()
+        Dim publicId As String = Me.obtenerNuevoPublicID()
+        If publicId = "error" Then
+            Return publicId
+        End If
 
-            'Al modificar esto, revisar código btnAnunciar en Turnos
-            resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-
-
-
-            'Log the action
-            Dim sSecurity As Security = Security.GetInstance()
-            Dim cUsuario As Usuario = sSecurity.getLoggedUser()
-            Dim vLog As New AuditLog
-            vLog.usuario = cUsuario
-            vLog.objectId = Me.nroEstudio
-            vLog.objectTypeId = 1
-            vLog.userActionId = 1
-            vLog.create()
-        Catch ex As IO.IOException
-            Return "error conexion base de datos" & ex.Message
-        Catch ex As Npgsql.NpgsqlException
-            Return "error en la consulta SQL" & ex.ErrorSql
-        Catch ex As Exception
-            Return ex.Message
-        
+        'Al modificar esto, revisar código btnAnunciar en Turnos
+        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
 
 
-
-
-           
-
-
-        End Try
-
+        'Log the action
+        Dim sSecurity As Security = Security.GetInstance()
+        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
+        Dim vLog As New AuditLog
+        vLog.usuario = cUsuario
+        vLog.objectId = Me.nroEstudio
+        vLog.objectTypeId = 1
+        vLog.userActionId = 1
+        vLog.create()
 
         Return resp
+
+
     End Function
 
 

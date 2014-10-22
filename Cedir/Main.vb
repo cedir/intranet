@@ -664,8 +664,6 @@ Public Class Main
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 
-
-
     End Sub
 
 #End Region
