@@ -301,7 +301,6 @@ Public Class Estudio
 
             Return posibleID
 
-
         Finally
             help = Nothing
             consultar = Nothing

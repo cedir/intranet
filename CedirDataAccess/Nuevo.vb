@@ -140,9 +140,7 @@ Public Class Nuevo
 
             Return "ok"
         
-        Catch ex As Npgsql.NpgsqlException
-            Return "error en la consulta SQL .... " & ex.ErrorSql
-        Catch ex As Exception
+               Catch ex As Exception
             Return ex.Message
         End Try
 
@@ -254,10 +252,8 @@ Public Class Nuevo
             cmd.CommandType = CommandType.Text
             cmd.ExecuteNonQuery()
             Return "ok"
-        Catch ex As NpgsqlException
-            Return (ex.ErrorSql & vbCrLf & "Reinicie la aplicación.")
-        Catch ex As IO.IOException
-            Return (ex.Message & vbCrLf & "Reinicie la aplicación.")
+        Catch ex As Exception
+            Return ex.Message
         End Try
     End Function
 
@@ -287,7 +283,7 @@ Public Class Nuevo
             End If
 
             Return id
-        Catch ex As SqlException
+        Catch ex As Exception
             Return 0
         End Try
     End Function
