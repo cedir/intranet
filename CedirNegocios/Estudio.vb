@@ -272,55 +272,52 @@ Public Class Estudio
         If insertarPaciente Then
             resp = Me.paciente.AltaPaciente()
         End If
-
         If resp = "ok" Then
             Return crearEstudio()
         End If
-
-
         Return "Error"
-
-
 
     End Function
  
     Private Function obtenerNuevoPublicID() As String
+
         'generamos un nuevo publicID y vemos si no existe
         Dim consultar As New Consultas
-
         Dim help As New Helper
         Dim bandera As Boolean = False
         Dim posibleID As String = help.generarPublicID()
 
         Try
-            Do While (consultar.existeEstudioNuevoPublicID(posibleID))
-
-                posibleID = help.generarPublicID()
-
+            Do While bandera = False
+                If consultar.existeEstudioNuevoPublicID(posibleID) > 0 Then
+                    posibleID = help.generarPublicID()
+                Else
+                    bandera = True
+                End If
             Loop
 
             Return posibleID
 
+        Catch ex As Exception
+
+            Throw New Exception(ex.Message)
+
         Finally
+
             help = Nothing
             consultar = Nothing
-        End Try
 
+        End Try
     End Function
 
     Private Function crearEstudio() As String
+
         Dim resp As String = ""
-
         Dim upd As New CedirDataAccess.Nuevo
-
         Dim publicId As String = Me.obtenerNuevoPublicID()
-        If publicId = "error" Then
-            Return publicId
-        End If
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
         resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-
 
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()
@@ -333,7 +330,6 @@ Public Class Estudio
         vLog.create()
 
         Return resp
-
 
     End Function
 

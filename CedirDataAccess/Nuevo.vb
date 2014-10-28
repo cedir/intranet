@@ -140,8 +140,8 @@ Public Class Nuevo
 
             Return "ok"
         
-               Catch ex As Exception
-            Return ex.Message
+        Catch ex As Exception
+            Throw New Exception
         End Try
 
     End Function

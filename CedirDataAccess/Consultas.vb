@@ -575,19 +575,18 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         End Try
     End Function
 
-    Public Function existeEstudioNuevoPublicID(ByVal posiblePublicID As String) As Boolean
+    Public Function existeEstudioNuevoPublicID(ByVal posiblePublicID As String) As Integer
+
         Dim com As String = """"
         Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
         " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
-
-        Dim id As Integer = cmd.ExecuteScalar()
-
-        If id > 0 Then
-            Return True
-        Else
-            Return False
-        End If
-
+        Try
+            Return cmd.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            cmd = Nothing
+        End Try
     End Function
 
     
