@@ -6,7 +6,7 @@
     <ProjectGuid>{129946C5-B138-42E5-9602-F3A30E1ACF22}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>Icons\misc05.ico</ApplicationIcon>
+    <ApplicationIcon>misc05.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Cedir</AssemblyName>
@@ -151,6 +151,7 @@
     <Compile Include="AgregarEstudioAFacturacion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="dgrDatagridTextBoxColumn.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -821,7 +822,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\misc05.ico" />
+    <Content Include="misc05.ico" />
     <Content Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
