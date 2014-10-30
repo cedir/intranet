@@ -139,11 +139,17 @@ Public Class Nuevo
             cmd.ExecuteNonQuery() 'Al modificar esto, revisar código btnAnunciar en Turnos
 
             Return "ok"
-        
-        Catch ex As Exception
-            Throw New Exception
-        End Try
 
+        Catch ex As NpgsqlException
+            Return ex.ErrorSql & ex.Message
+        Catch ex As Exception
+            Return ex.Message
+
+        Finally
+            cmd = Nothing
+
+
+        End Try
     End Function
 
 
@@ -369,5 +375,9 @@ Public Class Nuevo
     End Function
 
 
+    '------------------------------ Errorlogs -----------------------------
+    Private Sub insertLog()
+
+    End Sub
 
 End Class

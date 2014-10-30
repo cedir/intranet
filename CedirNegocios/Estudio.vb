@@ -273,9 +273,10 @@ Public Class Estudio
             resp = Me.paciente.AltaPaciente()
         End If
         If resp = "ok" Then
-            Return crearEstudio()
+            resp = crearEstudio()
         End If
-        Return "Error"
+
+        Return resp
 
     End Function
  
@@ -318,6 +319,12 @@ Public Class Estudio
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
         resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+        If resp <> "ok" Then
+            logError()
+        End If
+
+        Return resp
+
 
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()
@@ -344,12 +351,26 @@ Public Class Estudio
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fechaEstudio)
         fechaOptimizada = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
+
         resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        If resp <> "ok" Then
+            logError()
+        End If
         resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idMedicoActuante" & com & " = " & Me.medicoActuante.idMedico & " , " & com & "idMedicoSolicitante" & com & " = " & Me.medicoSolicitante.idMedico & " , " & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " , " & com & "nroDeOrden" & com & " = " & "'" & Me.nroOrden & "', " & com & "idAnestesista" & com & " = " & Me.Anestesista.idMedico, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        If resp <> "ok" Then
+            logError()
+        End If
 
         Return resp
 
     End Function
+
+    Private Sub logError()
+
+    End Sub
+
+
+
     Public Function actualizarImportes() As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String

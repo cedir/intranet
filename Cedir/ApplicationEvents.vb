@@ -24,12 +24,14 @@ Namespace My
             MessageBox.Show("Ha ocurrido un error en la aplicación. Por favor, comuniquese con el administrador de Cedir 2.0 ." & vbCrLf & _
                 "Se cerrará la aplicación", "Error de aplicación", MessageBoxButtons.OK, MessageBoxIcon.Error)
             My.Application.MainForm.Close()
+
+            'walter : aca podemos tener el error y mandarlo a log de base de datos, mas los datos de hora, fecha, 
+            'y demas 
+            'e.Exception.Message 
+            'My.Computer.Clock.LocalTime
+
+
         End Sub
-
-
-
-
-
 
 
     End Class
