@@ -30,6 +30,7 @@ Public Class NuevoEstudio
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents btnLink As System.Windows.Forms.Button
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents lblPublicID As System.Windows.Forms.Label
     Dim pAddFromSelectedEstudio As Boolean = False
 
 #Region " Constructor"
@@ -149,6 +150,7 @@ Public Class NuevoEstudio
         Me.GroupBox4 = New System.Windows.Forms.GroupBox
         Me.btnLink = New System.Windows.Forms.Button
         Me.GroupBox5 = New System.Windows.Forms.GroupBox
+        Me.lblPublicID = New System.Windows.Forms.Label
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -159,7 +161,7 @@ Public Class NuevoEstudio
         'lblDni
         '
         Me.lblDni.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDni.Location = New System.Drawing.Point(10, 20)
+        Me.lblDni.Location = New System.Drawing.Point(10, 18)
         Me.lblDni.Name = "lblDni"
         Me.lblDni.Size = New System.Drawing.Size(272, 16)
         Me.lblDni.TabIndex = 0
@@ -213,7 +215,7 @@ Public Class NuevoEstudio
         'lblNombre
         '
         Me.lblNombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblNombre.Location = New System.Drawing.Point(10, 44)
+        Me.lblNombre.Location = New System.Drawing.Point(10, 40)
         Me.lblNombre.Name = "lblNombre"
         Me.lblNombre.Size = New System.Drawing.Size(440, 16)
         Me.lblNombre.TabIndex = 9
@@ -434,6 +436,7 @@ Public Class NuevoEstudio
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.lblPublicID)
         Me.GroupBox1.Controls.Add(Me.lblDni)
         Me.GroupBox1.Controls.Add(Me.lblNombre)
         Me.GroupBox1.Controls.Add(Me.lblFecha)
@@ -524,6 +527,15 @@ Public Class NuevoEstudio
         Me.GroupBox5.Size = New System.Drawing.Size(343, 53)
         Me.GroupBox5.TabIndex = 47
         Me.GroupBox5.TabStop = False
+        '
+        'lblPublicID
+        '
+        Me.lblPublicID.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPublicID.Location = New System.Drawing.Point(10, 64)
+        Me.lblPublicID.Name = "lblPublicID"
+        Me.lblPublicID.Size = New System.Drawing.Size(384, 16)
+        Me.lblPublicID.TabIndex = 35
+        Me.lblPublicID.Text = "Public ID .................:   "
         '
         'NuevoEstudio
         '
@@ -623,8 +635,8 @@ Public Class NuevoEstudio
             End If
         End If
 
-               
-              
+
+
     End Sub
 
     Private Function validarCargaDeDatos() As Boolean
@@ -644,7 +656,7 @@ Public Class NuevoEstudio
     End Function
 
     Private Sub altaEstudio()
-       
+
 
         'dar de alta
         Dim resp As String
@@ -661,12 +673,18 @@ Public Class NuevoEstudio
                 frm.Show()
             End If
             Me.Close()
+        Else
+
+            MessageBox.Show(resp)
+
         End If
+
+
     End Sub
 
 
     Private Sub actualizarEstudio()
-      
+
         'Guardar cambios
         Dim resp As String
         resp = currentEst.actualizaEstudio()
@@ -789,6 +807,7 @@ Public Class NuevoEstudio
                 Me.Text = "Modificar estudio"
                 TxtMotivo.Text = currentEst.motivoEstudio
                 TxtInforme.Text = currentEst.informe
+                Me.lblPublicID.Text = Me.lblPublicID.Text & currentEst.publicID
             End If
 
 

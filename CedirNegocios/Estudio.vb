@@ -34,6 +34,7 @@ Public Class Estudio
     Public arrMedicacion As New ArrayList
     Private m_importeCobradoMedicacion As Decimal
     Private m_porcentajeIVAPagoMedicoActuante As Decimal
+    Private m_publicID As String
 
     'implementamos caja
     Private m_movCaja As List(Of MovimientoDeCaja)
@@ -54,6 +55,14 @@ Public Class Estudio
     End Sub
 
 #Region "Propiedades"
+    Public Property publicID() As String
+        Get
+            Return Me.m_publicID
+        End Get
+        Set(ByVal value As String)
+            Me.m_publicID = value
+        End Set
+    End Property
     Public Property fechaCobro() As Date
         Get
             fechaCobro = m_FechaCobro
@@ -256,45 +265,60 @@ Public Class Estudio
 
 #End Region
 
-    Public Function AltaEstudio() As String
-        'este metodo se llama desde el cuadro "buscarPaciente -> nuevoEstudio"
-        Dim resp As String
+    Public Function AltaEstudio(Optional ByVal insertarPaciente As Boolean = False) As String
 
-        Dim upd As New CedirDataAccess.Nuevo
-        'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-        Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
+        Dim resp As String = "ok"
 
-        'Log the action
-        Dim sSecurity As Security = Security.GetInstance()
-        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
-        Dim vLog As New AuditLog
-        vLog.usuario = cUsuario
-        vLog.objectId = Me.nroEstudio
-        vLog.objectTypeId = 1
-        vLog.userActionId = 1
-        vLog.create()
-
+        If insertarPaciente Then
+            resp = Me.paciente.AltaPaciente()
+        End If
+        If resp = "ok" Then
+            resp = crearEstudio()
+        End If
 
         Return resp
 
     End Function
-    Public Function AltaEstudio(ByVal insertarPaciente As Boolean) As String
-        'este se llama desde estudio Rapido 2 
+ 
+    Private Function obtenerNuevoPublicID() As String
+
+        'generamos un nuevo publicID y vemos si no existe
+        Dim consultar As New Consultas
+        Dim help As New Helper
+        Dim bandera As Boolean = False
+        Dim posibleID As String = help.generarPublicID()
+
+        Try
+            Do While bandera = False
+                If consultar.existeEstudioNuevoPublicID(posibleID) > 0 Then
+                    posibleID = help.generarPublicID()
+                Else
+                    bandera = True
+                End If
+            Loop
+
+            Return posibleID
+
+        Catch ex As Exception
+
+            Throw New Exception(ex.Message)
+
+        Finally
+
+            help = Nothing
+            consultar = Nothing
+
+        End Try
+    End Function
+
+    Private Function crearEstudio() As String
+
+        Dim resp As String = ""
         Dim upd As New CedirDataAccess.Nuevo
-        Dim resp As String = "ok"
+        Dim publicId As String = Me.obtenerNuevoPublicID()
 
-        If insertarPaciente = True Then
-            resp = Me.paciente.AltaPaciente()
-        End If
-
-        If resp = "ok" Then
-            resp = upd.nuevoEstudio(Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega)
-            Me.nroEstudio = upd.selectMAX("tblEstudios", "nroEstudio")
-        Else
-            Return resp
-        End If
-
+        'Al modificar esto, revisar código btnAnunciar en Turnos
+        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()
         Dim cUsuario As Usuario = sSecurity.getLoggedUser()
@@ -309,6 +333,7 @@ Public Class Estudio
 
     End Function
     Public Function actualizaEstudio() As String
+
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
         Dim fechaOptimizada As String
@@ -316,8 +341,15 @@ Public Class Estudio
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fechaEstudio)
         fechaOptimizada = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
+
         resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        If resp <> "ok" Then
+            logError()
+        End If
         resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idMedicoActuante" & com & " = " & Me.medicoActuante.idMedico & " , " & com & "idMedicoSolicitante" & com & " = " & Me.medicoSolicitante.idMedico & " , " & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " , " & com & "nroDeOrden" & com & " = " & "'" & Me.nroOrden & "', " & com & "idAnestesista" & com & " = " & Me.Anestesista.idMedico, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        If resp <> "ok" Then
+            logError()
+        End If
 
         Return resp
 

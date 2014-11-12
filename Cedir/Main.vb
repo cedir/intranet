@@ -4,16 +4,19 @@ Imports System.Collections.Generic
 
 Public Class Main
     Inherits System.Windows.Forms.Form
-
 #Region " Código generado por el Diseñador de Windows Forms "
 
     Public Sub New()
         MyBase.New()
 
+
+
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
         'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+
+
 
     End Sub
 
@@ -659,7 +662,6 @@ Public Class Main
     End Sub
 
 #End Region
-
     Public Property nti() As NotifyIcon
         Get
             Return Me.nfyIcon
@@ -668,7 +670,6 @@ Public Class Main
 
         End Set
     End Property
-
     Public Property timerMensajeria() As Timer
         Get
             Return Me.tmrTemporizador
@@ -677,8 +678,6 @@ Public Class Main
             tmrTemporizador = value
         End Set
     End Property
-
-
     Private Sub MenuItem4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemPacientesNuevo.Click
         Dim frm As New AltaPaciente()
         frm.esAltaPaciente = True
@@ -686,14 +685,12 @@ Public Class Main
         frm.Show()
 
     End Sub
-
     Private Sub MenuItem5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemPacientesBuscar.Click
         Dim frm As New BuscarPacientes
         frm.MdiParent = Me
         frm.Show()
 
     End Sub
-
     Private Sub MenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemEstudiosDeHoy.Click
 
         If Not Me.isFormOpened("EstudiosDeHoy") Then
@@ -704,13 +701,11 @@ Public Class Main
         End If
 
     End Sub
-
     Private Sub MenuItem9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemEstudiosBuscar.Click
         Dim f As New ConsultaEstudios
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemSalir.Click
         Me.Close()
     End Sub
@@ -719,7 +714,6 @@ Public Class Main
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemFacturacionNueva.Click
         If hayUnaFacturacionInstanciada Then
             MsgBox("Ya hay una ventana Nueva Facturación abierta", MsgBoxStyle.Information, "No se puede abrir la ventana Nueva Facturación")
@@ -730,49 +724,41 @@ Public Class Main
         End If
 
     End Sub
-
     Private Sub MenuItem13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemObraSocialesBuscar.Click
         Dim f As New ConsultarObraSocial
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemObraSocialesNueva.Click
         Dim f As New ABMObraSocial
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemMedicosABM.Click
         Dim f As New ABMMedico
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem23_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemPracticasABM.Click
         Dim f As New ABMPracticas
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem24_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemMedicosNuevoPago.Click
         Dim f As New PagoMedico
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem25_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemMedicosMiCuenta.Click
         Dim f As New MiCuenta
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem27_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemMedicacionABM.Click
         Dim f As New ABMMedicacion
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub ToolBar1_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar1.ButtonClick
         Select Case ToolBar1.Buttons.IndexOf(e.Button)
             Case 0
@@ -791,17 +777,14 @@ Public Class Main
 
         End Select
     End Sub
-
     Private Sub MenuItem10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemEstudiosCrearRapido.Click
         Dim f As New NuevoEstudioRapido("")
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem29_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
-
     Private Sub MenuItem30_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
@@ -810,31 +793,26 @@ Public Class Main
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem44_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'Dim f As New FacturacionesInforme
         'f.MdiParent = Me
         'f.Show()
     End Sub
-
     Private Sub MenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemUsuariosLogIn.Click
         Dim f As New LogIn
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem43_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemEstudiosBuscarAvanzado.Click
         Dim f As New ConsultaEstudiosPro
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem32_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemFacturacionConsultasBuscar.Click
         Dim f As New BuscarConsultas
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem36_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemFacturacionFacturaNueva.Click
         'Nueva Factura
         Dim f As New frmComprobanteNuevo
@@ -848,7 +826,6 @@ Public Class Main
         Me.Text = "Cedir"
         Me.timerMensajeria.Stop()
     End Sub
-
     Private Sub enableDefaultActions()
         Me.itemPracticas.Enabled = False
         Me.itemMedicacion.Enabled = False
@@ -881,38 +858,32 @@ Public Class Main
 
         Me.ToolBar1.Visible = False
     End Sub
-
     Private Sub itemFacturacionAMRListar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemFacturacionAMRBuscar.Click
         Dim f As New PresentacionAMRBuscar
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub itemFacturacionAMRNueva_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemFacturacionAMRNueva.Click
         Dim f As New PresentacionAMRAltaModificacion
         f.Alta = True
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub itemAnestesitasPagos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemAnestesitasPagos.Click
         Dim f As New AnestesistasNuevoPago
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub mnuComprobantesBuscar_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuItemComprobantesBuscar.Click
         Dim f As New ComprobantesBuscar
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub mnuMovimientoCaja_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMovimientoCaja.Click
         Dim f As New frmABMMovimientoCaja
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub mnuListadoCaja_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuListadoCaja.Click
         Dim f As New frmListadoDeMovimientos
         f.MdiParent = Me
@@ -923,27 +894,17 @@ Public Class Main
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub MenuItem4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMensajeria.Click
         Dim f As New Mensajeria
         f.MdiParent = Me
         f.Show()
     End Sub
-
-
     Private Sub mnuComplejidades_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuComplejidades.Click
         Dim f As New ComplejidadABM
         f.MdiParent = Me
         f.Show()
     End Sub
-
 #Region "Eventos"
-
-
-    Public Sub actualizarEstudiosHoy()
-
-    End Sub
-
     Public Sub mostrarMensajesNoLeidos()
 
         Dim c As New CatalogoDeMensajes
@@ -957,21 +918,14 @@ Public Class Main
         End If
         c = Nothing
     End Sub
-
-
-
     Private Sub tmrTemporizador_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrTemporizador.Tick
         Me.mostrarMensajesNoLeidos()
     End Sub
-
     Private Sub nfyIcon_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles nfyIcon.MouseDoubleClick
         Me.nti.Visible = False
         Me.mnuMensajeria.PerformClick()
     End Sub
-
 #End Region
-
-
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim procesos() As Process
         procesos = Process.GetProcessesByName(Application.ProductName.ToString)
@@ -982,13 +936,11 @@ Public Class Main
             Application.Exit()
         End If
     End Sub
-
     Private Sub MenuItem4_Click_3(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem4.Click
         Dim f As New InformeMensualComprobantes
         f.MdiParent = Me
         f.Show()
     End Sub
-
     ''' <summary>
     ''' Este metodo nos sirve para saber si existe algun formulario ya abierto.
     ''' Como parametros le pasamos el nombre del form
@@ -1005,10 +957,6 @@ Public Class Main
             End If
         Next
     End Function
-
-
-
-
     Private Sub mnuMedicMovimientoStock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMedicMovimientoStock.Click
         If Not Me.isFormOpened("MedicamentosMovimientoStock") Then
             Dim f As New MedicamentosMovimientoStock
@@ -1016,7 +964,6 @@ Public Class Main
             f.Show()
         End If
     End Sub
-
     Private Sub mnuMedicListadoMov_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMedicListadoMov.Click
         If Not Me.isFormOpened("MedicamentoListadoMovimientos") Then
             Dim f As New MedicamentoListadoMovimientos
@@ -1024,39 +971,32 @@ Public Class Main
             f.Show()
         End If
     End Sub
-
     Private Sub itemHonorariosCedir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemHonorariosCedir.Click
         Dim f As New ListadoHonorariosCedir
         f.MdiParent = Me
         f.Show()
     End Sub
-
     Private Sub BarraEstado_PanelClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.StatusBarPanelClickEventArgs) Handles BarraEstado.PanelClick
 
     End Sub
-
-
     Private Sub MenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem3.Click
         Dim f As New frmEstudiosMovimientos
         f.Show()
     End Sub
-
     Private Sub MenuItem5_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
-
-
-
     Private Sub mnuReemplazarPaciente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuReemplazarPaciente.Click
         Dim f As New frmEliminarPaciente
         f.Show()
     End Sub
-
     Private Sub itemUsuariosABM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemUsuariosABM.Click
         Dim f As New ABMUsuario
         f.MdiParent = Me
         f.Show()
-
-
     End Sub
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
+
 End Class

@@ -1,6 +1,11 @@
 Imports CedirDataAccess
 Imports Npgsql
 Imports System.Text.RegularExpressions
+Imports System.Guid
+Imports Microsoft.VisualBasic
+Imports System.Text
+Imports System.Collections.Generic
+
 
 Public Class Helper
 
@@ -95,6 +100,22 @@ Public Class Helper
         Return Regex.IsMatch(mailAValidar, "^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$")
     End Function
 
+    Public Function generarPublicID() As String
+        Dim caracteresValidos As String = "-+@=ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789abcddefghijklmnñopqrstuvwxyz*/"
+        Dim r As New Random
+        Dim sb As New StringBuilder
+        
 
+        'Dim sGUID As String
+        Dim arr As New List(Of String)
+        For i As Integer = 1 To 6
+            Dim idx As Integer = r.Next(0, caracteresValidos.Length() - 1) 'el largo de caracteresValidos
+            sb.Append(caracteresValidos.Substring(idx, 1))
+        Next
+
+        Return sb.ToString()
+
+
+    End Function
 
 End Class
