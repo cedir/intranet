@@ -22,10 +22,10 @@
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>Off</OptionStrict>
     <RootNamespace>Cedir</RootNamespace>
-    <StartupObject>Cedir.My.MyApplication</StartupObject>
+    <StartupObject>Cedir.Main</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
   </PropertyGroup>
@@ -153,10 +153,6 @@
     </Compile>
     <Compile Include="dgrDatagridTextBoxColumn.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="NuevoEstudioRapidoPaso2.vb">
       <SubType>Form</SubType>
@@ -355,11 +351,6 @@
     </Compile>
     <Compile Include="MiCuenta.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="NuevoEstudio.vb">
       <SubType>Form</SubType>
@@ -634,12 +625,6 @@
       <DependentUpon>MiCuenta.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="NuevoEstudio.resx">
       <DependentUpon>NuevoEstudio.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -822,10 +807,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\misc05.ico" />
-    <Content Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\DataSources\" />
