@@ -319,13 +319,6 @@ Public Class Estudio
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
         resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-        If resp <> "ok" Then
-            logError()
-        End If
-
-        Return resp
-
-
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()
         Dim cUsuario As Usuario = sSecurity.getLoggedUser()
@@ -339,9 +332,6 @@ Public Class Estudio
         Return resp
 
     End Function
-
-
-
     Public Function actualizaEstudio() As String
 
         Dim upd As New CedirDataAccess.Nuevo
@@ -364,13 +354,6 @@ Public Class Estudio
         Return resp
 
     End Function
-
-    Private Sub logError()
-
-    End Sub
-
-
-
     Public Function actualizarImportes() As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
