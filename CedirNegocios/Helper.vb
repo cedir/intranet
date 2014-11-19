@@ -101,7 +101,7 @@ Public Class Helper
     End Function
 
     Public Function generarPublicID() As String
-        Dim caracteresValidos As String = "-+@=ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789abcddefghijklmnñopqrstuvwxyz*/"
+        Dim caracteresValidos As String = "-+@=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcddefghijklmnopqrstuvwxyz*/"
         Dim r As New Random
         Dim sb As New StringBuilder
         
