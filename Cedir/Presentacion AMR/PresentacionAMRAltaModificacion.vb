@@ -309,12 +309,12 @@ Public Class PresentacionAMRAltaModificacion
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VerDetalleToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(138, 26)
         '
         'VerDetalleToolStripMenuItem
         '
         Me.VerDetalleToolStripMenuItem.Name = "VerDetalleToolStripMenuItem"
-        Me.VerDetalleToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.VerDetalleToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.VerDetalleToolStripMenuItem.Text = "Ver Detalle"
         '
         'Label2
@@ -600,6 +600,8 @@ Public Class PresentacionAMRAltaModificacion
         cmbAno.Items.Add("2012")
         cmbAno.Items.Add("2013")
         cmbAno.Items.Add("2014")
+        cmbAno.Items.Add("2015")
+        cmbAno.Items.Add("2016")
         cmbAno.SelectedItem = CStr(Today.Year)
 
 
