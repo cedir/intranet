@@ -122,7 +122,7 @@ Public Class PresentacionAMRBuscar
         'cmbAno
         '
         Me.cmbAno.FormattingEnabled = True
-        Me.cmbAno.Items.AddRange(New Object() {"2011", "2012", "2013", "2014"})
+        Me.cmbAno.Items.AddRange(New Object() {"2011", "2012", "2013", "2014", "2015", "2016"})
         Me.cmbAno.Location = New System.Drawing.Point(298, 19)
         Me.cmbAno.Name = "cmbAno"
         Me.cmbAno.Size = New System.Drawing.Size(76, 21)
