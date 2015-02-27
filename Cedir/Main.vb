@@ -3,17 +3,25 @@ Imports System.Collections.Generic
 
 
 Public Class Main
+
+
     Inherits System.Windows.Forms.Form
+
+
 
 #Region " Código generado por el Diseñador de Windows Forms "
 
     Public Sub New()
         MyBase.New()
 
+        
+
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
         'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+       
+
 
     End Sub
 
@@ -939,11 +947,6 @@ Public Class Main
 
 #Region "Eventos"
 
-
-    Public Sub actualizarEstudiosHoy()
-
-    End Sub
-
     Public Sub mostrarMensajesNoLeidos()
 
         Dim c As New CatalogoDeMensajes
@@ -968,6 +971,11 @@ Public Class Main
         Me.nti.Visible = False
         Me.mnuMensajeria.PerformClick()
     End Sub
+
+
+
+    
+
 
 #End Region
 
@@ -1056,7 +1064,12 @@ Public Class Main
         Dim f As New ABMUsuario
         f.MdiParent = Me
         f.Show()
-
-
     End Sub
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
+
+
+
 End Class

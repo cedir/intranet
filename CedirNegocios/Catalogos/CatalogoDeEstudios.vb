@@ -313,6 +313,7 @@ Public Class CatalogoDeEstudios
         Dim vEstudio As Estudio
         While drEstudios.Read()
             vEstudio = New Estudio
+            vEstudio.publicID = drEstudios.Item("publicID")
             vEstudio.nroEstudio = drEstudios.Item("nroEstudio")
             vEstudio.fechaEstudio = drEstudios.Item("fechaEstudio")
             vEstudio.motivoEstudio = drEstudios.Item("motivoEstudio")

@@ -31,26 +31,18 @@ Public Class Consultas
         End Try
     End Function
     Public Function Tabla(ByVal NombreTabla As String, ByVal condicion As String) As NpgsqlDataReader
-        Try
-            Dim com As String = """"
-            Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com & condicion, myConnection)
-            myCommand.CommandType = CommandType.Text
-            Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-            Return myDataReader
-        Catch ex As Exception
-            Throw New Exception(ex.ToString)
-        End Try
+        Dim com As String = """"
+        Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com & condicion, myConnection)
+        myCommand.CommandType = CommandType.Text
+        Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
+        Return myDataReader
     End Function
     Public Function Tabla(ByVal schema As String, ByVal NombreTabla As String, ByVal condicion As String) As NpgsqlDataReader
-        Try
-            Dim com As String = """"
-            Dim myCommand As New NpgsqlCommand("select * from " & com & schema & com & "." & com & NombreTabla & com & condicion, myConnection)
-            myCommand.CommandType = CommandType.Text
-            Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-            Return myDataReader
-        Catch ex As Exception
-            Throw New Exception(ex.ToString)
-        End Try
+        Dim com As String = """"
+        Dim myCommand As New NpgsqlCommand("select * from " & com & schema & com & "." & com & NombreTabla & com & condicion, myConnection)
+        myCommand.CommandType = CommandType.Text
+        Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
+        Return myDataReader
     End Function
     Public Function EjecutarSelect(ByVal Sqlquery As String) As NpgsqlDataReader
         Try
@@ -80,7 +72,8 @@ Public Class Consultas
     Public Function traerEstudios(ByVal condicion As String, Optional ByVal filtro As String = "") As NpgsqlDataReader
         Dim StringPuto As String = "select est." & com & "nroEstudio" & com & ", alos.*, " & com & "fechaEstudio" & com & "," & _
         com & "motivoEstudio" & com & "," & com & "informe" & com & "," & " det." & com & "idObraSocial" & com & _
-        ",det." & com & "idMedicoActuante" & com & ",det." & com & "idMedicoSolicitante" & com & ", " & com & _
+        ",  " & com & "publicID" & com & _
+        " ,det." & com & "idMedicoActuante" & com & ",det." & com & "idMedicoSolicitante" & com & ", " & com & _
         "enlaceVideo" & com & "," & com & _
         "nroDeOrden" & com & "," & com & "lugar" & com & "," & com & _
         "idFacturacion" & com & ", " & com & "idAnestesista" & com & "," & com & "fechaCobro" & com & "," & com & _
@@ -240,10 +233,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
     Public Function getLineasFacturcionAMR(ByVal filtro As String) As NpgsqlDataReader
         Dim inners As String
-        'Dim stringSelect As String = "select f." & com & "idFacturacion" & com & ", f." & com & "fechaFacturacion" & com & ", f." & com & "pagado" & com & ", f." & com & "tipoFactura" & com & ", f." & com & "iva" & com & ", f." & com & "idObraSocial" & com & ", " & com & "responsableDeFactura" & com & ", " & com & "periodo" & com & ", " & com & "total" & com & ", os." & com & "obraSocial" & com & ", fa." & com & "idPresentacionAMR" & com & ", fa." & com & "nroRemito" & com & " from " & com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com & " as fa "
         Dim stringSelect As String = "select f." & com & "idFacturacion" & com & ", fa." & com & "idPresentacionAMR" & com & ", fa." & com & "nroRemito" & com & " from " & com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com & " as fa "
-
-        ' inners &= " inner join " & com & "cedirData" & com & "." & com & "facturaciones_factAMR" & com & " as fa on fa." & com & "idFacturacion" & com & " = f." & com & "idFacturacion" & com
         inners &= " inner join " & com & "cedirData" & com & "." & com & "tblFacturacion" & com & " as f on fa." & com & "idFacturacion" & com & " = f." & com & "idFacturacion" & com
 
         Dim cCondicion As String = filtro
@@ -252,14 +242,8 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
             myCommand.CommandType = CommandType.Text
             myCommand.CommandText = stringSelect & inners & cCondicion
             myCommand.Connection = myConnection
-
-            'Dim objReader As New IO.StreamWriter("c:\w.txt")
-            'objReader.Write(myCommand.CommandText)
-            'objReader.Close()
-
             myCommand.ExecuteNonQuery()
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-
             Return myDataReader
         Catch ex As Exception
             Throw New Exception(ex.ToString)
@@ -332,37 +316,6 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
     End Function
 
-    'Public Function getComprobantes(ByVal filtro As String, Optional ByVal orderBy As String = "") As NpgsqlDataReader
-    '    'este metodo se invoca desde Comprobantes-buscar
-    '    Dim stringSelect As String = " select " & "c." & com & "id" & com & ",c." & com & "nroComprobante" & com & ",c." & com & "nombreCliente" & com & ",c." & com & "domicilioCliente" & com & ",c." & com & "nroCuit" & com & ",c." & com & "condicionFiscal" & com & ",c." & com & "responsable" & com & ",c." & com & "gravado" & com & ",c." & com & "idFactura" & com & ",g." & com & "descripcionGravado" & com & ",t." & com & "tipoComprobante" & com & ",t." & com & "id" & com & " as idTipo,c." & com & "fechaEmision" & com & ",c." & com & "fechaRecepcion" & com & ",c." & com & "estado" & com & ",c." & com & "subTipo" & com & ",c." & com & "totalFacturado" & com & ",c." & com & "totalCobrado" & com & ",c." & com & "gravadoPaciente" & com & ",g." & com & "porcentajeGravado" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c "
-    '    Dim inners As String = " left join " & com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & " as t on c." & com & "idTipoComprobante" & com & " = t." & com & "id" & com & " left join " & com & "cedirData" & com & "." & com & "tblGravado" & com & " as g on c." & com & "gravado" & com & " = g." & com & "id" & com
-
-    '    Dim concondicion As String = ""
-    '    Dim cCondicion As String
-    '    If filtro <> "" Then
-    '        cCondicion = " where " & filtro
-    '    Else
-    '        cCondicion = concondicion
-    '    End If
-
-    '    Dim order As String
-    '    If orderBy <> "" Then
-    '        order = " order by " & orderBy
-    '    End If
-    '    Try
-    '        myCommand.CommandType = CommandType.Text
-    '        myCommand.CommandText = stringSelect & inners & cCondicion & order
-    '        myCommand.Connection = myConnection
-    '        myCommand.ExecuteNonQuery()
-    '        Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
-
-    '        Return myDataReader
-    '    Catch ex As Exception
-    '        Throw New Exception(ex.ToString)
-
-    '    End Try
-
-    'End Function
     Public Function getComprobantes(ByVal filtro As String, Optional ByVal orderBy As String = "") As NpgsqlDataReader
         'este metodo se invoca desde Comprobantes-buscar
 
@@ -395,7 +348,6 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
             myCommand.CommandType = CommandType.Text
             myCommand.CommandText = stringSelect & cCondicion & order
             myCommand.Connection = myConnection
-            'myCommand.ExecuteNonQuery()
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
 
             Return myDataReader
@@ -574,6 +526,21 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         End Try
     End Function
 
+    Public Function existeEstudioNuevoPublicID(ByVal posiblePublicID As String) As Integer
+
+        Dim com As String = """"
+        Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
+        " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
+        Try
+            Return cmd.ExecuteScalar()
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            cmd = Nothing
+        End Try
+    End Function
+
+    
 
     '--------------------------------General Function----------------------------------------
 
