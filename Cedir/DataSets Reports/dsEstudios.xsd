@@ -30,6 +30,7 @@
               <xs:element name="nombreObraSocial" msprop:Generator_UserColumnName="nombreObraSocial" msprop:Generator_ColumnPropNameInRow="nombreObraSocial" msprop:Generator_ColumnVarNameInTable="columnnombreObraSocial" msprop:Generator_ColumnPropNameInTable="nombreObraSocialColumn" type="xs:string" minOccurs="0" />
               <xs:element name="telefonoPaciente" msprop:Generator_UserColumnName="telefonoPaciente" msprop:Generator_ColumnVarNameInTable="columntelefonoPaciente" msprop:Generator_ColumnPropNameInRow="telefonoPaciente" msprop:Generator_ColumnPropNameInTable="telefonoPacienteColumn" type="xs:string" minOccurs="0" />
               <xs:element name="enlaceVideo" msprop:Generator_UserColumnName="enlaceVideo" msprop:Generator_ColumnPropNameInRow="enlaceVideo" msprop:Generator_ColumnVarNameInTable="columnenlaceVideo" msprop:Generator_ColumnPropNameInTable="enlaceVideoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="publicID" msprop:Generator_UserColumnName="publicID" msprop:Generator_ColumnVarNameInTable="columnpublicID" msprop:Generator_ColumnPropNameInRow="publicID" msprop:Generator_ColumnPropNameInTable="publicIDColumn" type="xs:string" default="" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

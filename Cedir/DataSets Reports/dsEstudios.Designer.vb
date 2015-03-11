@@ -483,6 +483,8 @@ Partial Public Class dsEstudios
         
         Private columnenlaceVideo As Global.System.Data.DataColumn
         
+        Private columnpublicID As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Sub New()
             MyBase.New
@@ -599,6 +601,13 @@ Partial Public Class dsEstudios
             End Get
         End Property
         
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public ReadOnly Property publicIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnpublicID
+            End Get
+        End Property
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -628,9 +637,9 @@ Partial Public Class dsEstudios
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Overloads Function AddestudioRow(ByVal nombrePractica As String, ByVal medicoActuante As String, ByVal fecha As String, ByVal paciente As String, ByVal importeEstudio As Decimal, ByVal medicoSolicitante As String, ByVal pagoContraFactura As String, ByVal informe As String, ByVal motivoEstudio As String, ByVal nombreObraSocial As String, ByVal telefonoPaciente As String, ByVal enlaceVideo As String) As estudioRow
+        Public Overloads Function AddestudioRow(ByVal nombrePractica As String, ByVal medicoActuante As String, ByVal fecha As String, ByVal paciente As String, ByVal importeEstudio As Decimal, ByVal medicoSolicitante As String, ByVal pagoContraFactura As String, ByVal informe As String, ByVal motivoEstudio As String, ByVal nombreObraSocial As String, ByVal telefonoPaciente As String, ByVal enlaceVideo As String, ByVal publicID As String) As estudioRow
             Dim rowestudioRow As estudioRow = CType(Me.NewRow,estudioRow)
-            Dim columnValuesArray() As Object = New Object() {nombrePractica, medicoActuante, fecha, paciente, importeEstudio, medicoSolicitante, pagoContraFactura, informe, motivoEstudio, nombreObraSocial, telefonoPaciente, enlaceVideo}
+            Dim columnValuesArray() As Object = New Object() {nombrePractica, medicoActuante, fecha, paciente, importeEstudio, medicoSolicitante, pagoContraFactura, informe, motivoEstudio, nombreObraSocial, telefonoPaciente, enlaceVideo, publicID}
             rowestudioRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowestudioRow)
             Return rowestudioRow
@@ -667,6 +676,7 @@ Partial Public Class dsEstudios
             Me.columnnombreObraSocial = MyBase.Columns("nombreObraSocial")
             Me.columntelefonoPaciente = MyBase.Columns("telefonoPaciente")
             Me.columnenlaceVideo = MyBase.Columns("enlaceVideo")
+            Me.columnpublicID = MyBase.Columns("publicID")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
@@ -695,6 +705,9 @@ Partial Public Class dsEstudios
             MyBase.Columns.Add(Me.columntelefonoPaciente)
             Me.columnenlaceVideo = New Global.System.Data.DataColumn("enlaceVideo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnenlaceVideo)
+            Me.columnpublicID = New Global.System.Data.DataColumn("publicID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnpublicID)
+            Me.columnpublicID.DefaultValue = CType("",String)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
@@ -2677,6 +2690,20 @@ Partial Public Class dsEstudios
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property publicID() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableestudio.publicIDColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'publicID' de la tabla 'estudio' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableestudio.publicIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Function IsnombrePracticaNull() As Boolean
             Return Me.IsNull(Me.tableestudio.nombrePracticaColumn)
         End Function
@@ -2794,6 +2821,16 @@ Partial Public Class dsEstudios
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Sub SetenlaceVideoNull()
             Me(Me.tableestudio.enlaceVideoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Function IspublicIDNull() As Boolean
+            Return Me.IsNull(Me.tableestudio.publicIDColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Sub SetpublicIDNull()
+            Me(Me.tableestudio.publicIDColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
