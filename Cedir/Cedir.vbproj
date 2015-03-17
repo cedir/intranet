@@ -805,7 +805,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\icon-ingecol_01.png" />
     <Content Include="Icons\misc05.ico" />
   </ItemGroup>
   <ItemGroup>
