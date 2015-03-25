@@ -1012,16 +1012,9 @@ Public Class ConsultaEstudiosPro
     Private Sub ObraSocialToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ObraSocialToolStripMenuItem.Click
         Dim est As Estudio
         est = arrl(dgv.CurrentRow.Index)
-       
-
         Dim catalogoObraSocial As New CatalogoDeObrasSociales
-        arrObraSocial = catalogoObraSocial.TodosLasObrasSociales(est.obraSocial.ObraSocial)
-        
         Dim f As New DetalleObraSocial(catalogoObraSocial.TodosLasObrasSociales(est.obraSocial.ObraSocial).Item(0))
         f.ShowDialog()
-
-
-
 
     End Sub
 End Class
