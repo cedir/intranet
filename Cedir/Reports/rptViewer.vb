@@ -299,11 +299,22 @@ Public Class rptViewer
         r3("informe") = estudio.informe
         r3("fecha") = estudio.fechaEstudio.ToString().Remove(10)
         r3("medicoSolicitante") = estudio.medicoSolicitante.nombreCompleto
+        r3("publicID") = "http://www.cedirsalud.com.ar/video/" + estudio.publicID
         r3("enlaceVideo") = estudio.VideoEstudio.enlaceMega
         ds.Tables("estudio").Rows.Add(r3)
+
         If estudio.VideoEstudio.enlaceMega = "" Then
             rep.Section4.SectionFormat.EnableSuppress = True
+            rep.rfEnlaceVideo.SectionFormat.EnableSuppress = True 'sacamos el pie linkMega
+            rep.rfPublicID.SectionFormat.EnableSuppress = True 'sacamos el pie public id
+        ElseIf estudio.publicID <> "" Then
+            rep.rfEnlaceVideo.SectionFormat.EnableSuppress = True
+            rep.rfPublicID.SectionFormat.EnableSuppress = False
         End If
+
+
+        
+
         rep.SetDataSource(ds)
         Me.CrystalReportViewer1.ReportSource = rep
         Me.CrystalReportViewer1.PrintReport()
