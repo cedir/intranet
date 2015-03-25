@@ -35,7 +35,6 @@ Global
 		{42AFDE51-E355-4478-8657-42891E20A417}.Debug|Any CPU.ActiveCfg = Debug
 		{42AFDE51-E355-4478-8657-42891E20A417}.Debug|Any CPU.Build.0 = Debug
 		{42AFDE51-E355-4478-8657-42891E20A417}.Release|Any CPU.ActiveCfg = Release
-		{42AFDE51-E355-4478-8657-42891E20A417}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

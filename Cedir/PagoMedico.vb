@@ -444,7 +444,6 @@ Public Class PagoMedico
         CargarGrilla()
     End Sub
 
-
     Private Sub CargarGrilla()
         Dim NewRow As DataRow
         Dim i As Integer
@@ -490,8 +489,8 @@ Public Class PagoMedico
 
             If est.esPagoContraFactura = 1 Then
                 banderaPCF = "*" 'Es pago contra factura
-                If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante") And (est.obraSocial.idObraSocial <> PARTICULAR_ESPECIAL And est.obraSocial.idObraSocial <> PARTICULAR)) Then
-                    'Si es actuante y NO es de OS Particular
+                If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante")) Then
+
                     porcentaje = 100 - cLinea.getPorcentaje()
                     If (est.practica.idEstudio = VIDEOENDOSCOPIA_BAJA_TERAPEUTICA Or est.practica.idEstudio = VIDEOENDOSCOPIA_ALTA_TERAPEUTICA Or est.practica.idEstudio = 118 Or est.practica.idEstudio = 121) And (est.obraSocial.idObraSocial = OSDE Or est.obraSocial.idObraSocial = OSDE_CEDIR) Then
                         pagoDelCorrespondiente = ((importeEstudio - cLinea.getDescuentoPorPolipectomiaOSDE) * porcentaje / 100) + cLinea.getDescuentoPorPolipectomiaOSDE
@@ -500,18 +499,18 @@ Public Class PagoMedico
                     End If
                     pagoDelCorrespondiente = pagoDelCorrespondiente * (-1)
                 End If
+                'nueva rn
+                ' If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante") And (est.obraSocial.idObraSocial = PARTICULAR_ESPECIAL Or est.obraSocial.idObraSocial = PARTICULAR)) Then
+                '                ' Si el estudio es actuante y particular, y pago contra factura, significa que el medico se llevó el importe del estudio en el dia. No hay que pagarle nada al actuante
+                '                ' salvo el caso de analisis bioquimicos.
+                '                porcentaje = 0
+                '                pagoDelCorrespondiente = 0.0
 
-                If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante") And (est.obraSocial.idObraSocial = PARTICULAR_ESPECIAL Or est.obraSocial.idObraSocial = PARTICULAR)) Then
-                    ' Si el estudio es actuante y particular, y pago contra factura, significa que el medico se llevó el importe del estudio en el dia. No hay que pagarle nada al actuante
-                    ' salvo el caso de analisis bioquimicos.
-                    porcentaje = 0
-                    pagoDelCorrespondiente = 0.0
-
-                    If (est.practica.idEstudio = ANALISIS_BIOQUIMICOS) Then
-                        porcentaje = cLinea.getPorcentaje()
-                        pagoDelCorrespondiente = importeEstudio * porcentaje / 100
-                    End If
-                End If
+                '                If (est.practica.idEstudio = ANALISIS_BIOQUIMICOS) Then
+                '                    porcentaje = cLinea.getPorcentaje()
+                '                    pagoDelCorrespondiente = importeEstudio * porcentaje / 100
+                '                End If
+                ' End If
 
                 If (est.getCondicionMedico(currentMedico.idMedico) = "solicitante") Then
                     porcentaje = cLinea.getPorcentaje()
