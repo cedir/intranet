@@ -66,6 +66,7 @@ Public Class ConsultaEstudiosPro
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents PacienteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MovimientoDeCajaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ObraSocialToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btnEliminiar As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -105,6 +106,7 @@ Public Class ConsultaEstudiosPro
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.PacienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MovimientoDeCajaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ObraSocialToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.GroupBox1.SuspendLayout()
         Me.grpPeriodo.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -434,9 +436,9 @@ Public Class ConsultaEstudiosPro
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PacienteToolStripMenuItem, Me.MovimientoDeCajaToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PacienteToolStripMenuItem, Me.MovimientoDeCajaToolStripMenuItem, Me.ObraSocialToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(178, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(178, 92)
         '
         'PacienteToolStripMenuItem
         '
@@ -449,6 +451,12 @@ Public Class ConsultaEstudiosPro
         Me.MovimientoDeCajaToolStripMenuItem.Name = "MovimientoDeCajaToolStripMenuItem"
         Me.MovimientoDeCajaToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
         Me.MovimientoDeCajaToolStripMenuItem.Text = "Movimiento de caja"
+        '
+        'ObraSocialToolStripMenuItem
+        '
+        Me.ObraSocialToolStripMenuItem.Name = "ObraSocialToolStripMenuItem"
+        Me.ObraSocialToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
+        Me.ObraSocialToolStripMenuItem.Text = "Obra social"
         '
         'ConsultaEstudiosPro
         '
@@ -999,5 +1007,14 @@ Public Class ConsultaEstudiosPro
         Dim f As New frmEstudiosMovimientos
         f.DateTimePicker1.Value = est.fechaEstudio
         f.ShowDialog()
+    End Sub
+
+    Private Sub ObraSocialToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ObraSocialToolStripMenuItem.Click
+        Dim est As Estudio
+        est = arrl(dgv.CurrentRow.Index)
+        Dim catalogoObraSocial As New CatalogoDeObrasSociales
+        Dim f As New DetalleObraSocial(catalogoObraSocial.TodosLasObrasSociales(est.obraSocial.ObraSocial).Item(0))
+        f.ShowDialog()
+
     End Sub
 End Class

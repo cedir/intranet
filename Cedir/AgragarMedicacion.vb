@@ -586,7 +586,7 @@ Public Class AgragarMedicacion
 
         Dim m As Medicamento
         'Id's de los medicamentos que se cargan por default.
-        Dim arrMedDef() As Integer = {2, 3, 4, 5, 6, 7, 8, 22, 35, 36, 37, 42, 109, 128, 144}
+        Dim arrMedDef() As Integer = {2, 3, 4, 5, 6, 7, 8, 22, 35, 36, 37, 42, 48, 109, 128, 144, 167, 169}
         Dim list As New ArrayList
         list.AddRange(arrMedDef)
 
