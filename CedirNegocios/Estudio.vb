@@ -315,22 +315,34 @@ Public Class Estudio
 
         Dim resp As String = ""
         Dim upd As New CedirDataAccess.Nuevo
-        Me.publicID = Me.obtenerNuevoPublicID()
-
-        'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(me.publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-        resp = Me.obtenerUltimoNroEstudio()
-
-        'Log the action
-        Dim sSecurity As Security = Security.GetInstance()
-        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
         Dim vLog As New AuditLog
-        vLog.usuario = cUsuario
-        vLog.objectId = Me.nroEstudio
-        vLog.objectTypeId = 1
-        vLog.userActionId = 1
-        vLog.create()
+        Dim catEstudios As New CatalogoDeEstudios
+        Try
+            Me.publicID = Me.obtenerNuevoPublicID()
 
+            'Al modificar esto, revisar código btnAnunciar en Turnos
+            resp = upd.nuevoEstudio(Me.publicID, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+
+            Me.nroEstudio = catEstudios.obtenerUltimoNroEstudio
+
+            'Log the action
+            Dim sSecurity As Security = Security.GetInstance()
+            Dim cUsuario As Usuario = sSecurity.getLoggedUser()
+
+            vLog.usuario = cUsuario
+            vLog.objectId = Me.nroEstudio
+            vLog.objectTypeId = 1
+            vLog.userActionId = 1
+            vLog.create()
+
+        Finally
+
+            upd = Nothing
+            vLog = Nothing
+            catEstudios = Nothing
+
+        End Try
+        
         Return resp
 
     End Function
@@ -582,23 +594,7 @@ Public Class Estudio
         Return arr
     End Function
 
-    Public Function obtenerUltimoNroEstudio() As String
-        Dim da As New Consultas
-        Dim dr As NpgsqlDataReader
-        Try
-            dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
-            dr.Read()
-            Me.nroEstudio = dr.Item(0)
-            Return "ok"
-        Catch ex As Exception
-            Return ""
-        Finally
-            da = Nothing
-            dr = Nothing
-
-        End Try
-
-    End Function
+    
 
 
 End Class
