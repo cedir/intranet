@@ -123,7 +123,7 @@ Public Class CatalogoDeMovimientosDeCaja
             tipoMov.descripcion = Convert.ToString(dr("descripcion"))
             oCajaMov.TipoDeMovimiento = tipoMov
 
-            If dr("fechaEstudio") Is DBNull.Value Then 'aca esta el problema. no se esta seteando la fecha, cuando se asocia al mov.
+            If dr("fechaEstudio") Is DBNull.Value Then
                 oCajaMov.Estudio = Nothing
             Else
                 vEstudio = New Estudio
