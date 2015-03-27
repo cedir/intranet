@@ -375,7 +375,7 @@ Public Class NuevoEstudioRapidoPaso2
                 If currentOS <> "" Then
                     'llenar los datos en el form global
                     If hayUnaFacturacionInstanciada Then
-                        nroEstudioParaFacturacion = catalogoEstudios.obtenerUltimoNroEstudio 'para llenar este atributo hay que hacer una consulta
+                        nroEstudioParaFacturacion = est.nroEstudio 'para llenar este atributo hay que hacer una consulta
                     End If
                 Else
                     MsgBox("El estudio ha sido creado")
@@ -383,6 +383,7 @@ Public Class NuevoEstudioRapidoPaso2
                     Dim dr As DialogResult
                     dr = MessageBox.Show("Desea crear un movimiento de caja con este estudio?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
                     If dr = Windows.Forms.DialogResult.Yes Then
+
                         Me.cargarMovimientoCaja(est)
                     End If
                 End If

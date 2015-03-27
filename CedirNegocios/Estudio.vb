@@ -275,6 +275,7 @@ Public Class Estudio
         If resp = "ok" Then
             Return crearEstudio()
         End If
+
         Return "Error"
 
     End Function
@@ -314,10 +315,11 @@ Public Class Estudio
 
         Dim resp As String = ""
         Dim upd As New CedirDataAccess.Nuevo
-        Dim publicId As String = Me.obtenerNuevoPublicID()
+        Me.publicID = Me.obtenerNuevoPublicID()
 
         'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+        resp = upd.nuevoEstudio(me.publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+        resp = Me.obtenerUltimoNroEstudio()
 
         'Log the action
         Dim sSecurity As Security = Security.GetInstance()
@@ -579,4 +581,26 @@ Public Class Estudio
         Next
         Return arr
     End Function
+
+    Public Function obtenerUltimoNroEstudio() As String
+        Dim da As New Consultas
+        Dim dr As NpgsqlDataReader
+        Try
+            dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
+            dr.Read()
+            Me.nroEstudio = dr.Item(0)
+            Return "ok"
+        Catch ex As Exception
+            Return ""
+        Finally
+            da = Nothing
+            dr = Nothing
+
+        End Try
+
+    End Function
+
+
 End Class
+
+

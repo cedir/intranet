@@ -291,12 +291,7 @@ Public Class CatalogoDeEstudios
         resp = upd.delete("tblConsultas", com & "id" & com & " = " & idConsulta)
         Return resp
     End Function
-    Public Function obtenerUltimoNroEstudio() As Integer
-        Dim dr As NpgsqlDataReader
-        dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
-        dr.Read()
-        Return dr.Item(0)
-    End Function
+    
     Public Function obtenerUltimoNroConsulta() As Integer
         Dim dr As NpgsqlDataReader
         dr = da.EjecutarSelect("select max(" & com & "id" & com & ") from " & com & "cedirData" & com & "." & com & "tblConsultas" & com)
@@ -401,5 +396,6 @@ Public Class CatalogoDeEstudios
 
         drEstudios.Close()
     End Function
+
 
 End Class
