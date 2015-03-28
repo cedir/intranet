@@ -149,7 +149,7 @@ Public Class MovimientoDeCaja
         'insertamos, si corresponde, el id del estudio asociado
         If Me.Estudio IsNot Nothing Then
             cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "nroEstudio" & com & " = " & _
-                          Me.Estudio.nroEstudio, " where " & com & "id" & com & " = " & Id)
+                          Me.Estudio.nroEstudio, " where " & com & "id" & com & " = " & Id) ' ATENCION!!! ERROR
         End If
 
 

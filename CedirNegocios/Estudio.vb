@@ -275,6 +275,7 @@ Public Class Estudio
         If resp = "ok" Then
             Return crearEstudio()
         End If
+
         Return "Error"
 
     End Function
@@ -314,21 +315,34 @@ Public Class Estudio
 
         Dim resp As String = ""
         Dim upd As New CedirDataAccess.Nuevo
-        Dim publicId As String = Me.obtenerNuevoPublicID()
-
-        'Al modificar esto, revisar código btnAnunciar en Turnos
-        resp = upd.nuevoEstudio(publicId, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
-
-        'Log the action
-        Dim sSecurity As Security = Security.GetInstance()
-        Dim cUsuario As Usuario = sSecurity.getLoggedUser()
         Dim vLog As New AuditLog
-        vLog.usuario = cUsuario
-        vLog.objectId = Me.nroEstudio
-        vLog.objectTypeId = 1
-        vLog.userActionId = 1
-        vLog.create()
+        Dim catEstudios As New CatalogoDeEstudios
+        Try
+            Me.publicID = Me.obtenerNuevoPublicID()
 
+            'Al modificar esto, revisar código btnAnunciar en Turnos
+            resp = upd.nuevoEstudio(Me.publicID, Me.paciente.Id, Me.practica.idEstudio, Me.motivoEstudio, Me.informe, Me.medicoActuante.idMedico, Me.medicoSolicitante.idMedico, Me.obraSocial.idObraSocial, Me.fechaEstudio, Me.nroOrden, Me.Anestesista.idMedico, Me.VideoEstudio.enlaceMega.Trim())
+
+            Me.nroEstudio = catEstudios.obtenerUltimoNroEstudio
+
+            'Log the action
+            Dim sSecurity As Security = Security.GetInstance()
+            Dim cUsuario As Usuario = sSecurity.getLoggedUser()
+
+            vLog.usuario = cUsuario
+            vLog.objectId = Me.nroEstudio
+            vLog.objectTypeId = 1
+            vLog.userActionId = 1
+            vLog.create()
+
+        Finally
+
+            upd = Nothing
+            vLog = Nothing
+            catEstudios = Nothing
+
+        End Try
+        
         Return resp
 
     End Function
@@ -579,4 +593,10 @@ Public Class Estudio
         Next
         Return arr
     End Function
+
+    
+
+
 End Class
+
+

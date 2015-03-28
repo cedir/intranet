@@ -263,7 +263,20 @@ Public Class CatalogoDeEstudios
     Public Function traerEstudiosArancelados(ByVal condicion As String) As ArrayList
         Return loadEstudios(condicion)
     End Function
-    
+    Public Function obtenerUltimoNroEstudio() As Integer
+        Dim da As New Consultas
+        Dim dr As NpgsqlDataReader
+        Try
+            dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
+            dr.Read()
+            Return dr.Item(0)
+        Finally
+            da = Nothing
+            dr = Nothing
+
+        End Try
+
+    End Function
     Public Function borrarEstudio(ByVal estudio As Estudio) As String
         Dim resp As String
         Dim condicion As String
@@ -291,12 +304,7 @@ Public Class CatalogoDeEstudios
         resp = upd.delete("tblConsultas", com & "id" & com & " = " & idConsulta)
         Return resp
     End Function
-    Public Function obtenerUltimoNroEstudio() As Integer
-        Dim dr As NpgsqlDataReader
-        dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
-        dr.Read()
-        Return dr.Item(0)
-    End Function
+    
     Public Function obtenerUltimoNroConsulta() As Integer
         Dim dr As NpgsqlDataReader
         dr = da.EjecutarSelect("select max(" & com & "id" & com & ") from " & com & "cedirData" & com & "." & com & "tblConsultas" & com)
@@ -401,5 +409,6 @@ Public Class CatalogoDeEstudios
 
         drEstudios.Close()
     End Function
+
 
 End Class
