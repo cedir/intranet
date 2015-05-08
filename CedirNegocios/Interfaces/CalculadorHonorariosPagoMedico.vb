@@ -39,7 +39,6 @@ Public Class CalculadorHonorariosPagoMedico
 
     Private Function aplicarReglasDeNegocioEnImporteCobrado(ByVal lp As LineaPagoMedico) As Decimal
         Const ID_OBRA_SOCIAL_GALENO As Integer = 46
-
         Dim importeCobrado As Decimal = lp.estudio.importeEstudioCobrado
         If lp.estudio.obraSocial.idObraSocial = ID_OBRA_SOCIAL_GALENO Then
             importeCobrado = importeCobrado - getDescuentoOSGalenoPracticas(lp)
@@ -50,13 +49,14 @@ Public Class CalculadorHonorariosPagoMedico
 
 
     Private Function getDescuentoOSGalenoPracticas(ByVal lp As LineaPagoMedico) As Decimal
-        Const DESCUENTO_DE_MEDICACION As Decimal = 240
+        'al 08/05/2015 se anula el dto de medicaciones a galeno. 
+        Const DESCUENTO_DE_MEDICACION As Decimal = 0
         Dim arrayIdPracticasConDescuento As Integer() = {1, 2, 7, 13, 18, 19, 34, 35, 49}
         Array.Sort(arrayIdPracticasConDescuento)
 
         Dim descuento As Decimal = 0.0
         If (Array.BinarySearch(arrayIdPracticasConDescuento, lp.estudio.practica.idEstudio) >= 0) Then
-            descuento = descuento + DESCUENTO_DE_MEDICACION ' siempre se hace el dto por medicacion
+            descuento = descuento + DESCUENTO_DE_MEDICACION
         End If
         Return descuento
     End Function
