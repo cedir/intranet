@@ -38,12 +38,7 @@ Public Class CalculadorHonorariosPagoMedico
 
 
     Private Function aplicarReglasDeNegocioEnImporteCobrado(ByVal lp As LineaPagoMedico) As Decimal
-        Const ID_OBRA_SOCIAL_GALENO As Integer = 46
         Dim importeCobrado As Decimal = lp.estudio.importeEstudioCobrado
-        If lp.estudio.obraSocial.idObraSocial = ID_OBRA_SOCIAL_GALENO Then
-            importeCobrado = importeCobrado - getDescuentoOSGalenoPracticas(lp)
-        End If
-
         Return importeCobrado
     End Function
 
