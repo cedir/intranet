@@ -5,7 +5,8 @@ Public Class LineaPagoMedico
     Private m_importe As Single
     Private m_gastosAdministrativos As Decimal
     Private m_porcentajeIVAPagoMedicoActuante As Decimal
-    Const descuentoPorPolipectomiaOSDE As Single = 70
+    Const descuentoPorPolipectomiaOSDE As Decimal = 70
+    Const descuentoPorPolipectomiaMaterialFacturable As Decimal = 0
     Public idMedico As Integer
 
     Public Sub New()
@@ -47,28 +48,23 @@ Public Class LineaPagoMedico
         End Set
     End Property
 
-    Public ReadOnly Property getDescuentoPorPolipectomiaOSDE() As Single
+    Public ReadOnly Property getDescuentoPorPolipectomiaOSDE() As Decimal
         Get
             Return descuentoPorPolipectomiaOSDE
         End Get
     End Property
+    Public ReadOnly Property getDescuentoPorPolipectomiaMaterialFacturableDirecto() As Decimal
+        Get
+            Return descuentoPorPolipectomiaMaterialFacturable
+        End Get
+    End Property
 
-    Public Function getDescuentos() As Single
+    Public Function getDescuentos() As Decimal
 
         Dim cEstudio As Estudio = Me.estudio
-        Dim descuentoPorPolipectomia As Single = 0
+        Dim descuentoPorPolipectomia As Decimal = Me.getDescuentoPolipectomiaSegunObraSocial()
 
-        If cEstudio.practica.Estudio.IndexOf("POLIPECTOMIA") <> -1 Or cEstudio.practica.Estudio.IndexOf("TERAPEUTICA") <> -1 Then
-            If cEstudio.obraSocial.idObraSocial = 3 Or cEstudio.obraSocial.idObraSocial = 79 Then
-                'OS OSDE Y OS OSDE(CEDIR)
-                descuentoPorPolipectomia = Me.getDescuentoPorPolipectomiaOSDE()
-            ElseIf (cEstudio.obraSocial.idObraSocial = 25) Then
-                'OS UNR
-                descuentoPorPolipectomia = 0
-            Else
-                descuentoPorPolipectomia = 200
-            End If
-        End If
+
 
         Dim descuentoColangios As Decimal = 0
         ' si la practica es alguna de las siguientes, se realiza un dto de 2000 pesos, A PARTIR DEL 09/04/2013
@@ -88,9 +84,31 @@ Public Class LineaPagoMedico
             descuentoRadiofrecuencia = 450
         End If
 
-        
+
 
         Return Format(descuentoPorPolipectomia + descuentoColangios + descuentoStent + descuentoRadiofrecuencia, "#############0.00")
+    End Function
+
+    Private Function getDescuentoPolipectomiaSegunObraSocial() As Decimal
+        Dim cEstudio As Estudio = Me.estudio
+        'Si el estudio no es polipectomia, no se hace descuento
+        If cEstudio.practica.Estudio.IndexOf("POLIPECTOMIA") = -1 And cEstudio.practica.Estudio.IndexOf("TERAPEUTICA") = -1 Then
+            Return 0.0
+        Else
+
+            Select Case True
+                Case cEstudio.obraSocial.idObraSocial = 3 Or cEstudio.obraSocial.idObraSocial = 79
+                    'OS OSDE Y OS OSDE(CEDIR)
+                    Return Me.getDescuentoPorPolipectomiaOSDE
+                Case cEstudio.obraSocial.idObraSocial = 25 Or cEstudio.obraSocial.idObraSocial = 5 Or cEstudio.obraSocial.idObraSocial = 46
+                    'OS UNR aca y galeno
+                    Return Me.getDescuentoPorPolipectomiaMaterialFacturableDirecto
+                Case Else
+                    Return 200.0
+            End Select
+
+        End If
+
     End Function
 
 
