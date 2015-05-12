@@ -48,18 +48,7 @@ Public Class CalculadorHonorariosPagoMedico
     End Function
 
 
-    Private Function getDescuentoOSGalenoPracticas(ByVal lp As LineaPagoMedico) As Decimal
-        'al 08/05/2015 se anula el dto de medicaciones a galeno. 
-        Const DESCUENTO_DE_MEDICACION As Decimal = 0
-        Dim arrayIdPracticasConDescuento As Integer() = {1, 2, 7, 13, 18, 19, 34, 35, 49}
-        Array.Sort(arrayIdPracticasConDescuento)
-
-        Dim descuento As Decimal = 0.0
-        If (Array.BinarySearch(arrayIdPracticasConDescuento, lp.estudio.practica.idEstudio) >= 0) Then
-            descuento = descuento + DESCUENTO_DE_MEDICACION
-        End If
-        Return descuento
-    End Function
+    
 
 
 End Class
