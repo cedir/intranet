@@ -440,7 +440,7 @@ Public Class InformeMensualComprobantes
 
                         End If
 
-                        _calcHonorarios.testGetHonorariosPresentacion(c)
+                        _calcHonorarios.getHonorariosPresentacion(c)
                         dr("Honorarios") = _calcHonorarios.Dict("honorario")
                         dr("Anestesia") = _calcHonorarios.Dict("anestesia")
                         If _calcHonorarios.Dict("importeMedicacion") <> 0.0 Then

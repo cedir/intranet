@@ -15,7 +15,7 @@ Public Class CalculadorHonorariosComprobantes
     End Property
 
    
-    Public Sub testGetHonorariosPresentacion(ByVal _comprobante As Comprobante)
+    Public Sub getHonorariosPresentacion(ByVal _comprobante As Comprobante)
 
 
         Dim honorarios As Decimal = 0
