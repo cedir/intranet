@@ -87,6 +87,7 @@
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -106,6 +107,10 @@
       <Name>CedirNegocios</Name>
       <Project>{9AA0C62A-8AD0-4049-BF13-5BA4624FE249}</Project>
       <Package>{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\FacturaElectronica\FacturaElectronica.vbproj">
+      <Project>{A6286290-0D4E-43BC-ABEC-EA9ECD0076F3}</Project>
+      <Name>FacturaElectronica</Name>
     </ProjectReference>
     <ProjectReference Include="..\Singleton\Singleton.vbproj">
       <Name>Singleton</Name>
@@ -152,6 +157,11 @@
     </Compile>
     <Compile Include="dgrDatagridTextBoxColumn.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="NuevoEstudioRapidoPaso2.vb">
       <SubType>Form</SubType>
@@ -700,6 +710,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="DataSets Reports\dsAnestesistasListado.xsc">
       <DependentUpon>dsAnestesistasListado.xsd</DependentUpon>
     </None>
@@ -765,6 +776,11 @@
     </None>
     <None Include="DataSets Reports\dsMovimientosStock.xss">
       <DependentUpon>dsMovimientosStock.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

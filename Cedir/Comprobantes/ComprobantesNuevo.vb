@@ -20,6 +20,7 @@ Public Class frmComprobanteNuevo
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents btnQuitar As System.Windows.Forms.Button
     Friend WithEvents cmbNroTerminal As System.Windows.Forms.ComboBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents cmbSubTipo As System.Windows.Forms.ComboBox
 
 
@@ -77,7 +78,7 @@ Public Class frmComprobanteNuevo
     Friend WithEvents lblNroComprobante As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label5 = New System.Windows.Forms.Label
@@ -98,6 +99,7 @@ Public Class frmComprobanteNuevo
         Me.lblFecha = New System.Windows.Forms.Label
         Me.lblNroComprobante = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.cmbNroTerminal = New System.Windows.Forms.ComboBox
         Me.Label1 = New System.Windows.Forms.Label
         Me.cmbSubTipo = New System.Windows.Forms.ComboBox
         Me.lblSubTipo = New System.Windows.Forms.Label
@@ -116,7 +118,7 @@ Public Class frmComprobanteNuevo
         Me.chkLeyenda = New System.Windows.Forms.CheckBox
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnQuitar = New System.Windows.Forms.Button
-        Me.cmbNroTerminal = New System.Windows.Forms.ComboBox
+        Me.Button1 = New System.Windows.Forms.Button
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -311,6 +313,14 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Comprobante"
         '
+        'cmbNroTerminal
+        '
+        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090"})
+        Me.cmbNroTerminal.Location = New System.Drawing.Point(281, 87)
+        Me.cmbNroTerminal.Name = "cmbNroTerminal"
+        Me.cmbNroTerminal.Size = New System.Drawing.Size(71, 21)
+        Me.cmbNroTerminal.TabIndex = 37
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -410,10 +420,10 @@ Public Class frmComprobanteNuevo
         '
         'subtotal
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle2.Format = "N2"
-        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle1.Format = "N2"
+        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle1
         Me.subtotal.HeaderText = "SUBTOTAL"
         Me.subtotal.Name = "subtotal"
         '
@@ -467,18 +477,20 @@ Public Class frmComprobanteNuevo
         Me.btnQuitar.Text = "Quitar Linea"
         Me.btnQuitar.UseVisualStyleBackColor = True
         '
-        'cmbNroTerminal
+        'Button1
         '
-        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090"})
-        Me.cmbNroTerminal.Location = New System.Drawing.Point(281, 87)
-        Me.cmbNroTerminal.Name = "cmbNroTerminal"
-        Me.cmbNroTerminal.Size = New System.Drawing.Size(71, 21)
-        Me.cmbNroTerminal.TabIndex = 37
+        Me.Button1.Location = New System.Drawing.Point(138, 537)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 29
+        Me.Button1.Text = "AFIP"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'frmComprobanteNuevo
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(528, 566)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnQuitar)
         Me.Controls.Add(Me.chkLeyenda)
         Me.Controls.Add(Me.lblTotalSuma)
@@ -744,7 +756,7 @@ Public Class frmComprobanteNuevo
 
     End Sub
 
-   
+
 
     Public Sub setComprobante()
         'indicamos en el text del form que se esta creando un comprobante con referencia a una factura
@@ -1083,6 +1095,13 @@ Public Class frmComprobanteNuevo
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
         Me.calcularUltimoNro()
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+
+        Dim fe As New FacturaElectronica.ClienteFE()
+        fe.iniciar()
+
     End Sub
 End Class
 
