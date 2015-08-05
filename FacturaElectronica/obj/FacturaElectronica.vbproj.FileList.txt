@@ -8,3 +8,4 @@ obj\Debug\FacturaElectronica.xml
 obj\Debug\FacturaElectronica.pdb
 bin\Debug\FacturaElectronica.pdb
 bin\Debug\FacturaElectronica.xml
+bin\Debug\Factura Electronica\claves\certificado.pfx

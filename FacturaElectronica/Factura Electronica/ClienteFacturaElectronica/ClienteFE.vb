@@ -10,7 +10,7 @@ Imports System.Xml
 Public Class ClienteFE
 
 
-    Dim lt As LoginTicket
+    Dim lt As New LoginTicket
     Dim objWSFE As wsfe.Service = New wsfe.Service()
     Dim aut As wsfe.FEAuthRequest
     Dim fecaeReq As wsfe.FECAERequest
@@ -62,10 +62,9 @@ Public Class ClienteFE
         objFECAEDetRequest.MonCotiz = 1.0
 
 
+        Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
+        arrayFECAEDetRequest(0) = objFECAEDetRequest
 
-        Dim arrDetalle As wsfe.FECAEDetRequest = New wsfe.FECAEDetRequest()
-        arrDetalle = objFECAEDetRequest
-        fecaeReq.FeDetReq(0) = arrDetalle
 
 
     End Sub
