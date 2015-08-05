@@ -72,12 +72,12 @@ Public Class ClienteFE
 
 
     Private Sub InicializarAutenticador()
-        Dim lt = New LoginTicket()
-        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE, False)
+
+        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
 
     End Sub
 
-    Private Sub inicializarServicio()
+     Private Sub inicializarServicio()
 
         aut = New wsfe.FEAuthRequest()
         aut.Cuit = 30709300152

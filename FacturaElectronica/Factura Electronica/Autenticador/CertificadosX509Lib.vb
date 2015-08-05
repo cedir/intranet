@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic
 
 Public Module CertificadosX509Lib
 
-    Public VerboseMode As Boolean = False
+
 
     ''' <summary> 
     ''' Firma mensaje 
@@ -36,16 +36,12 @@ Public Module CertificadosX509Lib
             Dim cmsFirmante As CmsSigner = New CmsSigner(argCertFirmante)
             cmsFirmante.IncludeOption = X509IncludeOption.EndCertOnly
 
-            If (VerboseMode) Then
-                Console.WriteLine("***Firmando bytes del mensaje...")
-            End If
+            
 
             ' Firmo el mensaje PKCS #7 
             cmsFirmado.ComputeSignature(cmsFirmante)
 
-            If (VerboseMode) Then
-                Console.WriteLine("***OK mensaje firmado")
-            End If
+           
             ' Encodeo el mensaje PKCS #7. 
             Return cmsFirmado.Encode()
 
@@ -64,7 +60,7 @@ Public Module CertificadosX509Lib
 
         Dim objCert As X509Certificate2 = New X509Certificate2()
         Try
-            objCert.Import(Microsoft.VisualBasic.FileIO.FileSystem.ReadAllBytes(argArchivo))
+            objCert.Import(Microsoft.VisualBasic.FileIO.FileSystem.ReadAllBytes(argArchivo), "", X509KeyStorageFlags.DefaultKeySet)
             Return objCert
         Catch excepcionAlImportarCertificado As Exception
             Throw New Exception("argArchivo=" + argArchivo + " excepcion=" + excepcionAlImportarCertificado.Message + " " + excepcionAlImportarCertificado.StackTrace)

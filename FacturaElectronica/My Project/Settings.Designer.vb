@@ -76,7 +76,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("E:\GIT\ws\claves del cedir\certificado.pfx")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("E:\claves del cedir\certificado.pfx")>  _
         Public ReadOnly Property rutaClaveCertificadoFE() As String
             Get
                 Return CType(Me("rutaClaveCertificadoFE"),String)

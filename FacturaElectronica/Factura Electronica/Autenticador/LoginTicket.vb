@@ -29,7 +29,7 @@ Imports Microsoft.VisualBasic
     Public RutaDelCertificadoFirmante As String
     Public XmlStrLoginTicketRequestTemplate As String = "<loginTicketRequest><header><uniqueId></uniqueId><generationTime></generationTime><expirationTime></expirationTime></header><service></service></loginTicketRequest>"
 
-    Private _verboseMode As Boolean = True
+
 
     ' OJO! NO ES THREAD-SAFE 
     Private _globalUniqueID As UInt32 = 0
@@ -40,14 +40,13 @@ Imports Microsoft.VisualBasic
     '''<param name="argServicio">Servicio al que se desea acceder</param> 
     '''<param name="argUrlWsaa">URL del WSAA</param> 
     '''<param name="argRutaCertX509Firmante">Ruta del certificado X509 (con clave privada) usado para firmar</param> 
-    '''<param name="argVerbose">Nivel detallado de descripcion? true/false</param> 
     '''<remarks></remarks> 
-    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String, ByVal argVerbose As Boolean) As String
+    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String) As String
 
 
         Me.RutaDelCertificadoFirmante = argRutaCertX509Firmante
-        Me._verboseMode = argVerbose
-        CertificadosX509Lib.VerboseMode = argVerbose
+
+
 
         Dim cmsFirmadoBase64 As String
         Dim loginTicketResponse As String
@@ -57,25 +56,25 @@ Imports Microsoft.VisualBasic
         Dim xmlNodoExpirationTime As XmlNode
         Dim xmlNodoService As XmlNode
 
+
+
         ' PASO 1: Genero el Login Ticket Request 
         Try
+
 
             XmlLoginTicketRequest = New XmlDocument()
             XmlLoginTicketRequest.LoadXml(XmlStrLoginTicketRequestTemplate)
 
-            xmlNodoUniqueId = XmlLoginTicketRequest.SelectSingleNode("uniqueId")
-            xmlNodoGenerationTime = XmlLoginTicketRequest.SelectSingleNode("generationTime")
-            xmlNodoExpirationTime = XmlLoginTicketRequest.SelectSingleNode("expirationTime")
-            xmlNodoService = XmlLoginTicketRequest.SelectSingleNode("service")
+            xmlNodoUniqueId = XmlLoginTicketRequest.SelectSingleNode("//uniqueId")
+            xmlNodoGenerationTime = XmlLoginTicketRequest.SelectSingleNode("//generationTime")
+            xmlNodoExpirationTime = XmlLoginTicketRequest.SelectSingleNode("//expirationTime")
+            xmlNodoService = XmlLoginTicketRequest.SelectSingleNode("//service")
 
             xmlNodoGenerationTime.InnerText = DateTime.Now.AddMinutes(-10).ToString("s")
             xmlNodoExpirationTime.InnerText = DateTime.Now.AddMinutes(+10).ToString("s")
-            xmlNodoUniqueId.InnerText = Convert.ToString(_globalUniqueID)
+            xmlNodoUniqueId.InnerText = CStr(_globalUniqueID)
             xmlNodoService.InnerText = argServicio
             Me.Service = argServicio
-
-            _globalUniqueID += 1
-
 
 
 
@@ -121,11 +120,11 @@ Imports Microsoft.VisualBasic
             XmlLoginTicketResponse = New XmlDocument()
             XmlLoginTicketResponse.LoadXml(loginTicketResponse)
 
-            Me.UniqueId = UInt32.Parse(XmlLoginTicketResponse.SelectSingleNode("'uniqueId").InnerText)
-            Me.GenerationTime = DateTime.Parse(XmlLoginTicketResponse.SelectSingleNode("'generationTime").InnerText)
-            Me.ExpirationTime = DateTime.Parse(XmlLoginTicketResponse.SelectSingleNode("'expirationTime").InnerText)
-            Me.Sign = XmlLoginTicketResponse.SelectSingleNode("'sign").InnerText
-            Me.Token = XmlLoginTicketResponse.SelectSingleNode("'token").InnerText
+            Me.UniqueId = UInt32.Parse(XmlLoginTicketResponse.SelectSingleNode("//uniqueId").InnerText)
+            Me.GenerationTime = DateTime.Parse(XmlLoginTicketResponse.SelectSingleNode("//generationTime").InnerText)
+            Me.ExpirationTime = DateTime.Parse(XmlLoginTicketResponse.SelectSingleNode("//expirationTime").InnerText)
+            Me.Sign = XmlLoginTicketResponse.SelectSingleNode("//sign").InnerText
+            Me.Token = XmlLoginTicketResponse.SelectSingleNode("//token").InnerText
 
         Catch excepcionAlAnalizarLoginTicketResponse As Exception
 
@@ -139,4 +138,5 @@ Imports Microsoft.VisualBasic
 
     End Function
 
+ 
 End Class
