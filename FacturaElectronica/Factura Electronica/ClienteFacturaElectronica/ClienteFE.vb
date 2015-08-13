@@ -2,7 +2,6 @@ Imports System
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data
-Imports System.Drawing
 Imports System.Text
 Imports System.Xml
 
@@ -18,14 +17,20 @@ Public Class ClienteFE
 
 
 
-    Public Sub iniciar()
+    Public Function iniciar() As Boolean
         'Llamamos al servicio de autenticacion de afip LoginCMS
 
-        'inicializarCombos()
-        InicializarAutenticador()
-        inicializarServicio()
-        InicializarFactura()
-    End Sub
+        'inicializarombos()
+        Try
+            InicializarAutenticador()
+            inicializarServicio()
+            Return True
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+        'InicializarFactura()
+    End Function
 
 
 
@@ -72,11 +77,11 @@ Public Class ClienteFE
 
     Private Sub InicializarAutenticador()
 
-        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
+        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", "E:\claves del cedir\certificado.pfx")
 
     End Sub
 
-     Private Sub inicializarServicio()
+    Private Sub inicializarServicio()
 
         aut = New wsfe.FEAuthRequest()
         aut.Cuit = 30709300152
@@ -214,21 +219,35 @@ Public Class ClienteFE
 
     End Sub
 
-    Private Sub getTipoDocumentos()
+    Public Function getTipoDocumentos() As Dictionary(Of Integer, String)
+
+        Dim dic As New Dictionary(Of Integer, String)
 
         Dim objDocTipo As wsfe.DocTipoResponse = New wsfe.DocTipoResponse()
         objDocTipo = objWSFE.FEParamGetTiposDoc(aut)
         If (objDocTipo.Errors Is Nothing) Then
-            'cmbDocTipo.DisplayMember = "Desc"
-            'cmbDocTipo.ValueMember = "Id"
-            'cmbDocTipo.DataSource = objDocTipo.ResultGet
-        Else
-            '   MessageBox.Show("No se pudieron obtener datos del ws" + objDocTipo.Errors[0].Msg)
+            For Each ob As wsfe.DocTipo In objDocTipo.ResultGet()
+                dic.Add(ob.Id, ob.Desc)
+            Next
         End If
 
+        Return dic
+    End Function
+    Public Function getUltimoNroComprobante(ByVal tipoComprobante As String) As String
+
+        Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
+        ultimoComprobante = objWSFE.FECompUltimoAutorizado(aut, 91, tipoComprobante)
+        If (ultimoComprobante.Errors Is Nothing) Then
+            Return ultimoComprobante.CbteNro.ToString()
+        Else
+            Return ("No se pudieron obtener datos del utlimo comprobante...:" & ultimoComprobante.Errors(0).Msg)
+        End If
+
+    End Function
+
+    Public Sub New()
+
     End Sub
-
-
 End Class
 
 

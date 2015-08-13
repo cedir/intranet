@@ -802,6 +802,10 @@ FacturaElectronica
   Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
   búsquedas de recursos mediante esta clase de recurso con establecimiento inflexible de tipos.
 </summary>
+</member><member name="P:FacturaElectronica.My.Resources.Resources.String1">
+	<summary>
+  Busca una cadena traducida similar a .
+</summary>
 </member><member name="T:FacturaElectronica.My.Resources.Resources">
 	<summary>
   Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.

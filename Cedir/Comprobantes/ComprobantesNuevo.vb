@@ -315,7 +315,7 @@ Public Class frmComprobanteNuevo
         '
         'cmbNroTerminal
         '
-        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090"})
+        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
         Me.cmbNroTerminal.Location = New System.Drawing.Point(281, 87)
         Me.cmbNroTerminal.Name = "cmbNroTerminal"
         Me.cmbNroTerminal.Size = New System.Drawing.Size(71, 21)
@@ -518,127 +518,7 @@ Public Class frmComprobanteNuevo
 
 #End Region
 
-    'Private Sub cmbTipoComprobante_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbTipoComprobante.SelectedIndexChanged
-    '    lblSubTipo.Text = "Sub-tipo: A"
-    '    lblNroComprobante.Text = "Nro de Cmprobante: 001-0005588"
-    'End Sub
-
-    'Private Sub btnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimir.Click
-    '	If validateData() Then
-    '		prepareImprimirFactura()
-    '	End If
-    'End Sub
-    'Private Sub prepareImprimirFactura()
-    '	Dim facturaReport As New PrintDocument
-    '	AddHandler facturaReport.PrintPage, AddressOf imprimirFactura
-
-    '	'Imprimir
-    '	Dim pss As New PrintDialog
-    '	Dim bp As DialogResult
-    '	pss.Document = facturaReport
-    '	bp = pss.ShowDialog
-    '	If (bp = DialogResult.OK) Then
-    '		facturaReport.Print()
-    '	End If
-    'End Sub
-    'Sub imprimirFactura(ByVal sender As Object, ByVal e As PrintPageEventArgs)
-    '	Dim x As Single = 100.0F
-    '	Dim y As Single = 150.0F
-    '	Dim width As Single = 700.0F
-    '	Dim height As Single = 100.0F
-    '	Dim drawRect As New RectangleF(x, y, width, height)
-
-    '	Dim CurrentY As Integer = 130
-    '	Dim CurrentX As Integer = 100
-    '	Dim ReportFont As New Font("Arial", 10, FontStyle.Regular)
-    '	Dim ReportFontHeight As Integer = ReportFont.GetHeight(e.Graphics)
-    '	Dim resaltaText As New Font("Arial", 11, FontStyle.Bold)
-
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	CurrentX = 650
-    '	'e.Graphics.DrawString("Fecha: " & CStr(dtFecha.Value.Date), ReportFont, Brushes.Black, CurrentX, CurrentY)
-
-    '	CurrentY = CurrentY + 82
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	drawRect.Width = 600
-    '	'e.Graphics.DrawString(txtDatosDestinatario.Text, ReportFont, Brushes.Black, drawRect)
-
-
-    '	CurrentY = 271
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	e.Graphics.DrawString("Concepto", resaltaText, Brushes.Black, 100, CurrentY)
-    '	e.Graphics.DrawString("Total", resaltaText, Brushes.Black, 650, CurrentY)
-
-    '	CurrentY = CurrentY + 120
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	e.Graphics.DrawString(txtConcepto1.Text, ReportFont, Brushes.Black, drawRect)
-    '	e.Graphics.DrawString("$ " & txtTotal1.Text, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
-
-    '	If txtConcepto2.Text <> "" Then
-    '		CurrentY = CurrentY + 30
-    '		drawRect.Y = CurrentY - ReportFontHeight
-    '		e.Graphics.DrawString(txtConcepto2.Text, ReportFont, Brushes.Black, drawRect)
-    '		e.Graphics.DrawString("$ " & txtTotal2.Text, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
-    '	End If
-
-    '	If txtConcepto3.Text <> "" Then
-    '		CurrentY = CurrentY + 30
-    '		drawRect.Y = CurrentY - ReportFontHeight
-    '		e.Graphics.DrawString(txtConcepto3.Text, ReportFont, Brushes.Black, drawRect)
-    '		e.Graphics.DrawString("$ " & txtTotal3.Text, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
-    '	End If
-
-    '	CurrentY = CurrentY + 70
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	e.Graphics.DrawString("Total", ReportFont, Brushes.Black, drawRect)
-    '	'e.Graphics.DrawString("$ " & txtTotal.Text, ReportFont, Brushes.Black, CurrentX, CurrentY - ReportFontHeight)
-
-
-    '	CurrentY = CurrentY + 100
-    '	drawRect.Y = CurrentY - ReportFontHeight
-    '	'Dim descTot As String = txtTotalEnLetras.Text
-    '	'e.Graphics.DrawString(descTot, resaltaText, Brushes.Black, drawRect)
-
-    '	e.HasMorePages = False
-
-
-    'End Sub
-
-
-
-    'Private Function validateData() As Boolean
-    'If txtDatosDestinatario.Text = "" Then
-    'MsgBox("Los datos de la entidad-persona deben llenarse par poder imprimir", MsgBoxStyle.Critical)
-    'Return False
-    'End If
-    '	If txtConcepto1.Text = "" Then
-    '		MsgBox("Concepto(1) debe llenarse par poder imprimir", MsgBoxStyle.Critical)
-    '		Return False
-    '	End If
-    '	If txtTotal1.Text = "" Then
-    '		MsgBox("Total(1) debe llenarse par poder imprimir", MsgBoxStyle.Critical)
-    '		Return False
-    '	End If
-    ''If txtTotal.Text = "" Then
-    ''MsgBox("El total de la factura debe llenarse par poder imprimir", MsgBoxStyle.Critical)
-    ''Return False
-    ''End If
-    ''If txtTotalEnLetras.Text = "" Then
-    ''MsgBox("El total en letras debe llenarse par poder imprimir", MsgBoxStyle.Critical)
-    ''Return False
-    ''End If
-
-    '	Return True
-    'End Function
-
-
-
-    'llamada al frmBuscarOS
-
-
-    'llamada al frmBuscarPaciente
-
-    'Sobrecargamos el metodo para que pueda ser llamado sin importar el objeto enviado (paciente u obra social)
+    
 
 #Region "CABEZA"
     Public Sub CargarObjeto(ByVal p_os As ObraSocial)
@@ -663,7 +543,7 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-
+    Dim controladorFE As ControladorFacturaElectronica
 
     Public Property Comprobante() As Comprobante
         Get
@@ -847,7 +727,6 @@ Public Class frmComprobanteNuevo
 
     Private Sub calcularUltimoNro()
         Dim c As New CatalogoDeComprobantes
-
         If ((Me.cmbResponsable.SelectedItem <> "Seleccione..") And (Me.cmbSubTipo.SelectedIndex <> -1) Or (Me.cmbTipoComprobante.SelectedItem <> Nothing)) Then
             If Me.cmbTipoComprobante.SelectedItem <> Nothing Then
                 If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
@@ -859,6 +738,10 @@ Public Class frmComprobanteNuevo
         End If
         c = Nothing
     End Sub
+    Private Sub calcularUltimoNroAFIP()
+        Me.lblNroComprobante.Text = Me.controladorFE.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString())
+    End Sub
+    
 
     'Uso Reload para borrar todos los campos, una vez creado un comprobante, permitiendo 
     'cargar otro
@@ -893,6 +776,7 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub ComprobantesNuevo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
 
         lblFecha.Text = Today.Date
 
@@ -979,6 +863,8 @@ Public Class frmComprobanteNuevo
             Me.cmbSubTipo.Enabled = False
             Me.cmbNroTerminal.Enabled = False
         Else
+            
+
             Me.cmbCondicionFiscal.Enabled = True
             Me.cmbGravado.Enabled = True
             Me.cmbResponsable.Enabled = True
@@ -1094,13 +980,27 @@ Public Class frmComprobanteNuevo
 #End Region
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        Me.calcularUltimoNro()
+
+        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem <> Nothing) Then
+            Try
+                Me.controladorFE = New ControladorFacturaElectronica
+
+                MessageBox.Show("Ud se ha conectado al servicio de afip")
+                'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
+                Me.txtNroComprobante.ReadOnly = True
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Ud NO SE HA PODIDO CONECTAR al servicio de afip....", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End Try
+            Me.calcularUltimoNroAFIP()
+        Else
+            Me.calcularUltimoNro()
+        End If
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
 
-        Dim fe As New FacturaElectronica.ClienteFE()
-        fe.iniciar()
+        'Dim fe As New FacturaElectronica.ClienteFE()
+
 
     End Sub
 End Class
