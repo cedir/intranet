@@ -119,6 +119,7 @@
     <Compile Include="Complejidades\ArancelAnestesia.vb" />
     <Compile Include="Complejidades\Complejidad.vb" />
     <Compile Include="ControladorFacturaElectronica.vb" />
+    <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
     <Compile Include="Catalogos\CatalogoDeAuditLogs.vb" />
     <Compile Include="Catalogos\CatalogoDeComprobantes.vb" />
@@ -148,7 +149,7 @@
     <Compile Include="Catalogos\CatalogoDeUsuarios.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Comprobante.vb" />
+    <Compile Include="Comprobantes\Comprobante.vb" />
     <Compile Include="Consulta.vb">
       <SubType>Code</SubType>
     </Compile>

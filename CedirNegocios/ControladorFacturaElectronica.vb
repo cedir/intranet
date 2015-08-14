@@ -1,4 +1,6 @@
 Imports FacturaElectronica
+Imports System.Collections.Generic
+
 
 Public Class ControladorFacturaElectronica
 
@@ -19,15 +21,9 @@ Public Class ControladorFacturaElectronica
         Me.clienteFE = New ClienteFE()
         clienteFE.iniciar()
     End Sub
-
-
-
-
-
-    Public Sub ObtenerUltimoNro(ByVal tipoComprobante As String)
-
-
-    End Sub
+    Public Function ObtenerUltimoNro(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As String
+        Return clienteFE.getUltimoNroComprobante(tipoComprobante, nroTerminal, subtipo)
+    End Function
 
 
     Private Sub devolverIdComprobante(ByVal tipoComprobante As String)
@@ -36,8 +32,5 @@ Public Class ControladorFacturaElectronica
 
 
     End Sub
-
-
-
 
 End Class

@@ -31,53 +31,15 @@ Public Class ClienteFE
         End Try
         'InicializarFactura()
     End Function
-
-
-
-    Private Sub InicializarFactura()
-
-        'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
-        fecaeReq = New wsfe.FECAERequest()
-        'Información de la cabecera del comprobante o lote de comprobantes de ingreso
-        Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
-        fecaeCabReq.PtoVta = 91 ' Convert.ToInt16(this.cmbPtoVenta.SelectedValue ) //punto de venta factura electronica.
-        fecaeCabReq.CbteTipo = 1 'Convert.ToInt32(this.cmbTipoComprobante.SelectedValue) //tipo de comprobante
-        fecaeCabReq.CantReg = 1 'cant registros del detalle
-
-        fecaeReq.FeCabReq = fecaeCabReq
-
-        'Información del detalle del comprobante o lote de comprobantes de ingreso
-        Dim objFECAEDetRequest As wsfe.FECAEDetRequest = New wsfe.FECAEDetRequest()
-        objFECAEDetRequest.Concepto = 1 'Convert.ToInt16 ( cmbTipoConcepto.SelectedValue ) //puede ser producto, servicios o ambos
-        objFECAEDetRequest.DocTipo = 2 'Convert.ToInt16(cmbDocTipo.SelectedValue) //tipo id del comprador. CUIT/DNI/ETC
-        objFECAEDetRequest.DocNro = 31666150 'Convert.ToInt32( this.txtNroDocumento.Text )//nro id del comprador
-        objFECAEDetRequest.CbteDesde = 1 'nro de comprobante desde
-        objFECAEDetRequest.CbteHasta = 1 'nro de comprobante desde
-        objFECAEDetRequest.CbteFch = DateTime.Today.ToString("yyyyMMdd")
-        objFECAEDetRequest.ImpTotal = 0
-        objFECAEDetRequest.ImpTotConc = 0
-        objFECAEDetRequest.ImpNeto = 0
-        objFECAEDetRequest.ImpOpEx = 0
-        objFECAEDetRequest.ImpTrib = 0
-        objFECAEDetRequest.ImpIVA = 0
-        objFECAEDetRequest.FchServDesde = DateTime.Today.ToString()
-        objFECAEDetRequest.FchServHasta = DateTime.Today.ToString()
-        objFECAEDetRequest.FchVtoPago = DateTime.Today.ToString()
-        objFECAEDetRequest.MonId = "PES" 'Me.cmbTipoMoneda.SelectedValue.ToString()
-        objFECAEDetRequest.MonCotiz = 1.0
-
-
-        Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
-        arrayFECAEDetRequest(0) = objFECAEDetRequest
-
-
-
-    End Sub
-
+    ''' <summary>
+    ''' Prueba para crear un comprobante "directo" a AFIP
+    ''' </summary>
+    ''' <remarks></remarks>
+    
 
     Private Sub InicializarAutenticador()
 
-        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", "E:\claves del cedir\certificado.pfx")
+        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
 
     End Sub
 
@@ -90,8 +52,6 @@ Public Class ClienteFE
 
     End Sub
 
-
-
     Private Sub inicializarCombos()
 
         Me.getIVA()
@@ -99,7 +59,7 @@ Public Class ClienteFE
         Me.getTiposComprobante()
         Me.getTipoMonedaCotizacion()
         Me.getTipoConcepto()
-        Me.getTipoDocumentos()
+        Me.getTipoComprobante()
         Me.getPuntoVta()
     End Sub
 
@@ -219,31 +179,88 @@ Public Class ClienteFE
 
     End Sub
 
-    Public Function getTipoDocumentos() As Dictionary(Of Integer, String)
+    Private Function getTipoComprobante() As Dictionary(Of Integer, String)
 
         Dim dic As New Dictionary(Of Integer, String)
 
-        Dim objDocTipo As wsfe.DocTipoResponse = New wsfe.DocTipoResponse()
-        objDocTipo = objWSFE.FEParamGetTiposDoc(aut)
-        If (objDocTipo.Errors Is Nothing) Then
-            For Each ob As wsfe.DocTipo In objDocTipo.ResultGet()
+        Dim objCompTipo As wsfe.CbteTipoResponse = New wsfe.CbteTipoResponse()
+        objCompTipo = objWSFE.FEParamGetTiposCbte(aut)
+        If (objCompTipo.Errors Is Nothing) Then
+            For Each ob As wsfe.CbteTipo In objCompTipo.ResultGet()
                 dic.Add(ob.Id, ob.Desc)
             Next
         End If
 
         Return dic
     End Function
-    Public Function getUltimoNroComprobante(ByVal tipoComprobante As String) As String
 
+    Public Function getUltimoNroComprobante(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As Integer
         Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
-        ultimoComprobante = objWSFE.FECompUltimoAutorizado(aut, 91, tipoComprobante)
-        If (ultimoComprobante.Errors Is Nothing) Then
-            Return ultimoComprobante.CbteNro.ToString()
-        Else
-            Return ("No se pudieron obtener datos del utlimo comprobante...:" & ultimoComprobante.Errors(0).Msg)
-        End If
+
+        Dim cbteTipo As Integer
+        Dim dic As New Dictionary(Of Integer, String)
+        dic = Me.getTipoComprobante()
+        Dim pair As KeyValuePair(Of Integer, String)
+
+        For Each pair In dic
+            If pair.Value.ToLower.Trim() = String.Concat(tipoComprobante.ToLower.Trim(), " ", subtipo.ToLower()) Then
+                cbteTipo = pair.Key
+                Exit For
+            End If
+        Next
+
+        Try
+            ultimoComprobante = objWSFE.FECompUltimoAutorizado(aut, nroTerminal, cbteTipo)
+            Return ultimoComprobante.CbteNro
+        Catch ex As Exception
+            Throw ex
+        End Try
 
     End Function
+
+
+
+
+    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object))
+
+
+        'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
+        fecaeReq = New wsfe.FECAERequest()
+        'Información de la cabecera del comprobante o lote de comprobantes de ingreso
+        Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
+        fecaeCabReq.PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
+        fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'Convert.ToInt32(this.cmbTipoComprobante.SelectedValue) //tipo de comprobante
+        fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
+
+        fecaeReq.FeCabReq = fecaeCabReq
+
+        'Información del detalle del comprobante o lote de comprobantes de ingreso
+        Dim objFECAEDetRequest As wsfe.FECAEDetRequest = New wsfe.FECAEDetRequest()
+        objFECAEDetRequest.Concepto = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios.
+        objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo")) ' //tipo id del comprador. CUIT/DNI/ETC
+        objFECAEDetRequest.DocNro = Convert.ToInt16(dict.Item("DocTipo")) 'nro id del comprador
+        objFECAEDetRequest.CbteDesde = 1 'nro de comprobante desde
+        objFECAEDetRequest.CbteHasta = 1 'nro de comprobante desde
+        objFECAEDetRequest.CbteFch = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
+        objFECAEDetRequest.ImpTotal = Convert.ToDouble(dict.Item("ImpTotal"))
+        objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotalConciliado"))
+        objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
+        objFECAEDetRequest.ImpOpEx = Convert.ToDouble(dict.Item("ImpOpEx"))
+        objFECAEDetRequest.ImpTrib = Convert.ToDouble(dict.Item("ImpTrib"))
+        objFECAEDetRequest.ImpIVA = Convert.ToDouble(dict.Item("ImpIVA"))
+        objFECAEDetRequest.FchServDesde = DateTime.Today.ToString()
+        objFECAEDetRequest.FchServHasta = DateTime.Today.ToString()
+        objFECAEDetRequest.FchVtoPago = (DateTime.Today).AddDays(30).ToString()
+        objFECAEDetRequest.MonId = "PES" 'Me.cmbTipoMoneda.SelectedValue.ToString()
+        objFECAEDetRequest.MonCotiz = 1.0
+
+
+        Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
+        arrayFECAEDetRequest(0) = objFECAEDetRequest
+
+
+
+    End Sub
 
     Public Sub New()
 

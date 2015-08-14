@@ -793,11 +793,6 @@ FacturaElectronica
 	<remarks/>
 </member><member name="T:FacturaElectronica.wsfe.FEParamGetTiposPaisesCompletedEventArgs">
 	<remarks/>
-</member><member name="M:FacturaElectronica.ClienteFE.InicializarAutenticador">
-	<summary>
- Prueba para crear un comprobante "directo" a AFIP
- </summary>
-	<remarks></remarks>
 </member><member name="P:FacturaElectronica.My.Resources.Resources.ResourceManager">
 	<summary>
   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.

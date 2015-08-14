@@ -20,7 +20,6 @@ Public Class frmComprobanteNuevo
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents btnQuitar As System.Windows.Forms.Button
     Friend WithEvents cmbNroTerminal As System.Windows.Forms.ComboBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents cmbSubTipo As System.Windows.Forms.ComboBox
 
 
@@ -118,7 +117,6 @@ Public Class frmComprobanteNuevo
         Me.chkLeyenda = New System.Windows.Forms.CheckBox
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnQuitar = New System.Windows.Forms.Button
-        Me.Button1 = New System.Windows.Forms.Button
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -477,20 +475,10 @@ Public Class frmComprobanteNuevo
         Me.btnQuitar.Text = "Quitar Linea"
         Me.btnQuitar.UseVisualStyleBackColor = True
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(138, 537)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 29
-        Me.Button1.Text = "AFIP"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'frmComprobanteNuevo
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(528, 566)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnQuitar)
         Me.Controls.Add(Me.chkLeyenda)
         Me.Controls.Add(Me.lblTotalSuma)
@@ -518,7 +506,7 @@ Public Class frmComprobanteNuevo
 
 #End Region
 
-    
+
 
 #Region "CABEZA"
     Public Sub CargarObjeto(ByVal p_os As ObraSocial)
@@ -553,6 +541,7 @@ Public Class frmComprobanteNuevo
             m_comprobante = value
         End Set
     End Property
+
 
     Private Function Validar() As Boolean
 
@@ -596,10 +585,15 @@ Public Class frmComprobanteNuevo
 
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Me.Comprobante = New Comprobante
+            Select Case True
+                Case (cmbNroTerminal.SelectedItem.ToString() = "0091" And Me.cmbSubTipo.SelectedItem.ToString() = "A" And Me.cmbResponsable.SelectedItem.ToString() = "Cedir")
+                    Me.Comprobante = New FacturaElectronica
+                Case Else
+                    Me.Comprobante = New Comprobante
+            End Select
         End If
         Me.cargarComprobante(Me.Comprobante)
-        If Comprobante.doesExist Then
+        If Comprobante.doesExist() Then
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
         Else
@@ -636,8 +630,6 @@ Public Class frmComprobanteNuevo
 
     End Sub
 
-
-
     Public Sub setComprobante()
         'indicamos en el text del form que se esta creando un comprobante con referencia a una factura
         Me.Text = "Nuevo Comprobante: ajuste a " & Me.Comprobante.TipoComprobante.Descripcion & " Nro: " & Me.Comprobante.NroTerminal & " - " & Me.Comprobante.NroComprobante
@@ -662,7 +654,6 @@ Public Class frmComprobanteNuevo
         'seteo como factura de la nc o nd, el mismo comprobante(factura), que proviene de cobroFacturacion
         Me.Comprobante.Factura = Me.Comprobante
     End Sub
-
 
     Private Function cargarLineas() As List(Of LineaDeComprobante)
 
@@ -726,6 +717,32 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub calcularUltimoNro()
+        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem <> Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
+            ultimoNroAfip()
+        Else
+            ultimoNroCedir()
+        End If
+    End Sub
+
+    Private Sub ultimoNroAfip()
+        Try
+            Me.controladorFE = New ControladorFacturaElectronica
+            MessageBox.Show("Ud se ha conectado al servicio de afip")
+            'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
+            Me.txtNroComprobante.ReadOnly = True
+            Me.calcularUltimoNroAFIP()
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Ud NO SE HA PODIDO CONECTAR al servicio de afip....", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Finally
+            controladorFE = Nothing
+        End Try
+
+        'vamos a seleccionar el cmbResponsable, a "cedir", ya que es este el unico habilitado para factura electronica.
+        Me.cmbResponsable.SelectedIndex = Me.cmbResponsable.FindString("Cedir")
+
+    End Sub
+    Private Sub ultimoNroCedir()
         Dim c As New CatalogoDeComprobantes
         If ((Me.cmbResponsable.SelectedItem <> "Seleccione..") And (Me.cmbSubTipo.SelectedIndex <> -1) Or (Me.cmbTipoComprobante.SelectedItem <> Nothing)) Then
             If Me.cmbTipoComprobante.SelectedItem <> Nothing Then
@@ -737,11 +754,12 @@ Public Class frmComprobanteNuevo
             End If
         End If
         c = Nothing
+
     End Sub
     Private Sub calcularUltimoNroAFIP()
-        Me.lblNroComprobante.Text = Me.controladorFE.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString())
+        Me.txtNroComprobante.Text = (Me.controladorFE.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString(), Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
     End Sub
-    
+
 
     'Uso Reload para borrar todos los campos, una vez creado un comprobante, permitiendo 
     'cargar otro
@@ -769,17 +787,15 @@ Public Class frmComprobanteNuevo
                 End If
             End If
             Me.Close()
+
         Else : MsgBox("El comprobante no ha sido cargado", MsgBoxStyle.Exclamation, " Atención ")
 
-        End If
+        End If 'fin validar
 
     End Sub
 
     Private Sub ComprobantesNuevo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-
         lblFecha.Text = Today.Date
-
 
         'cmbCondicionFiscal.Items.Add("Seleccione..")
         cmbCondicionFiscal.Items.Add("CONSUMIDOR FINAL")
@@ -863,8 +879,6 @@ Public Class frmComprobanteNuevo
             Me.cmbSubTipo.Enabled = False
             Me.cmbNroTerminal.Enabled = False
         Else
-            
-
             Me.cmbCondicionFiscal.Enabled = True
             Me.cmbGravado.Enabled = True
             Me.cmbResponsable.Enabled = True
@@ -874,33 +888,19 @@ Public Class frmComprobanteNuevo
         'Ahora traemos el nro de comprobante que tendrían que ingresar en el txtNroComprobante
         Me.calcularUltimoNro()
     End Sub
-
-
     Private Sub cmbResponsable_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbResponsable.SelectedIndexChanged
         Me.calcularUltimoNro()
     End Sub
-
     Private Sub cmbSubTipo_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbSubTipo.SelectedIndexChanged
         Me.calcularUltimoNro()
     End Sub
-
-
-
     Private Sub cmbGravado_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbGravado.SelectedIndexChanged
 
         Me.dgvLineas.Rows.Add(gravados(Me.cmbGravado.SelectedIndex).descripcion)
     End Sub
-
-
-
-
-
-
 #End Region
 
 #Region "DATAGRID EVENTS"
-
-
     Private Sub dgvLineas_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellEndEdit
         Me.dgvLineas.Rows(e.RowIndex).ErrorText = String.Empty
     End Sub
@@ -930,8 +930,6 @@ Public Class frmComprobanteNuevo
         Me.dgvLineas.Rows(e.RowIndex).ErrorText = String.Empty
         lineaValida = True
     End Sub
-
-
 
     Private Sub dgvLineas_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles dgvLineas.KeyPress
 
@@ -980,28 +978,8 @@ Public Class frmComprobanteNuevo
 #End Region
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-
-        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem <> Nothing) Then
-            Try
-                Me.controladorFE = New ControladorFacturaElectronica
-
-                MessageBox.Show("Ud se ha conectado al servicio de afip")
-                'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
-                Me.txtNroComprobante.ReadOnly = True
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, "Ud NO SE HA PODIDO CONECTAR al servicio de afip....", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End Try
-            Me.calcularUltimoNroAFIP()
-        Else
-            Me.calcularUltimoNro()
-        End If
+        Me.calcularUltimoNro()
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-
-        'Dim fe As New FacturaElectronica.ClienteFE()
-
-
-    End Sub
 End Class
 
