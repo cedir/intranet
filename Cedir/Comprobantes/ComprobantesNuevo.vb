@@ -587,7 +587,7 @@ Public Class frmComprobanteNuevo
         If Me.Comprobante Is Nothing Then
             Select Case True
                 Case (cmbNroTerminal.SelectedItem.ToString() = "0091" And Me.cmbSubTipo.SelectedItem.ToString() = "A" And Me.cmbResponsable.SelectedItem.ToString() = "Cedir")
-                    Me.Comprobante = New FacturaElectronica
+                    Me.Comprobante = New ComprobanteElectronico
                 Case Else
                     Me.Comprobante = New Comprobante
             End Select
