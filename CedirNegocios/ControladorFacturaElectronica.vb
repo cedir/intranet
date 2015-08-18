@@ -14,9 +14,6 @@ Public Class ControladorFacturaElectronica
             m_ClienteFE = value
         End Set
     End Property
-
-
-
     Public Sub New()
         Me.clienteFE = New ClienteFE()
         clienteFE.iniciar()
@@ -24,13 +21,9 @@ Public Class ControladorFacturaElectronica
     Public Function ObtenerUltimoNro(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As String
         Return clienteFE.getUltimoNroComprobante(tipoComprobante, nroTerminal, subtipo)
     End Function
+    Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
+        Return clienteFE.getTiposDeDocumentoCliente()
+    End Function
 
-
-    Private Sub devolverIdComprobante(ByVal tipoComprobante As String)
-        'este medoto recibe el nombre del comprobante guardado en base de datos. 
-        'Y busca en el servicio AFIP, el id del comprobante que corresponde.
-
-
-    End Sub
 
 End Class

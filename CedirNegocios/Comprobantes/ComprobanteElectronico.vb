@@ -19,17 +19,17 @@ Public Class ComprobanteElectronico
 
 
 
-        clienteFE.crearComprobante(Me.convertirADictionary())
-        If nofalla Then
-            Return MyBase.crear()
-        Else
+        clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary())
+        'If nofalla Then
+        '    Return MyBase.crear()
+        'Else
 
-        End If
-        log()
+        'End If
+        '  log()
         'llamamos a la clase padre, para insertar el comprobante en base de datos. 
 
     End Function
-    Private Function convertirADictionary() As Dictionary(Of String, Object)
+    Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim dic As New Dictionary(Of String, Object)
 
 
@@ -38,9 +38,12 @@ Public Class ComprobanteElectronico
         dic.Item("CbteTipo") = Me.TipoComprobante.Descripcion 'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
         'fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
         'Información del detalle del comprobante o lote de comprobantes de ingreso
-        dic.Item("Concepto") = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios.
-        dic.Item("DocTipo") = 1 ' buscar el que corresponda:  tipo id del comprador. CUIT/DNI/ETC
-        dic.Item("DocNumero") = Convert.ToInt16(Me.NroCuit.Replace("-", "")) 'sacamos los guiones medios de existir
+
+        dic.Item("Concepto") = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
+
+        dic.Item("DocTipo") = Me.TipoDocumento  ' buscar el que corresponda:  tipo id del comprador. CUIT/DNI/ETC
+        dic.Item("DocNumero") = Convert.ToInt16(Me.NroDocumento.Replace("-", "")) 'sacamos los guiones medios de existir en el CUIT
+
         dic.Item("CbteDesde") = 1 'nro de comprobante desde
         dic.Item("CbteHasta") = 1 'nro de comprobante hasta
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
@@ -48,13 +51,13 @@ Public Class ComprobanteElectronico
         dic.Item("ImpTotal") = Me.TotalFacturado
         'Importe total del comprobante, Debe ser igual a Importe neto no gravado + Importe exento + Importe                                                 '   neto gravado + todos los campos de IVA al XX% + Importe de tributos.
 
-        dic.Item("ImpTotConc") = Convert.ToDouble(dict.Item("ImpTotalConciliado"))
+        dic.Item("ImpTotConc") = 0.0
         'Importe neto no gravado.Debe ser menor o igual a Importe total y no puede ser menor a cero.
         'No puede ser mayor al Importe total de la operación ni menor a cero (0).
         'Para comprobantes tipo C debe ser igual a cero (0).
         'Para comprobantes tipo Bienes Usados – Emisor Monotributista este campo corresponde al importe subtotal.
 
-        dic.Item("ImpNeto") = Convert.ToDouble(dict.Item("ImpNeto"))
+        dic.Item("ImpNeto") = Me.TotalFacturado 'es la sumatoria de las lineas de comprobante
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
@@ -87,5 +90,8 @@ Public Class ComprobanteElectronico
 
 
     End Function
+
+
+   
 
 End Class

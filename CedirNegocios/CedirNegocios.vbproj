@@ -159,9 +159,6 @@
     <Compile Include="Estudio.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Factura.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Interfaces\CalculadorHonorariosComprobantes.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosPagoMedico.vb" />
     <Compile Include="Interfaces\ICalculadorHonorarios.vb" />

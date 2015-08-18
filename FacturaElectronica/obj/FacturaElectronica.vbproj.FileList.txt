@@ -9,3 +9,16 @@ obj\Debug\FacturaElectronica.pdb
 bin\Debug\FacturaElectronica.pdb
 bin\Debug\FacturaElectronica.xml
 bin\Debug\Factura Electronica\claves\certificado.pfx
+bin\Release\Factura Electronica\claves\certificado.pfx
+bin\Release\FacturaElectronica.dll.config
+bin\Release\FacturaElectronica.dll
+bin\Release\FacturaElectronica.XmlSerializers.dll
+bin\Release\FacturaElectronica.pdb
+bin\Release\FacturaElectronica.xml
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\FacturaElectronica.Resources.resources
+obj\Release\FacturaElectronica.vbproj.GenerateResource.Cache
+obj\Release\FacturaElectronica.dll
+obj\Release\FacturaElectronica.xml
+obj\Release\FacturaElectronica.pdb
+obj\Release\FacturaElectronica.XmlSerializers.dll

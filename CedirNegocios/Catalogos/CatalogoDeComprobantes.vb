@@ -82,8 +82,8 @@ Public Class CatalogoDeComprobantes
 
 
                 If dr("nroCuit") Is DBNull.Value Then
-                    oComprobante.NroCuit = ""
-                Else : oComprobante.NroCuit = dr("nroCuit")
+                    oComprobante.NroDocumento = ""
+                Else : oComprobante.NroDocumento = dr("nroCuit")
                 End If
 
                 oComprobante.CondicionFiscal = Convert.ToString(dr("condicionFiscal"))

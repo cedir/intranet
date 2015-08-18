@@ -172,7 +172,7 @@ Public Class CatalogoDePresentaciones
                 vPresentacion.comprobante.NroComprobante = Convert.ToInt32(drPresentacion.Item("nroComprobante"))
                 vPresentacion.comprobante.NombreCliente = Convert.ToString(drPresentacion.Item("nombreCliente"))
                 vPresentacion.comprobante.DomicilioCliente = Convert.ToString(drPresentacion.Item("domicilioCliente"))
-                vPresentacion.comprobante.NroCuit = Convert.ToString(drPresentacion.Item("nroCuit"))
+                vPresentacion.comprobante.NroDocumento = Convert.ToString(drPresentacion.Item("nroCuit"))
                 vPresentacion.comprobante.CondicionFiscal = Convert.ToString(drPresentacion.Item("condicionFiscal"))
                 vPresentacion.comprobante.TipoComprobante.Id = Convert.ToInt32(drPresentacion.Item("idTipoComprobante"))
                 vPresentacion.comprobante.TipoComprobante.Descripcion = Convert.ToString(drPresentacion.Item("tipoComprobante"))

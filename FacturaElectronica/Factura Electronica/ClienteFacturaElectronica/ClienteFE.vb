@@ -32,15 +32,24 @@ Public Class ClienteFE
         'InicializarFactura()
     End Function
     ''' <summary>
-    ''' Prueba para crear un comprobante "directo" a AFIP
-    ''' </summary>
+    ''' eL Metodo INICIALIZARAUTENTICADOR debe primero traer de base de datos, de existir, el loginTicket. Ya que puede ser valido
+    ''' todavia
+    '''</summary>
     ''' <remarks></remarks>
-    
-
     Private Sub InicializarAutenticador()
 
-        lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
+        'pseudo(codigo)
+        'da = new dataaccess
+        'lt = new login ticket = da.getLoginTicket
+        'if expirationTIme <= time.now then obtener login tkcet
+        'else 
+        'token= lt token
+        'sign = lt.sign
+        'uniqueid = lt.uniqueid
 
+        If lt.ExpirationTime <= DateTime.Now Then
+            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
+        End If
     End Sub
 
     Private Sub inicializarServicio()
@@ -56,7 +65,7 @@ Public Class ClienteFE
 
         Me.getIVA()
         Me.getTipoMoneda()
-        Me.getTiposComprobante()
+        '  Me.getTiposComprobante()
         Me.getTipoMonedaCotizacion()
         Me.getTipoConcepto()
         Me.getTipoComprobante()
@@ -126,24 +135,23 @@ Public Class ClienteFE
 
     End Sub
 
-    Private Sub getTiposComprobante()
+    Public Function getTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
 
+        Dim objDocumentosTipo As wsfe.DocTipoResponse = New wsfe.DocTipoResponse()
+        objDocumentosTipo = objWSFE.FEParamGetTiposDoc(aut)
 
-        Dim objCbteTipo As wsfe.CbteTipoResponse = New wsfe.CbteTipoResponse()
-        objCbteTipo = objWSFE.FEParamGetTiposCbte(aut)
-        If (objCbteTipo.Errors IsNot Nothing) Then
-            '  MessageBox.Show("No se pudieron obtener datos del ws" + objCbteTipo.Errors[0].Msg )
+        Dim dic As New Dictionary(Of Integer, String)
 
-        Else
-            'this.cmbTipoComprobante.DisplayMember = "Desc"
-            'this.cmbTipoComprobante.ValueMember = "Id"
-
-            'cmbTipoComprobante.DataSource = objCbteTipo.ResultGet
-
-
+        If (objDocumentosTipo.Errors Is Nothing) Then
+            For Each ob As wsfe.DocTipo In objDocumentosTipo.ResultGet
+                dic.Add(ob.Id, ob.Desc)
+            Next
         End If
 
-    End Sub
+        Return dic
+
+
+    End Function
 
     Private Sub getTipoMonedaCotizacion()
 
@@ -179,7 +187,7 @@ Public Class ClienteFE
 
     End Sub
 
-    Private Function getTipoComprobante() As Dictionary(Of Integer, String)
+    Public Function getTipoComprobante() As Dictionary(Of Integer, String)
 
         Dim dic As New Dictionary(Of Integer, String)
 
@@ -266,70 +274,6 @@ Public Class ClienteFE
 
     End Sub
 End Class
-
-
-
-'#Region "eventos"
-'        private void cmbTipoMoneda_SelectedIndexChanged(object sender, EventArgs e)
-'        {
-'            MessageBox.Show(this.cmbTipoMoneda.SelectedValue.ToString())
-'        }
-
-'        private void btnIniciarFactura_Click(object sender, EventArgs e)
-'        {
-'            this.InicializarFactura()
-'            this.solicitarCAE()
-'        }
-
-'        private void solicitarCAE()
-'        {
-
-'            wsfe.FECAEResponse(objFECAEResponse = New wsfe.FECAEResponse())
-'            objFECAEResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
-
-'            if (objFECAEResponse != null && objFECAEResponse.FeDetResp[0].Observaciones !=null )
-'            {
-'                MessageBox.Show(objFECAEResponse.FeDetResp[0].Observaciones[0].Msg)
-'            }
-'            if (objFECAEResponse.Errors != null )
-'            {
-'                MessageBox.Show(objFECAEResponse.Errors[0].Msg )
-
-'            }
-'            if (objFECAEResponse.Events != null )
-'            {
-'                MessageBox.Show(objFECAEResponse.Events[0].Msg )
-
-'            }
-
-'            MessageBox.Show(objFECAEResponse.FeDetResp[0].Observaciones[0].Msg  )
-'            // Dim objFECAEResponse As New wsfev1.FECAEResponse
-
-'            //  objFECAEResponse = objWSFEV1.FECAESolicitar(FEAuthRequest, objFECAERequest)
-'            //If objFECAEResponse IsNot Nothing Then
-'            //    'Serialize object to a text file.
-'            //    Dim objStreamWriter As New StreamWriter("C:\WSFEV1_objFECAEResponse.xml")
-'            //    Dim x As New XmlSerializer(objFECAEResponse.GetType)
-'            //    x.Serialize(objStreamWriter, objFECAEResponse)
-'            //    objStreamWriter.Close()
-'            //    MessageBox.Show("Se generó el archivo C:\WSFEV1_objFECAEResponse.xml")
-'            //End If
-'            //If objFECAEResponse.Errors IsNot Nothing Then
-'            //    For i = 0 To objFECAEResponse.Errors.Length - 1
-'            //        MessageBox.Show("objFECAEResponse.Errors(i).Code: " + objFECAEResponse.Errors(i).Code.ToString + vbCrLf +
-'            //        "objFECAEResponse.Errors(i).Msg: " + objFECAEResponse.Errors(i).Msg)
-'            //    Next
-'            //End If
-'            //If objFECAEResponse.Events IsNot Nothing Then
-'            //    For i = 0 To objFECAEResponse.Events.Length - 1
-'            //        MessageBox.Show("objFECAEResponse.Events(i).Code: " + objFECAEResponse.Events(i).Code.ToString + vbCrLf +
-'            //        "objFECAEResponse.Events(i).Msg: " + objFECAEResponse.Events(i).Msg)
-'            //    Next
-'            //End If
-
-'        }
-
-'        #endregion
 
 
 
