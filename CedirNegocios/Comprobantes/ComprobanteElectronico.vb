@@ -61,13 +61,13 @@ Public Class ComprobanteElectronico
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
-        dic.Item("ImpOpEx") = Convert.ToDouble(dict.Item("ImpOpEx"))
+        dic.Item("ImpOpEx") = 0.0
         'Importe exento. Debe ser menor o igual a Importe total y no puede ser menor a cero.
 
-        dic.Item("ImpTrib") = Convert.ToDouble(dict.Item("ImpTrib"))
+        dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
 
-        dic.Item("ImpIVA") = Convert.ToDouble(dict.Item("ImpIVA"))
+        ' dic.Item("ImpIVA") = 'Convert.ToDouble(dict.Item("ImpIVA"))
         'Suma de los importes del array de IVA.
 
         dic.Item("FchServDesde") = DateTime.Today.ToString()

@@ -795,8 +795,9 @@ FacturaElectronica
 	<remarks/>
 </member><member name="M:FacturaElectronica.ClienteFE.InicializarAutenticador">
 	<summary>
- Prueba para crear un comprobante "directo" a AFIP
- </summary>
+ eL Metodo INICIALIZARAUTENTICADOR debe primero traer de base de datos, de existir, el loginTicket. Ya que puede ser valido
+ todavia
+</summary>
 	<remarks></remarks>
 </member><member name="P:FacturaElectronica.My.Resources.Resources.ResourceManager">
 	<summary>

@@ -4,6 +4,9 @@ Public Class LineaDeComprobante
     Private m_concepto As String
     Private m_subtotal As Decimal
     Private m_comprobante As Comprobante ' guardo un objeto comprobante en cada linea(y a su vez una coleccion en comprobante)
+    Private m_gravado As Gravado
+
+
 
 
     Public Property Concepto() As String
@@ -24,6 +27,14 @@ Public Class LineaDeComprobante
         End Set
     End Property
 
+    Public Property Gravado() As Gravado
+        Get
+            Return m_gravado
+        End Get
+        Set(ByVal value As Gravado)
+            m_gravado = value
+        End Set
+    End Property
     Public Property Comprobante() As Comprobante
         Get
             Return m_comprobante
