@@ -24,6 +24,23 @@ Public Class ControladorFacturaElectronica
     Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
         Return clienteFE.getTiposDeDocumentoCliente()
     End Function
+    ''' <summary>
+    ''' Este metodo decide que tipo de comprobante crear, con los parametros listados. Pudiendo ser electronico o no . 
+    ''' </summary>
+    ''' <param name="terminal"></param>
+    ''' <param name="subtipo"></param>
+    ''' <param name="responsable"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function crearComprobante(ByVal terminal As String, ByVal subtipo As String, ByVal responsable As String) As Comprobante
+        Select Case True
+            Case (terminal = "0091" And subtipo = "A" And responsable.ToUpper().Trim() = "CEDIR")
+                Return New ComprobanteElectronico
+            Case Else
+                Return New Comprobante
+        End Select
+
+    End Function
 
 
 End Class

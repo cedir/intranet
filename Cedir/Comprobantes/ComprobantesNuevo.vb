@@ -82,8 +82,8 @@ Public Class frmComprobanteNuevo
     Friend WithEvents lblNroComprobante As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label5 = New System.Windows.Forms.Label
@@ -117,17 +117,17 @@ Public Class frmComprobanteNuevo
         Me.Label12 = New System.Windows.Forms.Label
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.dgvLineas = New System.Windows.Forms.DataGridView
+        Me.concepto = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.colImporteNeto = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.porcIVA = New System.Windows.Forms.DataGridViewComboBoxColumn
+        Me.importeIVA = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.subtotal = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.btnAceptar = New System.Windows.Forms.Button
         Me.lblTotal = New System.Windows.Forms.Label
         Me.lblTotalSuma = New System.Windows.Forms.Label
         Me.chkLeyenda = New System.Windows.Forms.CheckBox
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnQuitar = New System.Windows.Forms.Button
-        Me.concepto = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colImporteNeto = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.porcIVA = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.importeIVA = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.subtotal = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -154,7 +154,7 @@ Public Class frmComprobanteNuevo
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(519, 22)
+        Me.Label5.Location = New System.Drawing.Point(446, 22)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(30, 16)
         Me.Label5.TabIndex = 17
@@ -300,9 +300,9 @@ Public Class frmComprobanteNuevo
         '
         'cmbTipoComprobante
         '
-        Me.cmbTipoComprobante.Location = New System.Drawing.Point(575, 19)
+        Me.cmbTipoComprobante.Location = New System.Drawing.Point(498, 19)
         Me.cmbTipoComprobante.Name = "cmbTipoComprobante"
-        Me.cmbTipoComprobante.Size = New System.Drawing.Size(123, 21)
+        Me.cmbTipoComprobante.Size = New System.Drawing.Size(200, 21)
         Me.cmbTipoComprobante.TabIndex = 19
         Me.cmbTipoComprobante.Text = "Tipo comprobante"
         '
@@ -317,7 +317,7 @@ Public Class frmComprobanteNuevo
         '
         'lblNroComprobante
         '
-        Me.lblNroComprobante.Location = New System.Drawing.Point(430, 50)
+        Me.lblNroComprobante.Location = New System.Drawing.Point(353, 44)
         Me.lblNroComprobante.Name = "lblNroComprobante"
         Me.lblNroComprobante.Size = New System.Drawing.Size(139, 23)
         Me.lblNroComprobante.TabIndex = 21
@@ -350,15 +350,15 @@ Public Class frmComprobanteNuevo
         'cmbNroTerminal
         '
         Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
-        Me.cmbNroTerminal.Location = New System.Drawing.Point(575, 47)
+        Me.cmbNroTerminal.Location = New System.Drawing.Point(498, 46)
         Me.cmbNroTerminal.Name = "cmbNroTerminal"
-        Me.cmbNroTerminal.Size = New System.Drawing.Size(107, 21)
+        Me.cmbNroTerminal.Size = New System.Drawing.Size(200, 21)
         Me.cmbNroTerminal.TabIndex = 37
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(688, 50)
+        Me.Label1.Location = New System.Drawing.Point(710, 50)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(10, 13)
         Me.Label1.TabIndex = 31
@@ -368,9 +368,9 @@ Public Class frmComprobanteNuevo
         '
         Me.cmbSubTipo.FormattingEnabled = True
         Me.cmbSubTipo.Items.AddRange(New Object() {"A", "B"})
-        Me.cmbSubTipo.Location = New System.Drawing.Point(782, 19)
+        Me.cmbSubTipo.Location = New System.Drawing.Point(810, 19)
         Me.cmbSubTipo.Name = "cmbSubTipo"
-        Me.cmbSubTipo.Size = New System.Drawing.Size(145, 21)
+        Me.cmbSubTipo.Size = New System.Drawing.Size(117, 21)
         Me.cmbSubTipo.TabIndex = 29
         Me.cmbSubTipo.Text = "Seleccione sub-tipo"
         '
@@ -385,9 +385,9 @@ Public Class frmComprobanteNuevo
         '
         'txtNroComprobante
         '
-        Me.txtNroComprobante.Location = New System.Drawing.Point(704, 47)
+        Me.txtNroComprobante.Location = New System.Drawing.Point(726, 47)
         Me.txtNroComprobante.Name = "txtNroComprobante"
-        Me.txtNroComprobante.Size = New System.Drawing.Size(223, 20)
+        Me.txtNroComprobante.Size = New System.Drawing.Size(201, 20)
         Me.txtNroComprobante.TabIndex = 27
         Me.txtNroComprobante.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -395,7 +395,7 @@ Public Class frmComprobanteNuevo
         '
         Me.cmbResponsable.Location = New System.Drawing.Point(112, 23)
         Me.cmbResponsable.Name = "cmbResponsable"
-        Me.cmbResponsable.Size = New System.Drawing.Size(121, 21)
+        Me.cmbResponsable.Size = New System.Drawing.Size(150, 21)
         Me.cmbResponsable.TabIndex = 26
         Me.cmbResponsable.Text = "Seleccione Empresa"
         '
@@ -451,6 +451,56 @@ Public Class frmComprobanteNuevo
         Me.dgvLineas.Size = New System.Drawing.Size(952, 137)
         Me.dgvLineas.TabIndex = 0
         '
+        'concepto
+        '
+        Me.concepto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.concepto.FillWeight = 369.5432!
+        Me.concepto.HeaderText = "CONCEPTO"
+        Me.concepto.Name = "concepto"
+        '
+        'colImporteNeto
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle1
+        Me.colImporteNeto.HeaderText = "Importe Neto"
+        Me.colImporteNeto.Name = "colImporteNeto"
+        '
+        'porcIVA
+        '
+        Me.porcIVA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.porcIVA.DataPropertyName = "id"
+        Me.porcIVA.FillWeight = 10.15228!
+        Me.porcIVA.HeaderText = "% IVA"
+        Me.porcIVA.Items.AddRange(New Object() {"0.0", "10.5", "21"})
+        Me.porcIVA.Name = "porcIVA"
+        Me.porcIVA.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.porcIVA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.porcIVA.Width = 60
+        '
+        'importeIVA
+        '
+        Me.importeIVA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.importeIVA.FillWeight = 10.15228!
+        Me.importeIVA.HeaderText = "ImporteIVA"
+        Me.importeIVA.Name = "importeIVA"
+        Me.importeIVA.ReadOnly = True
+        Me.importeIVA.Width = 84
+        '
+        'subtotal
+        '
+        Me.subtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle2
+        Me.subtotal.FillWeight = 10.15228!
+        Me.subtotal.HeaderText = "SUBTOTAL"
+        Me.subtotal.Name = "subtotal"
+        Me.subtotal.Width = 89
+        '
         'btnAceptar
         '
         Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -505,56 +555,6 @@ Public Class frmComprobanteNuevo
         Me.btnQuitar.TabIndex = 28
         Me.btnQuitar.Text = "Quitar Linea"
         Me.btnQuitar.UseVisualStyleBackColor = True
-        '
-        'concepto
-        '
-        Me.concepto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.concepto.FillWeight = 369.5432!
-        Me.concepto.HeaderText = "CONCEPTO"
-        Me.concepto.Name = "concepto"
-        '
-        'colImporteNeto
-        '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle9.Format = "C2"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle9
-        Me.colImporteNeto.HeaderText = "Importe Neto"
-        Me.colImporteNeto.Name = "colImporteNeto"
-        '
-        'porcIVA
-        '
-        Me.porcIVA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.porcIVA.DataPropertyName = "id"
-        Me.porcIVA.FillWeight = 10.15228!
-        Me.porcIVA.HeaderText = "% IVA"
-        Me.porcIVA.Items.AddRange(New Object() {"0.0", "10.5", "21"})
-        Me.porcIVA.Name = "porcIVA"
-        Me.porcIVA.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.porcIVA.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.porcIVA.Width = 60
-        '
-        'importeIVA
-        '
-        Me.importeIVA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.importeIVA.FillWeight = 10.15228!
-        Me.importeIVA.HeaderText = "ImporteIVA"
-        Me.importeIVA.Name = "importeIVA"
-        Me.importeIVA.ReadOnly = True
-        Me.importeIVA.Width = 84
-        '
-        'subtotal
-        '
-        Me.subtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle10.Format = "C2"
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle10
-        Me.subtotal.FillWeight = 10.15228!
-        Me.subtotal.HeaderText = "SUBTOTAL"
-        Me.subtotal.Name = "subtotal"
-        Me.subtotal.Width = 89
         '
         'frmComprobanteNuevo
         '
@@ -635,7 +635,7 @@ Public Class frmComprobanteNuevo
 
         If (Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) <> 2 Then
             'Validamos que los combos esten seleccionados
-            If (Me.cmbCondicionFiscal.Text = "" Or Me.cmbGravado.SelectedIndex = -1 Or Me.cmbResponsable.SelectedIndex = -1 Or Me.cmbSubTipo.SelectedIndex = -1 Or Me.cmbTipoComprobante.SelectedIndex = -1) Then
+            If (Me.cmbCondicionFiscal.Text = "" Or Me.cmbResponsable.SelectedIndex = -1 Or Me.cmbSubTipo.SelectedIndex = -1 Or Me.cmbTipoComprobante.SelectedIndex = -1) Then
                 MsgBox("No ha seleccionado detalles del comprobante, por favor hagalo", MsgBoxStyle.Exclamation, "Datos faltantes")
                 Validar = False
             End If
@@ -666,14 +666,11 @@ Public Class frmComprobanteNuevo
 
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Select Case True
-                Case (cmbNroTerminal.SelectedItem.ToString() = "0091" And Me.cmbSubTipo.SelectedItem.ToString() = "A" And Me.cmbResponsable.SelectedItem.ToString() = "Cedir")
-                    Me.Comprobante = New ComprobanteElectronico
-                Case Else
-                    Me.Comprobante = New Comprobante
-            End Select
+            Me.Comprobante = Me.controladorFE.crearComprobante(cmbNroTerminal.SelectedItem.ToString(), Me.cmbSubTipo.SelectedItem.ToString(), Me.cmbResponsable.SelectedItem.ToString().ToUpper())
         End If
+
         Me.cargarComprobante(Me.Comprobante)
+
         If Comprobante.doesExist() Then
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
@@ -689,7 +686,7 @@ Public Class frmComprobanteNuevo
         'algunos valores se setean vacios
         If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() <> "LIQUIDACION" Then
             p_com.Responsable = Me.cmbResponsable.Text
-            p_com.Gravado = Me.cmbGravado.SelectedItem
+            p_com.Gravado = Me.cmbGravado.SelectedItem ' ESTE CAMPO TENDRIA QUE ELIMINARSE DEL COMPROBANTE
             p_com.SubTipo = Me.cmbSubTipo.SelectedItem.ToString
         End If
 
@@ -699,7 +696,8 @@ Public Class frmComprobanteNuevo
 
         p_com.NombreCliente = Me.txtNombre.Text
         p_com.DomicilioCliente = Me.txtDomicilio.Text
-        p_com.NroDocumento = Me.txtNroCuit.Text
+        p_com.DocumentoCliente.NroDocumento = Me.txtNroCuit.Text
+        p_com.DocumentoCliente.idTipoDocumento = Me.cmbTipoDocumento.SelectedValue
         If (Me.cmbGravadoPaciente.Visible = True) Then
             p_com.GravadoPaciente = Me.cmbGravadoPaciente.SelectedItem
         End If
@@ -720,7 +718,7 @@ Public Class frmComprobanteNuevo
         'se pasa una factura, pero acá se crea nd o nc 
         Me.txtNombre.Text = Me.Comprobante.NombreCliente
         Me.txtDomicilio.Text = Me.Comprobante.DomicilioCliente
-        Me.txtNroCuit.Text = Me.Comprobante.NroDocumento
+        Me.txtNroCuit.Text = Me.Comprobante.DocumentoCliente.NroDocumento
         Me.cmbCondicionFiscal.Text = Me.Comprobante.CondicionFiscal
         Me.Comprobante.FechaEmision = Date.Today
         'deshabilitamos la edicion de los campos del cliente
@@ -799,7 +797,7 @@ Public Class frmComprobanteNuevo
 
     End Sub
 
-    Private Function CalcularSumaLineas(ByVal l As List(Of LineaDeComprobante)) As Single
+    Private Function CalcularSumaLineas(ByVal l As List(Of LineaDeComprobante)) As Decimal
         Dim total As Decimal = 0
         For Each row As LineaDeComprobante In l
             total = total + row.Subtotal
@@ -1089,7 +1087,7 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub cmbTipoDocumento_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipoDocumento.SelectedIndexChanged
-
+        MessageBox.Show(Me.cmbTipoDocumento.SelectedValue.ToString())
     End Sub
 
     Private Sub dgvLineas_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellContentClick

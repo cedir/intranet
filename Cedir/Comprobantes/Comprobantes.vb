@@ -85,7 +85,7 @@ Public Class Comprobantes
         Me.txtNombre.Text = Comprobante.NombreCliente
         Me.txtNroComprobante.Text = Comprobante.NroComprobante.ToString()
         Me.txtNroTerminal.Text = Comprobante.NroTerminal.ToString()
-        Me.txtNroCuit.Text = Comprobante.NroDocumento
+        Me.txtNroCuit.Text = Comprobante.DocumentoCliente.NroDocumento
         Me.txtTipo.Text = Comprobante.TipoComprobante.Descripcion
         Me.txtCondicionFiscal.Text = Comprobante.CondicionFiscal
         Me.txtPacienteGravado.Text = Comprobante.GravadoPaciente

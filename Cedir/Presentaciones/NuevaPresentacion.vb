@@ -1320,7 +1320,7 @@ Public Class NuevaPresentacion
                         cPresentacion.comprobante.NombreCliente = Me.cPresentacion.obraSocial.ObraSocial
                         cPresentacion.comprobante.CondicionFiscal = Me.cPresentacion.obraSocial.CondicionFiscal
                         cPresentacion.comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
-                        cPresentacion.comprobante.NroDocumento = Me.cPresentacion.obraSocial.nroCuit
+                        cPresentacion.comprobante.DocumentoCliente.NroDocumento = Me.cPresentacion.obraSocial.nroCuit
                         'El comprobante creado no es cobrado hasta que vuelve de la OS
                         cPresentacion.comprobante.Estado = "NO COBRADO"
                         cPresentacion.comprobante.Factura = Nothing

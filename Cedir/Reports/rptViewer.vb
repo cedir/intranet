@@ -23,7 +23,7 @@ Public Class rptViewer
             r("nroComprobante") = comp.NroComprobante.ToString()
             r("nombreCliente") = comp.NombreCliente
             r("domicilio") = comp.DomicilioCliente
-            r("nroCuit") = comp.NroDocumento
+            r("nroCuit") = comp.DocumentoCliente.NroDocumento
             r("responsable") = comp.Responsable
             r("tipoComprobante") = comp.TipoComprobante.Descripcion
             r("fechaEmision") = comp.FechaEmision.Date.ToString()
@@ -40,7 +40,7 @@ Public Class rptViewer
                 r("condicionFiscal") = ""
                 r("gravado") = ""
             Else
-                r("nroCuit") = "Cuit : " & comp.NroDocumento
+                r("nroCuit") = "Cuit : " & comp.DocumentoCliente.NroDocumento
                 r("condicionFiscal") = comp.CondicionFiscal
                 ' si el comprobante es liquidacion no posee gravado
                 If comp.TipoComprobante.Id = 2 Then

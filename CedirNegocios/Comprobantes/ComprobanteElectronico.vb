@@ -35,14 +35,14 @@ Public Class ComprobanteElectronico
 
 
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
-        dic.Item("CbteTipo") = Me.TipoComprobante.Descripcion 'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
+        dic.Item("CbteTipo") = Me.TipoComprobante.Id  'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
         'fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
         'Información del detalle del comprobante o lote de comprobantes de ingreso
 
         dic.Item("Concepto") = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
 
-        dic.Item("DocTipo") = Me.TipoDocumento  ' buscar el que corresponda:  tipo id del comprador. CUIT/DNI/ETC
-        dic.Item("DocNumero") = Convert.ToInt16(Me.NroDocumento.Replace("-", "")) 'sacamos los guiones medios de existir en el CUIT
+        dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento     ' buscar el que corresponda:  tipo id del comprador. CUIT/DNI/ETC
+        dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", "")) 'sacamos los guiones medios de existir en el CUIT
 
         dic.Item("CbteDesde") = 1 'nro de comprobante desde
         dic.Item("CbteHasta") = 1 'nro de comprobante hasta
@@ -70,15 +70,15 @@ Public Class ComprobanteElectronico
         ' dic.Item("ImpIVA") = 'Convert.ToDouble(dict.Item("ImpIVA"))
         'Suma de los importes del array de IVA.
 
-        dic.Item("FchServDesde") = DateTime.Today.ToString()
+        dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de inicio del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         'Formato(yyyymmdd)
 
-        dic.Item("FchServHasta") = DateTime.Today.ToString()
+        dic.Item("FchServHasta") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de fin del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         ' Formato yyyymmdd. FchServHasta no puede ser menor a FchServDesde
 
-        dic.Item("FchVtoPago") = (DateTime.Today).AddDays(30).ToString()
+        dic.Item("FchVtoPago") = (DateTime.Today).AddDays(30).ToString("yyyyMMdd")
         'Fecha de vencimiento del pago servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios). 
         'Formato yyyymmdd. Debe ser igual o posterior a la fecha del comprobante
 
@@ -91,7 +91,24 @@ Public Class ComprobanteElectronico
 
     End Function
 
+    ''' <summary>
+    ''' este metodo me ayuda a comparar los valores que me devuelve el metodo de afip, para mantener homogeneidad con los 
+    ''' nombres y tipos devueltos. 
+    ''' 
+    ''' ACTUALMENTE NO TENEMOS en base de datos nuestros propios tipos de documento, tenemos que saber cual es el id que corresponde en afip.
+    ''' </summary>
+    ''' <param name="descripcionTipoDocumento"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
 
+    Private Function getDocumentoTipoAFIP(ByVal descripcionTipoDocumento As String) As Integer
+        Dim dic As New Dictionary(Of Integer, String)
+        dic = clienteFE.getTiposDeDocumentoCliente()
+        If (dic.ContainsValue(descripcionTipoDocumento)) Then
+
+        End If
+
+    End Function
    
 
 End Class
