@@ -32,24 +32,26 @@ Public Class ComprobanteElectronico
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim dic As New Dictionary(Of String, Object)
 
-
-
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
-        dic.Item("CbteTipo") = Me.TipoComprobante.Id  'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
-        'fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
-        'Información del detalle del comprobante o lote de comprobantes de ingreso
 
-        dic.Item("Concepto") = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
+        'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
+        dic.Item("CbteTipo") = Me.TipoComprobante.Id
 
-        dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento     ' buscar el que corresponda:  tipo id del comprador. CUIT/DNI/ETC
-        dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", "")) 'sacamos los guiones medios de existir en el CUIT
+        ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
+        dic.Item("Concepto") = 2
+
+        'Tipo de documento : CUIT / DNI / CUIL / ETC
+        dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento
+        'sacamos los guiones medios de existir en el tipo de documento
+        dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
 
         dic.Item("CbteDesde") = 1 'nro de comprobante desde
         dic.Item("CbteHasta") = 1 'nro de comprobante hasta
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
 
         dic.Item("ImpTotal") = Me.TotalFacturado
-        'Importe total del comprobante, Debe ser igual a Importe neto no gravado + Importe exento + Importe                                                 '   neto gravado + todos los campos de IVA al XX% + Importe de tributos.
+        'Importe total del comprobante
+        'ImporteTotal = Importe neto no gravado + Importe exento + Importe neto gravado + todos los campos de IVA al XX% + Importe de tributos.
 
         dic.Item("ImpTotConc") = 0.0
         'Importe neto no gravado.Debe ser menor o igual a Importe total y no puede ser menor a cero.
@@ -67,7 +69,7 @@ Public Class ComprobanteElectronico
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
 
-        ' dic.Item("ImpIVA") = 'Convert.ToDouble(dict.Item("ImpIVA"))
+        dic.Item("ImpIVA") = 0.0
         'Suma de los importes del array de IVA.
 
         dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
@@ -82,33 +84,14 @@ Public Class ComprobanteElectronico
         'Fecha de vencimiento del pago servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios). 
         'Formato yyyymmdd. Debe ser igual o posterior a la fecha del comprobante
 
-        dic.Item("MonId") = "PES" 'Me.cmbTipoMoneda.SelectedValue.ToString()
-
+        dic.Item("MonId") = "PES"
         dic.Item("MonCotiz") = 1.0
 
         Return dic
-
-
     End Function
 
-    ''' <summary>
-    ''' este metodo me ayuda a comparar los valores que me devuelve el metodo de afip, para mantener homogeneidad con los 
-    ''' nombres y tipos devueltos. 
-    ''' 
-    ''' ACTUALMENTE NO TENEMOS en base de datos nuestros propios tipos de documento, tenemos que saber cual es el id que corresponde en afip.
-    ''' </summary>
-    ''' <param name="descripcionTipoDocumento"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
 
-    Private Function getDocumentoTipoAFIP(ByVal descripcionTipoDocumento As String) As Integer
-        Dim dic As New Dictionary(Of Integer, String)
-        dic = clienteFE.getTiposDeDocumentoCliente()
-        If (dic.ContainsValue(descripcionTipoDocumento)) Then
+  
 
-        End If
-
-    End Function
-   
 
 End Class

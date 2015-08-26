@@ -82,8 +82,8 @@ Public Class frmComprobanteNuevo
     Friend WithEvents lblNroComprobante As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label5 = New System.Windows.Forms.Label
@@ -137,7 +137,7 @@ Public Class frmComprobanteNuevo
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(825, 611)
+        Me.btnImprimir.Location = New System.Drawing.Point(825, 591)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(75, 23)
         Me.btnImprimir.TabIndex = 10
@@ -146,7 +146,7 @@ Public Class frmComprobanteNuevo
         'btnCerrar
         '
         Me.btnCerrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCerrar.Location = New System.Drawing.Point(906, 611)
+        Me.btnCerrar.Location = New System.Drawing.Point(906, 591)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(64, 23)
         Me.btnCerrar.TabIndex = 11
@@ -178,7 +178,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.txtNombre)
-        Me.GroupBox1.Location = New System.Drawing.Point(24, 25)
+        Me.GroupBox1.Location = New System.Drawing.Point(24, 15)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(961, 214)
         Me.GroupBox1.TabIndex = 18
@@ -309,7 +309,7 @@ Public Class frmComprobanteNuevo
         'lblFecha
         '
         Me.lblFecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblFecha.Location = New System.Drawing.Point(910, 8)
+        Me.lblFecha.Location = New System.Drawing.Point(902, 3)
         Me.lblFecha.Name = "lblFecha"
         Me.lblFecha.Size = New System.Drawing.Size(80, 16)
         Me.lblFecha.TabIndex = 20
@@ -340,12 +340,12 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.cmbTipoComprobante)
         Me.GroupBox2.Controls.Add(Me.lblNroComprobante)
-        Me.GroupBox2.Location = New System.Drawing.Point(27, 245)
+        Me.GroupBox2.Location = New System.Drawing.Point(27, 235)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(958, 107)
         Me.GroupBox2.TabIndex = 22
         Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Comprobante"
+        Me.GroupBox2.Text = "Cabecera del Comprobante:"
         '
         'cmbNroTerminal
         '
@@ -430,9 +430,9 @@ Public Class frmComprobanteNuevo
         Me.GroupBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox3.Controls.Add(Me.dgvLineas)
-        Me.GroupBox3.Location = New System.Drawing.Point(27, 372)
+        Me.GroupBox3.Location = New System.Drawing.Point(27, 348)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(958, 156)
+        Me.GroupBox3.Size = New System.Drawing.Size(958, 170)
         Me.GroupBox3.TabIndex = 23
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Conceptos"
@@ -448,7 +448,7 @@ Public Class frmComprobanteNuevo
         Me.dgvLineas.Name = "dgvLineas"
         Me.dgvLineas.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.dgvLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvLineas.Size = New System.Drawing.Size(952, 137)
+        Me.dgvLineas.Size = New System.Drawing.Size(952, 151)
         Me.dgvLineas.TabIndex = 0
         '
         'concepto
@@ -460,10 +460,10 @@ Public Class frmComprobanteNuevo
         '
         'colImporteNeto
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle3
         Me.colImporteNeto.HeaderText = "Importe Neto"
         Me.colImporteNeto.Name = "colImporteNeto"
         '
@@ -491,11 +491,11 @@ Public Class frmComprobanteNuevo
         'subtotal
         '
         Me.subtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.subtotal.DefaultCellStyle = DataGridViewCellStyle4
         Me.subtotal.FillWeight = 10.15228!
         Me.subtotal.HeaderText = "SUBTOTAL"
         Me.subtotal.Name = "subtotal"
@@ -504,7 +504,7 @@ Public Class frmComprobanteNuevo
         'btnAceptar
         '
         Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAceptar.Location = New System.Drawing.Point(744, 611)
+        Me.btnAceptar.Location = New System.Drawing.Point(744, 591)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(75, 23)
         Me.btnAceptar.TabIndex = 24
@@ -515,7 +515,7 @@ Public Class frmComprobanteNuevo
         '
         Me.lblTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTotal.AutoSize = True
-        Me.lblTotal.Location = New System.Drawing.Point(750, 531)
+        Me.lblTotal.Location = New System.Drawing.Point(783, 535)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(114, 13)
         Me.lblTotal.TabIndex = 25
@@ -534,7 +534,7 @@ Public Class frmComprobanteNuevo
         '
         Me.chkLeyenda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkLeyenda.AutoSize = True
-        Me.chkLeyenda.Location = New System.Drawing.Point(30, 585)
+        Me.chkLeyenda.Location = New System.Drawing.Point(30, 565)
         Me.chkLeyenda.Name = "chkLeyenda"
         Me.chkLeyenda.Size = New System.Drawing.Size(144, 17)
         Me.chkLeyenda.TabIndex = 27
@@ -549,7 +549,7 @@ Public Class frmComprobanteNuevo
         'btnQuitar
         '
         Me.btnQuitar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnQuitar.Location = New System.Drawing.Point(27, 550)
+        Me.btnQuitar.Location = New System.Drawing.Point(27, 530)
         Me.btnQuitar.Name = "btnQuitar"
         Me.btnQuitar.Size = New System.Drawing.Size(83, 23)
         Me.btnQuitar.TabIndex = 28
@@ -559,7 +559,7 @@ Public Class frmComprobanteNuevo
         'frmComprobanteNuevo
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(1017, 657)
+        Me.ClientSize = New System.Drawing.Size(1017, 637)
         Me.Controls.Add(Me.btnQuitar)
         Me.Controls.Add(Me.chkLeyenda)
         Me.Controls.Add(Me.lblTotalSuma)
@@ -612,7 +612,7 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-    Dim controladorFE As New ControladorFacturaElectronica
+    Dim controladorFE As New ControladorComprobanteElectronico
 
     Public Property Comprobante() As Comprobante
         Get
@@ -666,7 +666,7 @@ Public Class frmComprobanteNuevo
 
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Me.Comprobante = Me.controladorFE.crearComprobante(cmbNroTerminal.SelectedItem.ToString(), Me.cmbSubTipo.SelectedItem.ToString(), Me.cmbResponsable.SelectedItem.ToString().ToUpper())
+            Me.Comprobante = Me.controladorFE.crearComprobante(cmbNroTerminal.SelectedItem.ToString(), cmbTipoComprobante.SelectedItem, Me.cmbSubTipo.SelectedItem.ToString(), Me.cmbResponsable.SelectedItem.ToString().ToUpper())
         End If
 
         Me.cargarComprobante(Me.Comprobante)
@@ -690,7 +690,11 @@ Public Class frmComprobanteNuevo
             p_com.SubTipo = Me.cmbSubTipo.SelectedItem.ToString
         End If
 
-        p_com.TipoComprobante = tiposComprobante(Me.cmbTipoComprobante.SelectedIndex)
+        
+        p_com.TipoComprobante = cmbTipoComprobante.SelectedItem
+        If TypeOf p_com Is ComprobanteElectronico Then
+            p_com.TipoComprobante.Id = Me.controladorFE.getTipoDeComprobanteAFIP(p_com.TipoComprobante.Descripcion, p_com.SubTipo)
+        End If
         p_com.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
         p_com.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
 
@@ -698,6 +702,7 @@ Public Class frmComprobanteNuevo
         p_com.DomicilioCliente = Me.txtDomicilio.Text
         p_com.DocumentoCliente.NroDocumento = Me.txtNroCuit.Text
         p_com.DocumentoCliente.idTipoDocumento = Me.cmbTipoDocumento.SelectedValue
+        p_com.DocumentoCliente.Descripcion = Me.cmbTipoDocumento.DisplayMember
         If (Me.cmbGravadoPaciente.Visible = True) Then
             p_com.GravadoPaciente = Me.cmbGravadoPaciente.SelectedItem
         End If
@@ -783,11 +788,14 @@ Public Class frmComprobanteNuevo
         'tenemos que buscar los tipos en el objeto comprobante, ya que no hay un catalogo para tipos
         Try
             Dim c As New CatalogoDeTiposComprobante
-            Dim tipos As New List(Of TipoComprobante)
+
             tiposComprobante = c.getTiposComprobante()
-            For Each tipo As TipoComprobante In tiposComprobante
-                Me.cmbTipoComprobante.Items.Add(tipo.Descripcion)
-            Next
+            cmbTipoComprobante.DataSource = tiposComprobante
+            cmbTipoComprobante.DisplayMember = "Descripcion"
+            cmbTipoComprobante.ValueMember = "Id"
+            'For Each tipo As TipoComprobante In tiposComprobante
+            '    Me.cmbTipoComprobante.Items.Add(tipo.Descripcion)
+            'Next
         Catch ex As Exception
         Finally
 
@@ -814,7 +822,7 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub calcularUltimoNro()
-        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem <> Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
+        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem IsNot Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
             ultimoNroAfip()
         Else
             ultimoNroCedir()
@@ -838,8 +846,8 @@ Public Class frmComprobanteNuevo
     End Sub
     Private Sub ultimoNroCedir()
         Dim c As New CatalogoDeComprobantes
-        If ((Me.cmbResponsable.SelectedItem <> "Seleccione..") And (Me.cmbSubTipo.SelectedIndex <> -1) Or (Me.cmbTipoComprobante.SelectedItem <> Nothing)) Then
-            If Me.cmbTipoComprobante.SelectedItem <> Nothing Then
+        If ((Me.cmbResponsable.SelectedItem <> "Seleccione..") And (Me.cmbSubTipo.SelectedIndex <> -1) Or (Me.cmbTipoComprobante.SelectedItem IsNot Nothing)) Then
+            If Me.cmbTipoComprobante.SelectedItem IsNot Nothing Then
                 If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
                     Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) + 1).ToString()
                 Else
@@ -1078,22 +1086,13 @@ Public Class frmComprobanteNuevo
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
         Me.calcularUltimoNro()
-        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem <> Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
+        If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem IsNot Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
             Me.cmbTipoDocumento.Enabled = True
             Me.cargarComboTipoDocumentoCliente()
         Else
             Me.cmbTipoDocumento.Enabled = False
         End If
     End Sub
-
-    Private Sub cmbTipoDocumento_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipoDocumento.SelectedIndexChanged
-        MessageBox.Show(Me.cmbTipoDocumento.SelectedValue.ToString())
-    End Sub
-
-    Private Sub dgvLineas_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellContentClick
-
-    End Sub
-
     Private Sub dgvLineas_CellLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellLeave
 
         If Me.dgvLineas.Rows(e.RowIndex).Cells("concepto").Value Is Nothing AndAlso Me.dgvLineas.Rows(e.RowIndex).Cells("subtotal").Value IsNot Nothing Then
@@ -1108,12 +1107,5 @@ Public Class frmComprobanteNuevo
 
     End Sub
 
-    Private Sub Label5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label5.Click
-
-    End Sub
-
-    Private Sub lblSubTipo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblSubTipo.Click
-
-    End Sub
 End Class
 

@@ -245,21 +245,21 @@ Public Class ClienteFE
         'Información del detalle del comprobante o lote de comprobantes de ingreso
         Dim objFECAEDetRequest As wsfe.FECAEDetRequest = New wsfe.FECAEDetRequest()
         objFECAEDetRequest.Concepto = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios.
-        objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo")) ' //tipo id del comprador. CUIT/DNI/ETC
-        objFECAEDetRequest.DocNro = Convert.ToInt16(dict.Item("DocTipo")) 'nro id del comprador
-        objFECAEDetRequest.CbteDesde = 1 'nro de comprobante desde
-        objFECAEDetRequest.CbteHasta = 1 'nro de comprobante desde
-        objFECAEDetRequest.CbteFch = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
+        objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo"))
+        objFECAEDetRequest.DocNro = Convert.ToInt64(dict.Item("DocNumero"))
+        objFECAEDetRequest.CbteDesde = dict.Item("CbteDesde")
+        objFECAEDetRequest.CbteHasta = dict.Item("CbteHasta")
+        objFECAEDetRequest.CbteFch = dict.Item("CbteFch")
         objFECAEDetRequest.ImpTotal = Convert.ToDouble(dict.Item("ImpTotal"))
-        objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotalConciliado"))
+        objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotConc"))
         objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
         objFECAEDetRequest.ImpOpEx = Convert.ToDouble(dict.Item("ImpOpEx"))
         objFECAEDetRequest.ImpTrib = Convert.ToDouble(dict.Item("ImpTrib"))
-        objFECAEDetRequest.ImpIVA = Convert.ToDouble(dict.Item("ImpIVA"))
-        objFECAEDetRequest.FchServDesde = DateTime.Today.ToString()
-        objFECAEDetRequest.FchServHasta = DateTime.Today.ToString()
-        objFECAEDetRequest.FchVtoPago = (DateTime.Today).AddDays(30).ToString()
-        objFECAEDetRequest.MonId = "PES" 'Me.cmbTipoMoneda.SelectedValue.ToString()
+        objFECAEDetRequest.ImpIVA = 0
+        objFECAEDetRequest.FchServDesde = dict.Item("FchServDesde")
+        objFECAEDetRequest.FchServHasta = dict.Item("FchServHasta")
+        objFECAEDetRequest.FchVtoPago = dict.Item("FchVtoPago")
+        objFECAEDetRequest.MonId = "PES"
         objFECAEDetRequest.MonCotiz = 1.0
 
 

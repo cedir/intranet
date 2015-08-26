@@ -118,7 +118,7 @@
     <Compile Include="Catalogos\CatalogoDeTipoDeMovimientosDeCaja.vb" />
     <Compile Include="Complejidades\ArancelAnestesia.vb" />
     <Compile Include="Complejidades\Complejidad.vb" />
-    <Compile Include="ControladorFacturaElectronica.vb" />
+    <Compile Include="ControladorComprobanteElectronico.vb" />
     <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
     <Compile Include="DocumentoCliente.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
