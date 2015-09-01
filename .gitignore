@@ -11,5 +11,7 @@ CedirDataAccess/bin
 CedirDataAccess/obj
 CedirNegocios/bin
 CedirNegocios/obj
+FacturaElectronica/bin
+FacturaElectronica/obj
 Setup/Debug
 Setup/Release
