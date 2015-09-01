@@ -15,3 +15,5 @@ FacturaElectronica/bin
 FacturaElectronica/obj
 Setup/Debug
 Setup/Release
+bin/
+obj/
