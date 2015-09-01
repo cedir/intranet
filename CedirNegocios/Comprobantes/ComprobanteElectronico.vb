@@ -19,7 +19,7 @@ Public Class ComprobanteElectronico
 
 
 
-        clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary())
+        clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
         'If nofalla Then
         '    Return MyBase.crear()
         'Else
@@ -31,7 +31,6 @@ Public Class ComprobanteElectronico
     End Function
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim dic As New Dictionary(Of String, Object)
-
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
 
         'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
@@ -91,7 +90,18 @@ Public Class ComprobanteElectronico
     End Function
 
 
-  
+    Private Function convertLineasDeComprobanteElectronicoToDictionary() As List(Of Dictionary(Of String, Object))
+        Dim colLineas As New List(Of Dictionary(Of String, Object))
+        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
+            Dim linea As New Dictionary(Of String, Object)()
+            linea.Item("Id") = lineaComprobante.Gravado.id
+            linea.Item("BaseImp") = lineaComprobante.importeNeto
+            linea.Item("Importe") = lineaComprobante.ImporteIVA
+            colLineas.Add(linea)
+        Next
+        Return colLineas
+    End Function
+
 
 
 End Class

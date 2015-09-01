@@ -13,6 +13,7 @@ Public Class ClienteFE
     Dim objWSFE As wsfe.Service = New wsfe.Service()
     Dim aut As wsfe.FEAuthRequest
     Dim fecaeReq As wsfe.FECAERequest
+    Dim fecaeResponse As wsfe.FECAEResponse
 
 
 
@@ -110,30 +111,19 @@ Public Class ClienteFE
 
     End Sub
 
-    Private Sub getIVA()
-
+    Public Function getTiposIVA() As Dictionary(Of Integer, String)
         Dim objIvaTipo As wsfe.IvaTipoResponse = New wsfe.IvaTipoResponse()
         objIvaTipo = objWSFE.FEParamGetTiposIva(aut)
+
+        Dim dic As New Dictionary(Of Integer, String)
+
         If (objIvaTipo.Errors Is Nothing) Then
-
-            'this.cmbIva.DisplayMember = "Desc"
-            'this.cmbIva.ValueMember = "Id"
-
-            'cmbIva.DataSource = objIvaTipo.ResultGet
-
-
-
-        Else
-            Dim i As Integer = 0
-            For i = 0 To (objIvaTipo.ResultGet.Length - 1)
-
-                '   MessageBox.Show(objIvaTipo.ResultGet(i).Desc)
+            For Each ob As wsfe.IvaTipo In objIvaTipo.ResultGet
+                dic.Add(ob.Id, ob.Desc)
             Next
-
         End If
-
-
-    End Sub
+        Return dic
+    End Function
 
     Public Function getTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
 
@@ -229,11 +219,11 @@ Public Class ClienteFE
 
 
 
-    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object))
-
-
+    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object)))
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         fecaeReq = New wsfe.FECAERequest()
+        fecaeResponse = New wsfe.FECAEResponse()
+
         'Información de la cabecera del comprobante o lote de comprobantes de ingreso
         Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
         fecaeCabReq.PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
@@ -266,6 +256,19 @@ Public Class ClienteFE
         Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
         arrayFECAEDetRequest(0) = objFECAEDetRequest
 
+
+
+
+
+        Try
+            fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
+            
+            If fecaeResponse.Errors IsNot Nothing Then
+                'devolvemos el error
+            End If
+           
+        Catch ex As Exception
+        End Try
 
 
     End Sub

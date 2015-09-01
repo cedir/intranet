@@ -27,6 +27,9 @@ Public Class ControladorComprobanteElectronico
     Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
         Return clienteFE.getTiposDeDocumentoCliente()
     End Function
+    Public Function ObtenerTiposDeIVA() As Dictionary(Of Integer, String)
+        Return clienteFE.getTiposIVA()
+    End Function
     ''' <summary>
     ''' Este metodo decide que tipo de comprobante crear, con los parametros listados. Pudiendo ser electronico o no . 
     ''' 
