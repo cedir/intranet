@@ -252,12 +252,10 @@ Public Class ClienteFE
         objFECAEDetRequest.MonId = "PES"
         objFECAEDetRequest.MonCotiz = 1.0
 
-        objFECAEDetRequest.Iva = New wsfe.AlicIva() {}
+        objFECAEDetRequest.Iva = New wsfe.AlicIva(lineas.Count - 1) {}
         Dim i As Integer = 0
         For i = 0 To lineas.Count - 1
-
-
-            objFECAEDetRequest.Iva.SetValue(lineas(i).Item("Id"), i)
+            objFECAEDetRequest.Iva(i).Id = lineas(i).Item("Id")
             objFECAEDetRequest.Iva(i).BaseImp = lineas(i).Item("BaseImp")
             objFECAEDetRequest.Iva(i).Importe = lineas(i).Item("Importe")
         Next
