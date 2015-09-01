@@ -81,6 +81,7 @@ Public Class LineaDeComprobante
         Concepto = ""
         Subtotal = 0.0
         Comprobante = Nothing
+        Gravado = New Gravado()
     End Sub
 
     Public Sub insertar()

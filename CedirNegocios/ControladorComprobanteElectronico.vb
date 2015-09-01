@@ -27,8 +27,21 @@ Public Class ControladorComprobanteElectronico
     Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
         Return clienteFE.getTiposDeDocumentoCliente()
     End Function
-    Public Function ObtenerTiposDeIVA() As Dictionary(Of Integer, String)
-        Return clienteFE.getTiposIVA()
+    Public Function getTiposDeIVA(ByVal lineas As List(Of LineaDeComprobante)) As List(Of LineaDeComprobante)
+        Dim dic As New Dictionary(Of Integer, String)
+        dic = clienteFE.getTiposIVA()
+
+        Dim pair As KeyValuePair(Of Integer, String)
+        For Each li As LineaDeComprobante In lineas
+
+            For Each pair In dic
+                If pair.Value.ToLower.Trim().Replace("%", "") = String.Concat(li.Gravado.porcentaje.ToString()) Then
+                    li.Gravado.id = pair.Key
+                    li.Gravado.descripcion = pair.Value
+                End If
+            Next
+        Next
+        Return lineas
     End Function
     ''' <summary>
     ''' Este metodo decide que tipo de comprobante crear, con los parametros listados. Pudiendo ser electronico o no . 

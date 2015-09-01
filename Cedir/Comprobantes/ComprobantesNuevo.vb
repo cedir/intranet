@@ -743,18 +743,21 @@ Public Class frmComprobanteNuevo
         Dim lineas As New List(Of LineaDeComprobante)
 
         For Each row As DataGridViewRow In Me.dgvLineas.Rows
-
-
             If row.IsNewRow Then Continue For
             Dim linea As New LineaDeComprobante
-            linea.Concepto = row.Cells("concepto").Value.ToString
 
-            linea.ImporteIVA = row.Cells("importeIVA").Value.ToString
-
-            Dim subtotal As Decimal = Convert.ToDecimal((row.Cells("subtotal").Value.ToString.Trim))
+           
+            linea.Gravado.descripcion = row.Cells("colPorcIVA").Value.ToString
+            linea.Gravado.porcentaje = Convert.ToDecimal(row.Cells("colPorcIVA").Value)
+            linea.importeNeto = Convert.ToDecimal(row.Cells("colImporteNeto").Value)
+            linea.Concepto = row.Cells("colConcepto").Value.ToString
+            linea.ImporteIVA = row.Cells("colImporteIVA").Value.ToString
+            Dim subtotal As Decimal = Convert.ToDecimal((row.Cells("colSubtotal").Value.ToString.Trim))
             linea.Subtotal = Format(subtotal, "#########0.00")
             lineas.Add(linea)
         Next
+
+        lineas = Me.controladorFE.getTiposDeIVA(lineas)
 
         Return lineas
     End Function
@@ -763,9 +766,9 @@ Public Class frmComprobanteNuevo
         Dim catGrav As New CedirNegocios.CatalogoDeGravados
         gravados = catGrav.getGravadosAll()
 
-        CType(Me.dgvLineas.Columns("porcIVA"), DataGridViewComboBoxColumn).DataSource = gravados
-        CType(Me.dgvLineas.Columns("porcIVA"), DataGridViewComboBoxColumn).DisplayMember = "descripcion"
-        CType(Me.dgvLineas.Columns("porcIVA"), DataGridViewComboBoxColumn).ValueMember = "porcentaje"
+        CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DataSource = gravados
+        CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DisplayMember = "descripcion"
+        CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).ValueMember = "porcentaje"
     End Sub
     Private Sub cargarComboTipoDocumentoCliente()
         Dim dic As New Dictionary(Of Integer, String)
@@ -998,13 +1001,13 @@ Public Class frmComprobanteNuevo
             Me.btnQuitar.Visible = False
         End If
         Dim h As New Helper
-        If e.ColumnIndex = Me.dgvLineas.Columns("subtotal").Index AndAlso Not (e.Value Is Nothing) Then
-            With Me.dgvLineas.Rows(e.RowIndex).Cells("subtotal")
+        If e.ColumnIndex = Me.dgvLineas.Columns("colSubtotal").Index AndAlso Not (e.Value Is Nothing) Then
+            With Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal")
                 If Not h.validaNumero(e.Value.ToString) Then
                     .ToolTipText = "ingrese números válidos por favor"
-                    Me.dgvLineas.Rows(e.RowIndex).Cells("subtotal").ErrorText = "Los caracteres ingresados no son numeros validos"
+                    Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").ErrorText = "Los caracteres ingresados no son numeros validos"
                     lineaValida = False
-                Else : Me.dgvLineas.Rows(e.RowIndex).Cells("subtotal").ErrorText = Nothing
+                Else : Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").ErrorText = Nothing
                     .ToolTipText = Nothing
                 End If
             End With
@@ -1051,9 +1054,9 @@ Public Class frmComprobanteNuevo
             If row.Cells("colImporteNeto").Value <> "" Then
                 Dim h As New Helper
                 If h.validaNumero(row.Cells("colImporteNeto").Value.ToString) Then
-                    row.Cells("importeIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * Convert.ToDecimal(row.Cells("porcIVA").Value) / 100)).ToString()
-                    row.Cells("subtotal").Value = Convert.ToDecimal(row.Cells("importeIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)
-                    suma = suma + Convert.ToDecimal(row.Cells("subtotal").Value)
+                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * Convert.ToDecimal(row.Cells("colPorcIVA").Value) / 100)).ToString()
+                    row.Cells("colSubtotal").Value = Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)
+                    suma = suma + Convert.ToDecimal(row.Cells("colSubtotal").Value)
                 Else : lineaValida = False
                 End If
                 h = Nothing
@@ -1076,14 +1079,14 @@ Public Class frmComprobanteNuevo
     End Sub
     Private Sub dgvLineas_CellLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellLeave
 
-        If Me.dgvLineas.Rows(e.RowIndex).Cells("concepto").Value Is Nothing AndAlso Me.dgvLineas.Rows(e.RowIndex).Cells("subtotal").Value IsNot Nothing Then
-            With Me.dgvLineas.Rows(e.RowIndex).Cells("concepto")
+        If Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").Value Is Nothing AndAlso Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").Value IsNot Nothing Then
+            With Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto")
                 .ToolTipText = "INGRESE UN CONCEPTO"
-                Me.dgvLineas.Rows(e.RowIndex).Cells("concepto").ErrorText = "Concepto invalido"
+                Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ErrorText = "Concepto invalido"
                 lineaValida = False
             End With
-        Else : Me.dgvLineas.Rows(e.RowIndex).Cells("concepto").ErrorText = Nothing
-            Me.dgvLineas.Rows(e.RowIndex).Cells("concepto").ToolTipText = Nothing
+        Else : Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ErrorText = Nothing
+            Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ToolTipText = Nothing
         End If
 
     End Sub

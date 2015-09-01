@@ -64,7 +64,7 @@ Public Class ClienteFE
 
     Private Sub inicializarCombos()
 
-        Me.getIVA()
+        ' Me.getIVA()
         Me.getTipoMoneda()
         '  Me.getTiposComprobante()
         Me.getTipoMonedaCotizacion()
@@ -252,25 +252,27 @@ Public Class ClienteFE
         objFECAEDetRequest.MonId = "PES"
         objFECAEDetRequest.MonCotiz = 1.0
 
+        objFECAEDetRequest.Iva = New wsfe.AlicIva() {}
+        Dim i As Integer = 0
+        For i = 0 To lineas.Count - 1
+
+
+            objFECAEDetRequest.Iva.SetValue(lineas(i).Item("Id"), i)
+            objFECAEDetRequest.Iva(i).BaseImp = lineas(i).Item("BaseImp")
+            objFECAEDetRequest.Iva(i).Importe = lineas(i).Item("Importe")
+        Next
 
         Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
         arrayFECAEDetRequest(0) = objFECAEDetRequest
-
-
-
-
-
         Try
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
-            
+
             If fecaeResponse.Errors IsNot Nothing Then
                 'devolvemos el error
             End If
-           
+
         Catch ex As Exception
         End Try
-
-
     End Sub
 
     Public Sub New()
