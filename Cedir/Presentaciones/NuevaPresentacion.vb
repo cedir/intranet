@@ -67,10 +67,8 @@ Public Class NuevaPresentacion
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents lblObraSocial As System.Windows.Forms.Label
-    Friend WithEvents lblConsultas As System.Windows.Forms.Label
     Friend WithEvents cmbTipoComprobante As System.Windows.Forms.ComboBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents lblSubTotal As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txtNroComprobante As System.Windows.Forms.TextBox
     Friend WithEvents btnCerrar As System.Windows.Forms.Button
@@ -100,9 +98,7 @@ Public Class NuevaPresentacion
         Me.lbltotalEstudios = New System.Windows.Forms.Label
         Me.lblGravado = New System.Windows.Forms.Label
         Me.btnImprimir = New System.Windows.Forms.Button
-        Me.lblConsultas = New System.Windows.Forms.Label
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.lblSubTotal = New System.Windows.Forms.Label
         Me.btnAgregar = New System.Windows.Forms.Button
         Me.btnGuardar = New System.Windows.Forms.Button
         Me.grpComprobante = New System.Windows.Forms.GroupBox
@@ -213,7 +209,7 @@ Public Class NuevaPresentacion
         'lblImporteGravado
         '
         Me.lblImporteGravado.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lblImporteGravado.Location = New System.Drawing.Point(16, 96)
+        Me.lblImporteGravado.Location = New System.Drawing.Point(16, 72)
         Me.lblImporteGravado.Name = "lblImporteGravado"
         Me.lblImporteGravado.Size = New System.Drawing.Size(152, 23)
         Me.lblImporteGravado.TabIndex = 7
@@ -244,20 +240,9 @@ Public Class NuevaPresentacion
         Me.btnImprimir.TabIndex = 12
         Me.btnImprimir.Text = "Imprimir"
         '
-        'lblConsultas
-        '
-        Me.lblConsultas.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lblConsultas.Location = New System.Drawing.Point(16, 48)
-        Me.lblConsultas.Name = "lblConsultas"
-        Me.lblConsultas.Size = New System.Drawing.Size(144, 23)
-        Me.lblConsultas.TabIndex = 15
-        Me.lblConsultas.Text = "Consultas: $ 0"
-        '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.lblSubTotal)
         Me.GroupBox1.Controls.Add(Me.lblTotal)
-        Me.GroupBox1.Controls.Add(Me.lblConsultas)
         Me.GroupBox1.Controls.Add(Me.lblImporteGravado)
         Me.GroupBox1.Controls.Add(Me.lbltotalEstudios)
         Me.GroupBox1.Location = New System.Drawing.Point(576, 304)
@@ -266,14 +251,6 @@ Public Class NuevaPresentacion
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Importes Totales"
-        '
-        'lblSubTotal
-        '
-        Me.lblSubTotal.Location = New System.Drawing.Point(16, 72)
-        Me.lblSubTotal.Name = "lblSubTotal"
-        Me.lblSubTotal.Size = New System.Drawing.Size(152, 23)
-        Me.lblSubTotal.TabIndex = 16
-        Me.lblSubTotal.Text = "SubTotal: $ 0"
         '
         'btnAgregar
         '
@@ -586,7 +563,6 @@ Public Class NuevaPresentacion
     Dim totalMedicacion As Single = 0
     Dim totalEstudios As Single = 0
     Dim totalPension As Single = 0
-    Dim iva As Single
     'Dim totalConsultas As Single = 0
     Dim totalArancelAnestesia As Decimal = 0
 
@@ -822,7 +798,6 @@ Public Class NuevaPresentacion
     Private Sub cargarGrilla()
         totalEstudios = 0
         totalMedicacion = 0
-        iva = 0
         totalPension = 0
         ' totalConsultas = 0
         Me.totalArancelAnestesia = 0
@@ -894,7 +869,6 @@ Public Class NuevaPresentacion
         DataGrid1.DataSource = myTable
 
 
-        calcularIva()
         setTotalesLabels()
     End Sub
 
@@ -1087,38 +1061,32 @@ Public Class NuevaPresentacion
         setTotalesLabels()
     End Sub
 
-    Private Sub calcularIva()
-        Dim totalParcialEstudios As Single = totalEstudios + totalMedicacion + totalPension
-        Dim cIva As Single
-        If cmbGravado.SelectedIndex = -1 Then
-            cIva = 0
-        Else
-            cIva = CSng(cmbGravado.SelectedItem.ToString)
-        End If
-        iva = (totalParcialEstudios) * cIva / 100
+    Private Function calcularIva(ByVal monto As Decimal) As Decimal
+        Dim montoIva As Decimal = 0
+        Dim cmbIva As Decimal
 
-        iva = Math.Round(iva, 2)
-    End Sub
+        If cmbGravado.SelectedIndex = -1 Then
+            cmbIva = 0
+        Else
+            cmbIva = Convert.ToDecimal(cmbGravado.SelectedItem.ToString)
+        End If
+        montoIva = (monto) * cmbIva / 100
+        montoIva = Decimal.Round(montoIva, 2, MidpointRounding.AwayFromZero)
+
+        Return montoIva
+
+    End Function
 
     Private Sub setTotalesLabels()
-        Dim total As Single
-        Dim totalParcialEstudios As Single = totalEstudios + Math.Round(totalMedicacion, 2) + totalPension + Me.totalArancelAnestesia
-        Dim subTotal As Single = totalParcialEstudios '+ totalConsultas
-        calcularIva()
+        Dim total As Decimal
+        Dim totalParcialEstudios As Decimal = totalEstudios + Math.Round(totalMedicacion, 2) + totalPension + Me.totalArancelAnestesia
 
-        'MsgBox("Est: " & CStr(totalEstudios) & " Pen: " & CStr(totalPension) & " Med: " & CStr(totalMedicacion))
-        total = subTotal + iva
+        Dim iva As Decimal = calcularIva(totalParcialEstudios)
+        total = totalParcialEstudios + iva
         lbltotalEstudios.Text = "Estudios: $ " & Str(totalParcialEstudios)
-        '  lblConsultas.Text = "Consultas: $ " & Str(totalConsultas)
-        lblSubTotal.Text = "Subtotal: $ " & Str(Math.Round(subTotal, 2))
         lblImporteGravado.Text = "Gravado: $ " & Str(iva)
-        lblTotal.Text = "Total: $ " & Str(Math.Round(total, 2))
+        lblTotal.Text = "Total: $ " & Str(Decimal.Round(total, 2, MidpointRounding.AwayFromZero))
     End Sub
-
-    Private Sub txtIva_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs)
-        setTotalesLabels()
-    End Sub
-
     Private Sub cmbResponsableFactura_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbResponsableComprobante.SelectedIndexChanged
 
         calcularUltimoNro()
@@ -1221,7 +1189,6 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cmbGravado_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbGravado.SelectedIndexChanged
-        Me.iva = CSng(Me.cmbGravado.SelectedItem.ToString)
         Me.setTotalesLabels()
     End Sub
 
