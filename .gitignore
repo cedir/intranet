@@ -17,3 +17,7 @@ Setup/Debug
 Setup/Release
 bin/
 obj/
+*.sln
+*.resx
+*.config
+FacturaElectronica/My Proyect/
