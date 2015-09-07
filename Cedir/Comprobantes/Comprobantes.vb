@@ -122,7 +122,7 @@ Public Class Comprobantes
             For i = 0 To lineas.Count - 1
                 dRow = tabla.NewRow
                 dRow("CONCEPTO") = lineas(i).Concepto
-                dRow("SUBTOTAL") = Format(lineas(i).Subtotal, "########0.00")
+                dRow("SUBTOTAL") = Format(lineas(i).importeNeto, "########0.00")
                 tabla.Rows.Add(dRow)
             Next
             tabla.AcceptChanges()
