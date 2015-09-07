@@ -13,13 +13,28 @@ Public Class ComprobanteElectronico
         End Set
     End Property
 
-    Dim clienteFE As New ClienteFE
+    Dim _clienteFE As ClienteFE
+    Public Property clienteFE() As ClienteFE
+        Get
+            Return _clienteFE
+        End Get
+        Set(ByVal value As ClienteFE)
+            _clienteFE = value
+        End Set
+    End Property
+
 
     Public Overrides Function crear() As Object
 
 
+        Dim resultado As String
+        Try
+            resultado = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+            Return MyBase.crear()
+        Catch ex As Exception
 
-        clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+        End Try
+
         'If nofalla Then
         '    Return MyBase.crear()
         'Else
@@ -44,8 +59,8 @@ Public Class ComprobanteElectronico
         'sacamos los guiones medios de existir en el tipo de documento
         dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
 
-        dic.Item("CbteDesde") = 1 'nro de comprobante desde
-        dic.Item("CbteHasta") = 1 'nro de comprobante hasta
+        dic.Item("CbteDesde") = 2 'nro de comprobante desde
+        dic.Item("CbteHasta") = 2  'nro de comprobante hasta
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
 
         dic.Item("ImpTotal") = Me.TotalFacturado
@@ -58,7 +73,7 @@ Public Class ComprobanteElectronico
         'Para comprobantes tipo C debe ser igual a cero (0).
         'Para comprobantes tipo Bienes Usados – Emisor Monotributista este campo corresponde al importe subtotal.
 
-        dic.Item("ImpNeto") = Me.TotalFacturado 'es la sumatoria de las lineas de comprobante
+        dic.Item("ImpNeto") = Me.ImporteNeto 'es la sumatoria de las lineas de comprobante.importeNeto (sin IVA)
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
@@ -68,7 +83,7 @@ Public Class ComprobanteElectronico
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
 
-        dic.Item("ImpIVA") = 0.0
+        dic.Item("ImpIVA") = Me.totalImporteIVA()
         'Suma de los importes del array de IVA.
 
         dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
@@ -103,5 +118,14 @@ Public Class ComprobanteElectronico
     End Function
 
 
-
+    Private Function totalImporteIVA() As Decimal
+        Dim importeIVA As Decimal
+        For Each l As LineaDeComprobante In Me.LineasDeComprobante
+            importeIVA += l.ImporteIVA
+        Next
+        Return importeIVA
+    End Function
+    Public Sub New(ByVal cliente As ClienteFE)
+        Me.clienteFE = cliente
+    End Sub
 End Class

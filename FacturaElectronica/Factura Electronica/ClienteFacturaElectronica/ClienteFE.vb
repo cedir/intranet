@@ -219,7 +219,7 @@ Public Class ClienteFE
 
 
 
-    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object)))
+    Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As String
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
@@ -245,7 +245,7 @@ Public Class ClienteFE
         objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
         objFECAEDetRequest.ImpOpEx = Convert.ToDouble(dict.Item("ImpOpEx"))
         objFECAEDetRequest.ImpTrib = Convert.ToDouble(dict.Item("ImpTrib"))
-        objFECAEDetRequest.ImpIVA = 0
+        objFECAEDetRequest.ImpIVA = Convert.ToDouble(dict.Item("ImpIVA"))
         objFECAEDetRequest.FchServDesde = dict.Item("FchServDesde")
         objFECAEDetRequest.FchServHasta = dict.Item("FchServHasta")
         objFECAEDetRequest.FchVtoPago = dict.Item("FchVtoPago")
@@ -255,6 +255,7 @@ Public Class ClienteFE
         objFECAEDetRequest.Iva = New wsfe.AlicIva(lineas.Count - 1) {}
         Dim i As Integer = 0
         For i = 0 To lineas.Count - 1
+            objFECAEDetRequest.Iva(i) = New wsfe.AlicIva
             objFECAEDetRequest.Iva(i).Id = lineas(i).Item("Id")
             objFECAEDetRequest.Iva(i).BaseImp = lineas(i).Item("BaseImp")
             objFECAEDetRequest.Iva(i).Importe = lineas(i).Item("Importe")
@@ -262,16 +263,21 @@ Public Class ClienteFE
 
         Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
         arrayFECAEDetRequest(0) = objFECAEDetRequest
+        fecaeReq.FeDetReq = arrayFECAEDetRequest
         Try
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
 
             If fecaeResponse.Errors IsNot Nothing Then
-                'devolvemos el error
+                Return fecaeResponse.Errors(0).Msg
+            Else
+                Return fecaeResponse.FeDetResp(0).CAE
             End If
 
         Catch ex As Exception
+            Return fecaeResponse.Errors(0).Msg
         End Try
-    End Sub
+
+    End Function
 
     Public Sub New()
 

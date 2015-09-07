@@ -38,6 +38,7 @@ Public Class ControladorComprobanteElectronico
                 If pair.Value.ToLower.Trim().Replace("%", "") = String.Concat(li.Gravado.porcentaje.ToString()) Then
                     li.Gravado.id = pair.Key
                     li.Gravado.descripcion = pair.Value
+                    Exit For
                 End If
             Next
         Next
@@ -56,7 +57,7 @@ Public Class ControladorComprobanteElectronico
     Public Function crearComprobante(ByVal terminal As String, ByVal tipoComprobante As TipoComprobante, ByVal subtipo As String, ByVal responsable As String) As Comprobante
         Select Case True
             Case (terminal = "0091" And subtipo = "A" And responsable.ToUpper().Trim() = "CEDIR")
-                Return New ComprobanteElectronico
+                Return New ComprobanteElectronico(Me.clienteFE)
 
             Case Else
                 Return New Comprobante

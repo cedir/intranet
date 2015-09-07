@@ -22,6 +22,7 @@ Public Class Comprobante
     Private m_factura As Comprobante 'el comprobante si es nd o nc, tiene asociado una  factura
     Private m_totalFacturado As Decimal
     Private m_totalCobrado As Decimal
+    Private m_importeNeto As Decimal
     Private m_gravadoPaciente As String
     Private m_lineasDeComprobante As List(Of LineaDeComprobante) 'creo una coleccion de lineas(y a su vez guardo un objeto compro. en lineaComprobante)
 
@@ -177,6 +178,15 @@ Public Class Comprobante
             m_totalFacturado = value
         End Set
     End Property
+
+    Public Property ImporteNeto() As Decimal
+        Get
+            Return Me.m_importeNeto
+        End Get
+        Set(ByVal value As Decimal)
+            m_importeNeto = value
+        End Set
+    End Property
     Public Property LineasDeComprobante() As List(Of LineaDeComprobante)
         Get
             Return m_lineasDeComprobante
@@ -262,10 +272,10 @@ Public Class Comprobante
 
                 If ((Me.TipoComprobante.Id = 4 Or Me.TipoComprobante.Id = 3) And (Me.Factura IsNot Nothing)) Then
                     'si es asi, insertamos tambien la factura que corresponda
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
+                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "importeNeto" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.ImporteNeto & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
                 Else
                     'de otra manera, insertamos vacio en el campo idFactura de la tabla
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
+                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "importeNeto" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.ImporteNeto & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
                 End If
 
             End If
@@ -313,6 +323,8 @@ Public Class Comprobante
                 Dim linea As New LineaDeComprobante
                 linea.Concepto = Convert.ToString(dr("concepto"))
                 linea.Subtotal = Convert.ToDecimal(dr("subtotal"))
+                linea.ImporteIVA = Convert.ToDecimal(dr("importeIVA"))
+                linea.importeNeto = Convert.ToDecimal(dr("importeNeto"))
                 getLineas.Add(linea)
                 linea = Nothing
             Loop
