@@ -24,6 +24,7 @@ Public Class ControladorComprobanteElectronico
     Public Function ObtenerUltimoNro(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As String
         Return clienteFE.getUltimoNroComprobante(tipoComprobante, nroTerminal, subtipo)
     End Function
+
     Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
         Return clienteFE.getTiposDeDocumentoCliente()
     End Function
@@ -49,21 +50,17 @@ Public Class ControladorComprobanteElectronico
     ''' Observacion : no es conveniente usar patron factory?
     ''' </summary>
     ''' <param name="terminal"></param>
-    ''' <param name="subtipo"></param>
-    ''' <param name="responsable"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function crearComprobante(ByVal terminal As String, ByVal tipoComprobante As TipoComprobante, ByVal subtipo As String, ByVal responsable As String) As Comprobante
+    Public Function crearComprobante(ByVal terminal As String) As Comprobante
         Select Case True
-            Case (terminal = "0091" And subtipo = "A" And responsable.ToUpper().Trim() = "CEDIR")
+            Case (terminal = "0091")
                 Return New ComprobanteElectronico
-
             Case Else
                 Return New Comprobante
         End Select
 
     End Function
-
     Public Function getTipoDeComprobanteAFIP(ByVal descripcionTipoComprobante As String, ByVal subtipo As String) As Integer
         Dim dic As New Dictionary(Of Integer, String)
         dic = Me.clienteFE.getTipoComprobante()

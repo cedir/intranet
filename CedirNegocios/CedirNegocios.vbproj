@@ -116,10 +116,15 @@
     <Compile Include="Catalogos\CatalogoDeMovimientosDeCaja.vb" />
     <Compile Include="Catalogos\CatalogoDeMovimientosStock.vb" />
     <Compile Include="Catalogos\CatalogoDeTipoDeMovimientosDeCaja.vb" />
+    <Compile Include="Catalogos\CatalogoObjetosAFIP\CatalogoDeObjetosAFIP.vb" />
+    <Compile Include="Clases AFIP\TipoDeComprobanteAFIP.vb" />
+    <Compile Include="Clases AFIP\TipoDeGravadoAFIP.vb" />
+    <Compile Include="Clases AFIP\TipoIdentificacionClienteAFIP.vb" />
     <Compile Include="Complejidades\ArancelAnestesia.vb" />
     <Compile Include="Complejidades\Complejidad.vb" />
-    <Compile Include="ControladorComprobanteElectronico.vb" />
+    <Compile Include="Comprobantes\Comprobante.vb" />
     <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
+    <Compile Include="ControladorComprobanteElectronico.vb" />
     <Compile Include="DocumentoCliente.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
     <Compile Include="Catalogos\CatalogoDeAuditLogs.vb" />
@@ -150,7 +155,6 @@
     <Compile Include="Catalogos\CatalogoDeUsuarios.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Comprobantes\Comprobante.vb" />
     <Compile Include="Consulta.vb">
       <SubType>Code</SubType>
     </Compile>

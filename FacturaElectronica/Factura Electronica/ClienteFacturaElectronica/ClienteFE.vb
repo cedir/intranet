@@ -215,10 +215,6 @@ Public Class ClienteFE
         End Try
 
     End Function
-
-
-
-
     Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object)))
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         fecaeReq = New wsfe.FECAERequest()
