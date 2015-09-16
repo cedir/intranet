@@ -73,9 +73,11 @@ Public Class ControladorComprobanteElectronico
         For Each tipoCompAFIP As TipoDeComprobanteAFIP In Me.getTipoDeComprobanteAFIP
             If comprobante.tipoComprobanteAFIP.Id = tipoCompAFIP.idTblTipoDeComprobantes Then
                 comprobante.tipoComprobanteAFIP = tipoCompAFIP
+                Exit For
             End If
         Next
 
+        'ahora podemos usar los ids, que estan cargados en los objetosAFIP
 
         Return comprobante
     End Function
