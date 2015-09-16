@@ -4,8 +4,10 @@ Imports System.Collections.Generic
 
 Public Class ControladorComprobanteElectronico
 
-#Region "Propiedades"
+    Dim catObjetosAfip As New CedirNegocios.CatalogoDeObjetosAFIP
     Private m_ClienteFE As ClienteFE
+
+#Region "Propiedades"
     Public Property clienteFE() As ClienteFE
         Get
             Return m_ClienteFE
@@ -15,8 +17,6 @@ Public Class ControladorComprobanteElectronico
         End Set
     End Property
 #End Region
-
-
     Public Sub New()
         Me.clienteFE = New ClienteFE()
         clienteFE.iniciar()
@@ -25,24 +25,11 @@ Public Class ControladorComprobanteElectronico
         Return clienteFE.getUltimoNroComprobante(tipoComprobante, nroTerminal, subtipo)
     End Function
 
-    Public Function ObtenerTiposDeDocumentoCliente() As Dictionary(Of Integer, String)
-        Return clienteFE.getTiposDeDocumentoCliente()
+    Public Function ObtenerTiposDeIdentificacionDeClienteAFIP() As List(Of TipoIdentificacionClienteAFIP)
+        Return Me.catObjetosAfip.getTiposDeIdentificacionClienteAFIP()
     End Function
-    Public Function getTiposDeIVA(ByVal lineas As List(Of LineaDeComprobante)) As List(Of LineaDeComprobante)
-        Dim dic As New Dictionary(Of Integer, String)
-        dic = clienteFE.getTiposIVA()
-
-        Dim pair As KeyValuePair(Of Integer, String)
-        For Each li As LineaDeComprobante In lineas
-
-            For Each pair In dic
-                If pair.Value.ToLower.Trim().Replace("%", "") = String.Concat(li.Gravado.porcentaje.ToString()) Then
-                    li.Gravado.id = pair.Key
-                    li.Gravado.descripcion = pair.Value
-                End If
-            Next
-        Next
-        Return lineas
+    Private Function getTiposDeGravadoAFIP() As List(Of TipoDeGravadoAFIP)
+        Return Me.catObjetosAfip.getTiposDeGravadoAFIP()
     End Function
     ''' <summary>
     ''' Este metodo decide que tipo de comprobante crear, con los parametros listados. Pudiendo ser electronico o no . 
@@ -61,17 +48,35 @@ Public Class ControladorComprobanteElectronico
         End Select
 
     End Function
-    Public Function getTipoDeComprobanteAFIP(ByVal descripcionTipoComprobante As String, ByVal subtipo As String) As Integer
-        Dim dic As New Dictionary(Of Integer, String)
-        dic = Me.clienteFE.getTipoComprobante()
-
-        Dim pair As KeyValuePair(Of Integer, String)
-        For Each pair In dic
-            If pair.Value.ToLower.Trim() = String.Concat(descripcionTipoComprobante.ToLower.Trim(), " ", subtipo.ToLower()) Then
-                Return pair.Key
-            End If
-        Next
-        Return 0
+    Private Function getTipoDeComprobanteAFIP() As List(Of TipoDeComprobanteAFIP)
+        getTipoDeComprobanteAFIP = Me.catObjetosAfip.getTiposDeComprobanteAFIP()
     End Function
 
+    ''' <summary>
+    ''' metodo para cargar el comprobante con los datos que poseemos de AFIP, y 
+    ''' convertir los que nosotros usamos en base de datos, que estan cargados en el objeto comprobante
+    ''' </summary>
+    ''' <param name="comprobante"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function cargarComprobanteModeloAFIP(ByVal comprobante As ComprobanteElectronico) As ComprobanteElectronico
+
+        'El nro de documento, es cargado en la vista. No hace falta identificarlo. 
+
+        For Each tipoGravadoAFIP As TipoDeGravadoAFIP In Me.getTiposDeGravadoAFIP
+            If comprobante.Gravado.id = tipoGravadoAFIP.idTblGravados Then
+                comprobante.gravadoAFIP = tipoGravadoAFIP
+                Exit For
+            End If
+        Next
+
+        For Each tipoCompAFIP As TipoDeComprobanteAFIP In Me.getTipoDeComprobanteAFIP
+            If comprobante.tipoComprobanteAFIP.Id = tipoCompAFIP.idTblTipoDeComprobantes Then
+                comprobante.tipoComprobanteAFIP = tipoCompAFIP
+            End If
+        Next
+
+
+        Return comprobante
+    End Function
 End Class

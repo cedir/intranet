@@ -4,6 +4,9 @@ Public Class ComprobanteElectronico
     Inherits Comprobante
 
     Dim _cae As String
+    Dim _gravado As TipoDeGravadoAFIP
+    Dim _tipoComprobante As TipoDeComprobanteAFIP
+
     Public Property CAE() As String
         Get
             Return _cae
@@ -12,7 +15,22 @@ Public Class ComprobanteElectronico
             _cae = value
         End Set
     End Property
-
+    Public Property gravadoAFIP() As TipoDeGravadoAFIP
+        Get
+            Return _gravado
+        End Get
+        Set(ByVal value As TipoDeGravadoAFIP)
+            _gravado = value
+        End Set
+    End Property
+    Public Property tipoComprobanteAFIP() As TipoDeComprobanteAFIP
+        Get
+            Return _tipoComprobante
+        End Get
+        Set(ByVal value As TipoDeComprobanteAFIP)
+            _tipoComprobante = value
+        End Set
+    End Property
     Dim clienteFE As New ClienteFE
 
     Public Overrides Function crear() As Object
@@ -94,7 +112,14 @@ Public Class ComprobanteElectronico
         Dim colLineas As New List(Of Dictionary(Of String, Object))
         For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
             Dim linea As New Dictionary(Of String, Object)()
-            linea.Item("Id") = lineaComprobante.Gravado.id
+
+
+            linea.Item("Id") = lineaComprobante.Comprobante.Gravado.id  'ESTA LINEA CAMIBIA.TENEMOS QUE INSERTAR EL ID
+            'DE LA TABLA AFIP_ Gravados.idAFIP         
+
+
+
+
             linea.Item("BaseImp") = lineaComprobante.importeNeto
             linea.Item("Importe") = lineaComprobante.ImporteIVA
             colLineas.Add(linea)

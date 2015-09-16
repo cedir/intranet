@@ -13,7 +13,7 @@ Public Class TipoIdentificacionClienteAFIP
     End Property
     Public Property idAFIP() As Integer
         Get
-            id = m_idAFIP
+            Return m_idAFIP
         End Get
         Set(ByVal Value As Integer)
             m_idAFIP = Value

@@ -68,14 +68,14 @@ Public Class frmComprobanteNuevo
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents txtDomicilio As System.Windows.Forms.TextBox
-    Friend WithEvents txtNroCuit As System.Windows.Forms.TextBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents txtNroIdentificacionCliente As System.Windows.Forms.TextBox
+    Friend WithEvents lblIVA As System.Windows.Forms.Label
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents cmbCondicionFiscal As System.Windows.Forms.ComboBox
     Friend WithEvents cmbResponsable As System.Windows.Forms.ComboBox
     Friend WithEvents cmbTipoComprobante As System.Windows.Forms.ComboBox
-    Friend WithEvents cmbGravado As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbIVA As System.Windows.Forms.ComboBox
     Friend WithEvents btnObraSocial As System.Windows.Forms.Button
     Friend WithEvents lblFecha As System.Windows.Forms.Label
     Friend WithEvents btnPaciente As System.Windows.Forms.Button
@@ -93,7 +93,7 @@ Public Class frmComprobanteNuevo
         Me.lblPacienteGravado = New System.Windows.Forms.Label
         Me.cmbGravadoPaciente = New System.Windows.Forms.ComboBox
         Me.btnPaciente = New System.Windows.Forms.Button
-        Me.txtNroCuit = New System.Windows.Forms.TextBox
+        Me.txtNroIdentificacionCliente = New System.Windows.Forms.TextBox
         Me.txtDomicilio = New System.Windows.Forms.TextBox
         Me.btnObraSocial = New System.Windows.Forms.Button
         Me.cmbCondicionFiscal = New System.Windows.Forms.ComboBox
@@ -113,8 +113,8 @@ Public Class frmComprobanteNuevo
         Me.txtNroComprobante = New System.Windows.Forms.TextBox
         Me.cmbResponsable = New System.Windows.Forms.ComboBox
         Me.Label2 = New System.Windows.Forms.Label
-        Me.cmbGravado = New System.Windows.Forms.ComboBox
-        Me.Label12 = New System.Windows.Forms.Label
+        Me.cmbIVA = New System.Windows.Forms.ComboBox
+        Me.lblIVA = New System.Windows.Forms.Label
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.dgvLineas = New System.Windows.Forms.DataGridView
         Me.colConcepto = New System.Windows.Forms.DataGridViewTextBoxColumn
@@ -169,7 +169,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox1.Controls.Add(Me.lblPacienteGravado)
         Me.GroupBox1.Controls.Add(Me.cmbGravadoPaciente)
         Me.GroupBox1.Controls.Add(Me.btnPaciente)
-        Me.GroupBox1.Controls.Add(Me.txtNroCuit)
+        Me.GroupBox1.Controls.Add(Me.txtNroIdentificacionCliente)
         Me.GroupBox1.Controls.Add(Me.txtDomicilio)
         Me.GroupBox1.Controls.Add(Me.btnObraSocial)
         Me.GroupBox1.Controls.Add(Me.cmbCondicionFiscal)
@@ -226,14 +226,14 @@ Public Class frmComprobanteNuevo
         Me.btnPaciente.Text = "Paciente"
         Me.btnPaciente.UseVisualStyleBackColor = True
         '
-        'txtNroCuit
+        'txtNroIdentificacionCliente
         '
-        Me.txtNroCuit.Location = New System.Drawing.Point(114, 69)
-        Me.txtNroCuit.Multiline = True
-        Me.txtNroCuit.Name = "txtNroCuit"
-        Me.txtNroCuit.Size = New System.Drawing.Size(381, 36)
-        Me.txtNroCuit.TabIndex = 8
-        Me.ToolTip1.SetToolTip(Me.txtNroCuit, "Cuando ingrese un paciente, por favor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ingrese:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OBRA SOCIAL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & """Afiliado nro"" + NR" & _
+        Me.txtNroIdentificacionCliente.Location = New System.Drawing.Point(114, 69)
+        Me.txtNroIdentificacionCliente.Multiline = True
+        Me.txtNroIdentificacionCliente.Name = "txtNroIdentificacionCliente"
+        Me.txtNroIdentificacionCliente.Size = New System.Drawing.Size(381, 36)
+        Me.txtNroIdentificacionCliente.TabIndex = 8
+        Me.ToolTip1.SetToolTip(Me.txtNroIdentificacionCliente, "Cuando ingrese un paciente, por favor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ingrese:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OBRA SOCIAL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & """Afiliado nro"" + NR" & _
                 "O AFILIADO" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "----------------------------------------" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Cuando ingrese obra social" & _
                 ", por favor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ingrese:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "NRO CUIT")
         '
@@ -335,8 +335,8 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.Controls.Add(Me.txtNroComprobante)
         Me.GroupBox2.Controls.Add(Me.cmbResponsable)
         Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.cmbGravado)
-        Me.GroupBox2.Controls.Add(Me.Label12)
+        Me.GroupBox2.Controls.Add(Me.cmbIVA)
+        Me.GroupBox2.Controls.Add(Me.lblIVA)
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.cmbTipoComprobante)
         Me.GroupBox2.Controls.Add(Me.lblNroComprobante)
@@ -407,21 +407,21 @@ Public Class frmComprobanteNuevo
         Me.Label2.TabIndex = 25
         Me.Label2.Text = "Responsable:"
         '
-        'cmbGravado
+        'cmbIVA
         '
-        Me.cmbGravado.Location = New System.Drawing.Point(112, 50)
-        Me.cmbGravado.Name = "cmbGravado"
-        Me.cmbGravado.Size = New System.Drawing.Size(121, 21)
-        Me.cmbGravado.TabIndex = 24
-        Me.cmbGravado.Text = "Seleccione Gravado"
+        Me.cmbIVA.Location = New System.Drawing.Point(112, 50)
+        Me.cmbIVA.Name = "cmbIVA"
+        Me.cmbIVA.Size = New System.Drawing.Size(121, 21)
+        Me.cmbIVA.TabIndex = 24
+        Me.cmbIVA.Text = "Seleccione IVA:"
         '
-        'Label12
+        'lblIVA
         '
-        Me.Label12.Location = New System.Drawing.Point(20, 53)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(56, 23)
-        Me.Label12.TabIndex = 23
-        Me.Label12.Text = "Gravado:"
+        Me.lblIVA.Location = New System.Drawing.Point(20, 53)
+        Me.lblIVA.Name = "lblIVA"
+        Me.lblIVA.Size = New System.Drawing.Size(56, 23)
+        Me.lblIVA.TabIndex = 23
+        Me.lblIVA.Text = "IVA:"
         '
         'GroupBox3
         '
@@ -590,7 +590,7 @@ Public Class frmComprobanteNuevo
 #Region "CABEZA"
     Public Sub CargarObjeto(ByVal p_os As ObraSocial)
         Me.txtNombre.Text = p_os.ObraSocial
-        Me.txtNroCuit.Text = p_os.nroCuit
+        Me.txtNroIdentificacionCliente.Text = p_os.nroCuit
         Me.txtDomicilio.Text = p_os.direccion & " - " & p_os.localidad & " - " & "(CP:" & p_os.CodigoPostal.ToString() & ")"
         Me.cmbCondicionFiscal.Text = p_os.CondicionFiscal
         Me.cmbCondicionFiscal.Enabled = False
@@ -610,9 +610,9 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-    Dim controladorFE As New ControladorComprobanteElectronico
+    Dim controladorCompElectronico As New ControladorComprobanteElectronico
     Dim catGrav As New CedirNegocios.CatalogoDeGravados
-    Dim catObjetosAfip As New CedirNegocios.CatalogoDeObjetosAFIP
+
 
 
     Public Property Comprobante() As Comprobante
@@ -666,9 +666,16 @@ Public Class frmComprobanteNuevo
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Me.Comprobante = Me.controladorFE.crearComprobante(cmbNroTerminal.SelectedItem.ToString())
+            'comprobamos si es una factura electronica
+            Me.Comprobante = Me.controladorCompElectronico.crearComprobante(cmbNroTerminal.SelectedItem.ToString())
         End If
+        'cargamos los datos de la vista
         Me.cargarComprobante(Me.Comprobante)
+        If (Comprobante.GetType() Is GetType(ComprobanteElectronico)) Then
+            'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
+            Me.Comprobante = Me.controladorCompElectronico.cargarComprobanteModeloAFIP(Comprobante)
+        End If
+
         If Comprobante.doesExist() Then
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
@@ -706,7 +713,7 @@ Public Class frmComprobanteNuevo
         'algunos valores se setean vacios
         If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() <> "LIQUIDACION" Then
             p_com.Responsable = Me.cmbResponsable.Text
-            p_com.Gravado = Me.cmbGravado.SelectedItem
+            p_com.Gravado = Me.cmbIVA.SelectedItem
             p_com.SubTipo = Me.cmbSubTipo.SelectedItem.ToString
         End If
         p_com.TipoComprobante = cmbTipoComprobante.SelectedItem
@@ -714,7 +721,7 @@ Public Class frmComprobanteNuevo
         p_com.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
         p_com.NombreCliente = Me.txtNombre.Text
         p_com.DomicilioCliente = Me.txtDomicilio.Text
-        p_com.DocumentoCliente.NroDocumento = Me.txtNroCuit.Text
+        p_com.DocumentoCliente.NroDocumento = Me.txtNroIdentificacionCliente.Text
         p_com.DocumentoCliente.idTipoDocumento = Me.cmbTipoDocumento.SelectedValue
         p_com.DocumentoCliente.Descripcion = Me.cmbTipoDocumento.DisplayMember
         If (Me.cmbGravadoPaciente.Visible = True) Then
@@ -735,13 +742,13 @@ Public Class frmComprobanteNuevo
         'se pasa una factura, pero acá se crea nd o nc 
         Me.txtNombre.Text = Me.Comprobante.NombreCliente
         Me.txtDomicilio.Text = Me.Comprobante.DomicilioCliente
-        Me.txtNroCuit.Text = Me.Comprobante.DocumentoCliente.NroDocumento
+        Me.txtNroIdentificacionCliente.Text = Me.Comprobante.DocumentoCliente.NroDocumento
         Me.cmbCondicionFiscal.Text = Me.Comprobante.CondicionFiscal
         Me.Comprobante.FechaEmision = Date.Today
         'deshabilitamos la edicion de los campos del cliente
         Me.txtNombre.ReadOnly = True
         Me.txtDomicilio.ReadOnly = True
-        Me.txtNroCuit.ReadOnly = True
+        Me.txtNroIdentificacionCliente.ReadOnly = True
         Me.cmbCondicionFiscal.Enabled = True
         Me.btnPaciente.Visible = False
         Me.btnObraSocial.Visible = False
@@ -751,18 +758,18 @@ Public Class frmComprobanteNuevo
         Me.Comprobante.Factura = Me.Comprobante
     End Sub
     Private Sub cargarComboGravado()
-        Me.cmbGravado.DataSource = gravados
-        Me.cmbGravado.DisplayMember = "descripcion"
+        Me.cmbIVA.DataSource = gravados
+        Me.cmbIVA.DisplayMember = "descripcion"
     End Sub
     Private Sub cargarComboGravadoEnDataGrid()
         CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DataSource = gravados
         CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DisplayMember = "descripcion"
         CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).ValueMember = "porcentaje"
     End Sub
-    Private Sub cargarComboTipoDocumentoCliente()
+    Private Sub cargarComboTipoIdentificaiconCliente()
         Dim lista As New List(Of TipoIdentificacionClienteAFIP)
         Try
-            lista = catObjetosAfip.getTiposDeIdentificacionClienteAFIP()
+            lista = controladorCompElectronico.ObtenerTiposDeIdentificacionDeClienteAFIP()
             cmbTipoDocumento.DataSource = New BindingSource(lista, Nothing)
             cmbTipoDocumento.ValueMember = "id"
             cmbTipoDocumento.DisplayMember = "descripcion"
@@ -834,7 +841,7 @@ Public Class frmComprobanteNuevo
 
     End Sub
     Private Sub calcularUltimoNroAFIP()
-        Me.txtNroComprobante.Text = (Me.controladorFE.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString(), Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
+        Me.txtNroComprobante.Text = (Me.controladorCompElectronico.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString(), Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
     End Sub
     Private Sub calcularImportesEnLineasDataGrid()
         'Mostramos la suma de los subtotales de las lineas
@@ -846,7 +853,7 @@ Public Class frmComprobanteNuevo
                 Dim h As New Helper
                 If h.validaNumero(row.Cells("colImporteNeto").Value.ToString) Then
 
-                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * CType(Me.cmbGravado.SelectedItem, Gravado).porcentaje) / 100).ToString()
+                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100).ToString()
                     row.Cells("colSubtotal").Value = Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)
                     suma = suma + Convert.ToDecimal(row.Cells("colSubtotal").Value)
                 Else : lineaValida = False
@@ -912,7 +919,7 @@ Public Class frmComprobanteNuevo
 
         gravados = catGrav.getGravadosAll()
         'busco los gravados en la base de datos
-        Me.cargarComboGravadoEnDataGrid()
+        'Me.cargarComboGravadoEnDataGrid()
         cargarComboGravado()
 
         Me.cmbGravadoPaciente.Visible = False
@@ -969,13 +976,13 @@ Public Class frmComprobanteNuevo
     Private Sub cmbTipoComprobante_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipoComprobante.SelectedIndexChanged
         If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
             Me.cmbCondicionFiscal.Enabled = False
-            Me.cmbGravado.Enabled = False
+            Me.cmbIVA.Enabled = False
             Me.cmbResponsable.Enabled = False
             Me.cmbSubTipo.Enabled = False
             Me.cmbNroTerminal.Enabled = False
         Else
             Me.cmbCondicionFiscal.Enabled = True
-            Me.cmbGravado.Enabled = True
+            Me.cmbIVA.Enabled = True
             Me.cmbResponsable.Enabled = True
             Me.cmbNroTerminal.Enabled = True
             Me.cmbSubTipo.Enabled = True
@@ -989,14 +996,14 @@ Public Class frmComprobanteNuevo
     Private Sub cmbSubTipo_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbSubTipo.SelectedIndexChanged
         Me.calcularUltimoNro()
     End Sub
-    Private Sub cmbGravado_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbGravado.SelectedIndexChanged
+    Private Sub cmbIVA_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbIVA.SelectedIndexChanged
         calcularImportesEnLineasDataGrid()
     End Sub
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
         Me.calcularUltimoNro()
         If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem IsNot Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
             Me.cmbTipoDocumento.Enabled = True
-            Me.cargarComboTipoDocumentoCliente()
+            Me.cargarComboTipoIdentificaiconCliente()
         Else
             Me.cmbTipoDocumento.Enabled = False
         End If
@@ -1074,10 +1081,6 @@ Public Class frmComprobanteNuevo
     End Sub
 
 #End Region
-
-
-
-
 
 End Class
 

@@ -34,7 +34,8 @@ Public Class CatalogoDeObjetosAFIP
             cTipoGravadoAFIP.id = dr.Item("id")
             cTipoGravadoAFIP.descripcion = dr.Item("descripcion")
             cTipoGravadoAFIP.IdAFIP = dr.Item("idAFIP")
-
+            cTipoGravadoAFIP.idTblGravados = dr.Item("id_tblGravados")
+            cTipoGravadoAFIP.porcentaje = dr.Item("porcentaje")
             listTipos.Add(cTipoGravadoAFIP)
         End While
 
@@ -51,7 +52,7 @@ Public Class CatalogoDeObjetosAFIP
             cTipoIdentificacionCliente = New TipoIdentificacionClienteAFIP
             cTipoIdentificacionCliente.id = dr.Item("id")
             cTipoIdentificacionCliente.descripcion = dr.Item("descripcion")
-            cTipoIdentificacionCliente.idAFIP = dr.Item("idAFIP")
+            cTipoIdentificacionCliente.idAFIP = Convert.ToInt32(dr.Item("idAFIP"))
 
             listTipos.Add(cTipoIdentificacionCliente)
         End While
