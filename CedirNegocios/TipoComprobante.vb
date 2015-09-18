@@ -11,6 +11,7 @@ Public Class TipoComprobante
     Public Sub New()
         Me.Descripcion = ""
         Me.Id = Nothing
+        Me.SubTipo = ""
     End Sub
 
     Public Property Id() As Integer

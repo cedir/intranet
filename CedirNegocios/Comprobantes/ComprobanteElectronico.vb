@@ -35,9 +35,11 @@ Public Class ComprobanteElectronico
 
     Public Overrides Function crear() As Object
 
-
-
+        'primero insertamos la linea en base de datos, para obtener id's en las lineas
+        MyBase.crear()
+        'luego, insertamos esa factura en AFIP
         clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+
         'If nofalla Then
         '    Return MyBase.crear()
         'Else
@@ -111,22 +113,19 @@ Public Class ComprobanteElectronico
     Private Function convertLineasDeComprobanteElectronicoToDictionary() As List(Of Dictionary(Of String, Object))
         Dim colLineas As New List(Of Dictionary(Of String, Object))
         For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
+
+            'Esta linea es para cargar el objeto Iva.AlicIva de la linea de comprobante.
             Dim linea As New Dictionary(Of String, Object)()
-
-
-            linea.Item("Id") = lineaComprobante.Comprobante.Gravado.id  'ESTA LINEA CAMIBIA.TENEMOS QUE INSERTAR EL ID
-            'DE LA TABLA AFIP_ Gravados.idAFIP         
-
-
-
-
-            linea.Item("BaseImp") = lineaComprobante.importeNeto
-            linea.Item("Importe") = lineaComprobante.ImporteIVA
+            'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
+            'solo vamos a guardar un tipo de Gravado por comprobante. Las lineas deben tener un mismo tipo de iva (0%,21% o 10.5%)
+            linea.Item("Id") = CType(lineaComprobante.Comprobante, ComprobanteElectronico).gravadoAFIP.IdAFIP.ToString
+            linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString
+            linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString
             colLineas.Add(linea)
         Next
         Return colLineas
     End Function
-
-
-
+    Public Sub New()
+        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
+    End Sub
 End Class

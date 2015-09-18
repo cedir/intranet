@@ -15,6 +15,8 @@ Public Class CatalogoDeObjetosAFIP
             cTipoComprobante.Id = dr.Item("id")
             cTipoComprobante.Descripcion = dr.Item("descripcion")
             cTipoComprobante.IdAFIP = dr.Item("idAFIP")
+            cTipoComprobante.idTblTipoDeComprobantes = dr.Item("id_tblTipoDeComprobantes")
+            cTipoComprobante.SubTipo = dr.Item("subtipo")
 
             listTipos.Add(cTipoComprobante)
         End While
@@ -34,7 +36,7 @@ Public Class CatalogoDeObjetosAFIP
             cTipoGravadoAFIP.id = dr.Item("id")
             cTipoGravadoAFIP.descripcion = dr.Item("descripcion")
             cTipoGravadoAFIP.IdAFIP = dr.Item("idAFIP")
-            cTipoGravadoAFIP.idTblGravados = dr.Item("id_tblGravados")
+            cTipoGravadoAFIP.idTblGravados = dr.Item("id_tblGravado")
             cTipoGravadoAFIP.porcentaje = dr.Item("porcentaje")
             listTipos.Add(cTipoGravadoAFIP)
         End While
