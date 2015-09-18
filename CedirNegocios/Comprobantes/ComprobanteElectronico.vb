@@ -38,7 +38,7 @@ Public Class ComprobanteElectronico
         'primero insertamos la linea en base de datos, para obtener id's en las lineas
         MyBase.crear()
         'luego, insertamos esa factura en AFIP
-        clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+        Return clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
         'If nofalla Then
         '    Return MyBase.crear()

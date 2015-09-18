@@ -680,8 +680,8 @@ Public Class frmComprobanteNuevo
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
         Else
-            Comprobante.crear()
-            MessageBox.Show("Comprobante creado con éxito", "Atención")
+            Dim result As String = Comprobante.crear()
+            MessageBox.Show("Resultado de nuevo comprobante:  " & result, "Atención")
             Return True
         End If
     End Function

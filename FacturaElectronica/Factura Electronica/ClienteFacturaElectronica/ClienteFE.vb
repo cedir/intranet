@@ -215,7 +215,7 @@ Public Class ClienteFE
         End Try
 
     End Function
-    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object)))
+    Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As String
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
@@ -224,7 +224,7 @@ Public Class ClienteFE
         Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
         fecaeCabReq.PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
         fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'Convert.ToInt32(this.cmbTipoComprobante.SelectedValue) //tipo de comprobante
-        fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
+        fecaeCabReq.CantReg = lineas.Count 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
 
         fecaeReq.FeCabReq = fecaeCabReq
 
@@ -261,11 +261,11 @@ Public Class ClienteFE
         Try
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
             If fecaeResponse.Errors IsNot Nothing Then
-                'devolvemos el error
+                Return fecaeResponse.FeCabResp.Resultado
             End If
         Catch ex As Exception
         End Try
-    End Sub
+    End Function
 
     Public Sub New()
 
