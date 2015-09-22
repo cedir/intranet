@@ -6,6 +6,16 @@ Public Class ComprobanteElectronico
     Dim _cae As String
     Dim _gravado As TipoDeGravadoAFIP
     Dim _tipoComprobante As TipoDeComprobanteAFIP
+    Dim _ImporteIva As Decimal
+
+    Public Property importeIva() As Decimal
+        Get
+            Return _ImporteIva
+        End Get
+        Set(ByVal value As Decimal)
+            _ImporteIva = value
+        End Set
+    End Property
 
     Public Property CAE() As String
         Get
@@ -31,7 +41,15 @@ Public Class ComprobanteElectronico
             _tipoComprobante = value
         End Set
     End Property
-    Dim clienteFE As New ClienteFE
+    Dim _clienteFE As ClienteFE
+    Public Property clienteFE() As ClienteFE
+        Get
+            Return _clienteFE
+        End Get
+        Set(ByVal value As ClienteFE)
+            _clienteFE = value
+        End Set
+    End Property
 
     Public Overrides Function crear() As Object
 
@@ -50,6 +68,7 @@ Public Class ComprobanteElectronico
 
     End Function
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
+        Me.calcularImpIVA()
         Dim dic As New Dictionary(Of String, Object)
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
 
@@ -64,8 +83,8 @@ Public Class ComprobanteElectronico
         'sacamos los guiones medios de existir en el tipo de documento
         dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
 
-        dic.Item("CbteDesde") = 1 'nro de comprobante desde
-        dic.Item("CbteHasta") = 1 'nro de comprobante hasta
+        dic.Item("CbteDesde") = Me.NroComprobante
+        dic.Item("CbteHasta") = Me.NroComprobante
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
 
         dic.Item("ImpTotal") = Me.TotalFacturado
@@ -78,7 +97,7 @@ Public Class ComprobanteElectronico
         'Para comprobantes tipo C debe ser igual a cero (0).
         'Para comprobantes tipo Bienes Usados – Emisor Monotributista este campo corresponde al importe subtotal.
 
-        dic.Item("ImpNeto") = Me.TotalFacturado 'es la sumatoria de las lineas de comprobante
+        dic.Item("ImpNeto") = (Me.TotalFacturado - Me.importeIva) 'es la sumatoria de las lineas de comprobante
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
@@ -88,12 +107,15 @@ Public Class ComprobanteElectronico
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
 
-        dic.Item("ImpIVA") = 0.0
-        'Suma de los importes del array de IVA.
+
 
         dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de inicio del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         'Formato(yyyymmdd)
+
+        'Suma de los importes del array de IVA.
+        dic.Item("ImpIVA") = Me.importeIva
+
 
         dic.Item("FchServHasta") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de fin del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
@@ -112,8 +134,8 @@ Public Class ComprobanteElectronico
 
     Private Function convertLineasDeComprobanteElectronicoToDictionary() As List(Of Dictionary(Of String, Object))
         Dim colLineas As New List(Of Dictionary(Of String, Object))
-        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
 
+        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
             'Esta linea es para cargar el objeto Iva.AlicIva de la linea de comprobante.
             Dim linea As New Dictionary(Of String, Object)()
             'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
@@ -125,6 +147,12 @@ Public Class ComprobanteElectronico
         Next
         Return colLineas
     End Function
+
+    Private Sub calcularImpIVA()
+        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
+            Me.importeIva = Me.importeIva + lineaComprobante.ImporteIVA
+        Next
+    End Sub
     Public Sub New()
         Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
     End Sub

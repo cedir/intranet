@@ -610,7 +610,7 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-    Dim controladorCompElectronico As New ControladorComprobanteElectronico
+    Dim contComprobantes As New ControladorDeComprobantes
     Dim catGrav As New CedirNegocios.CatalogoDeGravados
 
 
@@ -666,24 +666,23 @@ Public Class frmComprobanteNuevo
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            'comprobamos si es una factura electronica
-            Me.Comprobante = Me.controladorCompElectronico.crearComprobante(cmbNroTerminal.SelectedItem.ToString())
+            Me.Comprobante = Me.contComprobantes.crearTipoDeComprobanteSegunNroTerminal(cmbNroTerminal.SelectedItem.ToString())
         End If
         'cargamos los datos de la vista
         Me.cargarComprobante(Me.Comprobante)
-        If (Comprobante.GetType() Is GetType(ComprobanteElectronico)) Then
-            'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
-            Me.Comprobante = Me.controladorCompElectronico.cargarComprobanteModeloAFIP(Comprobante)
-        End If
 
         If Comprobante.doesExist() Then
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
         Else
-            Dim result As String = Comprobante.crear()
+
+            Dim result As String = Me.contComprobantes.crearComprobante(Comprobante)
+
+            '  Dim result As String = Comprobante.crear()
             MessageBox.Show("Resultado de nuevo comprobante:  " & result, "Atención")
             Return True
         End If
+
     End Function
     Private Function cargarLineas() As List(Of LineaDeComprobante)
         Dim lineas As New List(Of LineaDeComprobante)
@@ -769,9 +768,9 @@ Public Class frmComprobanteNuevo
     Private Sub cargarComboTipoIdentificaiconCliente()
         Dim lista As New List(Of TipoIdentificacionClienteAFIP)
         Try
-            lista = controladorCompElectronico.ObtenerTiposDeIdentificacionDeClienteAFIP()
+            lista = contComprobantes.ObtenerTiposDeIdentificacionDeClienteAFIP()
             cmbTipoDocumento.DataSource = New BindingSource(lista, Nothing)
-            cmbTipoDocumento.ValueMember = "id"
+            cmbTipoDocumento.ValueMember = "idAFIP"
             cmbTipoDocumento.DisplayMember = "descripcion"
         Catch ex As Exception
             MessageBox.Show("No se han cargado los tipos de documento del cliente", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -841,7 +840,7 @@ Public Class frmComprobanteNuevo
 
     End Sub
     Private Sub calcularUltimoNroAFIP()
-        Me.txtNroComprobante.Text = (Me.controladorCompElectronico.ObtenerUltimoNro(Me.cmbTipoComprobante.SelectedItem.ToString(), Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
+        Me.txtNroComprobante.Text = (Me.contComprobantes.ObtenerUltimoNro(CType(Me.cmbTipoComprobante.SelectedItem, TipoComprobante).Descripcion, Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
     End Sub
     Private Sub calcularImportesEnLineasDataGrid()
         'Mostramos la suma de los subtotales de las lineas

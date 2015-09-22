@@ -102,61 +102,61 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.vb</LastGenOutput>
     </None>
-    <None Include="Web References\wsfe\CbteTipoResponse1.datasource">
+    <None Include="Web References\wsfe\CbteTipoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\ConceptoTipoResponse1.datasource">
+    <None Include="Web References\wsfe\ConceptoTipoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\DocTipoResponse1.datasource">
+    <None Include="Web References\wsfe\DocTipoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\DummyResponse1.datasource">
+    <None Include="Web References\wsfe\DummyResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECAEAGetResponse1.datasource">
+    <None Include="Web References\wsfe\FECAEAGetResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECAEAResponse1.datasource">
+    <None Include="Web References\wsfe\FECAEAResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECAEASinMovConsResponse1.datasource">
+    <None Include="Web References\wsfe\FECAEASinMovConsResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECAEASinMovResponse1.datasource">
+    <None Include="Web References\wsfe\FECAEASinMovResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECAEResponse1.datasource">
+    <None Include="Web References\wsfe\FECAEResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECompConsultaResponse1.datasource">
+    <None Include="Web References\wsfe\FECompConsultaResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FECotizacionResponse1.datasource">
+    <None Include="Web References\wsfe\FECotizacionResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FEPaisResponse1.datasource">
+    <None Include="Web References\wsfe\FEPaisResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FEPtoVentaResponse1.datasource">
+    <None Include="Web References\wsfe\FEPtoVentaResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FERecuperaLastCbteResponse1.datasource">
+    <None Include="Web References\wsfe\FERecuperaLastCbteResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FERegXReqResponse1.datasource">
+    <None Include="Web References\wsfe\FERegXReqResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\FETributoResponse1.datasource">
+    <None Include="Web References\wsfe\FETributoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\IvaTipoResponse1.datasource">
+    <None Include="Web References\wsfe\IvaTipoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\MonedaResponse1.datasource">
+    <None Include="Web References\wsfe\MonedaResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\wsfe\OpcionalTipoResponse1.datasource">
+    <None Include="Web References\wsfe\OpcionalTipoResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\wsfe\Reference.map">

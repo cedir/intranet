@@ -217,14 +217,16 @@ Public Class ClienteFE
     End Function
     Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As String
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
+
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
+
 
         'Información de la cabecera del comprobante o lote de comprobantes de ingreso
         Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
         fecaeCabReq.PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
-        fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'Convert.ToInt32(this.cmbTipoComprobante.SelectedValue) //tipo de comprobante
-        fecaeCabReq.CantReg = lineas.Count 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
+        fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'tipo de comprobante
+        fecaeCabReq.CantReg = lineas.Count 'cant registros del detalle = cant. lineas de comprobante
 
         fecaeReq.FeCabReq = fecaeCabReq
 
@@ -233,15 +235,15 @@ Public Class ClienteFE
         objFECAEDetRequest.Concepto = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios.
         objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo"))
         objFECAEDetRequest.DocNro = Convert.ToInt64(dict.Item("DocNumero"))
-        objFECAEDetRequest.CbteDesde = dict.Item("CbteDesde")
-        objFECAEDetRequest.CbteHasta = dict.Item("CbteHasta")
         objFECAEDetRequest.CbteFch = dict.Item("CbteFch")
+        objFECAEDetRequest.CbteDesde = 3
+        objFECAEDetRequest.CbteHasta = 3
         objFECAEDetRequest.ImpTotal = Convert.ToDouble(dict.Item("ImpTotal"))
         objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotConc"))
         objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
         objFECAEDetRequest.ImpOpEx = Convert.ToDouble(dict.Item("ImpOpEx"))
         objFECAEDetRequest.ImpTrib = Convert.ToDouble(dict.Item("ImpTrib"))
-        objFECAEDetRequest.ImpIVA = 0
+        objFECAEDetRequest.ImpIVA = Convert.ToDouble(dict.Item("ImpIVA"))
         objFECAEDetRequest.FchServDesde = dict.Item("FchServDesde")
         objFECAEDetRequest.FchServHasta = dict.Item("FchServHasta")
         objFECAEDetRequest.FchVtoPago = dict.Item("FchVtoPago")
@@ -258,11 +260,21 @@ Public Class ClienteFE
         Next
         Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
         arrayFECAEDetRequest(0) = objFECAEDetRequest
+
+        With fecaeReq
+            .FeCabReq = fecaeCabReq
+            .FeDetReq = arrayFECAEDetRequest
+        End With
+
         Try
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
             If fecaeResponse.Errors IsNot Nothing Then
                 Return fecaeResponse.FeCabResp.Resultado
+
+
             End If
+            Return fecaeResponse.FeDetResp(0).Resultado
+
         Catch ex As Exception
         End Try
     End Function

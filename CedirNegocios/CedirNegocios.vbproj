@@ -124,7 +124,7 @@
     <Compile Include="Complejidades\Complejidad.vb" />
     <Compile Include="Comprobantes\Comprobante.vb" />
     <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
-    <Compile Include="ControladorComprobanteElectronico.vb" />
+    <Compile Include="ControladorDeComprobantes.vb" />
     <Compile Include="DocumentoCliente.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
     <Compile Include="Catalogos\CatalogoDeAuditLogs.vb" />
