@@ -56,7 +56,9 @@ Public Class ComprobanteElectronico
         'primero insertamos la linea en base de datos, para obtener id's en las lineas
         MyBase.crear()
         'luego, insertamos esa factura en AFIP
-        Return clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+        Dim fecaeResponse As wsfe.FECAEResponse = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+        Me.InsertCAE(fecaeResponse.FeDetResp(0).CAE)
+
 
         'If nofalla Then
         '    Return MyBase.crear()
@@ -71,9 +73,11 @@ Public Class ComprobanteElectronico
         Me.calcularImpIVA()
         Dim dic As New Dictionary(Of String, Object)
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
+        dic.Item("CbteDesde") = Me.NroComprobante
+        dic.Item("CbteHasta") = Me.NroComprobante
 
         'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
-        dic.Item("CbteTipo") = Me.TipoComprobante.Id
+        dic.Item("CbteTipo") = Me.tipoComprobanteAFIP.IdAFIP
 
         ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
         dic.Item("Concepto") = 2

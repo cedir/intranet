@@ -215,9 +215,9 @@ Public Class ClienteFE
         End Try
 
     End Function
-    Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As String
+    Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
-
+        Me.getTipoComprobante()
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
 
@@ -236,8 +236,8 @@ Public Class ClienteFE
         objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo"))
         objFECAEDetRequest.DocNro = Convert.ToInt64(dict.Item("DocNumero"))
         objFECAEDetRequest.CbteFch = dict.Item("CbteFch")
-        objFECAEDetRequest.CbteDesde = 3
-        objFECAEDetRequest.CbteHasta = 3
+        objFECAEDetRequest.CbteDesde = dict.Item("CbteDesde")
+        objFECAEDetRequest.CbteHasta = dict.Item("CbteHasta")
         objFECAEDetRequest.ImpTotal = Convert.ToDouble(dict.Item("ImpTotal"))
         objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotConc"))
         objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
@@ -270,12 +270,12 @@ Public Class ClienteFE
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
             If fecaeResponse.Errors IsNot Nothing Then
                 Return fecaeResponse.FeCabResp.Resultado
-
-
             End If
-            Return fecaeResponse.FeDetResp(0).Resultado
+
+            Return (fecaeResponse.FeDetResp(0).CAE)
 
         Catch ex As Exception
+            Return ex
         End Try
     End Function
 

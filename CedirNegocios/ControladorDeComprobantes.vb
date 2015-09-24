@@ -69,7 +69,7 @@ Public Class ControladorDeComprobantes
         Next
 
         For Each tipoCompAFIP As TipoDeComprobanteAFIP In Me.getTipoDeComprobanteAFIP
-            If comprobante.tipoComprobanteAFIP.Id = tipoCompAFIP.idTblTipoDeComprobantes Then
+            If (comprobante.TipoComprobante.Id = tipoCompAFIP.idTblTipoDeComprobantes) And (tipoCompAFIP.SubTipo = comprobante.SubTipo) Then
                 comprobante.tipoComprobanteAFIP = tipoCompAFIP
                 Exit For
             End If
@@ -85,9 +85,9 @@ Public Class ControladorDeComprobantes
             c = cargarComprobanteModeloAFIP(c)
             CType(c, ComprobanteElectronico).clienteFE = Me.clienteFE
         End If
-        c.crear()
+        Return c.crear()
 
-        Return c.NroComprobante.ToString()
+
     End Function
 
 End Class
