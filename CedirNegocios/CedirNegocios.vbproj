@@ -112,7 +112,6 @@
     <Compile Include="Caja\TipoDeMovimientoDeCaja.vb" />
     <Compile Include="Catalogos\CatalogoArancelAnestesia.vb" />
     <Compile Include="Catalogos\CatalogoDeComplejidades.vb" />
-    <Compile Include="Catalogos\CatalogoDeFacturaElectronica.vb" />
     <Compile Include="Catalogos\CatalogoDeMovimientosDeCaja.vb" />
     <Compile Include="Catalogos\CatalogoDeMovimientosStock.vb" />
     <Compile Include="Catalogos\CatalogoDeTipoDeMovimientosDeCaja.vb" />
@@ -124,6 +123,7 @@
     <Compile Include="Complejidades\Complejidad.vb" />
     <Compile Include="Comprobantes\Comprobante.vb" />
     <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
+    <Compile Include="Comprobantes\LogComprobanteElectronico.vb" />
     <Compile Include="ControladorDeComprobantes.vb" />
     <Compile Include="DocumentoCliente.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />

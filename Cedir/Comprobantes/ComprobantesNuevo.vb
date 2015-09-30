@@ -659,10 +659,6 @@ Public Class frmComprobanteNuevo
                 End If
             End If
         End If
-
-
-
-
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
@@ -670,19 +666,14 @@ Public Class frmComprobanteNuevo
         End If
         'cargamos los datos de la vista
         Me.cargarComprobante(Me.Comprobante)
-
         If Comprobante.doesExist() Then
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
         Else
-
             Dim result As String = Me.contComprobantes.crearComprobante(Comprobante)
-
-            '  Dim result As String = Comprobante.crear()
-            MessageBox.Show("Resultado de nuevo comprobante:  " & result, "Atención")
+            MessageBox.Show("Resultado de nuevo comprobante:  " & vbCrLf & result, "Atención")
             Return True
         End If
-
     End Function
     Private Function cargarLineas() As List(Of LineaDeComprobante)
         Dim lineas As New List(Of LineaDeComprobante)
@@ -805,7 +796,7 @@ Public Class frmComprobanteNuevo
     End Sub
     Private Sub calcularUltimoNro()
         If (cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem IsNot Nothing And Me.cmbSubTipo.SelectedItem <> Nothing) Then
-            ultimoNroAfip()
+            Me.txtNroComprobante.Enabled = False
         Else
             ultimoNroCedir()
         End If
@@ -814,16 +805,11 @@ Public Class frmComprobanteNuevo
         Try
             'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
             Me.txtNroComprobante.ReadOnly = True
-            Me.calcularUltimoNroAFIP()
-
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Ud NO SE HA PODIDO CONECTAR al servicio de afip....", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-
         End Try
-
         'vamos a seleccionar el cmbResponsable, a "cedir", ya que es este el unico habilitado para factura electronica.
         Me.cmbResponsable.SelectedIndex = Me.cmbResponsable.FindString("Cedir")
-
     End Sub
     Private Sub ultimoNroCedir()
         Dim c As New CatalogoDeComprobantes
@@ -837,10 +823,6 @@ Public Class frmComprobanteNuevo
             End If
         End If
         c = Nothing
-
-    End Sub
-    Private Sub calcularUltimoNroAFIP()
-        Me.txtNroComprobante.Text = (Me.contComprobantes.ObtenerUltimoNro(CType(Me.cmbTipoComprobante.SelectedItem, TipoComprobante).Descripcion, Convert.ToInt16(Me.cmbNroTerminal.SelectedItem), cmbSubTipo.SelectedItem.ToString()) + 1).ToString()
     End Sub
     Private Sub calcularImportesEnLineasDataGrid()
         'Mostramos la suma de los subtotales de las lineas
@@ -895,39 +877,24 @@ Public Class frmComprobanteNuevo
     End Sub
     Private Sub ComprobantesNuevo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lblFecha.Text = Today.Date
-
         'cmbCondicionFiscal.Items.Add("Seleccione..")
         cmbCondicionFiscal.Items.Add("CONSUMIDOR FINAL")
         cmbCondicionFiscal.Items.Add("EXENTO")
         cmbCondicionFiscal.Items.Add("RESPONSABLE INSCRIPTO")
-        '   cmbCondicionFiscal.SelectedIndex = 0
-
-
         cmbResponsable.Items.Add("Seleccione..")
         cmbResponsable.Items.Add("Cedir")
         cmbResponsable.Items.Add("Brunetti")
         cmbResponsable.SelectedIndex = 0
-
-
-
         cmbNroTerminal.SelectedIndex = 0
-
         'busco los tipos de comprobante en la base de datos
         Me.cargarComboTipoComprobante()
-
-
         gravados = catGrav.getGravadosAll()
         'busco los gravados en la base de datos
         'Me.cargarComboGravadoEnDataGrid()
         cargarComboGravado()
-
         Me.cmbGravadoPaciente.Visible = False
         Me.lblPacienteGravado.Visible = False
-
         Me.dgvLineas.EditMode = DataGridViewEditMode.EditOnEnter
-
-
-
     End Sub
     Private Sub btnPaciente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPaciente.Click
         Dim f As New BuscarPacientes

@@ -300,7 +300,6 @@ Public Class Comprobante
             linea.insertar()
         Next
     End Sub
-
     Public Function getLineas() As List(Of LineaDeComprobante)
         Dim dr As NpgsqlDataReader
         Dim cDatos As New Consultas
@@ -331,7 +330,6 @@ Public Class Comprobante
             arr = Nothing
         End Try
     End Function
-
     Public Sub cambiarEstado(ByVal estado As String)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
@@ -346,7 +344,6 @@ Public Class Comprobante
             Me.Estado = estado
         End Try
     End Sub
-
     Public Sub setGravado()
         Dim com As String = """"
         Dim cDatos As New Consultas
@@ -369,7 +366,6 @@ Public Class Comprobante
             dr = Nothing
         End Try
     End Sub
-
     Public Function doesExist() As Boolean
         Dim com As String = """"
         Dim cDatos As New Consultas
@@ -394,7 +390,6 @@ Public Class Comprobante
         End Try
 
     End Function
-
     Public Sub getFactura(ByVal idFactura As Int32)
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -460,9 +455,6 @@ Public Class Comprobante
         Me.Factura = oComprobante
 
     End Sub
-
-
-
     Public Sub updateTotalCobrado()
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -476,7 +468,4 @@ Public Class Comprobante
         cDatos = Nothing
 
     End Sub
-
-
-
 End Class

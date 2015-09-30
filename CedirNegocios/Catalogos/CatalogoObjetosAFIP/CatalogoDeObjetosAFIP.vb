@@ -17,19 +17,14 @@ Public Class CatalogoDeObjetosAFIP
             cTipoComprobante.IdAFIP = dr.Item("idAFIP")
             cTipoComprobante.idTblTipoDeComprobantes = dr.Item("id_tblTipoDeComprobantes")
             cTipoComprobante.SubTipo = dr.Item("subtipo")
-
             listTipos.Add(cTipoComprobante)
         End While
-
         Return listTipos
-
     End Function
-
     Public Function getTiposDeGravadoAFIP() As List(Of TipoDeGravadoAFIP)
         Dim cDatos As New Consultas
         Dim listTipos As New List(Of TipoDeGravadoAFIP)
         Dim cTipoGravadoAFIP As TipoDeGravadoAFIP
-
         Dim dr As NpgsqlDataReader = cDatos.Tabla("cedirData", "AFIP_Gravados", " order by " & com & "id" & com)
         While dr.Read()
             cTipoGravadoAFIP = New TipoDeGravadoAFIP
@@ -40,9 +35,7 @@ Public Class CatalogoDeObjetosAFIP
             cTipoGravadoAFIP.porcentaje = dr.Item("porcentaje")
             listTipos.Add(cTipoGravadoAFIP)
         End While
-
         Return listTipos
-
     End Function
     Public Function getTiposDeIdentificacionClienteAFIP() As List(Of TipoIdentificacionClienteAFIP)
         Dim cDatos As New Consultas
@@ -55,10 +48,8 @@ Public Class CatalogoDeObjetosAFIP
             cTipoIdentificacionCliente.id = dr.Item("id")
             cTipoIdentificacionCliente.descripcion = dr.Item("descripcion")
             cTipoIdentificacionCliente.idAFIP = Convert.ToInt32(dr.Item("idAFIP"))
-
             listTipos.Add(cTipoIdentificacionCliente)
         End While
-
         Return listTipos
 
     End Function
