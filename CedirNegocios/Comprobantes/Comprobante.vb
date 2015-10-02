@@ -185,7 +185,6 @@ Public Class Comprobante
             m_lineasDeComprobante = value
         End Set
     End Property
-
     Public Property GravadoPaciente() As String
         Get
             Return m_gravadoPaciente.ToUpper

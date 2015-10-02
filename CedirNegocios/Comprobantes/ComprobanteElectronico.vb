@@ -4,10 +4,11 @@ Imports CedirDataAccess
 Public Class ComprobanteElectronico
     Inherits Comprobante
 
-    Dim _cae As String
+    Dim _cae As String = ""
     Dim _gravado As TipoDeGravadoAFIP
     Dim _tipoComprobante As TipoDeComprobanteAFIP
     Dim _ImporteIva As Decimal
+    Dim _clienteFE As ClienteFE
 
     Public Property importeIva() As Decimal
         Get
@@ -17,7 +18,6 @@ Public Class ComprobanteElectronico
             _ImporteIva = value
         End Set
     End Property
-
     Public Property CAE() As String
         Get
             Return _cae
@@ -42,7 +42,6 @@ Public Class ComprobanteElectronico
             _tipoComprobante = value
         End Set
     End Property
-    Dim _clienteFE As ClienteFE
     Public Property clienteFE() As ClienteFE
         Get
             Return _clienteFE
@@ -74,12 +73,12 @@ Public Class ComprobanteElectronico
                 responseError = True
             End If
         Next
-        mensajeResultado += "Resultado....: " & response("Resultado") & vbCrLf
-        If Not responseError And Not responseObs Then
-            mensajeResultado += "Nro de CAE ..: " & response("CAE") & vbCrLf
-            mensajeResultado += "UltimoNro ...: " & response("ultimoNro") & vbCrLf
 
-            Me.InsertarCAE(response.Item("CAE"))
+        Dim CAE As String = response("CAE")
+        mensajeResultado += "Resultado....: " & response("Resultado") & vbCrLf & "Errores..:" & mensajeError
+        If Not responseError And Not responseObs And CAE.Length Then
+            mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
+            Me.InsertarCAE(CAE)
         End If
         'Insertamos los resultados en el LOG
         Dim log As New LogComprobanteElectronico
@@ -88,18 +87,15 @@ Public Class ComprobanteElectronico
 
         Return mensajeResultado
     End Function
-    Private Sub InsertarCAE(ByVal cae As String)
+    Private Sub insertarCAE(ByVal cae As String)
         Dim com As String = """"
         Dim cDatos As New Nuevo
-
         Dim tabla As String = com & "cedirData" & com & "." & com & "tblComprobantes" & com
         Dim campos As String = com & "CAE" & com & " = " & Me.CAE
         Dim filtro As String = " where id = " & Me.IdComprobante
         cDatos.update(tabla, campos, filtro)
-
         cDatos = Nothing
     End Sub
-
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim ultimoNro As Integer = clienteFE.getUltimoNroComprobante(Me.TipoComprobante.Descripcion, Me.NroTerminal.ToString, Me.SubTipo)
         Me.calcularImpIVA()
@@ -210,5 +206,4 @@ Public Class ComprobanteElectronico
         Next
         'ahora podemos usar los ids, que estan cargados en los objetosAFIP
     End Sub
-
 End Class
