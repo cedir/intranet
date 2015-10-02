@@ -185,7 +185,6 @@ Public Class Comprobante
             m_lineasDeComprobante = value
         End Set
     End Property
-
     Public Property GravadoPaciente() As String
         Get
             Return m_gravadoPaciente.ToUpper
@@ -261,7 +260,7 @@ Public Class Comprobante
 
 
                 If ((Me.TipoComprobante.Id = 4 Or Me.TipoComprobante.Id = 3) And (Me.Factura IsNot Nothing)) Then
-                    'si es asi, insertamos tambien la factura que corresponda
+                    'si es asi, insertamos tambien la factura que corresponda, ya que es Nota de Debito, o Credito
                     resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
                 Else
                     'de otra manera, insertamos vacio en el campo idFactura de la tabla
@@ -289,14 +288,17 @@ Public Class Comprobante
         End Try
         Return Me
     End Function
-
+    ''' <summary>
+    ''' Este metodo se ejecuta una vez que la cabecera del comprobante fue insertado en DB. Ya 
+    ''' que luego utilizamos el id devuelto por la DB para insertarlo en la linea.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub crearLineas()
         For Each linea As LineaDeComprobante In Me.LineasDeComprobante
             linea.Comprobante = Me
             linea.insertar()
         Next
     End Sub
-
     Public Function getLineas() As List(Of LineaDeComprobante)
         Dim dr As NpgsqlDataReader
         Dim cDatos As New Consultas
@@ -313,6 +315,8 @@ Public Class Comprobante
                 Dim linea As New LineaDeComprobante
                 linea.Concepto = Convert.ToString(dr("concepto"))
                 linea.Subtotal = Convert.ToDecimal(dr("subtotal"))
+                linea.ImporteIVA = Convert.ToDecimal(dr("importeIVA"))
+                linea.importeNeto = Convert.ToDecimal(dr("importeNeto"))
                 getLineas.Add(linea)
                 linea = Nothing
             Loop
@@ -325,7 +329,6 @@ Public Class Comprobante
             arr = Nothing
         End Try
     End Function
-
     Public Sub cambiarEstado(ByVal estado As String)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
@@ -340,7 +343,6 @@ Public Class Comprobante
             Me.Estado = estado
         End Try
     End Sub
-
     Public Sub setGravado()
         Dim com As String = """"
         Dim cDatos As New Consultas
@@ -363,7 +365,6 @@ Public Class Comprobante
             dr = Nothing
         End Try
     End Sub
-
     Public Function doesExist() As Boolean
         Dim com As String = """"
         Dim cDatos As New Consultas
@@ -388,7 +389,6 @@ Public Class Comprobante
         End Try
 
     End Function
-
     Public Sub getFactura(ByVal idFactura As Int32)
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -454,9 +454,6 @@ Public Class Comprobante
         Me.Factura = oComprobante
 
     End Sub
-
-
-
     Public Sub updateTotalCobrado()
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -470,7 +467,4 @@ Public Class Comprobante
         cDatos = Nothing
 
     End Sub
-
-
-
 End Class

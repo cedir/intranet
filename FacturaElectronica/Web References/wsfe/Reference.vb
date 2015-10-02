@@ -3173,21 +3173,11 @@ Namespace wsfe
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="http://ar.gov.afip.dif.FEV1/")>  _
     Partial Public Class FECompConsultaResponse
         
-        Private errorsField() As Err
-        
         Private resultGetField As FECompConsResponse
         
-        Private eventsField() As Evt
+        Private errorsField() As Err
         
-        '''<comentarios/>
-        Public Property Errors() As Err()
-            Get
-                Return Me.errorsField
-            End Get
-            Set
-                Me.errorsField = value
-            End Set
-        End Property
+        Private eventsField() As Evt
         
         '''<comentarios/>
         Public Property ResultGet() As FECompConsResponse
@@ -3196,6 +3186,16 @@ Namespace wsfe
             End Get
             Set
                 Me.resultGetField = value
+            End Set
+        End Property
+        
+        '''<comentarios/>
+        Public Property Errors() As Err()
+            Get
+                Return Me.errorsField
+            End Get
+            Set
+                Me.errorsField = value
             End Set
         End Property
         

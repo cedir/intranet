@@ -359,11 +359,11 @@ Partial Class Comprobantes
         'lblTotalString
         '
         Me.lblTotalString.AutoSize = True
-        Me.lblTotalString.Location = New System.Drawing.Point(327, 479)
+        Me.lblTotalString.Location = New System.Drawing.Point(267, 479)
         Me.lblTotalString.Name = "lblTotalString"
-        Me.lblTotalString.Size = New System.Drawing.Size(45, 13)
+        Me.lblTotalString.Size = New System.Drawing.Size(114, 13)
         Me.lblTotalString.TabIndex = 30
-        Me.lblTotalString.Text = "TOTAL:"
+        Me.lblTotalString.Text = "TOTAL FACTURADO:"
         '
         'lblTotalDecimal
         '

@@ -28,7 +28,7 @@ Public Class ClienteFE
             Return True
 
         Catch ex As Exception
-            Throw ex
+            Return False
         End Try
         'InicializarFactura()
     End Function
@@ -215,20 +215,21 @@ Public Class ClienteFE
         End Try
 
     End Function
+    Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
+        'Iniciamos el web service aqui.
 
 
-
-
-    Public Sub crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object)))
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
+        Me.getTipoComprobante()
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
+        'IMPORTANTE: INSERTAR ULTIMO NRO DE COMPROBANTE +1 ACA!!
 
         'Información de la cabecera del comprobante o lote de comprobantes de ingreso
         Dim fecaeCabReq As wsfe.FECAECabRequest = New wsfe.FECAECabRequest()
         fecaeCabReq.PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
-        fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'Convert.ToInt32(this.cmbTipoComprobante.SelectedValue) //tipo de comprobante
-        fecaeCabReq.CantReg = 1 'cant registros del detalle. AGREGAR UN PARAMETRO CON LAS LINEAS DE COMPROBANTE
+        fecaeCabReq.CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'tipo de comprobante
+        fecaeCabReq.CantReg = lineas.Count 'cant registros del detalle = cant. lineas de comprobante
 
         fecaeReq.FeCabReq = fecaeCabReq
 
@@ -237,15 +238,15 @@ Public Class ClienteFE
         objFECAEDetRequest.Concepto = 2 ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios.
         objFECAEDetRequest.DocTipo = Convert.ToInt16(dict.Item("DocTipo"))
         objFECAEDetRequest.DocNro = Convert.ToInt64(dict.Item("DocNumero"))
+        objFECAEDetRequest.CbteFch = dict.Item("CbteFch")
         objFECAEDetRequest.CbteDesde = dict.Item("CbteDesde")
         objFECAEDetRequest.CbteHasta = dict.Item("CbteHasta")
-        objFECAEDetRequest.CbteFch = dict.Item("CbteFch")
         objFECAEDetRequest.ImpTotal = Convert.ToDouble(dict.Item("ImpTotal"))
         objFECAEDetRequest.ImpTotConc = Convert.ToDouble(dict.Item("ImpTotConc"))
         objFECAEDetRequest.ImpNeto = Convert.ToDouble(dict.Item("ImpNeto"))
         objFECAEDetRequest.ImpOpEx = Convert.ToDouble(dict.Item("ImpOpEx"))
         objFECAEDetRequest.ImpTrib = Convert.ToDouble(dict.Item("ImpTrib"))
-        objFECAEDetRequest.ImpIVA = 0
+        objFECAEDetRequest.ImpIVA = Convert.ToDouble(dict.Item("ImpIVA"))
         objFECAEDetRequest.FchServDesde = dict.Item("FchServDesde")
         objFECAEDetRequest.FchServHasta = dict.Item("FchServHasta")
         objFECAEDetRequest.FchVtoPago = dict.Item("FchVtoPago")
@@ -255,27 +256,50 @@ Public Class ClienteFE
         objFECAEDetRequest.Iva = New wsfe.AlicIva(lineas.Count - 1) {}
         Dim i As Integer = 0
         For i = 0 To lineas.Count - 1
-            objFECAEDetRequest.Iva(i).Id = lineas(i).Item("Id")
-            objFECAEDetRequest.Iva(i).BaseImp = lineas(i).Item("BaseImp")
-            objFECAEDetRequest.Iva(i).Importe = lineas(i).Item("Importe")
+            objFECAEDetRequest.Iva(i) = New wsfe.AlicIva
+            objFECAEDetRequest.Iva(i).Id = Convert.ToInt32(lineas(i).Item("Id"))
+            objFECAEDetRequest.Iva(i).BaseImp = Convert.ToDecimal(lineas(i).Item("BaseImp"))
+            objFECAEDetRequest.Iva(i).Importe = Convert.ToDecimal(lineas(i).Item("Importe"))
         Next
-
         Dim arrayFECAEDetRequest(0) As wsfe.FECAEDetRequest
         arrayFECAEDetRequest(0) = objFECAEDetRequest
-        Try
-            fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
 
+        With fecaeReq
+            .FeCabReq = fecaeCabReq
+            .FeDetReq = arrayFECAEDetRequest
+        End With
+
+        Try
+            'vamos a devolver un dictionary con los resultados
+            Dim response As New Dictionary(Of String, String)
+
+            fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
+            
             If fecaeResponse.Errors IsNot Nothing Then
-                'devolvemos el error
+                For Each e As wsfe.Err In fecaeResponse.Errors
+                    response.Add("errorCode: " & e.Code, e.Msg)
+                Next
             End If
 
+            If fecaeResponse.FeDetResp IsNot Nothing Then
+                For Each detResponse As wsfe.FECAEDetResponse In fecaeResponse.FeDetResp
+                    response.Add("CAE", detResponse.CAE)
+                    response.Add("Resultado", detResponse.Resultado)
+                    If detResponse.Observaciones IsNot Nothing Then
+                        For Each o As wsfe.Obs In detResponse.Observaciones
+                            response.Add("observacionCode" & o.Code, o.Msg)
+                        Next
+                    End If
+                Next
+            End If
+
+
+            Return response
         Catch ex As Exception
+            Return ex
         End Try
-    End Sub
+    End Function
 
-    Public Sub New()
-
-    End Sub
 End Class
 
 

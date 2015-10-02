@@ -7,7 +7,6 @@ Public Class LineaDeComprobante
     Private m_neto As Decimal
 
     Private m_comprobante As Comprobante ' guardo un objeto comprobante en cada linea(y a su vez una coleccion en comprobante)
-    Private m_gravado As Gravado
 
 
 
@@ -60,14 +59,6 @@ Public Class LineaDeComprobante
             m_importeIVA = value
         End Set
     End Property
-    Public Property Gravado() As Gravado
-        Get
-            Return m_gravado
-        End Get
-        Set(ByVal value As Gravado)
-            m_gravado = value
-        End Set
-    End Property
     Public Property Comprobante() As Comprobante
         Get
             Return m_comprobante
@@ -81,7 +72,6 @@ Public Class LineaDeComprobante
         Concepto = ""
         Subtotal = 0.0
         Comprobante = Nothing
-        Gravado = New Gravado()
     End Sub
 
     Public Sub insertar()
@@ -91,7 +81,6 @@ Public Class LineaDeComprobante
         arr.Add("concepto" & c & Me.Concepto)
         arr.Add("subtotal" & c & Me.Subtotal)
         arr.Add("idComprobante" & c & Me.Comprobante.IdComprobante)
-        arr.Add("idGravado" & c & Me.Comprobante.Gravado.id)
         arr.Add("importeIVA" & c & ImporteIVA)
         arr.Add("importeNeto" & c & Me.importeNeto)
 

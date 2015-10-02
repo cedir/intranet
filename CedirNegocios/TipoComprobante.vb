@@ -4,11 +4,14 @@ Public Class TipoComprobante
 
     Private m_id As Integer
     Private m_desc As String
+    Private m_subTipo As String
+
 
 
     Public Sub New()
         Me.Descripcion = ""
         Me.Id = Nothing
+        Me.SubTipo = ""
     End Sub
 
     Public Property Id() As Integer
@@ -26,6 +29,14 @@ Public Class TipoComprobante
         End Get
         Set(ByVal value As String)
             m_desc = value
+        End Set
+    End Property
+    Public Property SubTipo() As String
+        Get
+            Return m_subTipo
+        End Get
+        Set(ByVal value As String)
+            m_subTipo = value
         End Set
     End Property
 
