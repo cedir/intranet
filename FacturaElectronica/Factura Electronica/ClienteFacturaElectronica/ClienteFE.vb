@@ -29,6 +29,7 @@ Public Class ClienteFE
 
         Catch ex As Exception
             Return False
+            ' TODO: log error in tblComprobanteelectronicoLog
         End Try
         'InicializarFactura()
     End Function

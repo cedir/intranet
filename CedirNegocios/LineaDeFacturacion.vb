@@ -78,15 +78,15 @@ Public Class LineaDeFacturacion
         End Select
 
     End Function
-    Public Function getSubtotal() As Single
-        Dim subTotal As Single = 0
+    Public Function getImporteNeto() As Single
+        Dim importeNeto As Single = 0
         Select Case objeto.GetType.ToString
             Case "CedirNegocios.Estudio"
-                subTotal = Me.importe + Me.pension + Me.objeto.getTotalMedicacion - Me.diferenciaPaciente + Me.objeto.ArancelAnestesia
+                importeNeto = Me.importe + Me.pension + Me.objeto.getTotalMedicacion - Me.diferenciaPaciente + Me.objeto.ArancelAnestesia
             Case "CedirNegocios.Consulta"
-                subTotal = Me.importe
+                importeNeto = Me.importe
         End Select
 
-        Return subTotal
+        Return importeNeto
     End Function
 End Class

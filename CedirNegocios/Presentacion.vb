@@ -18,7 +18,7 @@ Public Class Presentacion
 
     Public Sub New()
         lineasDeFacturacionDeEstudios = New ArrayList
-        comprobante = New Comprobante
+        comprobante = New ComprobanteElectronico
         obraSocial = New ObraSocial
     End Sub
 
@@ -95,11 +95,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As Comprobante
+    Public Property comprobante() As ComprobanteElectronico
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As Comprobante)
+        Set(ByVal value As ComprobanteElectronico)
             _comprobante = value
         End Set
     End Property
@@ -149,59 +149,39 @@ Public Class Presentacion
 
     End Function
     Public Sub crearComprobante()
-        'CARGAMOS LAS LINEAS
-        Dim linea As New LineaDeComprobante
-        Dim linea2 As New LineaDeComprobante
-        Dim totFacturado As Decimal = 0.0
-        Dim subTot As Decimal = 0.0
+        'CARGAMOS LA LINEA: EN FACTURA ELECTRONICA, SOLAMENTE VAMOS A NECESITAR UNA SOLA
+        'YA QUE PODEMOS DISCRIMINAR IVA EN CADA UNA DE LAS LINEAS. 
+        Dim lineaComprobante As New LineaDeComprobante
+        Dim totalImporteNetoLineaDeFacturacion As Decimal = 0.0
         Dim cLinea As LineaDeFacturacion
-        Dim st As Decimal = 0.0
 
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
             cLinea.guardar(Me.idPresentacion)
-            subTot += cLinea.getSubtotal
+            totalImporteNetoLineaDeFacturacion += cLinea.getImporteNeto
         Next
 
         'Si el comprobante es una factura, la leyenda cambia
         If Me.comprobante.TipoComprobante.Descripcion.ToUpper = "FACTURA" And Me.comprobante.SubTipo <> Nothing Then
-            If Me.comprobante.SubTipo.ToUpper() = "A" Then
-                'Si la factura es tipo A tenemos que discriminar el IVA
-                linea2.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
-                linea2.Subtotal = Format(subTot, "########0.00")
-                linea.Concepto = "IVA " + Me.comprobante.Gravado.porcentaje.ToString + "   %   "
-                st = subTot * (Me.comprobante.Gravado.porcentaje / 100)
-                linea.Subtotal = Format(st, "########0.00")
-                totFacturado = linea.Subtotal + linea2.Subtotal
+            'Convertimos a la subclase, si es una factura.
 
-                Me.comprobante.LineasDeComprobante.Add(linea2)
-                Me.comprobante.LineasDeComprobante.Add(linea)
-
-            ElseIf (Me.comprobante.SubTipo.ToUpper() = "B") Then
-
-                linea.Concepto = "Facturación correspondiente al mes " & Me.periodo & vbCrLf & " según detalle adjunto"
-                st = subTot + (subTot * (Me.comprobante.Gravado.porcentaje / 100))
-                linea.Subtotal = Format(st, "########0.00")
-                totFacturado = linea.Subtotal
-                Me.comprobante.LineasDeComprobante.Add(linea)
-
-            End If
-
+            'Datos comunes tanto a Facturas B como Facturas A
+            lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
+            lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
+            lineaComprobante.ImporteIVA = totalImporteNetoLineaDeFacturacion * (Me.comprobante.Gravado.porcentaje / 100)
+            lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
+            Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         Else
-            'si no es una factura A, la leyenda es igual para todos los comprobantes, pero el subtotal cambia, 
-            'ya sea liquidación o no
-            linea.Concepto = "Facturación correspondiente al mes " & Me.periodo & vbCrLf & " según detalle adjunto"
             If Me.comprobante.TipoComprobante.Id = 2 Then
-                'las liquidaciones no poseen gravado
-                linea.Subtotal = Format(subTot, "########0.00")
+                comprobante = CType(comprobante, Comprobante)
+                'las liquidaciones no poseen gravado. 
+                lineaComprobante.Subtotal = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
             End If
-            totFacturado = linea.Subtotal
-            Me.comprobante.LineasDeComprobante.Add(linea)
+            Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         End If
+        Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
 
-        Me.comprobante.TotalFacturado = totFacturado
-        linea = Nothing
-        linea2 = Nothing
+        lineaComprobante = Nothing
         Me.comprobante.crear()
     End Sub
 
@@ -240,7 +220,7 @@ Public Class Presentacion
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
             cLinea.guardar(Me.idPresentacion)
-            total += cLinea.getSubtotal
+            total += cLinea.getImporteNeto
         Next
 
     End Sub
@@ -437,7 +417,7 @@ Public Class Presentacion
             cLinea.estado = estado
             lineasDeFacturacionDeEstudios.Add(cLinea)
 
-            Me.total += cLinea.getSubtotal
+            Me.total += cLinea.getImporteNeto
         Next
 
 

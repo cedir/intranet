@@ -291,7 +291,7 @@ Public Class NuevaPresentacion
         '
         'cmbNroTerminal
         '
-        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090"})
+        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
         Me.cmbNroTerminal.Location = New System.Drawing.Point(108, 17)
         Me.cmbNroTerminal.Name = "cmbNroTerminal"
         Me.cmbNroTerminal.Size = New System.Drawing.Size(71, 21)
@@ -1260,7 +1260,7 @@ Public Class NuevaPresentacion
 
 
                 If Me.validarDatosComprobante Then
-                    cPresentacion.comprobante.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
+                    ' cPresentacion.comprobante.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
                     cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
 
                     cPresentacion.comprobante.TipoComprobante = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex)
@@ -1707,7 +1707,7 @@ Public Class NuevaPresentacion
             'Total
             CurrentY = CurrentY + 25
             e.Graphics.DrawString("Total del estudio", reportFont, Brushes.Black, leftMarge, CurrentY)
-            e.Graphics.DrawString(" $" & Format(Convert.ToDecimal(cLinea.getSubtotal), "############0.00").ToString(), reportFont, Brushes.Black, 460, CurrentY)
+            e.Graphics.DrawString(" $" & Format(Convert.ToDecimal(cLinea.getImporteNeto), "############0.00").ToString(), reportFont, Brushes.Black, 460, CurrentY)
 
             'Linea horizontal de fin de estudio
             CurrentY = CurrentY + 20
@@ -1967,7 +1967,12 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        Me.calcularUltimoNro()
+        If cmbNroTerminal.SelectedItem = "0091" Then
+            Me.txtNroComprobante.Visible = False
+        Else
+            Me.txtNroComprobante.Visible = False
+            Me.calcularUltimoNro()
+        End If
     End Sub
 
     Private Sub NuevaPresentacion_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles MyBase.KeyPress
