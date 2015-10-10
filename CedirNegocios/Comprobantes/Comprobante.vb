@@ -222,7 +222,8 @@ Public Class Comprobante
     End Sub
 #End Region
 
-    Public Overridable Function crear() As Object
+    Public Overridable Function crear() As List(Of Object)
+        Dim result As New List(Of Object)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
         Dim help As New Helper
@@ -271,9 +272,10 @@ Public Class Comprobante
 
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
-                MsgBox("Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error")
-                Dim ex As New Exception
-                Return ex
+                Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
+                result(0) = False
+                result(1) = message
+                Return result
             End If
 
             'recuperamos el id autoincremental creado por postrge para insertarlo en las lineas
@@ -281,12 +283,22 @@ Public Class Comprobante
 
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
+
+            result(0) = True
+            result(1) = "Comprobante creado con èxito"
+
+        Catch ex As Exception
+            result(0) = False
+            result(1) = ex.Message
+
         Finally
             help = Nothing
             cDatos = Nothing
             arr = Nothing
         End Try
-        Return Me
+
+
+
     End Function
     ''' <summary>
     ''' Este metodo se ejecuta una vez que la cabecera del comprobante fue insertado en DB. Ya 

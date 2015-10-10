@@ -50,24 +50,46 @@ Public Class ComprobanteElectronico
             _clienteFE = value
         End Set
     End Property
-    Public Overrides Function crear() As Object
+    Public Overrides Function crear() As List(Of Object)
         Dim responseError As Boolean = False
         Dim responseObs As Boolean = False
         Dim mensajeError As String = "..Sin errores.."
         Dim mensajeResultado As String = " "
-        'primero insertamos la linea en base de datos, para obtener id's en las lineas
-        MyBase.crear()
+        Dim result As New List(Of Object)
+        Dim log As New LogComprobanteElectronico
+
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
         Me.cargarComprobanteModeloAFIP()
         'luego, insertamos esa factura en AFIP
         Dim response As New Dictionary(Of String, String)
         response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
+        If response.Item("Resultado") = "R" Then  'R significa error.
+            mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
+
+            For Each pair As KeyValuePair(Of String, String) In response
+                If pair.Key.Contains("error") Then
+                    mensajeError += "Error : " & pair.Value & vbCrLf
+                End If
+                If pair.Key.Contains("observacionCode") Then
+                    mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
+                End If
+            Next
+
+            'Insertamos los resultados en el LOG
+
+            log.detalle = mensajeResultado & mensajeError
+            log.insert()  'TODO: loguear mas datos
+
+            result.Add(False)
+            result.Add(mensajeResultado)
+            Return result
+        End If
+
+
+        MyBase.crear()
+
         For Each pair As KeyValuePair(Of String, String) In response
-            If pair.Key.Contains("error") Then
-                mensajeError += "Error : " & pair.Value & vbCrLf
-                responseError = True
-            End If
             If pair.Key.Contains("observacionCode") Then
                 mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
                 responseError = True
@@ -76,16 +98,15 @@ Public Class ComprobanteElectronico
 
         Dim CAE As String = response("CAE")
         mensajeResultado += "Resultado....: " & response("Resultado") & vbCrLf & "Errores..:" & mensajeError
-        If Not responseError And Not responseObs And CAE.Length Then
-            mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
-            Me.InsertarCAE(CAE)
-        End If
+        mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
+        Me.insertarCAE(CAE)
         'Insertamos los resultados en el LOG
-        Dim log As New LogComprobanteElectronico
         log.detalle = mensajeResultado & mensajeError
-        log.insert()
+        log.insert()  'TODO: loguear mas datos
 
-        Return mensajeResultado
+        result.Add(True)
+        result.Add(mensajeResultado)
+        Return result
     End Function
     Private Sub insertarCAE(ByVal cae As String)
         Dim com As String = """"

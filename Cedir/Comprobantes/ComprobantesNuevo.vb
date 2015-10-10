@@ -670,9 +670,12 @@ Public Class frmComprobanteNuevo
             MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
             Return False
         Else
-            Dim result As String = Me.contComprobantes.crearComprobante(Comprobante)
-            MessageBox.Show("Resultado de nuevo comprobante:  " & vbCrLf & result, "Atención")
-            Return True
+            Dim result As List(Of Object) = Me.contComprobantes.crearComprobante(Comprobante)
+            Dim success As Boolean = result(0)
+            Dim message As String = result(1)
+
+            MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return success
         End If
     End Function
     Private Function cargarLineas() As List(Of LineaDeComprobante)

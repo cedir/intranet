@@ -1260,7 +1260,9 @@ Public Class NuevaPresentacion
 
 
                 If Me.validarDatosComprobante Then
+
                     ' cPresentacion.comprobante.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
+                    cPresentacion.crearTipoComprobante(Me.cmbNroTerminal.SelectedItem)
                     cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
 
                     cPresentacion.comprobante.TipoComprobante = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex)
@@ -1293,7 +1295,10 @@ Public Class NuevaPresentacion
                         cPresentacion.comprobante.Factura = Nothing
                         'calculamos comprobante.totalFacturado como el presentacion.total+iva 
 
-                        cPresentacion.crearComprobante()
+                        Dim result As List(Of Object) = cPresentacion.crearComprobante()
+                        Dim success As Boolean = result(0)
+                        Dim message As String = result(1)
+
 
 
                     ElseIf cPresentacion.comprobante.TipoComprobante.Id <> 2 Then

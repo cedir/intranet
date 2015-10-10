@@ -14,6 +14,8 @@ Public Class Presentacion
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
     Private _comprobante As Comprobante
+    Dim _managerComprobante As New ManagerComprobante
+
 
 
     Public Sub New()
@@ -95,11 +97,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As ComprobanteElectronico
+    Public Property comprobante() As Comprobante
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As ComprobanteElectronico)
+        Set(ByVal value As Comprobante)
             _comprobante = value
         End Set
     End Property
@@ -148,7 +150,11 @@ Public Class Presentacion
         End If
 
     End Function
-    Public Sub crearComprobante()
+    Public Sub crearTipoComprobante(ByVal terminal As String)
+        'TODO: llamar al manager para instanciar el tipo de comprobante que corresponda. 
+    End Sub
+
+    Public Function crearComprobante() As List(Of Object)
         'CARGAMOS LA LINEA: EN FACTURA ELECTRONICA, SOLAMENTE VAMOS A NECESITAR UNA SOLA
         'YA QUE PODEMOS DISCRIMINAR IVA EN CADA UNA DE LAS LINEAS. 
         Dim lineaComprobante As New LineaDeComprobante
@@ -182,8 +188,11 @@ Public Class Presentacion
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
 
         lineaComprobante = Nothing
-        Me.comprobante.crear()
-    End Sub
+
+        'se devuelve una lista de objetos con la respuesta de AFIP
+        Return Me.comprobante.crear()
+
+    End Function
 
     Public Function guardar(ByVal guardarLineas As Boolean, Optional ByVal finalizaPresentacion As Boolean = False) As String
         Dim resp As String

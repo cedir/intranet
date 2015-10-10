@@ -18,22 +18,14 @@ Public Class ControladorDeComprobantes
     ''' <param name="terminal"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function crearTipoDeComprobanteSegunNroTerminal(ByVal terminal As String) As Comprobante
-        Select Case True
-            Case (terminal = "0091")
-                Return New ComprobanteElectronico
-            Case Else
-                Return New Comprobante
-        End Select
-    End Function
     Private Function getTipoDeComprobanteAFIP() As List(Of TipoDeComprobanteAFIP)
         getTipoDeComprobanteAFIP = Me.catObjetosAfip.getTiposDeComprobanteAFIP()
     End Function
-    Public Function crearComprobante(ByVal c As Comprobante) As String
+    Public Function crearComprobante(ByVal c As Comprobante) As List(Of Object)
         If (c.GetType() Is GetType(ComprobanteElectronico)) Then
             'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
             CType(c, ComprobanteElectronico).cargarComprobanteModeloAFIP()
         End If
-        Return c.crear().ToString()
+        Return c.crear()
     End Function
 End Class
