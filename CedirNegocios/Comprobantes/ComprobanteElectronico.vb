@@ -87,7 +87,7 @@ Public Class ComprobanteElectronico
         End If
 
 
-        MyBase.crear()
+        result = MyBase.crear()
 
         For Each pair As KeyValuePair(Of String, String) In response
             If pair.Key.Contains("observacionCode") Then
@@ -186,7 +186,7 @@ Public Class ComprobanteElectronico
             Dim linea As New Dictionary(Of String, Object)()
             'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
             'solo vamos a guardar un tipo de Gravado por comprobante. Las lineas deben tener un mismo tipo de iva (0%,21% o 10.5%)
-            linea.Item("Id") = CType(lineaComprobante.Comprobante, ComprobanteElectronico).gravadoAFIP.IdAFIP.ToString
+            linea.Item("Id") = Me.gravadoAFIP.IdAFIP.ToString
             linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString
             linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString
             colLineas.Add(linea)

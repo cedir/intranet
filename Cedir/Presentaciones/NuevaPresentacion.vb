@@ -1261,7 +1261,7 @@ Public Class NuevaPresentacion
 
                 If Me.validarDatosComprobante Then
 
-                    ' cPresentacion.comprobante.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
+                    'Este metodo crea tipo de comprobante, por medio del manager. (TipoComprobante = Electronico o no)
                     cPresentacion.crearTipoComprobante(Me.cmbNroTerminal.SelectedItem)
                     cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
 
@@ -1281,31 +1281,17 @@ Public Class NuevaPresentacion
                     End If
 
 
-                    'checkeamos que el compronante no exista
-                    If Not cPresentacion.comprobante.doesExist Then
+                    'cargamos los datos comunes para todos los tipos de comprobantes
+                    cPresentacion.comprobante.FechaEmision = Date.Today
+                    cPresentacion.comprobante.NombreCliente = Me.cPresentacion.obraSocial.ObraSocial
+                    cPresentacion.comprobante.CondicionFiscal = Me.cPresentacion.obraSocial.CondicionFiscal
+                    cPresentacion.comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
+                    cPresentacion.comprobante.DocumentoCliente.NroDocumento = Me.cPresentacion.obraSocial.nroCuit
+                    'El comprobante creado no es cobrado hasta que vuelve de la OS
+                    cPresentacion.comprobante.Estado = "NO COBRADO"
+                    cPresentacion.comprobante.Factura = Nothing
+                    'calculamos comprobante.totalFacturado como el presentacion.total+iva 
 
-                        'cargamos los datos comunes para todos los tipos de comprobantes
-                        cPresentacion.comprobante.FechaEmision = Date.Today
-                        cPresentacion.comprobante.NombreCliente = Me.cPresentacion.obraSocial.ObraSocial
-                        cPresentacion.comprobante.CondicionFiscal = Me.cPresentacion.obraSocial.CondicionFiscal
-                        cPresentacion.comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
-                        cPresentacion.comprobante.DocumentoCliente.NroDocumento = Me.cPresentacion.obraSocial.nroCuit
-                        'El comprobante creado no es cobrado hasta que vuelve de la OS
-                        cPresentacion.comprobante.Estado = "NO COBRADO"
-                        cPresentacion.comprobante.Factura = Nothing
-                        'calculamos comprobante.totalFacturado como el presentacion.total+iva 
-
-                        Dim result As List(Of Object) = cPresentacion.crearComprobante()
-                        Dim success As Boolean = result(0)
-                        Dim message As String = result(1)
-
-
-
-                    ElseIf cPresentacion.comprobante.TipoComprobante.Id <> 2 Then
-                        MessageBox.Show("El comprobante ya existe." + vbCrLf + "No es posible", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        'salimos del metodo y no guardamos nada
-                        Exit Sub
-                    End If
 
                     If esAltaPresentacion Then
                         resp = cPresentacion.crear()
@@ -1313,7 +1299,20 @@ Public Class NuevaPresentacion
                         resp = cPresentacion.guardar(True, True)
                     End If
 
+
                     If resp = "ok" Then
+                        Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
+                        Dim success As Boolean = result(0)
+                        Dim message As String = result(1)
+
+
+                        If success Then
+                            MessageBox.Show(message, "Comprobante creado con exito", MessageBoxButtons.OK)
+                        Else
+                            MessageBox.Show(message, "Atencion. Error creacion de comprobante", MessageBoxButtons.OK)
+                        End If
+
+
                         'Imprimir detalle
                         r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")
                         If r = 6 Then

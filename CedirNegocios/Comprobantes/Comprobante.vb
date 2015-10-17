@@ -222,8 +222,8 @@ Public Class Comprobante
     End Sub
 #End Region
 
-    Public Overridable Function crear() As List(Of Object)
-        Dim result As New List(Of Object)
+    Public Overridable Function crear() As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
         Dim help As New Helper
@@ -273,8 +273,8 @@ Public Class Comprobante
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
                 Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
-                result(0) = False
-                result(1) = message
+                result("RESULT") = False
+                result("MESSAGE") = message
                 Return result
             End If
 
@@ -284,21 +284,18 @@ Public Class Comprobante
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
 
-            result(0) = True
-            result(1) = "Comprobante creado con èxito"
-
+            result("RESULT") = True
+            result("MESSAGE") = "Comprobante creado con èxito"
+            Return result
         Catch ex As Exception
-            result(0) = False
-            result(1) = ex.Message
-
+            result("RESULT") = False
+            result("MESSAGE") = ex.Message
+            Return result
         Finally
             help = Nothing
             cDatos = Nothing
             arr = Nothing
         End Try
-
-
-
     End Function
     ''' <summary>
     ''' Este metodo se ejecuta una vez que la cabecera del comprobante fue insertado en DB. Ya 
@@ -377,30 +374,30 @@ Public Class Comprobante
             dr = Nothing
         End Try
     End Sub
-    Public Function doesExist() As Boolean
-        Dim com As String = """"
-        Dim cDatos As New Consultas
-        Dim dr As NpgsqlDataReader
-        Dim query As String
-        Try
-            If Me.TipoComprobante.Id = 2 Then
-                query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
-            Else
-                query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
-            End If
+    'Public Function doesExist() As Boolean
+    '    Dim com As String = """"
+    '    Dim cDatos As New Consultas
+    '    Dim dr As NpgsqlDataReader
+    '    Dim query As String
+    '    Try
+    '        If Me.TipoComprobante.Id = 2 Then
+    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
+    '        Else
+    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
+    '        End If
 
-            dr = cDatos.EjecutarSelect(query)
-            If dr.HasRows Then
-                Return True
-            Else : Return False
-            End If
-        Catch ex As Exception
-        Finally
-            cDatos = Nothing
-            dr = Nothing
-        End Try
+    '        dr = cDatos.EjecutarSelect(query)
+    '        If dr.HasRows Then
+    '            Return True
+    '        Else : Return False
+    '        End If
+    '    Catch ex As Exception
+    '    Finally
+    '        cDatos = Nothing
+    '        dr = Nothing
+    '    End Try
 
-    End Function
+    'End Function
     Public Sub getFactura(ByVal idFactura As Int32)
         Dim com As String = """"
         Dim oComprobante As New Comprobante

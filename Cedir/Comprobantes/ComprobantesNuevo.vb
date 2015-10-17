@@ -610,7 +610,8 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-    Dim contComprobantes As New ControladorDeComprobantes
+    Dim managerComprobante As New ManagerComprobante
+    Dim contComprobantes As ControladorDeComprobantes
     Dim catGrav As New CedirNegocios.CatalogoDeGravados
 
 
@@ -662,21 +663,16 @@ Public Class frmComprobanteNuevo
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Me.Comprobante = Me.contComprobantes.crearTipoDeComprobanteSegunNroTerminal(cmbNroTerminal.SelectedItem.ToString())
+            Me.Comprobante = Me.managerComprobante.crearTipoDeComprobanteSegunNroTerminal(cmbNroTerminal.SelectedItem.ToString())
         End If
         'cargamos los datos de la vista
         Me.cargarComprobante(Me.Comprobante)
-        If Comprobante.doesExist() Then
-            MessageBox.Show("Ya se ha cargado el comprobante anteriormente", "Atención")
-            Return False
-        Else
-            Dim result As List(Of Object) = Me.contComprobantes.crearComprobante(Comprobante)
-            Dim success As Boolean = result(0)
-            Dim message As String = result(1)
-
-            MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return success
-        End If
+        
+        Dim result As List(Of Object) = Comprobante.crear()
+        Dim success As Boolean = result(0)
+        Dim message As String = result(1)
+        MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Return success
     End Function
     Private Function cargarLineas() As List(Of LineaDeComprobante)
         Dim lineas As New List(Of LineaDeComprobante)
