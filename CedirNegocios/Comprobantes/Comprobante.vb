@@ -273,8 +273,8 @@ Public Class Comprobante
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
                 Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
-                result("RESULT") = False
-                result("MESSAGE") = message
+                result("ResultadoDatabase") = False
+                result("MensajeDB") = message
                 Return result
             End If
 
@@ -284,12 +284,12 @@ Public Class Comprobante
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
 
-            result("RESULT") = True
-            result("MESSAGE") = "Comprobante creado con èxito"
+            result("ResultadoDatabase") = True
+            result("MensajeDB") = "Comprobante creado con èxito"
             Return result
         Catch ex As Exception
-            result("RESULT") = False
-            result("MESSAGE") = ex.Message
+            result("ResultadoDatabase") = False
+            result("MensajeDB") = ex.Message
             Return result
         Finally
             help = Nothing

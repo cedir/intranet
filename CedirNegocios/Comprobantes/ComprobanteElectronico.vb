@@ -50,12 +50,11 @@ Public Class ComprobanteElectronico
             _clienteFE = value
         End Set
     End Property
-    Public Overrides Function crear() As List(Of Object)
+    Public Overrides Function crear() As Dictionary(Of String, String)
         Dim responseError As Boolean = False
         Dim responseObs As Boolean = False
         Dim mensajeError As String = "..Sin errores.."
         Dim mensajeResultado As String = " "
-        Dim result As New List(Of Object)
         Dim log As New LogComprobanteElectronico
 
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
@@ -64,7 +63,7 @@ Public Class ComprobanteElectronico
         Dim response As New Dictionary(Of String, String)
         response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
-        If response.Item("Resultado") = "R" Then  'R significa error.
+        If response.Item("ResultadoAFIP") = "R" Then  'R significa error.
             mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
 
             For Each pair As KeyValuePair(Of String, String) In response
@@ -80,14 +79,15 @@ Public Class ComprobanteElectronico
 
             log.detalle = mensajeResultado & mensajeError
             log.insert()  'TODO: loguear mas datos
-
-            result.Add(False)
-            result.Add(mensajeResultado)
-            Return result
+            Return response
         End If
 
+        'logueamos el resultado de insertar comprobante en base de datos
+        Dim resultDB As Dictionary(Of String, String)
+        resultDB = MyBase.crear()
+        response.Add("ResultadoDatabase", resultDB.Item("ResultadoDatabase"))
+        response.Add("MensajeDB", resultDB.Item("MensajeDB"))
 
-        result = MyBase.crear()
 
         For Each pair As KeyValuePair(Of String, String) In response
             If pair.Key.Contains("observacionCode") Then
@@ -104,9 +104,8 @@ Public Class ComprobanteElectronico
         log.detalle = mensajeResultado & mensajeError
         log.insert()  'TODO: loguear mas datos
 
-        result.Add(True)
-        result.Add(mensajeResultado)
-        Return result
+      
+        Return response
     End Function
     Private Sub insertarCAE(ByVal cae As String)
         Dim com As String = """"

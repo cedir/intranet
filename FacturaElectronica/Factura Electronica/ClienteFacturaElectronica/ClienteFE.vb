@@ -285,7 +285,7 @@ Public Class ClienteFE
             If fecaeResponse.FeDetResp IsNot Nothing Then
                 For Each detResponse As wsfe.FECAEDetResponse In fecaeResponse.FeDetResp
                     response.Add("CAE", detResponse.CAE)
-                    response.Add("Resultado", detResponse.Resultado)
+                    response.Add("ResultadoAFIP", detResponse.Resultado)
                     If detResponse.Observaciones IsNot Nothing Then
                         For Each o As wsfe.Obs In detResponse.Observaciones
                             response.Add("observacionCode" & o.Code, o.Msg)

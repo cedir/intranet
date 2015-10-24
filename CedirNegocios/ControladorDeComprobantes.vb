@@ -21,7 +21,7 @@ Public Class ControladorDeComprobantes
     Private Function getTipoDeComprobanteAFIP() As List(Of TipoDeComprobanteAFIP)
         getTipoDeComprobanteAFIP = Me.catObjetosAfip.getTiposDeComprobanteAFIP()
     End Function
-    Public Function crearComprobante(ByVal c As Comprobante) As List(Of Object)
+    Public Function crearComprobante(ByVal c As Comprobante) As Dictionary(Of String, String)
         If (c.GetType() Is GetType(ComprobanteElectronico)) Then
             'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
             CType(c, ComprobanteElectronico).cargarComprobanteModeloAFIP()

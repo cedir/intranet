@@ -668,7 +668,7 @@ Public Class frmComprobanteNuevo
         'cargamos los datos de la vista
         Me.cargarComprobante(Me.Comprobante)
         
-        Dim result As List(Of Object) = Comprobante.crear()
+        Dim result As Dictionary(Of String, String) = Comprobante.crear()
         Dim success As Boolean = result(0)
         Dim message As String = result(1)
         MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
