@@ -175,7 +175,6 @@ Public Class Presentacion
             lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
             lineaComprobante.ImporteIVA = totalImporteNetoLineaDeFacturacion * (Me.comprobante.Gravado.porcentaje / 100)
             lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
-            Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         Else
             'las liquidaciones no poseen gravado. 
             lineaComprobante.Subtotal = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
@@ -185,8 +184,7 @@ Public Class Presentacion
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
-        Dim success As Boolean = result(0)
-        If success Then
+        If (result("ResultadoAFIP" <> "R")) Then
             'update presentacion con id comprobante
             result(1) = "Fallo al actualizar presentacion ID con comprente ID. Sacar sceenshot de la pantalla y avisar al administrador."
         End If

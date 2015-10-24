@@ -200,7 +200,6 @@ Public Class ComprobanteElectronico
     Public Sub New()
         Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
         Me.clienteFE = New ClienteFE
-        clienteFE.iniciar()
     End Sub
     ''' <summary>
     ''' metodo para cargar el comprobante con los datos que poseemos de AFIP, y 

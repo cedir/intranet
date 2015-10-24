@@ -139,9 +139,9 @@ Public Class NuevaPresentacion
         '
         'cmbObraSocial
         '
-        Me.cmbObraSocial.Location = New System.Drawing.Point(16, 16)
+        Me.cmbObraSocial.Location = New System.Drawing.Point(19, 18)
         Me.cmbObraSocial.Name = "cmbObraSocial"
-        Me.cmbObraSocial.Size = New System.Drawing.Size(344, 21)
+        Me.cmbObraSocial.Size = New System.Drawing.Size(413, 24)
         Me.cmbObraSocial.TabIndex = 0
         Me.cmbObraSocial.Text = "Seleccione una Obra Social.."
         '
@@ -151,92 +151,92 @@ Public Class NuevaPresentacion
         Me.DataGrid1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.DataGrid1.DataMember = ""
         Me.DataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.DataGrid1.Location = New System.Drawing.Point(0, 8)
+        Me.DataGrid1.Location = New System.Drawing.Point(0, 9)
         Me.DataGrid1.Name = "DataGrid1"
-        Me.DataGrid1.Size = New System.Drawing.Size(828, 200)
+        Me.DataGrid1.Size = New System.Drawing.Size(994, 231)
         Me.DataGrid1.TabIndex = 1
         '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PacienteToolStripMenuItem, Me.EstudioToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(127, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 52)
         '
         'PacienteToolStripMenuItem
         '
         Me.PacienteToolStripMenuItem.Name = "PacienteToolStripMenuItem"
-        Me.PacienteToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.PacienteToolStripMenuItem.Size = New System.Drawing.Size(134, 24)
         Me.PacienteToolStripMenuItem.Text = "Paciente"
         '
         'EstudioToolStripMenuItem
         '
         Me.EstudioToolStripMenuItem.Name = "EstudioToolStripMenuItem"
-        Me.EstudioToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.EstudioToolStripMenuItem.Size = New System.Drawing.Size(134, 24)
         Me.EstudioToolStripMenuItem.Text = "Estudio"
         '
         'btnFacturar
         '
-        Me.btnFacturar.Location = New System.Drawing.Point(24, 464)
+        Me.btnFacturar.Location = New System.Drawing.Point(29, 535)
         Me.btnFacturar.Name = "btnFacturar"
-        Me.btnFacturar.Size = New System.Drawing.Size(72, 24)
+        Me.btnFacturar.Size = New System.Drawing.Size(86, 28)
         Me.btnFacturar.TabIndex = 2
         Me.btnFacturar.Text = "Finalizar"
         '
         'lblTotal
         '
-        Me.lblTotal.Location = New System.Drawing.Point(16, 125)
+        Me.lblTotal.Location = New System.Drawing.Point(19, 144)
         Me.lblTotal.Name = "lblTotal"
-        Me.lblTotal.Size = New System.Drawing.Size(152, 24)
+        Me.lblTotal.Size = New System.Drawing.Size(183, 28)
         Me.lblTotal.TabIndex = 3
         Me.lblTotal.Text = "Total: $ "
         '
         'btnQuitarItem
         '
-        Me.btnQuitarItem.Location = New System.Drawing.Point(7, 24)
+        Me.btnQuitarItem.Location = New System.Drawing.Point(8, 28)
         Me.btnQuitarItem.Name = "btnQuitarItem"
-        Me.btnQuitarItem.Size = New System.Drawing.Size(104, 24)
+        Me.btnQuitarItem.Size = New System.Drawing.Size(125, 27)
         Me.btnQuitarItem.TabIndex = 4
         Me.btnQuitarItem.Text = "Quitar"
         '
         'btnMedicacion
         '
-        Me.btnMedicacion.Location = New System.Drawing.Point(7, 54)
+        Me.btnMedicacion.Location = New System.Drawing.Point(8, 62)
         Me.btnMedicacion.Name = "btnMedicacion"
-        Me.btnMedicacion.Size = New System.Drawing.Size(104, 23)
+        Me.btnMedicacion.Size = New System.Drawing.Size(125, 27)
         Me.btnMedicacion.TabIndex = 5
         Me.btnMedicacion.Text = "Medicación"
         '
         'lblImporteGravado
         '
         Me.lblImporteGravado.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lblImporteGravado.Location = New System.Drawing.Point(16, 72)
+        Me.lblImporteGravado.Location = New System.Drawing.Point(19, 83)
         Me.lblImporteGravado.Name = "lblImporteGravado"
-        Me.lblImporteGravado.Size = New System.Drawing.Size(152, 23)
+        Me.lblImporteGravado.Size = New System.Drawing.Size(183, 27)
         Me.lblImporteGravado.TabIndex = 7
         Me.lblImporteGravado.Text = "Gravado: $"
         '
         'lbltotalEstudios
         '
         Me.lbltotalEstudios.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lbltotalEstudios.Location = New System.Drawing.Point(16, 24)
+        Me.lbltotalEstudios.Location = New System.Drawing.Point(19, 28)
         Me.lbltotalEstudios.Name = "lbltotalEstudios"
-        Me.lbltotalEstudios.Size = New System.Drawing.Size(144, 23)
+        Me.lbltotalEstudios.Size = New System.Drawing.Size(173, 26)
         Me.lbltotalEstudios.TabIndex = 8
         Me.lbltotalEstudios.Text = "Estudios: $"
         '
         'lblGravado
         '
-        Me.lblGravado.Location = New System.Drawing.Point(11, 110)
+        Me.lblGravado.Location = New System.Drawing.Point(13, 127)
         Me.lblGravado.Name = "lblGravado"
-        Me.lblGravado.Size = New System.Drawing.Size(79, 13)
+        Me.lblGravado.Size = New System.Drawing.Size(95, 15)
         Me.lblGravado.TabIndex = 10
         Me.lblGravado.Text = "% Gravado :"
         '
         'btnImprimir
         '
-        Me.btnImprimir.Location = New System.Drawing.Point(200, 464)
+        Me.btnImprimir.Location = New System.Drawing.Point(240, 535)
         Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(64, 23)
+        Me.btnImprimir.Size = New System.Drawing.Size(77, 27)
         Me.btnImprimir.TabIndex = 12
         Me.btnImprimir.Text = "Imprimir"
         '
@@ -245,26 +245,26 @@ Public Class NuevaPresentacion
         Me.GroupBox1.Controls.Add(Me.lblTotal)
         Me.GroupBox1.Controls.Add(Me.lblImporteGravado)
         Me.GroupBox1.Controls.Add(Me.lbltotalEstudios)
-        Me.GroupBox1.Location = New System.Drawing.Point(576, 304)
+        Me.GroupBox1.Location = New System.Drawing.Point(691, 351)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(176, 152)
+        Me.GroupBox1.Size = New System.Drawing.Size(211, 175)
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Importes Totales"
         '
         'btnAgregar
         '
-        Me.btnAgregar.Location = New System.Drawing.Point(384, 16)
+        Me.btnAgregar.Location = New System.Drawing.Point(461, 18)
         Me.btnAgregar.Name = "btnAgregar"
-        Me.btnAgregar.Size = New System.Drawing.Size(75, 23)
+        Me.btnAgregar.Size = New System.Drawing.Size(90, 27)
         Me.btnAgregar.TabIndex = 17
         Me.btnAgregar.Text = "Agregar"
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(112, 464)
+        Me.btnGuardar.Location = New System.Drawing.Point(134, 535)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(75, 23)
+        Me.btnGuardar.Size = New System.Drawing.Size(90, 27)
         Me.btnGuardar.TabIndex = 18
         Me.btnGuardar.Text = "Guardar"
         '
@@ -282,9 +282,9 @@ Public Class NuevaPresentacion
         Me.grpComprobante.Controls.Add(Me.cmbTipoComprobante)
         Me.grpComprobante.Controls.Add(Me.lblGravado)
         Me.grpComprobante.Controls.Add(Me.cmbResponsableComprobante)
-        Me.grpComprobante.Location = New System.Drawing.Point(254, 304)
+        Me.grpComprobante.Location = New System.Drawing.Point(305, 351)
         Me.grpComprobante.Name = "grpComprobante"
-        Me.grpComprobante.Size = New System.Drawing.Size(316, 151)
+        Me.grpComprobante.Size = New System.Drawing.Size(379, 174)
         Me.grpComprobante.TabIndex = 21
         Me.grpComprobante.TabStop = False
         Me.grpComprobante.Text = "Comprobante"
@@ -292,17 +292,17 @@ Public Class NuevaPresentacion
         'cmbNroTerminal
         '
         Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
-        Me.cmbNroTerminal.Location = New System.Drawing.Point(108, 17)
+        Me.cmbNroTerminal.Location = New System.Drawing.Point(130, 20)
         Me.cmbNroTerminal.Name = "cmbNroTerminal"
-        Me.cmbNroTerminal.Size = New System.Drawing.Size(71, 21)
+        Me.cmbNroTerminal.Size = New System.Drawing.Size(85, 24)
         Me.cmbNroTerminal.TabIndex = 36
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(219, 46)
+        Me.Label1.Location = New System.Drawing.Point(263, 53)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(46, 13)
+        Me.Label1.Size = New System.Drawing.Size(61, 17)
         Me.Label1.TabIndex = 35
         Me.Label1.Text = "Sub-tipo"
         '
@@ -310,84 +310,84 @@ Public Class NuevaPresentacion
         '
         Me.cmbSubTipo.FormattingEnabled = True
         Me.cmbSubTipo.Items.AddRange(New Object() {"A", "B"})
-        Me.cmbSubTipo.Location = New System.Drawing.Point(268, 43)
+        Me.cmbSubTipo.Location = New System.Drawing.Point(322, 50)
         Me.cmbSubTipo.Name = "cmbSubTipo"
-        Me.cmbSubTipo.Size = New System.Drawing.Size(38, 21)
+        Me.cmbSubTipo.Size = New System.Drawing.Size(45, 24)
         Me.cmbSubTipo.TabIndex = 34
         '
         'cmbGravado
         '
         Me.cmbGravado.FormattingEnabled = True
-        Me.cmbGravado.Location = New System.Drawing.Point(197, 107)
+        Me.cmbGravado.Location = New System.Drawing.Point(236, 123)
         Me.cmbGravado.Name = "cmbGravado"
-        Me.cmbGravado.Size = New System.Drawing.Size(109, 21)
+        Me.cmbGravado.Size = New System.Drawing.Size(131, 24)
         Me.cmbGravado.TabIndex = 33
         Me.cmbGravado.Text = "Seleccione..."
         '
         'lblGuion
         '
         Me.lblGuion.AutoSize = True
-        Me.lblGuion.Location = New System.Drawing.Point(185, 20)
+        Me.lblGuion.Location = New System.Drawing.Point(222, 23)
         Me.lblGuion.Name = "lblGuion"
-        Me.lblGuion.Size = New System.Drawing.Size(10, 13)
+        Me.lblGuion.Size = New System.Drawing.Size(13, 17)
         Me.lblGuion.TabIndex = 32
         Me.lblGuion.Text = "-"
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(12, 20)
+        Me.Label5.Location = New System.Drawing.Point(14, 23)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(50, 16)
+        Me.Label5.Size = New System.Drawing.Size(60, 19)
         Me.Label5.TabIndex = 27
         Me.Label5.Text = "Número :"
         '
         'txtNroComprobante
         '
-        Me.txtNroComprobante.Location = New System.Drawing.Point(201, 17)
+        Me.txtNroComprobante.Location = New System.Drawing.Point(241, 20)
         Me.txtNroComprobante.Name = "txtNroComprobante"
         Me.txtNroComprobante.ReadOnly = True
-        Me.txtNroComprobante.Size = New System.Drawing.Size(105, 20)
+        Me.txtNroComprobante.Size = New System.Drawing.Size(126, 22)
         Me.txtNroComprobante.TabIndex = 26
         Me.txtNroComprobante.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(11, 45)
+        Me.Label6.Location = New System.Drawing.Point(13, 52)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(79, 14)
+        Me.Label6.Size = New System.Drawing.Size(95, 16)
         Me.Label6.TabIndex = 25
         Me.Label6.Text = "Comprobante:"
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(11, 79)
+        Me.Label4.Location = New System.Drawing.Point(13, 91)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(79, 16)
+        Me.Label4.Size = New System.Drawing.Size(95, 19)
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Responsable: "
         '
         'cmbTipoComprobante
         '
         Me.cmbTipoComprobante.Items.AddRange(New Object() {""})
-        Me.cmbTipoComprobante.Location = New System.Drawing.Point(108, 43)
+        Me.cmbTipoComprobante.Location = New System.Drawing.Point(130, 50)
         Me.cmbTipoComprobante.Name = "cmbTipoComprobante"
-        Me.cmbTipoComprobante.Size = New System.Drawing.Size(109, 21)
+        Me.cmbTipoComprobante.Size = New System.Drawing.Size(130, 24)
         Me.cmbTipoComprobante.TabIndex = 12
         Me.cmbTipoComprobante.Text = "Seleccione.."
         '
         'cmbResponsableComprobante
         '
-        Me.cmbResponsableComprobante.Location = New System.Drawing.Point(197, 76)
+        Me.cmbResponsableComprobante.Location = New System.Drawing.Point(236, 88)
         Me.cmbResponsableComprobante.Name = "cmbResponsableComprobante"
-        Me.cmbResponsableComprobante.Size = New System.Drawing.Size(109, 21)
+        Me.cmbResponsableComprobante.Size = New System.Drawing.Size(131, 24)
         Me.cmbResponsableComprobante.TabIndex = 23
         Me.cmbResponsableComprobante.Text = "Seleccione..."
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(609, 16)
+        Me.Label3.Location = New System.Drawing.Point(731, 18)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(40, 23)
+        Me.Label3.Size = New System.Drawing.Size(48, 27)
         Me.Label3.TabIndex = 22
         Me.Label3.Text = "Fecha:"
         '
@@ -395,18 +395,18 @@ Public Class NuevaPresentacion
         '
         Me.TabControl1.Controls.Add(Me.TabEstudios)
         Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Location = New System.Drawing.Point(8, 48)
+        Me.TabControl1.Location = New System.Drawing.Point(10, 55)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(839, 248)
+        Me.TabControl1.Size = New System.Drawing.Size(1006, 287)
         Me.TabControl1.TabIndex = 24
         '
         'TabEstudios
         '
         Me.TabEstudios.Controls.Add(Me.DataGrid1)
-        Me.TabEstudios.Location = New System.Drawing.Point(4, 22)
+        Me.TabEstudios.Location = New System.Drawing.Point(4, 25)
         Me.TabEstudios.Name = "TabEstudios"
-        Me.TabEstudios.Size = New System.Drawing.Size(831, 222)
+        Me.TabEstudios.Size = New System.Drawing.Size(998, 258)
         Me.TabEstudios.TabIndex = 0
         Me.TabEstudios.Text = "Estudios"
         Me.TabEstudios.UseVisualStyleBackColor = True
@@ -416,45 +416,45 @@ Public Class NuevaPresentacion
         Me.TabPage1.Controls.Add(Me.Label8)
         Me.TabPage1.Controls.Add(Me.txtOSObservaciones)
         Me.TabPage1.Controls.Add(Me.btnVerAranceles)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(831, 222)
+        Me.TabPage1.Size = New System.Drawing.Size(998, 258)
         Me.TabPage1.TabIndex = 2
         Me.TabPage1.Text = "Ayuda"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'Label8
         '
-        Me.Label8.Location = New System.Drawing.Point(272, 40)
+        Me.Label8.Location = New System.Drawing.Point(326, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(80, 16)
+        Me.Label8.Size = New System.Drawing.Size(96, 19)
         Me.Label8.TabIndex = 3
         Me.Label8.Text = "Observaciones"
         '
         'txtOSObservaciones
         '
-        Me.txtOSObservaciones.Location = New System.Drawing.Point(8, 64)
+        Me.txtOSObservaciones.Location = New System.Drawing.Point(10, 74)
         Me.txtOSObservaciones.Multiline = True
         Me.txtOSObservaciones.Name = "txtOSObservaciones"
         Me.txtOSObservaciones.ReadOnly = True
         Me.txtOSObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtOSObservaciones.Size = New System.Drawing.Size(600, 96)
+        Me.txtOSObservaciones.Size = New System.Drawing.Size(720, 111)
         Me.txtOSObservaciones.TabIndex = 2
         '
         'btnVerAranceles
         '
-        Me.btnVerAranceles.Location = New System.Drawing.Point(16, 24)
+        Me.btnVerAranceles.Location = New System.Drawing.Point(19, 28)
         Me.btnVerAranceles.Name = "btnVerAranceles"
-        Me.btnVerAranceles.Size = New System.Drawing.Size(75, 23)
+        Me.btnVerAranceles.Size = New System.Drawing.Size(90, 26)
         Me.btnVerAranceles.TabIndex = 1
         Me.btnVerAranceles.Text = "Aranceles"
         '
         'DateTimePicker1
         '
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(657, 13)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(788, 15)
         Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(88, 20)
+        Me.DateTimePicker1.Size = New System.Drawing.Size(106, 22)
         Me.DateTimePicker1.TabIndex = 25
         '
         'GroupBox3
@@ -462,56 +462,56 @@ Public Class NuevaPresentacion
         Me.GroupBox3.Controls.Add(Me.btnAnest)
         Me.GroupBox3.Controls.Add(Me.btnQuitarItem)
         Me.GroupBox3.Controls.Add(Me.btnMedicacion)
-        Me.GroupBox3.Location = New System.Drawing.Point(32, 304)
+        Me.GroupBox3.Location = New System.Drawing.Point(38, 351)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(121, 110)
+        Me.GroupBox3.Size = New System.Drawing.Size(146, 127)
         Me.GroupBox3.TabIndex = 26
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Con el item seleccionado"
         '
         'btnAnest
         '
-        Me.btnAnest.Location = New System.Drawing.Point(7, 83)
+        Me.btnAnest.Location = New System.Drawing.Point(8, 96)
         Me.btnAnest.Name = "btnAnest"
-        Me.btnAnest.Size = New System.Drawing.Size(104, 23)
+        Me.btnAnest.Size = New System.Drawing.Size(125, 26)
         Me.btnAnest.TabIndex = 6
         Me.btnAnest.Text = "Anestesia" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'lblObraSocial
         '
-        Me.lblObraSocial.Location = New System.Drawing.Point(16, 16)
+        Me.lblObraSocial.Location = New System.Drawing.Point(19, 18)
         Me.lblObraSocial.Name = "lblObraSocial"
-        Me.lblObraSocial.Size = New System.Drawing.Size(328, 24)
+        Me.lblObraSocial.Size = New System.Drawing.Size(394, 28)
         Me.lblObraSocial.TabIndex = 27
         Me.lblObraSocial.Text = "nombre de obra social"
         '
         'btnCerrar
         '
-        Me.btnCerrar.Location = New System.Drawing.Point(288, 464)
+        Me.btnCerrar.Location = New System.Drawing.Point(346, 535)
         Me.btnCerrar.Name = "btnCerrar"
-        Me.btnCerrar.Size = New System.Drawing.Size(75, 23)
+        Me.btnCerrar.Size = New System.Drawing.Size(90, 27)
         Me.btnCerrar.TabIndex = 28
         Me.btnCerrar.Text = "Cerrar"
         '
         'Label7
         '
-        Me.Label7.Location = New System.Drawing.Point(56, 417)
+        Me.Label7.Location = New System.Drawing.Point(67, 481)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(144, 16)
+        Me.Label7.Size = New System.Drawing.Size(173, 19)
         Me.Label7.TabIndex = 38
         Me.Label7.Text = "Período de la Presentación"
         '
         'txtPeriodoPresentacion
         '
-        Me.txtPeriodoPresentacion.Location = New System.Drawing.Point(32, 433)
+        Me.txtPeriodoPresentacion.Location = New System.Drawing.Point(38, 500)
         Me.txtPeriodoPresentacion.Name = "txtPeriodoPresentacion"
-        Me.txtPeriodoPresentacion.Size = New System.Drawing.Size(184, 20)
+        Me.txtPeriodoPresentacion.Size = New System.Drawing.Size(221, 22)
         Me.txtPeriodoPresentacion.TabIndex = 37
         '
         'NuevaPresentacion
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(859, 506)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
+        Me.ClientSize = New System.Drawing.Size(1059, 591)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.txtPeriodoPresentacion)
         Me.Controls.Add(Me.btnCerrar)

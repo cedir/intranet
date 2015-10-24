@@ -39,18 +39,8 @@ Public Class ClienteFE
     '''</summary>
     ''' <remarks></remarks>
     Private Sub InicializarAutenticador()
-
-        'pseudo(codigo)
-        'da = new dataaccess
-        'lt = new login ticket = da.getLoginTicket
-        'if expirationTIme <= time.now then obtener login tkcet
-        'else 
-        'token= lt token
-        'sign = lt.sign
-        'uniqueid = lt.uniqueid
-
         If lt.ExpirationTime <= DateTime.Now Then
-            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
+            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveDemian)
         End If
     End Sub
 
@@ -218,7 +208,7 @@ Public Class ClienteFE
     End Function
     Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
         'Iniciamos el web service aqui.
-
+        Me.iniciar()
 
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         Me.getTipoComprobante()
