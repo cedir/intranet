@@ -13,14 +13,13 @@ Public Class Presentacion
     Private lineasDeFacturacionDeEstudios As ArrayList
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
-    Private _comprobante As Comprobante
+    Private _comprobante As ComprobanteElectronico
     Dim _managerComprobante As New ManagerComprobante
 
 
 
     Public Sub New()
         lineasDeFacturacionDeEstudios = New ArrayList
-        comprobante = New ComprobanteElectronico
         obraSocial = New ObraSocial
     End Sub
 
@@ -97,11 +96,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As Comprobante
+    Public Property comprobante() As ComprobanteElectronico
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As Comprobante)
+        Set(ByVal value As ComprobanteElectronico)
             _comprobante = value
         End Set
     End Property
@@ -184,7 +183,7 @@ Public Class Presentacion
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
-        If (result("ResultadoAFIP" <> "R")) Then
+        If (result("ResultadoAFIP") <> "R") Then
             'update presentacion con id comprobante
             result(1) = "Fallo al actualizar presentacion ID con comprente ID. Sacar sceenshot de la pantalla y avisar al administrador."
         End If

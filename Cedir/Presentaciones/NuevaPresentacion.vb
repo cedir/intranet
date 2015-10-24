@@ -1284,6 +1284,15 @@ Public Class NuevaPresentacion
                     'cargamos los datos comunes para todos los tipos de comprobantes
                     cPresentacion.comprobante.FechaEmision = Date.Today
                     cPresentacion.comprobante.NombreCliente = Me.cPresentacion.obraSocial.ObraSocial
+
+                    'Los campos DOCUMENTO CLIENTE estan harcoded porque las obras sociales poseen siempre CUIT
+                    'No damos opcion a elegir otro tipo de documento que no sea CUIT
+                    cPresentacion.comprobante.DocumentoCliente.idTipoDocumento = 80
+                    cPresentacion.comprobante.DocumentoCliente.NroDocumento = cPresentacion.obraSocial.nroCuit
+                    cPresentacion.comprobante.DocumentoCliente.Descripcion = "CUIT"
+
+
+
                     cPresentacion.comprobante.CondicionFiscal = Me.cPresentacion.obraSocial.CondicionFiscal
                     cPresentacion.comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
                     cPresentacion.comprobante.DocumentoCliente.NroDocumento = Me.cPresentacion.obraSocial.nroCuit
@@ -1302,14 +1311,14 @@ Public Class NuevaPresentacion
 
                     If resp = "ok" Then
                         Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
-                        Dim success As Boolean = result(0)
+                        Dim success As Boolean = result("ResultadoDatabase")
                         Dim message As String = result(1)
 
 
                         If success Then
-                            MessageBox.Show(message, "Comprobante creado con exito", MessageBoxButtons.OK)
+                            MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE:" & result("CAE"), MessageBoxButtons.OK)
                         Else
-                            MessageBox.Show(message, "Atencion. Error creacion de comprobante", MessageBoxButtons.OK)
+                            MessageBox.Show(message, result("ResultadoDatabase") +  , MessageBoxButtons.OK)
                         End If
 
 

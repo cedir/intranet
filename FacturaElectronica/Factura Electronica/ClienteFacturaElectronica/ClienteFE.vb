@@ -40,7 +40,7 @@ Public Class ClienteFE
     ''' <remarks></remarks>
     Private Sub InicializarAutenticador()
         If lt.ExpirationTime <= DateTime.Now Then
-            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveDemian)
+            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
         End If
     End Sub
 
@@ -184,8 +184,8 @@ Public Class ClienteFE
     End Function
 
     Public Function getUltimoNroComprobante(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As Integer
-        Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
 
+        Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
         Dim cbteTipo As Integer
         Dim dic As New Dictionary(Of Integer, String)
         dic = Me.getTipoComprobante()
@@ -207,11 +207,7 @@ Public Class ClienteFE
 
     End Function
     Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
-        'Iniciamos el web service aqui.
-        Me.iniciar()
-
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
-        Me.getTipoComprobante()
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
         'IMPORTANTE: INSERTAR ULTIMO NRO DE COMPROBANTE +1 ACA!!
@@ -291,6 +287,10 @@ Public Class ClienteFE
         End Try
     End Function
 
+    Public Sub New()
+        'Iniciamos el web service aqui.
+        Me.iniciar()
+    End Sub
 End Class
 
 

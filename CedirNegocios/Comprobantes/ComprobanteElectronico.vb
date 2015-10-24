@@ -4,7 +4,7 @@ Imports CedirDataAccess
 Public Class ComprobanteElectronico
     Inherits Comprobante
 
-    Dim _cae As String = ""
+
     Dim _gravado As TipoDeGravadoAFIP
     Dim _tipoComprobante As TipoDeComprobanteAFIP
     Dim _ImporteIva As Decimal
@@ -18,14 +18,7 @@ Public Class ComprobanteElectronico
             _ImporteIva = value
         End Set
     End Property
-    Public Property CAE() As String
-        Get
-            Return _cae
-        End Get
-        Set(ByVal value As String)
-            _cae = value
-        End Set
-    End Property
+
     Public Property gravadoAFIP() As TipoDeGravadoAFIP
         Get
             Return _gravado
@@ -82,9 +75,13 @@ Public Class ComprobanteElectronico
             Return response
         End If
 
+        'seteamos nuestro CAE recuperado, antes de realizar el insert en base de datos
+        Me.CAE = response("CAE")
+
         'logueamos el resultado de insertar comprobante en base de datos
         Dim resultDB As Dictionary(Of String, String)
         resultDB = MyBase.crear()
+
         response.Add("ResultadoDatabase", resultDB.Item("ResultadoDatabase"))
         response.Add("MensajeDB", resultDB.Item("MensajeDB"))
 
@@ -96,10 +93,9 @@ Public Class ComprobanteElectronico
             End If
         Next
 
-        Dim CAE As String = response("CAE")
-        mensajeResultado += "Resultado....: " & response("Resultado") & vbCrLf & "Errores..:" & mensajeError
+
+        mensajeResultado += "Resultado....: " & response("ResultadoDatabase") & vbCrLf & "Errores..:" & mensajeError
         mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
-        Me.insertarCAE(CAE)
         'Insertamos los resultados en el LOG
         log.detalle = mensajeResultado & mensajeError
         log.insert()  'TODO: loguear mas datos
@@ -107,17 +103,10 @@ Public Class ComprobanteElectronico
       
         Return response
     End Function
-    Private Sub insertarCAE(ByVal cae As String)
-        Dim com As String = """"
-        Dim cDatos As New Nuevo
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblComprobantes" & com
-        Dim campos As String = com & "CAE" & com & " = " & Me.CAE
-        Dim filtro As String = " where id = " & Me.IdComprobante
-        cDatos.update(tabla, campos, filtro)
-        cDatos = Nothing
-    End Sub
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim ultimoNro As Integer = clienteFE.getUltimoNroComprobante(Me.TipoComprobante.Descripcion, Me.NroTerminal.ToString, Me.SubTipo)
+        Me.NroComprobante = ultimoNro + 1
+
         Me.calcularImpIVA()
         Dim dic As New Dictionary(Of String, Object)
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
@@ -132,8 +121,8 @@ Public Class ComprobanteElectronico
         dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento
         'sacamos los guiones medios de existir en el tipo de documento
         dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
-        dic.Item("CbteDesde") = ultimoNro + 1
-        dic.Item("CbteHasta") = ultimoNro + 1
+        dic.Item("CbteDesde") = Me.NroComprobante
+        dic.Item("CbteHasta") = Me.NroComprobante
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
         dic.Item("ImpTotal") = Me.TotalFacturado
         'Importe total del comprobante
@@ -153,8 +142,6 @@ Public Class ComprobanteElectronico
 
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
-
-
 
         dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de inicio del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
