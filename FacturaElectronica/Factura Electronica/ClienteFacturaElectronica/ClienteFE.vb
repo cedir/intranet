@@ -256,34 +256,41 @@ Public Class ClienteFE
             .FeDetReq = arrayFECAEDetRequest
         End With
 
+        Dim result As New Dictionary(Of String, String)
+        Dim message As String = ""
         Try
-            'vamos a devolver un dictionary con los resultados
-            Dim response As New Dictionary(Of String, String)
-
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
-            
+
             If fecaeResponse.Errors IsNot Nothing Then
+                result("success") = False
+
                 For Each e As wsfe.Err In fecaeResponse.Errors
-                    response.Add("errorCode: " & e.Code, e.Msg)
+                    message &= e.Code & ": " & e.Msg & " - "
                 Next
+                result("message") = message
             End If
 
             If fecaeResponse.FeDetResp IsNot Nothing Then
                 For Each detResponse As wsfe.FECAEDetResponse In fecaeResponse.FeDetResp
-                    response.Add("CAE", detResponse.CAE)
-                    response.Add("ResultadoAFIP", detResponse.Resultado)
-                    If detResponse.Observaciones IsNot Nothing Then
+                    If detResponse.Resultado = "R" Then  'R significa error.
+                        'If detResponse.Observaciones IsNot Nothing Then
+                        result("success") = False
                         For Each o As wsfe.Obs In detResponse.Observaciones
-                            response.Add("observacionCode" & o.Code, o.Msg)
+                            message &= o.Code & ": " & o.Msg & " - "
                         Next
+                        'End If
+                    Else
+                        result("success") = True
+                        result.Add("CAE", detResponse.CAE)
                     End If
+                    result("message") = message
                 Next
             End If
-
-
-            Return response
+            Return result
         Catch ex As Exception
-            Return ex
+            result("success") = False
+            result("message") = ex.Message
+            Return result
         End Try
     End Function
 

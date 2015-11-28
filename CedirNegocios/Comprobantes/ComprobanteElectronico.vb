@@ -10,6 +10,11 @@ Public Class ComprobanteElectronico
     Dim _ImporteIva As Decimal
     Dim _clienteFE As ClienteFE
 
+    Public Sub New()
+        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
+        Me.clienteFE = New ClienteFE  'TODO: ojo con esto que se crean conexiones con la afip cada vez que se hace un new ClienteFE
+    End Sub
+
     Public Property importeIva() As Decimal
         Get
             Return _ImporteIva
@@ -44,8 +49,6 @@ Public Class ComprobanteElectronico
         End Set
     End Property
     Public Overrides Function crear() As Dictionary(Of String, String)
-        Dim responseError As Boolean = False
-        Dim responseObs As Boolean = False
         Dim mensajeError As String = "..Sin errores.."
         Dim mensajeResultado As String = " "
         Dim log As New LogComprobanteElectronico
@@ -56,7 +59,8 @@ Public Class ComprobanteElectronico
         Dim response As New Dictionary(Of String, String)
         response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
-        If response.Item("ResultadoAFIP") = "R" Then  'R significa error.
+        If Not Boolean.Parse(response.Item("success")) Then
+            response.Item("success") = False
             mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
 
             For Each pair As KeyValuePair(Of String, String) In response
@@ -72,6 +76,8 @@ Public Class ComprobanteElectronico
 
             log.detalle = mensajeResultado & mensajeError
             log.insert()  'TODO: loguear mas datos
+
+            response.Item("message") = mensajeResultado & mensajeError
             Return response
         End If
 
@@ -82,25 +88,14 @@ Public Class ComprobanteElectronico
         Dim resultDB As Dictionary(Of String, String)
         resultDB = MyBase.crear()
 
-        response.Add("ResultadoDatabase", resultDB.Item("ResultadoDatabase"))
-        response.Add("MensajeDB", resultDB.Item("MensajeDB"))
+        response.Add("success", resultDB.Item("success"))
+        response.Add("message", resultDB.Item("message"))
 
-
-        For Each pair As KeyValuePair(Of String, String) In response
-            If pair.Key.Contains("observacionCode") Then
-                mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
-                responseError = True
-            End If
-        Next
-
-
-        mensajeResultado += "Resultado....: " & response("ResultadoDatabase") & vbCrLf & "Errores..:" & mensajeError
-        mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
+        mensajeResultado += "Resultado....: " & response("ResultadoDatabase") & vbCrLf & "Errores:" & resultDB.Item("message")
+        mensajeResultado += "Nro de CAE ..: " & Me.CAE & vbCrLf
         'Insertamos los resultados en el LOG
-        log.detalle = mensajeResultado & mensajeError
+        log.detalle = "Error al crear comprobante en base de datos. " & resultDB.Item("message")
         log.insert()  'TODO: loguear mas datos
-
-      
         Return response
     End Function
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
@@ -183,10 +178,6 @@ Public Class ComprobanteElectronico
         For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
             Me.importeIva = Me.importeIva + lineaComprobante.ImporteIVA
         Next
-    End Sub
-    Public Sub New()
-        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
-        Me.clienteFE = New ClienteFE
     End Sub
     ''' <summary>
     ''' metodo para cargar el comprobante con los datos que poseemos de AFIP, y 

@@ -281,8 +281,8 @@ Public Class Comprobante
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
                 Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
-                result("ResultadoDatabase") = False
-                result("MensajeDB") = message
+                result("success") = False
+                result("message") = message
                 Return result
             End If
 
@@ -292,18 +292,17 @@ Public Class Comprobante
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
 
-            result("ResultadoDatabase") = True
-            result("MensajeDB") = "Comprobante creado con èxito"
-            Return result
+            result("success") = True
+            result("message") = "Comprobante creado con èxito"
         Catch ex As Exception
-            result("ResultadoDatabase") = False
-            result("MensajeDB") = ex.Message
-            Return result
+            result("success") = False
+            result("message") = ex.Message
         Finally
             help = Nothing
             cDatos = Nothing
             arr = Nothing
         End Try
+        Return result
     End Function
     ''' <summary>
     ''' Este metodo se ejecuta una vez que la cabecera del comprobante fue insertado en DB. Ya 

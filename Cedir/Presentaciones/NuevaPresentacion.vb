@@ -1308,19 +1308,17 @@ Public Class NuevaPresentacion
                         resp = cPresentacion.guardar(True, True)
                     End If
 
-
                     If resp = "ok" Then
                         Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
-                        Dim success As Boolean = result("ResultadoDatabase")
-                        Dim message As String = result(1)
-
+                        Dim success As Boolean = result("success")
+                        Dim message As String = result("message")
 
                         If success Then
                             MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE:" & result("CAE"), MessageBoxButtons.OK)
                         Else
-                            MessageBox.Show(message, result("ResultadoDatabase") +  , MessageBoxButtons.OK)
+                            Dim caption As String = "Error al crear comprobante"
+                            MessageBox.Show(message, caption, MessageBoxButtons.OK)
                         End If
-
 
                         'Imprimir detalle
                         r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")

@@ -183,9 +183,11 @@ Public Class Presentacion
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
-        If (result("ResultadoAFIP") <> "R") Then
-            'update presentacion con id comprobante
-            result(1) = "Fallo al actualizar presentacion ID con comprente ID. Sacar sceenshot de la pantalla y avisar al administrador."
+        If Not Boolean.Parse(result("success")) Then
+            result("success") = False
+            result("message") = "ERROR: " & result("message") & ". Sacar sceenshot de la pantalla y avisar al administrador."
+            'TODO: El comprobante debe existir. Ver que hacer aca en caso de error.
+            'Una opcion es crear una Liquidacion para que se vuelva a intentar desde "abrir estudio"
         End If
 
         Return result

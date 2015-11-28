@@ -669,8 +669,8 @@ Public Class frmComprobanteNuevo
         Me.cargarComprobante(Me.Comprobante)
         
         Dim result As Dictionary(Of String, String) = Comprobante.crear()
-        Dim success As Boolean = result(0)
-        Dim message As String = result(1)
+        Dim success As Boolean = result.Item("success")
+        Dim message As String = result.Item("message")
         MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Return success
     End Function
@@ -758,6 +758,7 @@ Public Class frmComprobanteNuevo
     Private Sub cargarComboTipoIdentificaiconCliente()
         Dim lista As New List(Of TipoIdentificacionClienteAFIP)
         Try
+            contComprobantes = New ControladorDeComprobantes()
             lista = contComprobantes.ObtenerTiposDeIdentificacionDeClienteAFIP()
             cmbTipoDocumento.DataSource = New BindingSource(lista, Nothing)
             cmbTipoDocumento.ValueMember = "idAFIP"
