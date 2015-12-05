@@ -13,12 +13,13 @@ Public Class Presentacion
     Private lineasDeFacturacionDeEstudios As ArrayList
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
-    Private _comprobante As Comprobante
+    Private _comprobante As ComprobanteElectronico
+    Dim _managerComprobante As New ManagerComprobante
+
 
 
     Public Sub New()
         lineasDeFacturacionDeEstudios = New ArrayList
-        comprobante = New Comprobante
         obraSocial = New ObraSocial
     End Sub
 
@@ -95,11 +96,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As Comprobante
+    Public Property comprobante() As ComprobanteElectronico
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As Comprobante)
+        Set(ByVal value As ComprobanteElectronico)
             _comprobante = value
         End Set
     End Property
@@ -148,61 +149,58 @@ Public Class Presentacion
         End If
 
     End Function
-    Public Sub crearComprobante()
-        'CARGAMOS LAS LINEAS
-        Dim linea As New LineaDeComprobante
-        Dim linea2 As New LineaDeComprobante
-        Dim totFacturado As Decimal = 0.0
-        Dim subTot As Decimal = 0.0
+    Public Sub crearTipoComprobante(ByVal terminal As String)
+        Me.comprobante = Me._managerComprobante.crearTipoDeComprobanteSegunNroTerminal(terminal)
+    End Sub
+
+    Public Function crearComprobante() As Dictionary(Of String, String)
+        'CARGAMOS LA LINEA: EN FACTURA ELECTRONICA, SOLAMENTE VAMOS A NECESITAR UNA SOLA
+        'YA QUE PODEMOS DISCRIMINAR IVA EN CADA UNA DE LAS LINEAS. 
+        Dim result As New Dictionary(Of String, String)
+        Dim lineaComprobante As New LineaDeComprobante
+        Dim totalImporteNetoLineaDeFacturacion As Decimal = 0.0
         Dim cLinea As LineaDeFacturacion
-        Dim st As Decimal = 0.0
 
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
-            cLinea.guardar(Me.idPresentacion)
-            subTot += cLinea.getSubtotal
+            'cLinea.guardar(Me.idPresentacion)
+            totalImporteNetoLineaDeFacturacion += cLinea.getImporteNeto
         Next
 
         'Si el comprobante es una factura, la leyenda cambia
-        If Me.comprobante.TipoComprobante.Descripcion.ToUpper = "FACTURA" And Me.comprobante.SubTipo <> Nothing Then
-            If Me.comprobante.SubTipo.ToUpper() = "A" Then
-                'Si la factura es tipo A tenemos que discriminar el IVA
-                linea2.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
-                linea2.Subtotal = Format(subTot, "########0.00")
-                linea.Concepto = "IVA " + Me.comprobante.Gravado.porcentaje.ToString + "   %   "
-                st = subTot * (Me.comprobante.Gravado.porcentaje / 100)
-                linea.Subtotal = Format(st, "########0.00")
-                totFacturado = linea.Subtotal + linea2.Subtotal
-
-                Me.comprobante.LineasDeComprobante.Add(linea2)
-                Me.comprobante.LineasDeComprobante.Add(linea)
-
-            ElseIf (Me.comprobante.SubTipo.ToUpper() = "B") Then
-
-                linea.Concepto = "Facturación correspondiente al mes " & Me.periodo & vbCrLf & " según detalle adjunto"
-                st = subTot + (subTot * (Me.comprobante.Gravado.porcentaje / 100))
-                linea.Subtotal = Format(st, "########0.00")
-                totFacturado = linea.Subtotal
-                Me.comprobante.LineasDeComprobante.Add(linea)
-
-            End If
-
+        If (TypeOf (Me.comprobante) Is ComprobanteElectronico) Then
+            'Datos comunes tanto a Facturas B como Facturas A
+            lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
+            lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
+            lineaComprobante.ImporteIVA = totalImporteNetoLineaDeFacturacion * (Me.comprobante.Gravado.porcentaje / 100)
+            lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
         Else
-            'si no es una factura A, la leyenda es igual para todos los comprobantes, pero el subtotal cambia, 
-            'ya sea liquidación o no
-            linea.Concepto = "Facturación correspondiente al mes " & Me.periodo & vbCrLf & " según detalle adjunto"
-            If Me.comprobante.TipoComprobante.Id = 2 Then
-                'las liquidaciones no poseen gravado
-                linea.Subtotal = Format(subTot, "########0.00")
-            End If
-            totFacturado = linea.Subtotal
-            Me.comprobante.LineasDeComprobante.Add(linea)
+            'las liquidaciones no poseen gravado. 
+            lineaComprobante.Subtotal = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
         End If
 
-        Me.comprobante.TotalFacturado = totFacturado
-        linea = Nothing
-        linea2 = Nothing
-        Me.comprobante.crear()
+        Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
+        Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
+        'se devuelve una lista de objetos con la respuesta de AFIP
+        result = Me.comprobante.crear()
+        If Not Boolean.Parse(result("success")) Then
+            result("success") = False
+            result("message") = "ERROR: " & result("message") & ". Sacar sceenshot de la pantalla y avisar al administrador."
+            'TODO: El comprobante debe existir. Ver que hacer aca en caso de error.
+            'Una opcion es crear una Liquidacion para que se vuelva a intentar desde "abrir estudio"
+        End If
+
+        Return result
+
+    End Function
+    Private Sub updateNroComprobante()
+        Dim cDatos As New Nuevo
+        Dim com As String = """"
+
+        Dim tabla As String = com & "cedirData" & com & "." & com & "tblFacturacion" & com
+        Dim campos As String = com & "idComprobante" & com & " = " & Me.comprobante.IdComprobante
+        Dim filtro As String = " where idFacturacion = " & Me.idPresentacion
+        cDatos.update(tabla, campos, filtro)
     End Sub
 
     Public Function guardar(ByVal guardarLineas As Boolean, Optional ByVal finalizaPresentacion As Boolean = False) As String
@@ -240,7 +238,7 @@ Public Class Presentacion
         For i As Integer = 0 To lineasDeFacturacionDeEstudios.Count - 1
             cLinea = lineasDeFacturacionDeEstudios(i)
             cLinea.guardar(Me.idPresentacion)
-            total += cLinea.getSubtotal
+            total += cLinea.getImporteNeto
         Next
 
     End Sub
@@ -437,7 +435,7 @@ Public Class Presentacion
             cLinea.estado = estado
             lineasDeFacturacionDeEstudios.Add(cLinea)
 
-            Me.total += cLinea.getSubtotal
+            Me.total += cLinea.getImporteNeto
         Next
 
 

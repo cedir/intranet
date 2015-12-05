@@ -29,6 +29,7 @@ Public Class ClienteFE
 
         Catch ex As Exception
             Return False
+            ' TODO: log error in tblComprobanteelectronicoLog
         End Try
         'InicializarFactura()
     End Function
@@ -38,16 +39,6 @@ Public Class ClienteFE
     '''</summary>
     ''' <remarks></remarks>
     Private Sub InicializarAutenticador()
-
-        'pseudo(codigo)
-        'da = new dataaccess
-        'lt = new login ticket = da.getLoginTicket
-        'if expirationTIme <= time.now then obtener login tkcet
-        'else 
-        'token= lt token
-        'sign = lt.sign
-        'uniqueid = lt.uniqueid
-
         If lt.ExpirationTime <= DateTime.Now Then
             lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
         End If
@@ -193,8 +184,8 @@ Public Class ClienteFE
     End Function
 
     Public Function getUltimoNroComprobante(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As Integer
-        Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
 
+        Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
         Dim cbteTipo As Integer
         Dim dic As New Dictionary(Of Integer, String)
         dic = Me.getTipoComprobante()
@@ -216,11 +207,7 @@ Public Class ClienteFE
 
     End Function
     Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
-        'Iniciamos el web service aqui.
-
-
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
-        Me.getTipoComprobante()
         fecaeReq = New wsfe.FECAERequest()
         fecaeResponse = New wsfe.FECAEResponse()
         'IMPORTANTE: INSERTAR ULTIMO NRO DE COMPROBANTE +1 ACA!!
@@ -269,37 +256,48 @@ Public Class ClienteFE
             .FeDetReq = arrayFECAEDetRequest
         End With
 
+        Dim result As New Dictionary(Of String, String)
+        Dim message As String = ""
         Try
-            'vamos a devolver un dictionary con los resultados
-            Dim response As New Dictionary(Of String, String)
-
             fecaeResponse = objWSFE.FECAESolicitar(aut, fecaeReq)
-            
+
             If fecaeResponse.Errors IsNot Nothing Then
+                result("success") = False
+
                 For Each e As wsfe.Err In fecaeResponse.Errors
-                    response.Add("errorCode: " & e.Code, e.Msg)
+                    message &= e.Code & ": " & e.Msg & " - "
                 Next
+                result("message") = message
             End If
 
             If fecaeResponse.FeDetResp IsNot Nothing Then
                 For Each detResponse As wsfe.FECAEDetResponse In fecaeResponse.FeDetResp
-                    response.Add("CAE", detResponse.CAE)
-                    response.Add("Resultado", detResponse.Resultado)
-                    If detResponse.Observaciones IsNot Nothing Then
+                    If detResponse.Resultado = "R" Then  'R significa error.
+                        'If detResponse.Observaciones IsNot Nothing Then
+                        result("success") = False
                         For Each o As wsfe.Obs In detResponse.Observaciones
-                            response.Add("observacionCode" & o.Code, o.Msg)
+                            message &= o.Code & ": " & o.Msg & " - "
                         Next
+                        'End If
+                    Else
+                        result("success") = True
+                        result.Add("CAE", detResponse.CAE)
                     End If
+                    result("message") = message
                 Next
             End If
-
-
-            Return response
+            Return result
         Catch ex As Exception
-            Return ex
+            result("success") = False
+            result("message") = ex.Message
+            Return result
         End Try
     End Function
 
+    Public Sub New()
+        'Iniciamos el web service aqui.
+        Me.iniciar()
+    End Sub
 End Class
 
 

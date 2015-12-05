@@ -4,11 +4,16 @@ Imports CedirDataAccess
 Public Class ComprobanteElectronico
     Inherits Comprobante
 
-    Dim _cae As String = ""
+
     Dim _gravado As TipoDeGravadoAFIP
     Dim _tipoComprobante As TipoDeComprobanteAFIP
     Dim _ImporteIva As Decimal
     Dim _clienteFE As ClienteFE
+
+    Public Sub New()
+        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
+        Me.clienteFE = New ClienteFE  'TODO: ojo con esto que se crean conexiones con la afip cada vez que se hace un new ClienteFE
+    End Sub
 
     Public Property importeIva() As Decimal
         Get
@@ -18,14 +23,7 @@ Public Class ComprobanteElectronico
             _ImporteIva = value
         End Set
     End Property
-    Public Property CAE() As String
-        Get
-            Return _cae
-        End Get
-        Set(ByVal value As String)
-            _cae = value
-        End Set
-    End Property
+
     Public Property gravadoAFIP() As TipoDeGravadoAFIP
         Get
             Return _gravado
@@ -50,54 +48,60 @@ Public Class ComprobanteElectronico
             _clienteFE = value
         End Set
     End Property
-    Public Overrides Function crear() As Object
-        Dim responseError As Boolean = False
-        Dim responseObs As Boolean = False
+    Public Overrides Function crear() As Dictionary(Of String, String)
         Dim mensajeError As String = "..Sin errores.."
         Dim mensajeResultado As String = " "
-        'primero insertamos la linea en base de datos, para obtener id's en las lineas
-        MyBase.crear()
+        Dim log As New LogComprobanteElectronico
+
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
         Me.cargarComprobanteModeloAFIP()
         'luego, insertamos esa factura en AFIP
         Dim response As New Dictionary(Of String, String)
         response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
-        For Each pair As KeyValuePair(Of String, String) In response
-            If pair.Key.Contains("error") Then
-                mensajeError += "Error : " & pair.Value & vbCrLf
-                responseError = True
-            End If
-            If pair.Key.Contains("observacionCode") Then
-                mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
-                responseError = True
-            End If
-        Next
+        If Not Boolean.Parse(response.Item("success")) Then
+            response.Item("success") = False
+            mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
 
-        Dim CAE As String = response("CAE")
-        mensajeResultado += "Resultado....: " & response("Resultado") & vbCrLf & "Errores..:" & mensajeError
-        If Not responseError And Not responseObs And CAE.Length Then
-            mensajeResultado += "Nro de CAE ..: " & CAE & vbCrLf
-            Me.InsertarCAE(CAE)
+            For Each pair As KeyValuePair(Of String, String) In response
+                If pair.Key.Contains("error") Then
+                    mensajeError += "Error : " & pair.Value & vbCrLf
+                End If
+                If pair.Key.Contains("observacionCode") Then
+                    mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
+                End If
+            Next
+
+            'Insertamos los resultados en el LOG
+
+            log.detalle = mensajeResultado & mensajeError
+            log.insert()  'TODO: loguear mas datos
+
+            response.Item("message") = mensajeResultado & mensajeError
+            Return response
         End If
-        'Insertamos los resultados en el LOG
-        Dim log As New LogComprobanteElectronico
-        log.detalle = mensajeResultado & mensajeError
-        log.insert()
 
-        Return mensajeResultado
+        'seteamos nuestro CAE recuperado, antes de realizar el insert en base de datos
+        Me.CAE = response("CAE")
+
+        'logueamos el resultado de insertar comprobante en base de datos
+        Dim resultDB As Dictionary(Of String, String)
+        resultDB = MyBase.crear()
+
+        response.Add("success", resultDB.Item("success"))
+        response.Add("message", resultDB.Item("message"))
+
+        mensajeResultado += "Resultado....: " & response("ResultadoDatabase") & vbCrLf & "Errores:" & resultDB.Item("message")
+        mensajeResultado += "Nro de CAE ..: " & Me.CAE & vbCrLf
+        'Insertamos los resultados en el LOG
+        log.detalle = "Error al crear comprobante en base de datos. " & resultDB.Item("message")
+        log.insert()  'TODO: loguear mas datos
+        Return response
     End Function
-    Private Sub insertarCAE(ByVal cae As String)
-        Dim com As String = """"
-        Dim cDatos As New Nuevo
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblComprobantes" & com
-        Dim campos As String = com & "CAE" & com & " = " & Me.CAE
-        Dim filtro As String = " where id = " & Me.IdComprobante
-        cDatos.update(tabla, campos, filtro)
-        cDatos = Nothing
-    End Sub
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
         Dim ultimoNro As Integer = clienteFE.getUltimoNroComprobante(Me.TipoComprobante.Descripcion, Me.NroTerminal.ToString, Me.SubTipo)
+        Me.NroComprobante = ultimoNro + 1
+
         Me.calcularImpIVA()
         Dim dic As New Dictionary(Of String, Object)
         dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
@@ -112,8 +116,8 @@ Public Class ComprobanteElectronico
         dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento
         'sacamos los guiones medios de existir en el tipo de documento
         dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
-        dic.Item("CbteDesde") = ultimoNro + 1
-        dic.Item("CbteHasta") = ultimoNro + 1
+        dic.Item("CbteDesde") = Me.NroComprobante
+        dic.Item("CbteHasta") = Me.NroComprobante
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
         dic.Item("ImpTotal") = Me.TotalFacturado
         'Importe total del comprobante
@@ -133,8 +137,6 @@ Public Class ComprobanteElectronico
 
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
-
-
 
         dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
         'Fecha de inicio del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
@@ -165,7 +167,7 @@ Public Class ComprobanteElectronico
             Dim linea As New Dictionary(Of String, Object)()
             'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
             'solo vamos a guardar un tipo de Gravado por comprobante. Las lineas deben tener un mismo tipo de iva (0%,21% o 10.5%)
-            linea.Item("Id") = CType(lineaComprobante.Comprobante, ComprobanteElectronico).gravadoAFIP.IdAFIP.ToString
+            linea.Item("Id") = Me.gravadoAFIP.IdAFIP.ToString
             linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString
             linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString
             colLineas.Add(linea)
@@ -176,11 +178,6 @@ Public Class ComprobanteElectronico
         For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
             Me.importeIva = Me.importeIva + lineaComprobante.ImporteIVA
         Next
-    End Sub
-    Public Sub New()
-        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
-        Me.clienteFE = New ClienteFE
-        clienteFE.iniciar()
     End Sub
     ''' <summary>
     ''' metodo para cargar el comprobante con los datos que poseemos de AFIP, y 

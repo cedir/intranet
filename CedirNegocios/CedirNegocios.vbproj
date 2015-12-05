@@ -169,6 +169,7 @@
     <Compile Include="Interfaces\ICalculadorHonorarios.vb" />
     <Compile Include="Interfaces\ICatalogoMovimientos.vb" />
     <Compile Include="LineaPagoAnestesista.vb" />
+    <Compile Include="managers\ManagerComprobante.vb" />
     <Compile Include="Movimiento.vb" />
     <Compile Include="MovimientoStock.vb" />
     <Compile Include="PagoAnestesista.vb" />

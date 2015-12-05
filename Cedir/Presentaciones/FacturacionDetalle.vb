@@ -581,7 +581,7 @@ Public Class FacturacionDetalle
             NewRow("Anestesia") = cLineaEstudio.objeto.ArancelAnestesia
             myTable.Rows.Add(NewRow)
 
-            totalEstudios += cLineaEstudio.getSubtotal
+            totalEstudios += cLineaEstudio.getImporteNeto
         Next
 
 
@@ -912,7 +912,7 @@ Public Class FacturacionDetalle
             'Total
             CurrentY = CurrentY + 25
             e.Graphics.DrawString("Total del estudio", reportFont, Brushes.Black, leftMarge, CurrentY)
-            e.Graphics.DrawString(" $" & CStr(cLinea.getSubtotal), reportFont, Brushes.Black, 460, CurrentY)
+            e.Graphics.DrawString(" $" & CStr(cLinea.getImporteNeto), reportFont, Brushes.Black, 460, CurrentY)
 
             'Linea horizontal de fin de estudio
             CurrentY = CurrentY + 20

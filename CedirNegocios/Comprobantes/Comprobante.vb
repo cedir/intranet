@@ -10,6 +10,7 @@ Public Class Comprobante
     Private m_nombreCliente As String
     Private m_domicilioCliente As String
     Private m_documentoCliente As DocumentoCliente
+    Dim _cae As String = ""
 
     Private m_condicionFiscal As String
     Private m_responsable As String
@@ -30,7 +31,14 @@ Public Class Comprobante
 #End Region
 
 #Region "PROPIEDADES"
-
+    Public Property CAE() As String
+        Get
+            Return _cae
+        End Get
+        Set(ByVal value As String)
+            _cae = value
+        End Set
+    End Property
 
     Public Property IdComprobante() As Integer
         Get
@@ -222,7 +230,8 @@ Public Class Comprobante
     End Sub
 #End Region
 
-    Public Overridable Function crear() As Object
+    Public Overridable Function crear() As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
         Dim help As New Helper
@@ -264,16 +273,17 @@ Public Class Comprobante
                     resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
                 Else
                     'de otra manera, insertamos vacio en el campo idFactura de la tabla
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
+                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'" & ", '" & CAE & "'")
                 End If
 
             End If
 
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
-                MsgBox("Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error")
-                Dim ex As New Exception
-                Return ex
+                Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
+                result("success") = False
+                result("message") = message
+                Return result
             End If
 
             'recuperamos el id autoincremental creado por postrge para insertarlo en las lineas
@@ -281,12 +291,18 @@ Public Class Comprobante
 
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
+
+            result("success") = True
+            result("message") = "Comprobante creado con èxito"
+        Catch ex As Exception
+            result("success") = False
+            result("message") = ex.Message
         Finally
             help = Nothing
             cDatos = Nothing
             arr = Nothing
         End Try
-        Return Me
+        Return result
     End Function
     ''' <summary>
     ''' Este metodo se ejecuta una vez que la cabecera del comprobante fue insertado en DB. Ya 
@@ -365,30 +381,30 @@ Public Class Comprobante
             dr = Nothing
         End Try
     End Sub
-    Public Function doesExist() As Boolean
-        Dim com As String = """"
-        Dim cDatos As New Consultas
-        Dim dr As NpgsqlDataReader
-        Dim query As String
-        Try
-            If Me.TipoComprobante.Id = 2 Then
-                query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
-            Else
-                query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
-            End If
+    'Public Function doesExist() As Boolean
+    '    Dim com As String = """"
+    '    Dim cDatos As New Consultas
+    '    Dim dr As NpgsqlDataReader
+    '    Dim query As String
+    '    Try
+    '        If Me.TipoComprobante.Id = 2 Then
+    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
+    '        Else
+    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
+    '        End If
 
-            dr = cDatos.EjecutarSelect(query)
-            If dr.HasRows Then
-                Return True
-            Else : Return False
-            End If
-        Catch ex As Exception
-        Finally
-            cDatos = Nothing
-            dr = Nothing
-        End Try
+    '        dr = cDatos.EjecutarSelect(query)
+    '        If dr.HasRows Then
+    '            Return True
+    '        Else : Return False
+    '        End If
+    '    Catch ex As Exception
+    '    Finally
+    '        cDatos = Nothing
+    '        dr = Nothing
+    '    End Try
 
-    End Function
+    'End Function
     Public Sub getFactura(ByVal idFactura As Int32)
         Dim com As String = """"
         Dim oComprobante As New Comprobante
