@@ -497,9 +497,11 @@ Public Class BuscarPresentacion
                 NewRow("ID") = cPresentacion.idPresentacion
                 NewRow("Fecha") = cPresentacion.fechaFacturacion
                 NewRow("Obra Social") = cPresentacion.obraSocial.ObraSocial
-                NewRow("Nro Comprobante") = cPresentacion.comprobante.NroComprobante
-                NewRow("Tipo Comprobante") = cPresentacion.comprobante.TipoComprobante.Descripcion
-                NewRow("SubTipo") = cPresentacion.comprobante.SubTipo
+                If (cPresentacion.comprobante IsNot Nothing) Then
+                    NewRow("Nro Comprobante") = cPresentacion.comprobante.NroComprobante
+                    NewRow("Tipo Comprobante") = cPresentacion.comprobante.TipoComprobante.Descripcion
+                    NewRow("SubTipo") = cPresentacion.comprobante.SubTipo
+                End If
                 NewRow("Estado") = cPresentacion.estado
                 NewRow("Total") = Format(cPresentacion.getTotalFactura(), "###########0.00")
                 sumTotal = sumTotal + Format(cPresentacion.getTotalFactura(), "###########0.00")

@@ -13,7 +13,7 @@ Public Class Presentacion
     Private lineasDeFacturacionDeEstudios As ArrayList
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
-    Private _comprobante As ComprobanteElectronico
+    Private _comprobante As Comprobante
     Dim _managerComprobante As New ManagerComprobante
 
 
@@ -21,6 +21,7 @@ Public Class Presentacion
     Public Sub New()
         lineasDeFacturacionDeEstudios = New ArrayList
         obraSocial = New ObraSocial
+        comprobante = New Comprobante
     End Sub
 
 #Region "Propiedades"
@@ -96,11 +97,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As ComprobanteElectronico
+    Public Property comprobante() As Comprobante
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As ComprobanteElectronico)
+        Set(ByVal value As Comprobante)
             _comprobante = value
         End Set
     End Property
@@ -350,28 +351,17 @@ Public Class Presentacion
     End Function
 
     Public Function getImporteIva() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            tempTotal = Me.totalFacturado
+        If Me.comprobante Is Nothing Then
+            Return 0
         End If
-        Dim cIva As Single = (tempTotal) * Me.comprobante.Gravado.porcentaje / 100
-        cIva = Math.Round(cIva, 2)
-        Return cIva
+        Return Math.Round((Me.totalFacturado * Me.comprobante.Gravado.porcentaje) / 100, 2, MidpointRounding.AwayFromZero)
     End Function
     Public Function getTotalFactura() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            tempTotal = Me.totalFacturado
-        End If
-        Return tempTotal + Me.getImporteIva
+        Return Me.getTotalFacturado + Me.getImporteIva
     End Function
     Public Function getTotalFacturado() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            Return Me.totalFacturado
-        Else
-            Return Me.total
-        End If
+        'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
+        Return Math.Round(Math.Max(Me.totalFacturado, Me.total), 2, MidpointRounding.AwayFromZero)
     End Function
     Public Function getTotalMedicacion() As Single
         Dim totalMedicacion As Single = 0
@@ -380,7 +370,6 @@ Public Class Presentacion
             cLinea = lineasDeFacturacionDeEstudios(i)
             totalMedicacion += cLinea.objeto.getTotalMedicacion()
         Next
-
         Return totalMedicacion
     End Function
 
@@ -437,11 +426,6 @@ Public Class Presentacion
 
             Me.total += cLinea.getImporteNeto
         Next
-
-
-
-
-
     End Function
 
 End Class

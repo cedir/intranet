@@ -1079,7 +1079,7 @@ Public Class NuevaPresentacion
 
     Private Sub setTotalesLabels()
         Dim total As Decimal
-        Dim totalParcialEstudios As Decimal = totalEstudios + Math.Round(totalMedicacion, 2) + totalPension + Me.totalArancelAnestesia
+        Dim totalParcialEstudios As Decimal = Math.Round(totalEstudios + totalMedicacion + totalPension + Me.totalArancelAnestesia, 2, MidpointRounding.AwayFromZero)
 
         Dim iva As Decimal = calcularIva(totalParcialEstudios)
         total = totalParcialEstudios + iva
