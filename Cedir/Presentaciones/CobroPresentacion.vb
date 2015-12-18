@@ -704,7 +704,7 @@ Public Class CobroPresentacion
                     f.Comprobante = cPresentacion.comprobante
                     'ahora seteamos el domicilio de manera completa.(esto es para presentaciones que no se hayan seteado de esta manera en NuevaPresentacion)
                     f.Comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
-                    f.setComprobante()
+                    f.SetComprobante()
                     f.ShowDialog()
                 End If
             End If

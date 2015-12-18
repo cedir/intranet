@@ -60,7 +60,7 @@ Public Class ComprobanteElectronico
         response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
 
         If Not Boolean.Parse(response.Item("success")) Then
-            response.Item("success") = False
+            'response.Item("success") = False 'es innecesario
             mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
 
             For Each pair As KeyValuePair(Of String, String) In response
@@ -72,12 +72,14 @@ Public Class ComprobanteElectronico
                 End If
             Next
 
+            mensajeResultado += mensajeError
+
             'Insertamos los resultados en el LOG
 
-            log.detalle = mensajeResultado & mensajeError
+            log.detalle = mensajeResultado
             log.insert()  'TODO: loguear mas datos
 
-            response.Item("message") = mensajeResultado & mensajeError
+            response.Item("message") = mensajeResultado
             Return response
         End If
 
@@ -88,14 +90,16 @@ Public Class ComprobanteElectronico
         Dim resultDB As Dictionary(Of String, String)
         resultDB = MyBase.crear()
 
-        response.Add("success", resultDB.Item("success"))
-        response.Add("message", resultDB.Item("message"))
-
-        mensajeResultado += "Resultado....: " & response("ResultadoDatabase") & vbCrLf & "Errores:" & resultDB.Item("message")
+        mensajeResultado += "Resultado....: " & response("message") & vbCrLf & "Errores:" & resultDB.Item("message")
         mensajeResultado += "Nro de CAE ..: " & Me.CAE & vbCrLf
+
+        response.Item("success") = resultDB.Item("success")
+        response.Item("message") = mensajeResultado
+
         'Insertamos los resultados en el LOG
-        log.detalle = "Error al crear comprobante en base de datos. " & resultDB.Item("message")
+        log.detalle = "Comprobante creado en base de datos. " & mensajeResultado
         log.insert()  'TODO: loguear mas datos
+
         Return response
     End Function
     Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
