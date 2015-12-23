@@ -647,7 +647,6 @@ Public Class frmComprobanteNuevo
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
     Dim m_comprobante As Comprobante = Nothing
-    Dim managerComprobante As New ManagerComprobante
     Dim contComprobantes As New ControladorDeComprobantes
     Dim catComprobante As New CatalogoDeTiposComprobante
     Dim catGrav As New CedirNegocios.CatalogoDeGravados
@@ -710,14 +709,14 @@ Public Class frmComprobanteNuevo
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
-            Me.Comprobante = Me.managerComprobante.crearTipoDeComprobanteSegunNroTerminal(cmbNroTerminal.SelectedItem.ToString())
+            Me.Comprobante = New Comprobante
         End If
         'cargamos los datos de la vista
         Me.CargarComprobante(Me.Comprobante)
 
         Dim result As Dictionary(Of String, String) = Comprobante.crear()
-        Dim success As Boolean = result.Item("success")
-        Dim message As String = result.Item("message")
+        Dim success As Boolean = Helper.IsSuccess(result)
+        Dim message As String = Helper.GetMessage(result)
         MessageBox.Show(message, "Resultado:", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Return success
     End Function
@@ -895,8 +894,8 @@ Public Class frmComprobanteNuevo
                 Dim h As New Helper
                 If h.validaNumero(row.Cells("colImporteNeto").Value.ToString) Then
 
-                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100).ToString()
-                    row.Cells("colSubtotal").Value = Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)
+                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100).ToString("F2")
+                    row.Cells("colSubtotal").Value = (Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)).ToString("F2")
                     suma = suma + Convert.ToDecimal(row.Cells("colSubtotal").Value)
                 Else : lineaValida = False
                 End If

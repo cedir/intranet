@@ -2,20 +2,19 @@ Imports System.Collections.Generic
 Imports FacturaElectronica
 Imports CedirDataAccess
 Public Class ComprobanteElectronico
-    Inherits Comprobante
+    Shared _listaGravado As List(Of TipoDeGravadoAFIP)
+    Shared _listaTipoComprobante As List(Of TipoDeComprobanteAFIP)
+    Shared _gravado As TipoDeGravadoAFIP
+    Shared _tipoComprobante As TipoDeComprobanteAFIP
+    Shared _ImporteIva As Decimal
 
-
-    Dim _gravado As TipoDeGravadoAFIP
-    Dim _tipoComprobante As TipoDeComprobanteAFIP
-    Dim _ImporteIva As Decimal
-    Dim _clienteFE As ClienteFE
-
-    Public Sub New()
-        Me.tipoComprobanteAFIP = New TipoDeComprobanteAFIP
-        Me.clienteFE = New ClienteFE  'TODO: ojo con esto que se crean conexiones con la afip cada vez que se hace un new ClienteFE
+    Shared Sub New()
+        Dim catalogoAfip As New CatalogoDeObjetosAFIP
+        _listaGravado = catalogoAfip.getTiposDeGravadoAFIP
+        _listaTipoComprobante = catalogoAfip.getTiposDeComprobanteAFIP
     End Sub
 
-    Public Property importeIva() As Decimal
+    Private Shared Property importeIva() As Decimal
         Get
             Return _ImporteIva
         End Get
@@ -24,7 +23,7 @@ Public Class ComprobanteElectronico
         End Set
     End Property
 
-    Public Property gravadoAFIP() As TipoDeGravadoAFIP
+    Private Shared Property gravadoAFIP() As TipoDeGravadoAFIP
         Get
             Return _gravado
         End Get
@@ -32,7 +31,8 @@ Public Class ComprobanteElectronico
             _gravado = value
         End Set
     End Property
-    Public Property tipoComprobanteAFIP() As TipoDeComprobanteAFIP
+
+    Private Shared Property tipoComprobanteAFIP() As TipoDeComprobanteAFIP
         Get
             Return _tipoComprobante
         End Get
@@ -40,90 +40,81 @@ Public Class ComprobanteElectronico
             _tipoComprobante = value
         End Set
     End Property
-    Public Property clienteFE() As ClienteFE
-        Get
-            Return _clienteFE
-        End Get
-        Set(ByVal value As ClienteFE)
-            _clienteFE = value
-        End Set
-    End Property
-    Public Overrides Function crear() As Dictionary(Of String, String)
-        Dim mensajeError As String = "..Sin errores.."
-        Dim mensajeResultado As String = " "
+
+    Private Shared Function EsComprobanteElectronico(ByVal comprobante As Comprobante) As Boolean
+        'TODO: hacer multi responsable y quitar la constante
+        Return comprobante.Responsable = "Cedir" And comprobante.TipoComprobante.Id <> Constants.TIPO_LIQUIDACION And comprobante.NroTerminal = Constants.TERMINAL_AFIP
+    End Function
+
+    Public Shared Function Crear(ByVal comprobante As Comprobante) As Dictionary(Of String, String)
+        Dim response As New Dictionary(Of String, String)
+
+        If Not EsComprobanteElectronico(comprobante) Then
+            Return Helper.Result(response, True, "El comprobante no aplica para ser enviado a AFIP.")
+        End If
+
         Dim log As New LogComprobanteElectronico
+        Dim mensajeResultado As String = String.Empty
+        importeIva = 0
+        gravadoAFIP = Nothing
+        tipoComprobanteAFIP = Nothing
 
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
-        Me.cargarComprobanteModeloAFIP()
+        CargarComprobanteModeloAFIP(comprobante)
         'luego, insertamos esa factura en AFIP
-        Dim response As New Dictionary(Of String, String)
-        response = clienteFE.crearComprobante(Me.convertComprobanteElectronicoToDictionary(), Me.convertLineasDeComprobanteElectronicoToDictionary())
+        response = ClienteFE.GetInstance.crearComprobante(ConvertComprobanteElectronicoToDictionary(comprobante), ConvertLineasDeComprobanteElectronicoToDictionary(comprobante))
 
-        If Not Boolean.Parse(response.Item("success")) Then
+        If Not Helper.IsSuccess(response) Then
             'response.Item("success") = False 'es innecesario
             mensajeResultado = " ---Se Rechazó el comporobante. No va a poder crearse el comprobante en AFIP ni en Base de Datos--- " & vbCrLf
-
-            For Each pair As KeyValuePair(Of String, String) In response
-                If pair.Key.Contains("error") Then
-                    mensajeError += "Error : " & pair.Value & vbCrLf
-                End If
-                If pair.Key.Contains("observacionCode") Then
-                    mensajeResultado += "Observacion ...: " & pair.Value & vbCrLf
-                End If
-            Next
-
-            mensajeResultado += mensajeError
+            mensajeResultado += Helper.GetMessage(response)
 
             'Insertamos los resultados en el LOG
 
             log.detalle = mensajeResultado
             log.insert()  'TODO: loguear mas datos
 
-            response.Item("message") = mensajeResultado
+            Helper.SetMessage(response, mensajeResultado)
             Return response
         End If
 
         'seteamos nuestro CAE recuperado, antes de realizar el insert en base de datos
-        Me.CAE = response("CAE")
+        comprobante.CAE = response("CAE")
 
-        'logueamos el resultado de insertar comprobante en base de datos
-        Dim resultDB As Dictionary(Of String, String)
-        resultDB = MyBase.crear()
+        mensajeResultado += "Resultado....: " & Helper.GetMessage(response) & vbCrLf
+        mensajeResultado += "Nro de CAE ..: " & comprobante.CAE & vbCrLf
 
-        mensajeResultado += "Resultado....: " & response("message") & vbCrLf & "Errores:" & resultDB.Item("message")
-        mensajeResultado += "Nro de CAE ..: " & Me.CAE & vbCrLf
-
-        response.Item("success") = resultDB.Item("success")
-        response.Item("message") = mensajeResultado
+        Helper.Result(response, True, mensajeResultado)
 
         'Insertamos los resultados en el LOG
-        log.detalle = "Comprobante creado en base de datos. " & mensajeResultado
+        log.detalle = mensajeResultado
         log.insert()  'TODO: loguear mas datos
 
         Return response
     End Function
-    Private Function convertComprobanteElectronicoToDictionary() As Dictionary(Of String, Object)
-        Dim ultimoNro As Integer = clienteFE.getUltimoNroComprobante(Me.TipoComprobante.Descripcion, Me.NroTerminal.ToString, Me.SubTipo)
-        Me.NroComprobante = ultimoNro + 1
 
-        Me.calcularImpIVA()
+    Private Shared Function ConvertComprobanteElectronicoToDictionary(ByVal comprobante As Comprobante) As Dictionary(Of String, Object)
+        Dim ultimoNro As Integer = ClienteFE.GetInstance.getUltimoNroComprobante(comprobante.TipoComprobante.Descripcion, comprobante.NroTerminal.ToString, comprobante.SubTipo)
+        comprobante.NroComprobante = ultimoNro + 1
+
+        CalcularImpIVA(comprobante)
         Dim dic As New Dictionary(Of String, Object)
-        dic.Item("PtoVta") = Me.NroTerminal   'punto de venta factura electronica.
-        dic.Item("CbteDesde") = Me.NroComprobante
-        dic.Item("CbteHasta") = Me.NroComprobante
+        dic.Item("PtoVta") = comprobante.NroTerminal   'punto de venta factura electronica.
+        dic.Item("CbteDesde") = comprobante.NroComprobante
+        dic.Item("CbteHasta") = comprobante.NroComprobante
 
         'recordar de buscar en la capa de datos, el id que me da el afip. (FAC/ND/NC)
-        dic.Item("CbteTipo") = Me.tipoComprobanteAFIP.IdAFIP
+        dic.Item("CbteTipo") = tipoComprobanteAFIP.IdAFIP
         ' puede ser producto, servicios o ambos. Cedir solo ofrece servicios = 2 .
         dic.Item("Concepto") = 2
         'Tipo de documento : CUIT / DNI / CUIL / ETC
-        dic.Item("DocTipo") = Me.DocumentoCliente.idTipoDocumento
+        dic.Item("DocTipo") = comprobante.DocumentoCliente.idTipoDocumento
         'sacamos los guiones medios de existir en el tipo de documento
-        dic.Item("DocNumero") = Convert.ToInt64(Me.DocumentoCliente.NroDocumento.Replace("-", ""))
-        dic.Item("CbteDesde") = Me.NroComprobante
-        dic.Item("CbteHasta") = Me.NroComprobante
+        dic.Item("DocNumero") = Convert.ToInt64(comprobante.DocumentoCliente.NroDocumento.Replace("-", ""))
+        dic.Item("CbteDesde") = comprobante.NroComprobante
+        dic.Item("CbteHasta") = comprobante.NroComprobante
         dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
-        dic.Item("ImpTotal") = Me.TotalFacturado
+        dic.Item("ImpTotal") = comprobante.TotalFacturado
         'Importe total del comprobante
         'ImporteTotal = Importe neto no gravado + Importe exento + Importe neto gravado + todos los campos de IVA al XX% + Importe de tributos.
         dic.Item("ImpTotConc") = 0.0
@@ -132,7 +123,7 @@ Public Class ComprobanteElectronico
         'Para comprobantes tipo C debe ser igual a cero (0).
         'Para comprobantes tipo Bienes Usados – Emisor Monotributista este campo corresponde al importe subtotal.
 
-        dic.Item("ImpNeto") = (Me.TotalFacturado - Me.importeIva) 'es la sumatoria de las lineas de comprobante
+        dic.Item("ImpNeto") = (comprobante.TotalFacturado - importeIva) 'es la sumatoria de las lineas de comprobante
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
@@ -147,7 +138,7 @@ Public Class ComprobanteElectronico
         'Formato(yyyymmdd)
 
         'Suma de los importes del array de IVA.
-        dic.Item("ImpIVA") = Me.importeIva
+        dic.Item("ImpIVA") = importeIva
 
 
         dic.Item("FchServHasta") = DateTime.Today.ToString("yyyyMMdd")
@@ -163,45 +154,44 @@ Public Class ComprobanteElectronico
 
         Return dic
     End Function
-    Private Function convertLineasDeComprobanteElectronicoToDictionary() As List(Of Dictionary(Of String, Object))
+
+    Private Shared Function ConvertLineasDeComprobanteElectronicoToDictionary(ByVal comprobante As Comprobante) As List(Of Dictionary(Of String, Object))
         Dim colLineas As New List(Of Dictionary(Of String, Object))
 
-        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
+        For Each lineaComprobante As LineaDeComprobante In comprobante.LineasDeComprobante
             'Esta linea es para cargar el objeto Iva.AlicIva de la linea de comprobante.
             Dim linea As New Dictionary(Of String, Object)()
             'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
             'solo vamos a guardar un tipo de Gravado por comprobante. Las lineas deben tener un mismo tipo de iva (0%,21% o 10.5%)
-            linea.Item("Id") = Me.gravadoAFIP.IdAFIP.ToString
+            linea.Item("Id") = gravadoAFIP.IdAFIP.ToString
             linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString
             linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString
             colLineas.Add(linea)
         Next
         Return colLineas
     End Function
-    Private Sub calcularImpIVA()
-        For Each lineaComprobante As LineaDeComprobante In Me.LineasDeComprobante
-            Me.importeIva = Me.importeIva + lineaComprobante.ImporteIVA
+
+    Private Shared Sub CalcularImpIVA(ByVal comprobante As Comprobante)
+        For Each lineaComprobante As LineaDeComprobante In comprobante.LineasDeComprobante
+            importeIva = importeIva + lineaComprobante.ImporteIVA
         Next
     End Sub
+
     ''' <summary>
     ''' metodo para cargar el comprobante con los datos que poseemos de AFIP, y 
     ''' convertir los que nosotros usamos en base de datos, que estan cargados en el objeto comprobante
     ''' </summary>
-    ''' <param name="comprobante"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Sub cargarComprobanteModeloAFIP()
+    Private Shared Sub CargarComprobanteModeloAFIP(ByVal comprobante As Comprobante)
         'El nro de documento, es cargado en la vista. No hace falta identificarlo. 
-        Dim catalogoAfip As New CatalogoDeObjetosAFIP
-        For Each tipoGravadoAFIP As TipoDeGravadoAFIP In catalogoAfip.getTiposDeGravadoAFIP
-            If Me.Gravado.id = tipoGravadoAFIP.idTblGravados Then
-                Me.gravadoAFIP = tipoGravadoAFIP
+        For Each tipoGravadoAFIP As TipoDeGravadoAFIP In _listaGravado
+            If comprobante.Gravado.id = tipoGravadoAFIP.idTblGravados Then
+                gravadoAFIP = tipoGravadoAFIP
                 Exit For
             End If
         Next
-        For Each tipoCompAFIP As TipoDeComprobanteAFIP In catalogoAfip.getTiposDeComprobanteAFIP
-            If (Me.TipoComprobante.Id = tipoCompAFIP.idTblTipoDeComprobantes) And (tipoCompAFIP.SubTipo = Me.SubTipo) Then
-                Me.tipoComprobanteAFIP = tipoCompAFIP
+        For Each tipoCompAFIP As TipoDeComprobanteAFIP In _listaTipoComprobante
+            If (comprobante.TipoComprobante.Id = tipoCompAFIP.idTblTipoDeComprobantes) And (tipoCompAFIP.SubTipo = comprobante.SubTipo) Then
+                tipoComprobanteAFIP = tipoCompAFIP
                 Exit For
             End If
         Next

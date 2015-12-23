@@ -14,7 +14,6 @@ Public Class Presentacion
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
     Private _comprobante As Comprobante
-    Dim _managerComprobante As New ManagerComprobante
 
 
 
@@ -151,7 +150,7 @@ Public Class Presentacion
 
     End Function
     Public Sub crearTipoComprobante(ByVal terminal As String)
-        Me.comprobante = Me._managerComprobante.crearTipoDeComprobanteSegunNroTerminal(terminal)
+        Me.comprobante = New Comprobante
     End Sub
 
     Public Function crearComprobante() As Dictionary(Of String, String)
@@ -169,16 +168,12 @@ Public Class Presentacion
         Next
 
         'Si el comprobante es una factura, la leyenda cambia
-        If (TypeOf (Me.comprobante) Is ComprobanteElectronico) Then
-            'Datos comunes tanto a Facturas B como Facturas A
-            lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
-            lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
-            lineaComprobante.ImporteIVA = totalImporteNetoLineaDeFacturacion * (Me.comprobante.Gravado.porcentaje / 100)
-            lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
-        Else
-            'las liquidaciones no poseen gravado. 
-            lineaComprobante.Subtotal = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
-        End If
+        'Datos comunes tanto a Facturas B como Facturas A
+        lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
+        lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
+        lineaComprobante.ImporteIVA = (totalImporteNetoLineaDeFacturacion * Me.comprobante.Gravado.porcentaje) / 100
+        lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
+
 
         Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal

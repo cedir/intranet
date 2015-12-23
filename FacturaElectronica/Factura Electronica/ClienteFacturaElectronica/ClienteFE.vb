@@ -3,20 +3,18 @@ Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data
 Imports System.Text
+Imports System.Threading
 Imports System.Xml
 
 
 Public Class ClienteFE
-
-
+    Private Shared _singleton As ClienteFE
+    Private Shared _mu As New Mutex
     Dim lt As New LoginTicket
     Dim objWSFE As wsfe.Service = New wsfe.Service()
     Dim aut As wsfe.FEAuthRequest
     Dim fecaeReq As wsfe.FECAERequest
     Dim fecaeResponse As wsfe.FECAEResponse
-
-
-
 
     Public Function iniciar() As Boolean
         'Llamamos al servicio de autenticacion de afip LoginCMS
@@ -298,6 +296,22 @@ Public Class ClienteFE
         'Iniciamos el web service aqui.
         Me.iniciar()
     End Sub
+
+    Public Shared Function GetInstance() As ClienteFE
+        _mu.WaitOne()
+
+        Try
+            If _singleton Is Nothing Then
+                _singleton = New ClienteFE
+            End If
+
+        Finally
+            _mu.ReleaseMutex()
+        End Try
+
+        Return _singleton
+
+    End Function
 End Class
 
 

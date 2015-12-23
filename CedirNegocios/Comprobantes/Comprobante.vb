@@ -244,10 +244,15 @@ Public Class Comprobante
 
         Try
             Dim resp As String
+
+            Dim resultAFIP As Dictionary(Of String, String) = ComprobanteElectronico.Crear(Me)
+
+            If Not Helper.IsSuccess(resultAFIP) Then
+                Return result
+            End If
+
             'tenemos que diferenciar al momento de insertar una factura o una nd o nc o liquidacion
-
-
-            If Me.TipoComprobante.Id = 2 Then
+            If Me.TipoComprobante.Id = Constants.TIPO_LIQUIDACION Then
                 'Si el comprobante es una liquidación vaciamos los campos que no correspondan
                 Me.Gravado = Nothing
                 Me.Factura = New Comprobante
@@ -266,8 +271,6 @@ Public Class Comprobante
                 "', '" & Me.CondicionFiscal & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & _
                 Me.Estado & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.GravadoPaciente & "'")
             Else
-
-
                 If ((Me.TipoComprobante.Id = 4 Or Me.TipoComprobante.Id = 3) And (Me.Factura IsNot Nothing)) Then
                     'si es asi, insertamos tambien la factura que corresponda, ya que es Nota de Debito, o Credito
                     resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
@@ -280,10 +283,7 @@ Public Class Comprobante
 
             Dim maxId As Integer = cDatos.selectMAX("tblComprobantes", "id")
             If maxId = 0 Then
-                Dim message As String = "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error"
-                result("success") = False
-                result("message") = message
-                Return result
+                Return Helper.Result(result, False, "Error al obtener el id del comprobante, comuniquese con area de sistemas para comunicar el error")
             End If
 
             'recuperamos el id autoincremental creado por postrge para insertarlo en las lineas
@@ -292,11 +292,9 @@ Public Class Comprobante
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
 
-            result("success") = True
-            result("message") = "Comprobante creado con èxito"
+            Helper.Result(result, True, "Comprobante creado con èxito")
         Catch ex As Exception
-            result("success") = False
-            result("message") = ex.Message
+            Helper.Result(result, False, ex.Message)
         Finally
             help = Nothing
             cDatos = Nothing
