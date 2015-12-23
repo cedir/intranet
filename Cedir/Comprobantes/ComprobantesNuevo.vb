@@ -141,7 +141,7 @@ Public Class frmComprobanteNuevo
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(1026, 700)
+        Me.btnImprimir.Location = New System.Drawing.Point(1026, 696)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(75, 21)
         Me.btnImprimir.TabIndex = 10
@@ -150,7 +150,7 @@ Public Class frmComprobanteNuevo
         'btnCerrar
         '
         Me.btnCerrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCerrar.Location = New System.Drawing.Point(1108, 700)
+        Me.btnCerrar.Location = New System.Drawing.Point(1108, 696)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(63, 21)
         Me.btnCerrar.TabIndex = 11
@@ -182,7 +182,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.txtNombre)
-        Me.GroupBox1.Location = New System.Drawing.Point(24, 71)
+        Me.GroupBox1.Location = New System.Drawing.Point(24, 69)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(1162, 214)
         Me.GroupBox1.TabIndex = 18
@@ -200,6 +200,7 @@ Public Class frmComprobanteNuevo
         'FrmComprobanteNuevoBindingSource
         '
         Me.FrmComprobanteNuevoBindingSource.DataSource = Me
+        Me.FrmComprobanteNuevoBindingSource.Position = 0
         '
         'Label3
         '
@@ -349,7 +350,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.cmbTipoComprobante)
         Me.GroupBox2.Controls.Add(Me.lblNroComprobante)
-        Me.GroupBox2.Location = New System.Drawing.Point(27, 291)
+        Me.GroupBox2.Location = New System.Drawing.Point(27, 289)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(1159, 107)
         Me.GroupBox2.TabIndex = 22
@@ -437,7 +438,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox3.Controls.Add(Me.dgvLineas)
-        Me.GroupBox3.Location = New System.Drawing.Point(27, 404)
+        Me.GroupBox3.Location = New System.Drawing.Point(27, 402)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(1159, 169)
         Me.GroupBox3.TabIndex = 23
@@ -511,7 +512,7 @@ Public Class frmComprobanteNuevo
         'btnAceptar
         '
         Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAceptar.Location = New System.Drawing.Point(945, 700)
+        Me.btnAceptar.Location = New System.Drawing.Point(945, 696)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(75, 21)
         Me.btnAceptar.TabIndex = 24
@@ -522,7 +523,7 @@ Public Class frmComprobanteNuevo
         '
         Me.lblTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTotal.AutoSize = True
-        Me.lblTotal.Location = New System.Drawing.Point(985, 642)
+        Me.lblTotal.Location = New System.Drawing.Point(985, 638)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(114, 13)
         Me.lblTotal.TabIndex = 25
@@ -541,7 +542,7 @@ Public Class frmComprobanteNuevo
         '
         Me.chkLeyenda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkLeyenda.AutoSize = True
-        Me.chkLeyenda.Location = New System.Drawing.Point(30, 673)
+        Me.chkLeyenda.Location = New System.Drawing.Point(30, 669)
         Me.chkLeyenda.Name = "chkLeyenda"
         Me.chkLeyenda.Size = New System.Drawing.Size(144, 17)
         Me.chkLeyenda.TabIndex = 27
@@ -556,7 +557,7 @@ Public Class frmComprobanteNuevo
         'btnQuitar
         '
         Me.btnQuitar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnQuitar.Location = New System.Drawing.Point(30, 700)
+        Me.btnQuitar.Location = New System.Drawing.Point(30, 696)
         Me.btnQuitar.Name = "btnQuitar"
         Me.btnQuitar.Size = New System.Drawing.Size(83, 21)
         Me.btnQuitar.TabIndex = 28
@@ -566,7 +567,7 @@ Public Class frmComprobanteNuevo
         'frmComprobanteNuevo
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(1219, 746)
+        Me.ClientSize = New System.Drawing.Size(1219, 742)
         Me.Controls.Add(Me.btnQuitar)
         Me.Controls.Add(Me.chkLeyenda)
         Me.Controls.Add(Me.lblTotalSuma)
@@ -648,6 +649,7 @@ Public Class frmComprobanteNuevo
     Dim m_comprobante As Comprobante = Nothing
     Dim managerComprobante As New ManagerComprobante
     Dim contComprobantes As New ControladorDeComprobantes
+    Dim catComprobante As New CatalogoDeTiposComprobante
     Dim catGrav As New CedirNegocios.CatalogoDeGravados
 
     Public ReadOnly Property EsFacturaElectronica() As Boolean
@@ -815,12 +817,9 @@ Public Class frmComprobanteNuevo
     Private Sub CargarComboTipoComprobante()
         'tenemos que buscar los tipos en el objeto comprobante, ya que no hay un catalogo para tipos
         Try
-            Dim c As New CatalogoDeTiposComprobante
-
-            tiposComprobante = c.getTiposComprobante()
-            cmbTipoComprobante.DataSource = tiposComprobante
-            cmbTipoComprobante.DisplayMember = "Descripcion"
+            cmbTipoComprobante.DataSource = New BindingSource(tiposComprobante, Nothing)
             cmbTipoComprobante.ValueMember = "Id"
+            cmbTipoComprobante.DisplayMember = "Descripcion"
             'For Each tipo As TipoComprobante In tiposComprobante
             '    Me.cmbTipoComprobante.Items.Add(tipo.Descripcion)
             'Next
@@ -842,6 +841,7 @@ Public Class frmComprobanteNuevo
         cmbResponsable.Items.Add("Seleccione..")
         cmbResponsable.Items.Add("Cedir")
         cmbResponsable.Items.Add("Brunetti")
+        cmbResponsable.SelectedIndex = 0
     End Sub
 
     Private Sub LimpiarComboTipoIdentificacionCliente()
@@ -943,6 +943,8 @@ Public Class frmComprobanteNuevo
         lblFecha.Text = Today.Date
         gravados = catGrav.getGravadosAll()
         identificacion = contComprobantes.ObtenerTiposDeIdentificacionDeClienteAFIP()
+        tiposComprobante = catComprobante.getTiposComprobante()
+
 
         Me.CargarComboCondicionFiscal()
         Me.CargarComboResponsable()
@@ -950,7 +952,7 @@ Public Class frmComprobanteNuevo
         Me.CargarComboTipoComprobante()
         Me.cargarComboGravado()
 
-        cmbResponsable.SelectedIndex = 0
+
         cmbNroTerminal.SelectedIndex = 0
 
         'busco los gravados en la base de datos
