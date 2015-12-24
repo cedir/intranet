@@ -113,8 +113,8 @@ Public Class ComprobanteElectronico
         dic.Item("DocNumero") = Convert.ToInt64(comprobante.DocumentoCliente.NroDocumento.Replace("-", ""))
         dic.Item("CbteDesde") = comprobante.NroComprobante
         dic.Item("CbteHasta") = comprobante.NroComprobante
-        dic.Item("CbteFch") = DateTime.Today.ToString("yyyyMMdd") 'fecha de hoy
-        dic.Item("ImpTotal") = comprobante.TotalFacturado
+        dic.Item("CbteFch") = ClienteFE.FormatDate(DateTime.Today) 'fecha de hoy
+        dic.Item("ImpTotal") = Math.Round(comprobante.TotalFacturado, 2)
         'Importe total del comprobante
         'ImporteTotal = Importe neto no gravado + Importe exento + Importe neto gravado + todos los campos de IVA al XX% + Importe de tributos.
         dic.Item("ImpTotConc") = 0.0
@@ -123,7 +123,7 @@ Public Class ComprobanteElectronico
         'Para comprobantes tipo C debe ser igual a cero (0).
         'Para comprobantes tipo Bienes Usados – Emisor Monotributista este campo corresponde al importe subtotal.
 
-        dic.Item("ImpNeto") = (comprobante.TotalFacturado - importeIva) 'es la sumatoria de las lineas de comprobante
+        dic.Item("ImpNeto") = Math.Round(comprobante.TotalFacturado - importeIva, 2) 'es la sumatoria de las lineas de comprobante
         'Importe neto gravado. Debe ser menor o igual a Importe total y no puede ser menor a cero. 
         'Para comprobantes tipo C este campo corresponde al Importe del Sub Total
 
@@ -133,23 +133,23 @@ Public Class ComprobanteElectronico
         dic.Item("ImpTrib") = 0.0
         'Suma de los importes del array de tributos
 
-        dic.Item("FchServDesde") = DateTime.Today.ToString("yyyyMMdd")
+        dic.Item("FchServDesde") = ClienteFE.FormatDate(DateTime.Today)
         'Fecha de inicio del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         'Formato(yyyymmdd)
 
         'Suma de los importes del array de IVA.
-        dic.Item("ImpIVA") = importeIva
+        dic.Item("ImpIVA") = Math.Round(importeIva, 2)
 
 
-        dic.Item("FchServHasta") = DateTime.Today.ToString("yyyyMMdd")
+        dic.Item("FchServHasta") = ClienteFE.FormatDate(DateTime.Today)
         'Fecha de fin del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         ' Formato yyyymmdd. FchServHasta no puede ser menor a FchServDesde
 
-        dic.Item("FchVtoPago") = (DateTime.Today).AddDays(30).ToString("yyyyMMdd")
+        dic.Item("FchVtoPago") = ClienteFE.FormatDate(DateTime.Today.AddDays(30))
         'Fecha de vencimiento del pago servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios). 
         'Formato yyyymmdd. Debe ser igual o posterior a la fecha del comprobante
 
-        dic.Item("MonId") = "PES"
+        dic.Item("MonId") = Constants.CUR_ARS
         dic.Item("MonCotiz") = 1.0
 
         Return dic
@@ -164,8 +164,8 @@ Public Class ComprobanteElectronico
             'tenemos que hacer un cast, ya que cuando asignamos el comprobante a la linea, esta no sabe que puede ser un comprobante electronico
             'solo vamos a guardar un tipo de Gravado por comprobante. Las lineas deben tener un mismo tipo de iva (0%,21% o 10.5%)
             linea.Item("Id") = gravadoAFIP.IdAFIP.ToString
-            linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString
-            linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString
+            linea.Item("BaseImp") = lineaComprobante.importeNeto.ToString("F2")
+            linea.Item("Importe") = lineaComprobante.ImporteIVA.ToString("F2")
             colLineas.Add(linea)
         Next
         Return colLineas

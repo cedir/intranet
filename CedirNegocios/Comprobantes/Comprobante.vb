@@ -248,7 +248,7 @@ Public Class Comprobante
             Dim resultAFIP As Dictionary(Of String, String) = ComprobanteElectronico.Crear(Me)
 
             If Not Helper.IsSuccess(resultAFIP) Then
-                Return result
+                Return resultAFIP
             End If
 
             'tenemos que diferenciar al momento de insertar una factura o una nd o nc o liquidacion
@@ -292,7 +292,7 @@ Public Class Comprobante
             'Ahora inserto cada linea a la DB
             Me.crearLineas()
 
-            Helper.Result(result, True, "Comprobante creado con èxito")
+            Helper.Result(result, True, "Comprobante creado con éxito")
         Catch ex As Exception
             Helper.Result(result, False, ex.Message)
         Finally
@@ -313,6 +313,7 @@ Public Class Comprobante
             linea.insertar()
         Next
     End Sub
+
     Public Function getLineas() As List(Of LineaDeComprobante)
         Dim dr As NpgsqlDataReader
         Dim cDatos As New Consultas

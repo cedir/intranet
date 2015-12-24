@@ -1301,65 +1301,63 @@ Public Class NuevaPresentacion
                     cPresentacion.comprobante.Factura = Nothing
                     'calculamos comprobante.totalFacturado como el presentacion.total+iva 
 
+                    Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
+                    Dim message As String = Helper.GetMessage(result)
 
-                    If esAltaPresentacion Then
-                        resp = cPresentacion.crear()
-                    Else
-                        resp = cPresentacion.guardar(True, True)
-                    End If
+                    If Helper.IsSuccess(result) Then
+                        Dim CAE As String = IIf(cPresentacion.comprobante IsNot Nothing, cPresentacion.comprobante.CAE, "-")
 
-                    If resp = "ok" Then
-                        Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
-                        Dim success As Boolean = result("success")
-                        Dim message As String = result("message")
-
-                        If success Then
-                            MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE:" & result("CAE"), MessageBoxButtons.OK)
+                        If esAltaPresentacion Then
+                            resp = cPresentacion.crear()
                         Else
-                            Dim caption As String = "Error al crear comprobante"
-                            MessageBox.Show(message, caption, MessageBoxButtons.OK)
+                            resp = cPresentacion.guardar(True, True)
                         End If
 
-                        'Imprimir detalle
-                        r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")
-                        If r = 6 Then
-                            prepareImprimirDetalle()
-                        End If
-                        'Imprimir Comprobante si es una factura
-                        If cPresentacion.comprobante.TipoComprobante.Id = 1 Then
-                            r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
+                        If resp = "ok" Then
+                            'Imprimir detalle
+                            r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")
                             If r = 6 Then
-                                'prepareImprimirFactura()
-                                Me.imprimirComprobante()
+                                prepareImprimirDetalle()
                             End If
+                            'Imprimir Comprobante si es una factura
+                            If cPresentacion.comprobante.TipoComprobante.Id = 1 Then
+                                r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
+                                If r = 6 Then
+                                    'prepareImprimirFactura()
+                                    Me.imprimirComprobante()
+                                End If
+                            End If
+
+                            MsgBox("La presentación se ha creado con éxito")
+                            btnFacturar.Enabled = False
+                            btnGuardar.Enabled = False
+                            Me.btnAnest.Enabled = False
+                            btnAgregar.Enabled = False
+                            btnMedicacion.Enabled = False
+                            btnQuitarItem.Enabled = False
+                            Me.cmbSubTipo.Enabled = False
+                            cmbResponsableComprobante.Enabled = False
+                            cmbTipoComprobante.Enabled = False
+                            btnImprimir.Enabled = True
+                            cmbGravado.Enabled = False
+                            txtNroComprobante.Enabled = False
+
+                            'Esto es para que no se modifique la facturacion y se imprima otra cosa, una vez que se guardo
+                            DataGrid1.ReadOnly = True
+                            '   DataGrid2.ReadOnly = True
+
+                            'global
+                            hayUnaFacturacionInstanciada = False
+                            actualizarListadoFacturaciones = True
+                        Else
+                            MsgBox("Se ha prudicido un error al intentar guardar: " & resp)
                         End If
 
-                        MsgBox("La presentación se ha creado con éxito")
-                        btnFacturar.Enabled = False
-                        btnGuardar.Enabled = False
-                        Me.btnAnest.Enabled = False
-                        btnAgregar.Enabled = False
-                        btnMedicacion.Enabled = False
-                        btnQuitarItem.Enabled = False
-                        Me.cmbSubTipo.Enabled = False
-                        cmbResponsableComprobante.Enabled = False
-                        cmbTipoComprobante.Enabled = False
-                        btnImprimir.Enabled = True
-                        cmbGravado.Enabled = False
-                        txtNroComprobante.Enabled = False
-
-                        'Esto es para que no se modifique la facturacion y se imprima otra cosa, una vez que se guardo
-                        DataGrid1.ReadOnly = True
-                        '   DataGrid2.ReadOnly = True
-
-                        'global
-                        hayUnaFacturacionInstanciada = False
-                        actualizarListadoFacturaciones = True
+                        MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE: " & CAE, MessageBoxButtons.OK)
                     Else
-                        MsgBox("Se ha prudicido un error al intentar guardar: " & resp)
+                        Dim caption As String = "Error al crear comprobante"
+                        MessageBox.Show(message, caption, MessageBoxButtons.OK)
                     End If
-
-
                 End If
             End If
         Else
@@ -1378,8 +1376,6 @@ Public Class NuevaPresentacion
             ' calcularTotalConsultas()
             Dim r As Integer
             r = MsgBox("¿Esta seguro que desea guardar la presentación?", MsgBoxStyle.YesNo, "Guardar Presentación")
-
-
 
             If r = 6 Then
 

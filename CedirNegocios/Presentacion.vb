@@ -179,9 +179,8 @@ Public Class Presentacion
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
-        If Not Boolean.Parse(result("success")) Then
-            result("success") = False
-            result("message") = "ERROR: " & result("message") & ". Sacar sceenshot de la pantalla y avisar al administrador."
+        If Not Helper.IsSuccess(result) Then
+            Helper.Result(result, False, String.Format("ERROR: {0}. Sacar sceenshot de la pantalla y avisar al administrador.", Helper.GetMessage(result)))
             'TODO: El comprobante debe existir. Ver que hacer aca en caso de error.
             'Una opcion es crear una Liquidacion para que se vuelva a intentar desde "abrir estudio"
         End If
