@@ -42,8 +42,8 @@ Public Class ComprobanteElectronico
     End Property
 
     Private Shared Function EsComprobanteElectronico(ByVal comprobante As Comprobante) As Boolean
-        'TODO: hacer multi responsable y quitar la constante
-        Return comprobante.Responsable = "Cedir" And comprobante.TipoComprobante.Id <> Constants.TIPO_LIQUIDACION And comprobante.NroTerminal = Constants.TERMINAL_AFIP
+        'TODO: quitar la constante
+        Return comprobante.TipoComprobante.Id <> Constants.TIPO_LIQUIDACION And comprobante.NroTerminal = Constants.TERMINAL_AFIP
     End Function
 
     Public Shared Function Crear(ByVal comprobante As Comprobante) As Dictionary(Of String, String)
@@ -61,8 +61,13 @@ Public Class ComprobanteElectronico
 
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
         CargarComprobanteModeloAFIP(comprobante)
+
+        'Obtiene el ultimo número de comprobante
+        Dim ultimoNro As Integer = ClienteFE.GetInstance(comprobante.Responsable).getUltimoNroComprobante(comprobante.NroTerminal.ToString, tipoComprobanteAFIP.IdAFIP)
+        comprobante.NroComprobante = ultimoNro + 1
+
         'luego, insertamos esa factura en AFIP
-        response = ClienteFE.GetInstance.crearComprobante(ConvertComprobanteElectronicoToDictionary(comprobante), ConvertLineasDeComprobanteElectronicoToDictionary(comprobante))
+        response = ClienteFE.GetInstance(comprobante.Responsable).crearComprobante(ConvertComprobanteElectronicoToDictionary(comprobante), ConvertLineasDeComprobanteElectronicoToDictionary(comprobante))
 
         If Not Helper.IsSuccess(response) Then
             'response.Item("success") = False 'es innecesario
@@ -94,9 +99,6 @@ Public Class ComprobanteElectronico
     End Function
 
     Private Shared Function ConvertComprobanteElectronicoToDictionary(ByVal comprobante As Comprobante) As Dictionary(Of String, Object)
-        Dim ultimoNro As Integer = ClienteFE.GetInstance.getUltimoNroComprobante(comprobante.TipoComprobante.Descripcion, comprobante.NroTerminal.ToString, comprobante.SubTipo)
-        comprobante.NroComprobante = ultimoNro + 1
-
         CalcularImpIVA(comprobante)
         Dim dic As New Dictionary(Of String, Object)
         dic.Item("PtoVta") = comprobante.NroTerminal   'punto de venta factura electronica.
