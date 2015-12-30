@@ -653,7 +653,7 @@ Public Class frmComprobanteNuevo
 
     Public ReadOnly Property EsFacturaElectronica() As Boolean
         Get
-            Return cmbNroTerminal.SelectedItem = "0091" And Me.cmbTipoComprobante.SelectedItem IsNot Nothing And Me.cmbSubTipo.SelectedItem IsNot Nothing
+            Return cmbNroTerminal.SelectedItem IsNot Nothing AndAlso CType(cmbNroTerminal.SelectedItem, String).EndsWith(Constants.TERMINAL_AFIP) AndAlso Me.cmbTipoComprobante.SelectedValue IsNot Nothing AndAlso Me.cmbTipoComprobante.SelectedValue <> Constants.TIPO_LIQUIDACION AndAlso Me.cmbSubTipo.SelectedItem IsNot Nothing
         End Get
     End Property
 
@@ -676,7 +676,7 @@ Public Class frmComprobanteNuevo
             Validar = False
         End If
 
-        If (Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) <> 2 Then
+        If Me.cmbTipoComprobante.SelectedValue <> 2 Then
             'Validamos que los combos esten seleccionados
             If (Me.cmbCondicionFiscal.Text = "" Or Me.cmbResponsable.SelectedIndex = -1 Or Me.cmbSubTipo.SelectedIndex = -1 Or Me.cmbTipoComprobante.SelectedIndex = -1) Then
                 MsgBox("No ha seleccionado detalles del comprobante, por favor hagalo", MsgBoxStyle.Exclamation, "Datos faltantes")
@@ -685,7 +685,7 @@ Public Class frmComprobanteNuevo
         End If
 
         'Validamos que entren datos validos en la columna de subtotal
-        If (lineaValida = False) Then
+        If Not lineaValida Then
             MsgBox("Lineas de comprobante invalidas", MsgBoxStyle.OkOnly, "Linea de comprobante invalida")
             Validar = False
         End If
@@ -700,7 +700,7 @@ Public Class frmComprobanteNuevo
         'notaCredito o notaDébito
         If Me.Comprobante IsNot Nothing Then
             If Me.Comprobante.Factura IsNot Nothing Then
-                If ((Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id <> 3) And (Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id <> 4)) Then
+                If Me.cmbTipoComprobante.SelectedValue <> 3 And Me.cmbTipoComprobante.SelectedValue <> 4 Then
                     MsgBox("No puede crearse este tipo de comprobante", MsgBoxStyle.OkOnly, "Tipo de comprobante Invalido")
                     Validar = False
                 End If
@@ -806,9 +806,9 @@ Public Class frmComprobanteNuevo
 
     Private Sub CargarComboTipoIdentificacionCliente()
         Try
-            cmbTipoDocumento.DataSource = New BindingSource(identificacion, Nothing)
             cmbTipoDocumento.ValueMember = "idAFIP"
             cmbTipoDocumento.DisplayMember = "descripcion"
+            cmbTipoDocumento.DataSource = New BindingSource(identificacion, Nothing)
         Catch ex As Exception
             MessageBox.Show("No se han cargado los tipos de documento del cliente", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -816,9 +816,9 @@ Public Class frmComprobanteNuevo
     Private Sub CargarComboTipoComprobante()
         'tenemos que buscar los tipos en el objeto comprobante, ya que no hay un catalogo para tipos
         Try
-            cmbTipoComprobante.DataSource = New BindingSource(tiposComprobante, Nothing)
             cmbTipoComprobante.ValueMember = "Id"
             cmbTipoComprobante.DisplayMember = "Descripcion"
+            cmbTipoComprobante.DataSource = New BindingSource(tiposComprobante, Nothing)
             'For Each tipo As TipoComprobante In tiposComprobante
             '    Me.cmbTipoComprobante.Items.Add(tipo.Descripcion)
             'Next
@@ -855,32 +855,27 @@ Public Class frmComprobanteNuevo
         End If
     End Sub
     Private Sub calcularUltimoNro()
-        If (Me.EsFacturaElectronica) Then
-            Me.txtNroComprobante.Enabled = False
-        Else
-            ultimoNroCedir()
-        End If
-    End Sub
-    Private Sub ultimoNroAfip()
-        Try
-            'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
-            Me.txtNroComprobante.ReadOnly = True
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Ud NO SE HA PODIDO CONECTAR al servicio de afip....", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End Try
-        'vamos a seleccionar el cmbResponsable, a "cedir", ya que es este el unico habilitado para factura electronica.
-        Me.cmbResponsable.SelectedIndex = Me.cmbResponsable.FindString("Cedir")
-    End Sub
-    Private Sub ultimoNroCedir()
         Dim c As New CatalogoDeComprobantes
-        If ((Me.cmbResponsable.SelectedItem <> "Seleccione..") And (Me.cmbSubTipo.SelectedIndex <> -1) Or (Me.cmbTipoComprobante.SelectedItem IsNot Nothing)) Then
-            If Me.cmbTipoComprobante.SelectedItem IsNot Nothing Then
-                If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) + 1).ToString()
-                Else
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id, Me.cmbResponsable.SelectedItem.ToString(), Me.cmbSubTipo.SelectedItem, Convert.ToInt32(cmbNroTerminal.SelectedItem)) + 1).ToString()
+
+        'A priori borramos
+        Me.txtNroComprobante.Text = String.Empty
+        'no dejamos cambiar el nro de comprobante, ya que lo traemos del afip
+        Me.txtNroComprobante.ReadOnly = Me.EsFacturaElectronica
+
+        Dim ultimoNumero As New Nullable(Of Integer)
+
+        If Me.cmbTipoComprobante.SelectedValue = Constants.TIPO_LIQUIDACION Then
+            ultimoNumero = c.getUltimoNro(Me.cmbTipoComprobante.SelectedValue)
+        Else
+            If Me.cmbResponsable.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
+                Dim terminal As Integer
+                If Int32.TryParse(cmbNroTerminal.SelectedItem, terminal) Then
+                    ultimoNumero = c.getUltimoNro(Me.cmbTipoComprobante.SelectedValue, Me.cmbResponsable.SelectedItem, Me.cmbSubTipo.SelectedItem, terminal)
                 End If
             End If
+        End If
+        If ultimoNumero.HasValue Then
+            Me.txtNroComprobante.Text = (ultimoNumero.Value + 1).ToString()
         End If
         c = Nothing
     End Sub

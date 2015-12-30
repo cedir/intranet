@@ -41,15 +41,10 @@ Public Class ComprobanteElectronico
         End Set
     End Property
 
-    Private Shared Function EsComprobanteElectronico(ByVal comprobante As Comprobante) As Boolean
-        'TODO: quitar la constante
-        Return comprobante.TipoComprobante.Id <> Constants.TIPO_LIQUIDACION And comprobante.NroTerminal = Constants.TERMINAL_AFIP
-    End Function
-
     Public Shared Function Crear(ByVal comprobante As Comprobante) As Dictionary(Of String, String)
         Dim response As New Dictionary(Of String, String)
 
-        If Not EsComprobanteElectronico(comprobante) Then
+        If Not Helper.EsComprobanteElectronico(comprobante.TipoComprobante.Id, comprobante.NroTerminal) Then
             Return Helper.Result(response, True, "El comprobante no aplica para ser enviado a AFIP.")
         End If
 

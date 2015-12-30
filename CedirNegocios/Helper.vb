@@ -41,6 +41,11 @@ Public Class Helper
         Return dr.Item(0)
     End Function
 
+    Public Shared Function EsComprobanteElectronico(ByVal tipoComprobanteId As Int32, ByVal nroTerminal As String) As Boolean
+        'TODO: quitar la constante
+        Return tipoComprobanteId <> Constants.TIPO_LIQUIDACION And nroTerminal = Constants.TERMINAL_AFIP
+    End Function
+
     Public Function existeId(ByVal nombreTabla As String, ByVal condicion As String) As Boolean
         Dim da As New Consultas
         'Se utiliza solo para saber si esxiste un arancel en obraSocial
