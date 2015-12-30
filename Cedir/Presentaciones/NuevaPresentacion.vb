@@ -1215,11 +1215,6 @@ Public Class NuevaPresentacion
             Me.txtNroComprobante.Location = New Point(201, 17)
             Me.txtNroComprobante.Width = 105
         End If
-        'Ahora traemos el nro de comprobante que tendrían que ingresar en el txtNroComprobante
-        Dim c As New CatalogoDeComprobantes
-        Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id, , , Convert.ToInt16(Me.cmbNroTerminal.SelectedItem)) + 1.ToString())
-        c = Nothing
-
         Me.setTotalesLabels()
         Me.calcularUltimoNro()
     End Sub
@@ -1451,19 +1446,29 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub calcularUltimoNro()
-        Dim c As New CatalogoDeComprobantes
+        'A priori borramos
+        Me.txtNroComprobante.Text = String.Empty
 
-        If ((Me.cmbResponsableComprobante.SelectedItem <> Nothing) And (Me.cmbSubTipo.SelectedItem <> Nothing) Or (Me.cmbTipoComprobante.SelectedItem <> Nothing)) Then
-            If Me.cmbTipoComprobante.SelectedItem <> Nothing Then
-                If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) + 1).ToString()
-                ElseIf ((Me.cmbResponsableComprobante.SelectedItem <> Nothing) And (Me.cmbSubTipo.SelectedItem <> Nothing)) Then
+        If Me.cmbTipoComprobante.SelectedIndex <> -1 Then
+            Dim c As New CatalogoDeComprobantes
+            Dim ultimoNumero As New Nullable(Of Integer)
+            Dim tipoComprobante As Integer = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id
 
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id, Me.cmbResponsableComprobante.SelectedItem.ToString(), Me.cmbSubTipo.SelectedItem, Convert.ToInt16(Me.cmbNroTerminal.SelectedItem)) + 1).ToString()
+            If tipoComprobante = Constants.TIPO_LIQUIDACION Then
+                ultimoNumero = c.getUltimoNro(tipoComprobante)
+            Else
+                If Me.cmbResponsableComprobante.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
+                    Dim terminal As Integer
+                    If Int32.TryParse(cmbNroTerminal.SelectedItem, terminal) Then
+                        ultimoNumero = c.getUltimoNro(tipoComprobante, Me.cmbResponsableComprobante.SelectedItem, Me.cmbSubTipo.SelectedItem, terminal)
+                    End If
                 End If
             End If
+            If ultimoNumero.HasValue Then
+                Me.txtNroComprobante.Text = (ultimoNumero.Value + 1).ToString()
+            End If
+            c = Nothing
         End If
-        c = Nothing
     End Sub
 
     Private Sub DescripcionAnestesia()
@@ -1974,12 +1979,7 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        If cmbNroTerminal.SelectedItem = "0091" Then
-            Me.txtNroComprobante.Visible = False
-        Else
-            Me.txtNroComprobante.Visible = False
-            Me.calcularUltimoNro()
-        End If
+        Me.calcularUltimoNro()
     End Sub
 
     Private Sub NuevaPresentacion_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles MyBase.KeyPress

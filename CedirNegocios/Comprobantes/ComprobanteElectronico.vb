@@ -57,10 +57,6 @@ Public Class ComprobanteElectronico
         'cargamos los datos al comprobante, con valores que sean homonimos a los nuestros       
         CargarComprobanteModeloAFIP(comprobante)
 
-        'Obtiene el ultimo número de comprobante
-        Dim ultimoNro As Integer = ClienteFE.GetInstance(comprobante.Responsable).getUltimoNroComprobante(comprobante.NroTerminal.ToString, tipoComprobanteAFIP.IdAFIP)
-        comprobante.NroComprobante = ultimoNro + 1
-
         'luego, insertamos esa factura en AFIP
         response = ClienteFE.GetInstance(comprobante.Responsable).crearComprobante(ConvertComprobanteElectronicoToDictionary(comprobante), ConvertLineasDeComprobanteElectronicoToDictionary(comprobante))
 

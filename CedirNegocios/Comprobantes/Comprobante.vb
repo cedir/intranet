@@ -1,5 +1,6 @@
 Imports CedirDataAccess
 Imports System.Collections.Generic
+Imports FacturaElectronica
 Imports Npgsql
 Public Class Comprobante
 
@@ -244,6 +245,24 @@ Public Class Comprobante
 
         Try
             Dim resp As String
+
+            'Obtiene el ultimo número de comprobante
+            If Not Me.NroComprobante > 0 Then
+                Dim c As New CatalogoDeComprobantes
+                Dim ultimoNumero As New Nullable(Of Integer)
+
+                If Me.TipoComprobante.Id = Constants.TIPO_LIQUIDACION Then
+                    ultimoNumero = c.getUltimoNro(Me.TipoComprobante.Id)
+                Else
+                    ultimoNumero = c.getUltimoNro(Me.TipoComprobante.Id, Me.Responsable, Me.SubTipo, Me.NroTerminal)
+                End If
+
+                If ultimoNumero.HasValue Then
+                    Me.NroComprobante = ultimoNumero.Value + 1
+                Else
+                    Return Helper.Result(result, False, "Imposible determinar el número de comprobante")
+                End If
+            End If
 
             Dim resultAFIP As Dictionary(Of String, String) = ComprobanteElectronico.Crear(Me)
 

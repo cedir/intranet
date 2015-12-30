@@ -171,7 +171,9 @@ Public Class Presentacion
         'Datos comunes tanto a Facturas B como Facturas A
         lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
         lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
-        lineaComprobante.ImporteIVA = (totalImporteNetoLineaDeFacturacion * Me.comprobante.Gravado.porcentaje) / 100
+        If Me.comprobante.Gravado IsNot Nothing Then
+            lineaComprobante.ImporteIVA = (totalImporteNetoLineaDeFacturacion * Me.comprobante.Gravado.porcentaje) / 100
+        End If
         lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
 
 
