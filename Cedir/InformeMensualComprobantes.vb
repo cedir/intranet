@@ -431,7 +431,7 @@ Public Class InformeMensualComprobantes
 
                         dr("TotalCobrado") = c.TotalCobrado
                         'si el comprobante es una nota de credito, los valores se muestran negativos
-                        If c.TipoComprobante.Id = 4 Then
+                        If c.TipoComprobante.Id = TComprobante.NotaDeCredito Then
                             dr("TotalFacturado") = -dr("TotalFacturado")
                             dr("TotalCobrado") = -dr("TotalCobrado")
                             dr("Neto") = -dr("Neto")

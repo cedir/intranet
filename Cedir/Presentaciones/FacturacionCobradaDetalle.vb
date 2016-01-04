@@ -515,7 +515,7 @@ Public Class FacturacionCobradaDetalle
 
 
     Private Sub btnAgregarComprobante_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarComprobante.Click
-        If cPresentacion.comprobante.Estado.ToUpper() <> "ANULADO" And cPresentacion.comprobante.TipoComprobante.Id = 1 Then
+        If cPresentacion.comprobante.Estado.ToUpper() <> "ANULADO" And cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
             Dim f As New frmComprobanteNuevo
             Me.AddOwnedForm(f)
             'el comprobante que pasamos es una factura.

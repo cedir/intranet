@@ -773,7 +773,7 @@ Public Class NuevaPresentacion
         Me.cmbTipoComprobante.Items.Clear()
 
         For Each t As TipoComprobante In cTipos
-            If t.Id = 1 Or t.Id = 2 Then
+            If t.Id = TComprobante.Factura Or t.Id = TComprobante.Liquidacion Then
                 Me.cmbTipoComprobante.Items.Add(t.Descripcion)
                 tiposComprobante.Add(t)
             End If
@@ -1264,7 +1264,7 @@ Public Class NuevaPresentacion
                     'tenemos que vaciar los campos que no correspondan si es una liquidacion
                     'Tenemos en cuenta que si no es un alta, la liquidacion ya existe y mantenemos la misma
 
-                    If cPresentacion.comprobante.TipoComprobante.Id = 2 Then
+                    If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
                         cPresentacion.comprobante.Responsable = ""
                         cPresentacion.comprobante.SubTipo = ""
                         cPresentacion.comprobante.Gravado = Nothing
@@ -1315,7 +1315,7 @@ Public Class NuevaPresentacion
                                 prepareImprimirDetalle()
                             End If
                             'Imprimir Comprobante si es una factura
-                            If cPresentacion.comprobante.TipoComprobante.Id = 1 Then
+                            If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
                                 r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
                                 If r = 6 Then
                                     'prepareImprimirFactura()
@@ -1454,7 +1454,7 @@ Public Class NuevaPresentacion
             Dim ultimoNumero As New Nullable(Of Integer)
             Dim tipoComprobante As Integer = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id
 
-            If tipoComprobante = Constants.TIPO_LIQUIDACION Then
+            If tipoComprobante = TComprobante.Liquidacion Then
                 ultimoNumero = c.getUltimoNro(tipoComprobante)
             Else
                 If Me.cmbResponsableComprobante.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then

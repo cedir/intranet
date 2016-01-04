@@ -251,7 +251,7 @@ Public Class Comprobante
                 Dim c As New CatalogoDeComprobantes
                 Dim ultimoNumero As New Nullable(Of Integer)
 
-                If Me.TipoComprobante.Id = Constants.TIPO_LIQUIDACION Then
+                If Me.TipoComprobante.Id = TComprobante.Liquidacion Then
                     ultimoNumero = c.getUltimoNro(Me.TipoComprobante.Id)
                 Else
                     ultimoNumero = c.getUltimoNro(Me.TipoComprobante.Id, Me.Responsable, Me.SubTipo, Me.NroTerminal)
@@ -271,7 +271,7 @@ Public Class Comprobante
             End If
 
             'tenemos que diferenciar al momento de insertar una factura o una nd o nc o liquidacion
-            If Me.TipoComprobante.Id = Constants.TIPO_LIQUIDACION Then
+            If Me.TipoComprobante.Id = TComprobante.Liquidacion Then
                 'Si el comprobante es una liquidación vaciamos los campos que no correspondan
                 Me.Gravado = Nothing
                 Me.Factura = New Comprobante
@@ -290,7 +290,7 @@ Public Class Comprobante
                 "', '" & Me.CondicionFiscal & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & _
                 Me.Estado & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.GravadoPaciente & "'")
             Else
-                If ((Me.TipoComprobante.Id = 4 Or Me.TipoComprobante.Id = 3) And (Me.Factura IsNot Nothing)) Then
+                If ((Me.TipoComprobante.Id = TComprobante.NotaDeCredito Or Me.TipoComprobante.Id = TComprobante.NotaDeDebito) And (Me.Factura IsNot Nothing)) Then
                     'si es asi, insertamos tambien la factura que corresponda, ya que es Nota de Debito, o Credito
                     resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
                 Else

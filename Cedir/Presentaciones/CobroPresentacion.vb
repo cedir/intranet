@@ -694,7 +694,7 @@ Public Class CobroPresentacion
             'menor o mayor al monto del comprobante asignado a la presentacion 
             'Solo creamos nc o nd para las Facturas, no las liquidaciones
 
-            If cPresentacion.total <> cPresentacion.totalFacturado And cPresentacion.comprobante.TipoComprobante.Id = 1 Then
+            If cPresentacion.total <> cPresentacion.totalFacturado And cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
                 'mostramos de cuánto debe ser el monto del comprobante(variable diferencia)
                 Dim res As DialogResult = MessageBox.Show("Existe una diferencia de montos entre lo facturado y lo cobrado." & vbCrLf & "Deberá crear un comprobante correspondiente" & vbCrLf & "(ND) o (NC)", "Atención" & vbCrLf & "Diferencia de: $" & diferencia.ToString(), MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
                 If res = Windows.Forms.DialogResult.Yes Then

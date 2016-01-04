@@ -653,7 +653,7 @@ Public Class frmComprobanteNuevo
 
     Public ReadOnly Property EsFacturaElectronica() As Boolean
         Get
-            Return cmbNroTerminal.SelectedItem IsNot Nothing AndAlso CType(cmbNroTerminal.SelectedItem, String).EndsWith(Constants.TERMINAL_AFIP) AndAlso Me.cmbTipoComprobante.SelectedValue IsNot Nothing AndAlso Me.cmbTipoComprobante.SelectedValue <> Constants.TIPO_LIQUIDACION AndAlso Me.cmbSubTipo.SelectedItem IsNot Nothing
+            Return cmbNroTerminal.SelectedItem IsNot Nothing AndAlso CType(cmbNroTerminal.SelectedItem, String).EndsWith(Constants.TERMINAL_AFIP) AndAlso Me.cmbTipoComprobante.SelectedValue IsNot Nothing AndAlso Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion AndAlso Me.cmbSubTipo.SelectedItem IsNot Nothing
         End Get
     End Property
 
@@ -798,12 +798,6 @@ Public Class frmComprobanteNuevo
         Me.cmbIVA.DisplayMember = "descripcion"
     End Sub
 
-    'Private Sub cargarComboGravadoEnDataGrid()
-    '    CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DataSource = gravados
-    '    CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).DisplayMember = "descripcion"
-    '    CType(Me.dgvLineas.Columns("colPorcIVA"), DataGridViewComboBoxColumn).ValueMember = "porcentaje"
-    'End Sub
-
     Private Sub CargarComboTipoIdentificacionCliente()
         Try
             cmbTipoDocumento.ValueMember = "idAFIP"
@@ -864,7 +858,7 @@ Public Class frmComprobanteNuevo
 
         Dim ultimoNumero As New Nullable(Of Integer)
 
-        If Me.cmbTipoComprobante.SelectedValue = Constants.TIPO_LIQUIDACION Then
+        If Me.cmbTipoComprobante.SelectedValue = TComprobante.Liquidacion Then
             ultimoNumero = c.getUltimoNro(Me.cmbTipoComprobante.SelectedValue)
         Else
             If Me.cmbResponsable.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
@@ -948,9 +942,6 @@ Public Class frmComprobanteNuevo
 
 
         cmbNroTerminal.SelectedIndex = 0
-
-        'busco los gravados en la base de datos
-        'Me.cargarComboGravadoEnDataGrid()
 
         Me.cmbGravadoPaciente.Visible = False
         Me.lblPacienteGravado.Visible = False
