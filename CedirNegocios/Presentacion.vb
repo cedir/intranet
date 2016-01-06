@@ -13,14 +13,14 @@ Public Class Presentacion
     Private lineasDeFacturacionDeEstudios As ArrayList
     Private arancelConsulta As Arancel
     Private pagoFacturacion As PagoFacturacion
-    Private _comprobante As ComprobanteElectronico
-    Dim _managerComprobante As New ManagerComprobante
+    Private _comprobante As Comprobante
 
 
 
     Public Sub New()
         lineasDeFacturacionDeEstudios = New ArrayList
         obraSocial = New ObraSocial
+        comprobante = New Comprobante
     End Sub
 
 #Region "Propiedades"
@@ -96,11 +96,11 @@ Public Class Presentacion
         End Set
     End Property
 
-    Public Property comprobante() As ComprobanteElectronico
+    Public Property comprobante() As Comprobante
         Get
             Return _comprobante
         End Get
-        Set(ByVal value As ComprobanteElectronico)
+        Set(ByVal value As Comprobante)
             _comprobante = value
         End Set
     End Property
@@ -150,7 +150,7 @@ Public Class Presentacion
 
     End Function
     Public Sub crearTipoComprobante(ByVal terminal As String)
-        Me.comprobante = Me._managerComprobante.crearTipoDeComprobanteSegunNroTerminal(terminal)
+        Me.comprobante = New Comprobante
     End Sub
 
     Public Function crearComprobante() As Dictionary(Of String, String)
@@ -168,24 +168,21 @@ Public Class Presentacion
         Next
 
         'Si el comprobante es una factura, la leyenda cambia
-        If (TypeOf (Me.comprobante) Is ComprobanteElectronico) Then
-            'Datos comunes tanto a Facturas B como Facturas A
-            lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
-            lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
-            lineaComprobante.ImporteIVA = totalImporteNetoLineaDeFacturacion * (Me.comprobante.Gravado.porcentaje / 100)
-            lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
-        Else
-            'las liquidaciones no poseen gravado. 
-            lineaComprobante.Subtotal = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
+        'Datos comunes tanto a Facturas B como Facturas A
+        lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
+        lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
+        If Me.comprobante.Gravado IsNot Nothing Then
+            lineaComprobante.ImporteIVA = (totalImporteNetoLineaDeFacturacion * Me.comprobante.Gravado.porcentaje) / 100
         End If
+        lineaComprobante.Subtotal = Format(lineaComprobante.importeNeto + lineaComprobante.ImporteIVA, "########0.00")
+
 
         Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
-        If Not Boolean.Parse(result("success")) Then
-            result("success") = False
-            result("message") = "ERROR: " & result("message") & ". Sacar sceenshot de la pantalla y avisar al administrador."
+        If Not Helper.IsSuccess(result) Then
+            Helper.Result(result, False, String.Format("ERROR: {0}. Sacar sceenshot de la pantalla y avisar al administrador.", Helper.GetMessage(result)))
             'TODO: El comprobante debe existir. Ver que hacer aca en caso de error.
             'Una opcion es crear una Liquidacion para que se vuelva a intentar desde "abrir estudio"
         End If
@@ -350,28 +347,17 @@ Public Class Presentacion
     End Function
 
     Public Function getImporteIva() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            tempTotal = Me.totalFacturado
+        If Me.comprobante Is Nothing Then
+            Return 0
         End If
-        Dim cIva As Single = (tempTotal) * Me.comprobante.Gravado.porcentaje / 100
-        cIva = Math.Round(cIva, 2)
-        Return cIva
+        Return Math.Round((Me.totalFacturado * Me.comprobante.Gravado.porcentaje) / 100, 2, MidpointRounding.AwayFromZero)
     End Function
     Public Function getTotalFactura() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            tempTotal = Me.totalFacturado
-        End If
-        Return tempTotal + Me.getImporteIva
+        Return Me.getTotalFacturado + Me.getImporteIva
     End Function
     Public Function getTotalFacturado() As Single
-        Dim tempTotal As Single = Me.total
-        If Me.totalFacturado > 0 Then 'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
-            Return Me.totalFacturado
-        Else
-            Return Me.total
-        End If
+        'esto se hace por compatibilidad, en facturaciones viejas no esta cargado el valor totalFacturado
+        Return Math.Round(Math.Max(Me.totalFacturado, Me.total), 2, MidpointRounding.AwayFromZero)
     End Function
     Public Function getTotalMedicacion() As Single
         Dim totalMedicacion As Single = 0
@@ -380,7 +366,6 @@ Public Class Presentacion
             cLinea = lineasDeFacturacionDeEstudios(i)
             totalMedicacion += cLinea.objeto.getTotalMedicacion()
         Next
-
         Return totalMedicacion
     End Function
 
@@ -437,11 +422,6 @@ Public Class Presentacion
 
             Me.total += cLinea.getImporteNeto
         Next
-
-
-
-
-
     End Function
 
 End Class

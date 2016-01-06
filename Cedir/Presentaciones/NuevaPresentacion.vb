@@ -773,7 +773,7 @@ Public Class NuevaPresentacion
         Me.cmbTipoComprobante.Items.Clear()
 
         For Each t As TipoComprobante In cTipos
-            If t.Id = 1 Or t.Id = 2 Then
+            If t.Id = TComprobante.Factura Or t.Id = TComprobante.Liquidacion Then
                 Me.cmbTipoComprobante.Items.Add(t.Descripcion)
                 tiposComprobante.Add(t)
             End If
@@ -1079,7 +1079,7 @@ Public Class NuevaPresentacion
 
     Private Sub setTotalesLabels()
         Dim total As Decimal
-        Dim totalParcialEstudios As Decimal = totalEstudios + Math.Round(totalMedicacion, 2) + totalPension + Me.totalArancelAnestesia
+        Dim totalParcialEstudios As Decimal = Math.Round(totalEstudios + totalMedicacion + totalPension + Me.totalArancelAnestesia, 2, MidpointRounding.AwayFromZero)
 
         Dim iva As Decimal = calcularIva(totalParcialEstudios)
         total = totalParcialEstudios + iva
@@ -1215,11 +1215,6 @@ Public Class NuevaPresentacion
             Me.txtNroComprobante.Location = New Point(201, 17)
             Me.txtNroComprobante.Width = 105
         End If
-        'Ahora traemos el nro de comprobante que tendrían que ingresar en el txtNroComprobante
-        Dim c As New CatalogoDeComprobantes
-        Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id, , , Convert.ToInt16(Me.cmbNroTerminal.SelectedItem)) + 1.ToString())
-        c = Nothing
-
         Me.setTotalesLabels()
         Me.calcularUltimoNro()
     End Sub
@@ -1269,7 +1264,7 @@ Public Class NuevaPresentacion
                     'tenemos que vaciar los campos que no correspondan si es una liquidacion
                     'Tenemos en cuenta que si no es un alta, la liquidacion ya existe y mantenemos la misma
 
-                    If cPresentacion.comprobante.TipoComprobante.Id = 2 Then
+                    If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
                         cPresentacion.comprobante.Responsable = ""
                         cPresentacion.comprobante.SubTipo = ""
                         cPresentacion.comprobante.Gravado = Nothing
@@ -1301,65 +1296,63 @@ Public Class NuevaPresentacion
                     cPresentacion.comprobante.Factura = Nothing
                     'calculamos comprobante.totalFacturado como el presentacion.total+iva 
 
+                    Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
+                    Dim message As String = Helper.GetMessage(result)
 
-                    If esAltaPresentacion Then
-                        resp = cPresentacion.crear()
-                    Else
-                        resp = cPresentacion.guardar(True, True)
-                    End If
+                    If Helper.IsSuccess(result) Then
+                        Dim CAE As String = IIf(cPresentacion.comprobante IsNot Nothing, cPresentacion.comprobante.CAE, "-")
 
-                    If resp = "ok" Then
-                        Dim result As Dictionary(Of String, String) = cPresentacion.crearComprobante()
-                        Dim success As Boolean = result("success")
-                        Dim message As String = result("message")
-
-                        If success Then
-                            MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE:" & result("CAE"), MessageBoxButtons.OK)
+                        If esAltaPresentacion Then
+                            resp = cPresentacion.crear()
                         Else
-                            Dim caption As String = "Error al crear comprobante"
-                            MessageBox.Show(message, caption, MessageBoxButtons.OK)
+                            resp = cPresentacion.guardar(True, True)
                         End If
 
-                        'Imprimir detalle
-                        r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")
-                        If r = 6 Then
-                            prepareImprimirDetalle()
-                        End If
-                        'Imprimir Comprobante si es una factura
-                        If cPresentacion.comprobante.TipoComprobante.Id = 1 Then
-                            r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
+                        If resp = "ok" Then
+                            'Imprimir detalle
+                            r = MsgBox("Se va a imprimir el detalle de la presentación, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir detalle")
                             If r = 6 Then
-                                'prepareImprimirFactura()
-                                Me.imprimirComprobante()
+                                prepareImprimirDetalle()
                             End If
+                            'Imprimir Comprobante si es una factura
+                            If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
+                                r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
+                                If r = 6 Then
+                                    'prepareImprimirFactura()
+                                    Me.imprimirComprobante()
+                                End If
+                            End If
+
+                            MsgBox("La presentación se ha creado con éxito")
+                            btnFacturar.Enabled = False
+                            btnGuardar.Enabled = False
+                            Me.btnAnest.Enabled = False
+                            btnAgregar.Enabled = False
+                            btnMedicacion.Enabled = False
+                            btnQuitarItem.Enabled = False
+                            Me.cmbSubTipo.Enabled = False
+                            cmbResponsableComprobante.Enabled = False
+                            cmbTipoComprobante.Enabled = False
+                            btnImprimir.Enabled = True
+                            cmbGravado.Enabled = False
+                            txtNroComprobante.Enabled = False
+
+                            'Esto es para que no se modifique la facturacion y se imprima otra cosa, una vez que se guardo
+                            DataGrid1.ReadOnly = True
+                            '   DataGrid2.ReadOnly = True
+
+                            'global
+                            hayUnaFacturacionInstanciada = False
+                            actualizarListadoFacturaciones = True
+                        Else
+                            MsgBox("Se ha prudicido un error al intentar guardar: " & resp)
                         End If
 
-                        MsgBox("La presentación se ha creado con éxito")
-                        btnFacturar.Enabled = False
-                        btnGuardar.Enabled = False
-                        Me.btnAnest.Enabled = False
-                        btnAgregar.Enabled = False
-                        btnMedicacion.Enabled = False
-                        btnQuitarItem.Enabled = False
-                        Me.cmbSubTipo.Enabled = False
-                        cmbResponsableComprobante.Enabled = False
-                        cmbTipoComprobante.Enabled = False
-                        btnImprimir.Enabled = True
-                        cmbGravado.Enabled = False
-                        txtNroComprobante.Enabled = False
-
-                        'Esto es para que no se modifique la facturacion y se imprima otra cosa, una vez que se guardo
-                        DataGrid1.ReadOnly = True
-                        '   DataGrid2.ReadOnly = True
-
-                        'global
-                        hayUnaFacturacionInstanciada = False
-                        actualizarListadoFacturaciones = True
+                        MessageBox.Show(message, "Comprobante creado con exito..: Nro de CAE: " & CAE, MessageBoxButtons.OK)
                     Else
-                        MsgBox("Se ha prudicido un error al intentar guardar: " & resp)
+                        Dim caption As String = "Error al crear comprobante"
+                        MessageBox.Show(message, caption, MessageBoxButtons.OK)
                     End If
-
-
                 End If
             End If
         Else
@@ -1378,8 +1371,6 @@ Public Class NuevaPresentacion
             ' calcularTotalConsultas()
             Dim r As Integer
             r = MsgBox("¿Esta seguro que desea guardar la presentación?", MsgBoxStyle.YesNo, "Guardar Presentación")
-
-
 
             If r = 6 Then
 
@@ -1455,19 +1446,29 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub calcularUltimoNro()
-        Dim c As New CatalogoDeComprobantes
+        'A priori borramos
+        Me.txtNroComprobante.Text = String.Empty
 
-        If ((Me.cmbResponsableComprobante.SelectedItem <> Nothing) And (Me.cmbSubTipo.SelectedItem <> Nothing) Or (Me.cmbTipoComprobante.SelectedItem <> Nothing)) Then
-            If Me.cmbTipoComprobante.SelectedItem <> Nothing Then
-                If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id) + 1).ToString()
-                ElseIf ((Me.cmbResponsableComprobante.SelectedItem <> Nothing) And (Me.cmbSubTipo.SelectedItem <> Nothing)) Then
+        If Me.cmbTipoComprobante.SelectedIndex <> -1 Then
+            Dim c As New CatalogoDeComprobantes
+            Dim ultimoNumero As New Nullable(Of Integer)
+            Dim tipoComprobante As Integer = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id
 
-                    Me.txtNroComprobante.Text = (c.getUltimoNro(Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id, Me.cmbResponsableComprobante.SelectedItem.ToString(), Me.cmbSubTipo.SelectedItem, Convert.ToInt16(Me.cmbNroTerminal.SelectedItem)) + 1).ToString()
+            If tipoComprobante = TComprobante.Liquidacion Then
+                ultimoNumero = c.getUltimoNro(tipoComprobante)
+            Else
+                If Me.cmbResponsableComprobante.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
+                    Dim terminal As Integer
+                    If Int32.TryParse(cmbNroTerminal.SelectedItem, terminal) Then
+                        ultimoNumero = c.getUltimoNro(tipoComprobante, Me.cmbResponsableComprobante.SelectedItem, Me.cmbSubTipo.SelectedItem, terminal)
+                    End If
                 End If
             End If
+            If ultimoNumero.HasValue Then
+                Me.txtNroComprobante.Text = (ultimoNumero.Value + 1).ToString()
+            End If
+            c = Nothing
         End If
-        c = Nothing
     End Sub
 
     Private Sub DescripcionAnestesia()
@@ -1978,12 +1979,7 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        If cmbNroTerminal.SelectedItem = "0091" Then
-            Me.txtNroComprobante.Visible = False
-        Else
-            Me.txtNroComprobante.Visible = False
-            Me.calcularUltimoNro()
-        End If
+        Me.calcularUltimoNro()
     End Sub
 
     Private Sub NuevaPresentacion_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles MyBase.KeyPress

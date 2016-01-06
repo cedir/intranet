@@ -1,9 +1,12 @@
 Imports System.Collections.Generic
 Imports CedirDataAccess
+Imports FacturaElectronica
 Imports Npgsql
 
 Public Class CatalogoDeComprobantes
 
+    Shared catalogoAfip As New CatalogoDeObjetosAFIP
+    Shared tiposComprobanteAFIP As List(Of TipoDeComprobanteAFIP) = catalogoAfip.getTiposDeComprobanteAFIP()
 
     Function getComprobantes(Optional ByVal nroComprobante As String = "", Optional ByVal tipo As String = "Ninguno", Optional ByVal responsable As String = "Ninguno", Optional ByVal fDesde As String = "", Optional ByVal fHasta As String = "", Optional ByVal condCliente As String = " true ", Optional ByVal idComprobante As Integer = 0) As List(Of Comprobante)
         Dim com As String = """"
@@ -144,6 +147,20 @@ Public Class CatalogoDeComprobantes
     End Function
 
     Public Function getUltimoNro(ByVal idTipo As Int32, Optional ByVal responsable As String = "", Optional ByVal subtipo As String = "", Optional ByVal nroTerminal As Integer = 1) As Int32
+
+        If Helper.EsComprobanteElectronico(idTipo, nroTerminal.ToString) Then
+            Dim tipoComprobanteAFIP As TipoDeComprobanteAFIP = Nothing
+
+            For Each tipoCompAFIP As TipoDeComprobanteAFIP In tiposComprobanteAFIP
+                If (idTipo = tipoCompAFIP.idTblTipoDeComprobantes) And (subtipo = tipoCompAFIP.SubTipo) Then
+                    tipoComprobanteAFIP = tipoCompAFIP
+                    Exit For
+                End If
+            Next
+
+            Return ClienteFE.GetInstance(responsable).getUltimoNroComprobante(nroTerminal, tipoComprobanteAFIP.IdAFIP)
+        End If
+
         Dim com As String = """"
         Dim cDatos As New Nuevo
         Dim dr As NpgsqlDataReader
@@ -162,7 +179,7 @@ Public Class CatalogoDeComprobantes
 
             Dim filtro4 As String
             filtro4 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "nroTerminal" & com & " = " & nroTerminal
-            
+
             Dim filtroTotal As String
 
             If idTipo <> 2 Then 'No es liquidacion

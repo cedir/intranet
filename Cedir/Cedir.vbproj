@@ -707,6 +707,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Claves\cedir.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DataSets Reports\dsAnestesistasListado.xsc">
       <DependentUpon>dsAnestesistasListado.xsd</DependentUpon>
     </None>
@@ -773,6 +776,7 @@
     <None Include="DataSets Reports\dsMovimientosStock.xss">
       <DependentUpon>dsMovimientosStock.xsd</DependentUpon>
     </None>
+    <None Include="My Project\DataSources\frmComprobanteNuevo.datasource" />
     <None Include="My Project\Settings.settings">
       <CustomToolNamespace>My</CustomToolNamespace>
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -819,9 +823,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\misc05.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="My Project\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

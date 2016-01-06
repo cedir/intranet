@@ -3,28 +3,26 @@ Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data
 Imports System.Text
+Imports System.Threading
 Imports System.Xml
 
 
 Public Class ClienteFE
-
-
+    Private Shared _singleton As New Dictionary(Of String, ClienteFE)
+    Private Shared _mu As New Mutex
     Dim lt As New LoginTicket
     Dim objWSFE As wsfe.Service = New wsfe.Service()
     Dim aut As wsfe.FEAuthRequest
     Dim fecaeReq As wsfe.FECAERequest
     Dim fecaeResponse As wsfe.FECAEResponse
 
-
-
-
-    Public Function iniciar() As Boolean
+    Public Function iniciar(ByVal responsable As String) As Boolean
         'Llamamos al servicio de autenticacion de afip LoginCMS
 
         'inicializarombos()
         Try
-            InicializarAutenticador()
-            inicializarServicio()
+            InicializarAutenticador(responsable)
+            inicializarServicio(responsable)
             Return True
 
         Catch ex As Exception
@@ -38,69 +36,79 @@ Public Class ClienteFE
     ''' todavia
     '''</summary>
     ''' <remarks></remarks>
-    Private Sub InicializarAutenticador()
+    Private Sub InicializarAutenticador(ByVal responsable As String)
         If lt.ExpirationTime <= DateTime.Now Then
-            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", My.Settings.rutaClaveCertificadoFE)
+            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", String.Format(My.Settings.rutaClaveCertificadoFE, responsable))
         End If
     End Sub
 
-    Private Sub inicializarServicio()
+    Private Sub inicializarServicio(ByVal responsable As String)
 
         aut = New wsfe.FEAuthRequest()
-        aut.Cuit = 30709300152
+        aut.Cuit = GetCUITFromResponsable(responsable)
         aut.Sign = lt.Sign
         aut.Token = lt.Token
 
     End Sub
 
+    Private Function GetCUITFromResponsable(ByVal responsable As String) As String
+        'TODO: pasar a base de datos?
+        If responsable = "cedir" Then
+            Return "30709300152"
+        ElseIf responsable = "brunetti" Then
+            Return "20118070659"
+        End If
+        Return String.Empty
+    End Function
+
     Private Sub inicializarCombos()
 
-        ' Me.getIVA()
-        Me.getTipoMoneda()
-        '  Me.getTiposComprobante()
-        Me.getTipoMonedaCotizacion()
-        Me.getTipoConcepto()
-        Me.getTipoComprobante()
-        Me.getPuntoVta()
+        'Me.getIVA()
+        'Me.getTipoMoneda()
+        'Me.getTiposComprobante()
+        'Me.getTipoMonedaCotizacion()
+        'Me.getTipoConcepto()
+        'Me.getTipoComprobante()
+        'Me.getPuntoVta()
     End Sub
 
-    Private Sub getPuntoVta()
+    'Private Sub getPuntoVta()
 
-        Dim objPtoVta As wsfe.FEPtoVentaResponse = New wsfe.FEPtoVentaResponse()
-        objPtoVta = objWSFE.FEParamGetPtosVenta(aut)
-        If (objPtoVta.Errors Is Nothing) Then
+    '    Dim objPtoVta As wsfe.FEPtoVentaResponse = New wsfe.FEPtoVentaResponse()
+    '    objPtoVta = objWSFE.FEParamGetPtosVenta(aut)
+    '    If (objPtoVta.Errors Is Nothing) Then
 
-            'cmbPtoVenta.DisplayMember = "Nro"
-            'cmbPtoVenta.ValueMember = "Nro"
+    '        'cmbPtoVenta.DisplayMember = "Nro"
+    '        'cmbPtoVenta.ValueMember = "Nro"
 
-            'cmbPtoVenta.DataSource = objPtoVta.ResultGet
+    '        'cmbPtoVenta.DataSource = objPtoVta.ResultGet
 
-        Else
+    '    Else
 
-            '  MessageBox.Show("No se pudieron obtener datos del ws" + objPtoVta.Errors[0].Msg)
-        End If
-    End Sub
+    '        '  MessageBox.Show("No se pudieron obtener datos del ws" + objPtoVta.Errors[0].Msg)
+    '    End If
+    'End Sub
 
-    Private Sub getTipoMoneda()
+    'Private Sub getTipoMoneda()
 
-        Dim objMoneda As wsfe.MonedaResponse = New wsfe.MonedaResponse()
-        objMoneda = objWSFE.FEParamGetTiposMonedas(aut)
-        If (objMoneda.Errors Is Nothing) Then
+    '    Dim objMoneda As wsfe.MonedaResponse = New wsfe.MonedaResponse()
+    '    objMoneda = objWSFE.FEParamGetTiposMonedas(aut)
+    '    If (objMoneda.Errors Is Nothing) Then
 
-            'cmbTipoMoneda.DisplayMember = "Desc"
-            'cmbTipoMoneda.ValueMember = "Id"
+    '        'cmbTipoMoneda.DisplayMember = "Desc"
+    '        'cmbTipoMoneda.ValueMember = "Id"
 
-            'cmbTipoMoneda.DataSource = objMoneda.ResultGet
+    '        'cmbTipoMoneda.DataSource = objMoneda.ResultGet
 
 
 
-        Else
+    '    Else
 
-            'MessageBox.Show("No se pudieron obtener datos del ws" + objMoneda.Errors[0].Msg)
+    '        'MessageBox.Show("No se pudieron obtener datos del ws" + objMoneda.Errors[0].Msg)
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Public Function getTiposIVA() As Dictionary(Of Integer, String)
         Dim objIvaTipo As wsfe.IvaTipoResponse = New wsfe.IvaTipoResponse()
@@ -134,69 +142,58 @@ Public Class ClienteFE
 
     End Function
 
-    Private Sub getTipoMonedaCotizacion()
+    'Private Sub getTipoMonedaCotizacion()
 
-        'Dim objCotizacion As wsfe.FECotizacionResponse = New wsfe.FECotizacionResponse()
-        'objCotizacion = objWSFE.FEParamGetCotizacion(aut, cmbTipoMoneda.SelectedValue.ToString())
-        'If (objCotizacion Is Nothing) Then
-        '    'cmbCotizacion.DisplayMember = "MonCotiz"
-        '    'cmbCotizacion.ValueMember = "MonId"
+    'Dim objCotizacion As wsfe.FECotizacionResponse = New wsfe.FECotizacionResponse()
+    'objCotizacion = objWSFE.FEParamGetCotizacion(aut, cmbTipoMoneda.SelectedValue.ToString())
+    'If (objCotizacion Is Nothing) Then
+    '    'cmbCotizacion.DisplayMember = "MonCotiz"
+    '    'cmbCotizacion.ValueMember = "MonId"
 
-        '    'cmbCotizacion.DataSource = objCotizacion
+    '    'cmbCotizacion.DataSource = objCotizacion
 
 
-        'Else
-        '    'MessageBox.Show("No se pudieron obtener datos del ws" + objMoneda.Errors[0].Msg)
+    'Else
+    '    'MessageBox.Show("No se pudieron obtener datos del ws" + objMoneda.Errors[0].Msg)
 
-        'End If
+    'End If
 
-    End Sub
+    'End Sub
 
-    Private Sub getTipoConcepto()
+    'Private Sub getTipoConcepto()
 
-        Dim objConceptos As wsfe.ConceptoTipoResponse = New wsfe.ConceptoTipoResponse()
-        objConceptos = objWSFE.FEParamGetTiposConcepto(aut)
-        If (objConceptos.Errors Is Nothing) Then
+    '    Dim objConceptos As wsfe.ConceptoTipoResponse = New wsfe.ConceptoTipoResponse()
+    '    objConceptos = objWSFE.FEParamGetTiposConcepto(aut)
+    '    If (objConceptos.Errors Is Nothing) Then
 
-            'cmbTipoConcepto.DisplayMember = "Desc"
-            'cmbTipoConcepto.ValueMember = "Id"
+    '        'cmbTipoConcepto.DisplayMember = "Desc"
+    '        'cmbTipoConcepto.ValueMember = "Id"
 
-            'cmbTipoConcepto.DataSource = objConceptos.ResultGet
-        Else
-            ' MessageBox.Show("No se pudieron obtener datos del ws" + objConceptos.Errors(0).Msg)
-        End If
+    '        'cmbTipoConcepto.DataSource = objConceptos.ResultGet
+    '    Else
+    '        ' MessageBox.Show("No se pudieron obtener datos del ws" + objConceptos.Errors(0).Msg)
+    '    End If
 
-    End Sub
+    'End Sub
 
-    Public Function getTipoComprobante() As Dictionary(Of Integer, String)
+    'Public Function getTipoComprobante() As Dictionary(Of Integer, String)
 
-        Dim dic As New Dictionary(Of Integer, String)
+    '    Dim dic As New Dictionary(Of Integer, String)
 
-        Dim objCompTipo As wsfe.CbteTipoResponse = New wsfe.CbteTipoResponse()
-        objCompTipo = objWSFE.FEParamGetTiposCbte(aut)
-        If (objCompTipo.Errors Is Nothing) Then
-            For Each ob As wsfe.CbteTipo In objCompTipo.ResultGet()
-                dic.Add(ob.Id, ob.Desc)
-            Next
-        End If
+    '    Dim objCompTipo As wsfe.CbteTipoResponse = New wsfe.CbteTipoResponse()
+    '    objCompTipo = objWSFE.FEParamGetTiposCbte(aut)
+    '    If (objCompTipo.Errors Is Nothing) Then
+    '        For Each ob As wsfe.CbteTipo In objCompTipo.ResultGet()
+    '            dic.Add(ob.Id, ob.Desc)
+    '        Next
+    '    End If
 
-        Return dic
-    End Function
+    '    Return dic
+    'End Function
 
-    Public Function getUltimoNroComprobante(ByVal tipoComprobante As String, ByVal nroTerminal As Integer, ByVal subtipo As String) As Integer
+    Public Function getUltimoNroComprobante(ByVal nroTerminal As Integer, ByVal cbteTipo As Integer) As Integer
 
         Dim ultimoComprobante As wsfe.FERecuperaLastCbteResponse = New wsfe.FERecuperaLastCbteResponse()
-        Dim cbteTipo As Integer
-        Dim dic As New Dictionary(Of Integer, String)
-        dic = Me.getTipoComprobante()
-        Dim pair As KeyValuePair(Of Integer, String)
-
-        For Each pair In dic
-            If pair.Value.ToLower.Trim() = String.Concat(tipoComprobante.ToLower.Trim(), " ", subtipo.ToLower()) Then
-                cbteTipo = pair.Key
-                Exit For
-            End If
-        Next
 
         Try
             ultimoComprobante = objWSFE.FECompUltimoAutorizado(aut, nroTerminal, cbteTipo)
@@ -206,6 +203,7 @@ Public Class ClienteFE
         End Try
 
     End Function
+
     Public Function crearComprobante(ByVal dict As Dictionary(Of String, Object), ByVal lineas As List(Of Dictionary(Of String, Object))) As Object
         'Información del comprobante o lote de comprobantes de ingreso. Contiene los datos de FeCabReq y FeDetReq
         fecaeReq = New wsfe.FECAERequest()
@@ -294,10 +292,32 @@ Public Class ClienteFE
         End Try
     End Function
 
-    Public Sub New()
+    Shared Function FormatDate(ByVal value As DateTime) As String
+        Return value.ToString("yyyyMMdd")
+    End Function
+
+    Public Sub New(ByVal cuenta As String)
         'Iniciamos el web service aqui.
-        Me.iniciar()
+        Me.iniciar(cuenta)
     End Sub
+
+    Public Shared Function GetInstance(ByVal responsable As String) As ClienteFE
+        _mu.WaitOne()
+
+        Try
+            responsable = responsable.ToLower
+
+            If Not _singleton.ContainsKey(responsable) Then
+                _singleton(responsable) = New ClienteFE(responsable)
+            End If
+
+        Finally
+            _mu.ReleaseMutex()
+        End Try
+
+        Return _singleton(responsable)
+
+    End Function
 End Class
 
 

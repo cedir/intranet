@@ -69,7 +69,7 @@ Public Class Comprobantes
     Private Sub cargarCabezera()
 
         Me.txtDomicilio.Text = Comprobante.DomicilioCliente
-        If Comprobante.TipoComprobante.Id = 2 Then
+        If Comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
             Me.txtGravado.Text = ""
             Me.txtResponsable.Text = ""
             Me.txtSubtipo.Text = ""

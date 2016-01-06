@@ -125,6 +125,7 @@
     <Compile Include="Comprobantes\ComprobanteElectronico.vb" />
     <Compile Include="Comprobantes\LogComprobanteElectronico.vb" />
     <Compile Include="ControladorDeComprobantes.vb" />
+    <Compile Include="Constantes.vb" />
     <Compile Include="DocumentoCliente.vb" />
     <Compile Include="Interfaces\CalculadorHonorariosAnestesistas.vb" />
     <Compile Include="Catalogos\CatalogoDeAuditLogs.vb" />
@@ -169,7 +170,6 @@
     <Compile Include="Interfaces\ICalculadorHonorarios.vb" />
     <Compile Include="Interfaces\ICatalogoMovimientos.vb" />
     <Compile Include="LineaPagoAnestesista.vb" />
-    <Compile Include="managers\ManagerComprobante.vb" />
     <Compile Include="Movimiento.vb" />
     <Compile Include="MovimientoStock.vb" />
     <Compile Include="PagoAnestesista.vb" />
@@ -241,6 +241,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="managers\" />
     <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

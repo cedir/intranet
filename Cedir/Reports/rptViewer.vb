@@ -43,7 +43,7 @@ Public Class rptViewer
                 r("nroCuit") = "Cuit : " & comp.DocumentoCliente.NroDocumento
                 r("condicionFiscal") = comp.CondicionFiscal
                 ' si el comprobante es liquidacion no posee gravado
-                If comp.TipoComprobante.Id = 2 Then
+                If comp.TipoComprobante.Id = TComprobante.Liquidacion Then
                     r("gravado") = ""
                 Else
                     r("gravado") = comp.Gravado.porcentaje.ToString()

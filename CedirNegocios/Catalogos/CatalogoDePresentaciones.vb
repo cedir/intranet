@@ -163,8 +163,7 @@ Public Class CatalogoDePresentaciones
             vPresentacion.fechaFacturacion = drPresentacion.Item("fechaFacturacion")
 
             'aca tenemos que controlar si la presentacion fue guardada o si fue ya facturada
-            If (drPresentacion.Item("idComprobante") IsNot DBNull.Value) Then
-
+            If (drPresentacion.Item("id") IsNot DBNull.Value) Then
 
                 vPresentacion.comprobante.IdComprobante = Convert.ToInt32(drPresentacion.Item("id"))
                 vPresentacion.comprobante.NroTerminal = Convert.ToInt32(drPresentacion.Item("nroTerminal"))

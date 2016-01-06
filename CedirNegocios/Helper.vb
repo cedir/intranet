@@ -11,6 +11,28 @@ Public Class Helper
 
     Dim com As String = """"
 
+    Shared Function IsSuccess(ByVal result As Dictionary(Of String, String)) As Boolean
+        Return result.ContainsKey(Constants.SUCCESS) And Boolean.Parse(result.Item(Constants.SUCCESS))
+    End Function
+
+    Shared Function GetMessage(ByVal result As Dictionary(Of String, String)) As String
+        Return IIf(result.ContainsKey(Constants.MESSAGE), result.Item(Constants.MESSAGE), String.Empty)
+    End Function
+
+    Shared Sub SetSuccess(ByVal result As Dictionary(Of String, String), ByVal value As Boolean)
+        result.Item(Constants.SUCCESS) = value.ToString
+    End Sub
+
+    Shared Sub SetMessage(ByVal result As Dictionary(Of String, String), ByVal message As String)
+        result.Item(Constants.MESSAGE) = message
+    End Sub
+
+    Shared Function Result(ByVal r As Dictionary(Of String, String), ByVal value As Boolean, ByVal message As String) As Dictionary(Of String, String)
+        r.Item(Constants.SUCCESS) = value.ToString
+        r.Item(Constants.MESSAGE) = message
+        Return r
+    End Function
+
     Public Function obtenerUltimoNro(ByVal tabla As String, ByVal campo As String) As Integer
         Dim da As New Consultas
         Dim dr As NpgsqlDataReader
@@ -19,6 +41,10 @@ Public Class Helper
         Return dr.Item(0)
     End Function
 
+    Public Shared Function EsComprobanteElectronico(ByVal tipoComprobanteId As Int32, ByVal nroTerminal As String) As Boolean
+        'TODO: quitar la constante
+        Return tipoComprobanteId <> TComprobante.Liquidacion And nroTerminal = Constants.TERMINAL_AFIP
+    End Function
 
     Public Function existeId(ByVal nombreTabla As String, ByVal condicion As String) As Boolean
         Dim da As New Consultas
@@ -104,7 +130,7 @@ Public Class Helper
         Dim caracteresValidos As String = "_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcddefghijklmnopqrstuvwxyz"
         Dim r As New Random
         Dim sb As New StringBuilder
-        
+
 
         'Dim sGUID As String
         Dim arr As New List(Of String)

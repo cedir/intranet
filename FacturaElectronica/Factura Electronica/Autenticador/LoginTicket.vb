@@ -26,7 +26,6 @@ Imports Microsoft.VisualBasic
 
     Public XmlLoginTicketRequest As XmlDocument = Nothing
     Public XmlLoginTicketResponse As XmlDocument = Nothing
-    Public RutaDelCertificadoFirmante As String
     Public XmlStrLoginTicketRequestTemplate As String = "<loginTicketRequest><header><uniqueId></uniqueId><generationTime></generationTime><expirationTime></expirationTime></header><service></service></loginTicketRequest>"
 
 
@@ -42,12 +41,6 @@ Imports Microsoft.VisualBasic
     '''<param name="argRutaCertX509Firmante">Ruta del certificado X509 (con clave privada) usado para firmar</param> 
     '''<remarks></remarks> 
     Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String) As String
-
-
-        Me.RutaDelCertificadoFirmante = argRutaCertX509Firmante
-
-
-
         Dim cmsFirmadoBase64 As String
         Dim loginTicketResponse As String
 

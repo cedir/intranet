@@ -515,14 +515,14 @@ Public Class FacturacionCobradaDetalle
 
 
     Private Sub btnAgregarComprobante_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarComprobante.Click
-        If cPresentacion.comprobante.Estado.ToUpper() <> "ANULADO" And cPresentacion.comprobante.TipoComprobante.Id = 1 Then
+        If cPresentacion.comprobante.Estado.ToUpper() <> "ANULADO" And cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
             Dim f As New frmComprobanteNuevo
             Me.AddOwnedForm(f)
             'el comprobante que pasamos es una factura.
             f.Comprobante = cPresentacion.comprobante
             'ahora seteamos el domicilio de manera completa.(esto es para presentaciones que no se hayan seteado de esta manera en NuevaPresentacion)
             f.Comprobante.DomicilioCliente = Me.cPresentacion.obraSocial.direccion & " - " & Me.cPresentacion.obraSocial.localidad & " - " & "(CP:" & Me.cPresentacion.obraSocial.CodigoPostal.ToString() & ")"
-            f.setComprobante()
+            f.SetComprobante()
             f.ShowDialog()
         Else
             MessageBox.Show("No se pueden crear nc o nd a " & vbCrLf & "liquidaciones o comprobantes anulados", "Atención")

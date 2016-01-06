@@ -648,7 +648,7 @@ Public Class FacturacionDetalle
         Else
 
             'si el comprobante es una liquidacion, no lo anulamos, lo mantenemos para la misma presentacion
-            If cPresentacion.comprobante.TipoComprobante.Id <> 2 Then
+            If cPresentacion.comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
                 Dim r As DialogResult = MessageBox.Show("Al abrir la presentación se anulará el comprobante asociado" + vbCrLf + "Esta seguro de continuar?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
                 If r = Windows.Forms.DialogResult.Yes Then
                     'Debemos anular el comprobante que estaba asociado a esa presentacion
