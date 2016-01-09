@@ -149,9 +149,6 @@ Public Class Presentacion
         End If
 
     End Function
-    Public Sub crearTipoComprobante(ByVal terminal As String)
-        Me.comprobante = New Comprobante
-    End Sub
 
     Public Function crearComprobante() As Dictionary(Of String, String)
         'CARGAMOS LA LINEA: EN FACTURA ELECTRONICA, SOLAMENTE VAMOS A NECESITAR UNA SOLA
