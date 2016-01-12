@@ -148,7 +148,7 @@ Public Class CatalogoDeComprobantes
 
     Public Function getUltimoNro(ByVal idTipo As Int32, Optional ByVal responsable As String = "", Optional ByVal subtipo As String = "", Optional ByVal nroTerminal As Integer = 1) As Int32
 
-        If Helper.EsComprobanteElectronico(idTipo, nroTerminal.ToString) Then
+        If Helper.EsComprobanteElectronico(idTipo) Then
             Dim tipoComprobanteAFIP As TipoDeComprobanteAFIP = Nothing
 
             For Each tipoCompAFIP As TipoDeComprobanteAFIP In tiposComprobanteAFIP

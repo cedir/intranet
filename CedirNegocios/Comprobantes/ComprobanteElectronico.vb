@@ -44,7 +44,7 @@ Public Class ComprobanteElectronico
     Public Shared Function Crear(ByVal comprobante As Comprobante) As Dictionary(Of String, String)
         Dim response As New Dictionary(Of String, String)
 
-        If Not Helper.EsComprobanteElectronico(comprobante.TipoComprobante.Id, comprobante.NroTerminal) Then
+        If Not Helper.EsComprobanteElectronico(comprobante.TipoComprobante.Id) Then
             Return Helper.Result(response, True, "El comprobante no aplica para ser enviado a AFIP.")
         End If
 
@@ -142,7 +142,7 @@ Public Class ComprobanteElectronico
         'Fecha de vencimiento del pago servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios). 
         'Formato yyyymmdd. Debe ser igual o posterior a la fecha del comprobante
 
-        dic.Item("MonId") = Constants.CUR_ARS
+        dic.Item("MonId") = ClienteFE.CUR_ARS
         dic.Item("MonCotiz") = 1.0
 
         Return dic

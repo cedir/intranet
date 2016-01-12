@@ -246,6 +246,11 @@ Public Class Comprobante
         Try
             Dim resp As String
 
+            'Obtiene el número de terminal
+            If Not Me.NroTerminal > 0 Then
+                Me.NroTerminal = GetPVFromResponsable(Me.Responsable)
+            End If
+
             'Obtiene el ultimo número de comprobante
             If Not Me.NroComprobante > 0 Then
                 Dim c As New CatalogoDeComprobantes
@@ -501,4 +506,8 @@ Public Class Comprobante
         cDatos = Nothing
 
     End Sub
+
+    Shared Function GetPVFromResponsable(ByVal responsable As String) As Integer
+        Return ClienteFE.GetPVFromResponsable(responsable)
+    End Function
 End Class

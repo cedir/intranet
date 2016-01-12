@@ -19,7 +19,7 @@ Public Class frmComprobanteNuevo
     Friend WithEvents cmbGravadoPaciente As System.Windows.Forms.ComboBox
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents btnQuitar As System.Windows.Forms.Button
-    Friend WithEvents cmbNroTerminal As System.Windows.Forms.ComboBox
+    Friend WithEvents txtNroTerminal As System.Windows.Forms.TextBox
     Friend WithEvents cmbTipoDocumento As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents colConcepto As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -84,8 +84,8 @@ Public Class frmComprobanteNuevo
     Friend WithEvents lblNroComprobante As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label5 = New System.Windows.Forms.Label
@@ -109,7 +109,7 @@ Public Class frmComprobanteNuevo
         Me.lblFecha = New System.Windows.Forms.Label
         Me.lblNroComprobante = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.cmbNroTerminal = New System.Windows.Forms.ComboBox
+        Me.txtNroTerminal = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
         Me.cmbSubTipo = New System.Windows.Forms.ComboBox
         Me.lblSubTipo = New System.Windows.Forms.Label
@@ -158,9 +158,9 @@ Public Class frmComprobanteNuevo
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(446, 22)
+        Me.Label5.Location = New System.Drawing.Point(441, 19)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(30, 16)
+        Me.Label5.Size = New System.Drawing.Size(35, 21)
         Me.Label5.TabIndex = 17
         Me.Label5.Text = "Tipo:"
         '
@@ -327,9 +327,9 @@ Public Class frmComprobanteNuevo
         '
         'lblNroComprobante
         '
-        Me.lblNroComprobante.Location = New System.Drawing.Point(353, 44)
+        Me.lblNroComprobante.Location = New System.Drawing.Point(353, 47)
         Me.lblNroComprobante.Name = "lblNroComprobante"
-        Me.lblNroComprobante.Size = New System.Drawing.Size(139, 23)
+        Me.lblNroComprobante.Size = New System.Drawing.Size(139, 20)
         Me.lblNroComprobante.TabIndex = 21
         Me.lblNroComprobante.Text = "Nro de Comprobante: "
         Me.lblNroComprobante.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -338,7 +338,7 @@ Public Class frmComprobanteNuevo
         '
         Me.GroupBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.GroupBox2.Controls.Add(Me.cmbNroTerminal)
+        Me.GroupBox2.Controls.Add(Me.txtNroTerminal)
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.cmbSubTipo)
         Me.GroupBox2.Controls.Add(Me.lblSubTipo)
@@ -357,18 +357,19 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Cabecera del Comprobante:"
         '
-        'cmbNroTerminal
+        'txtNroTerminal
         '
-        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
-        Me.cmbNroTerminal.Location = New System.Drawing.Point(498, 46)
-        Me.cmbNroTerminal.Name = "cmbNroTerminal"
-        Me.cmbNroTerminal.Size = New System.Drawing.Size(200, 21)
-        Me.cmbNroTerminal.TabIndex = 37
+        Me.txtNroTerminal.Enabled = False
+        Me.txtNroTerminal.Location = New System.Drawing.Point(498, 47)
+        Me.txtNroTerminal.Name = "txtNroTerminal"
+        Me.txtNroTerminal.ReadOnly = True
+        Me.txtNroTerminal.Size = New System.Drawing.Size(200, 20)
+        Me.txtNroTerminal.TabIndex = 37
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(710, 50)
+        Me.Label1.Location = New System.Drawing.Point(707, 51)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(10, 13)
         Me.Label1.TabIndex = 31
@@ -387,7 +388,7 @@ Public Class frmComprobanteNuevo
         'lblSubTipo
         '
         Me.lblSubTipo.AutoSize = True
-        Me.lblSubTipo.Location = New System.Drawing.Point(723, 22)
+        Me.lblSubTipo.Location = New System.Drawing.Point(723, 23)
         Me.lblSubTipo.Name = "lblSubTipo"
         Me.lblSubTipo.Size = New System.Drawing.Size(53, 13)
         Me.lblSubTipo.TabIndex = 28
@@ -397,6 +398,7 @@ Public Class frmComprobanteNuevo
         '
         Me.txtNroComprobante.Location = New System.Drawing.Point(726, 47)
         Me.txtNroComprobante.Name = "txtNroComprobante"
+        Me.txtNroComprobante.ReadOnly = True
         Me.txtNroComprobante.Size = New System.Drawing.Size(201, 20)
         Me.txtNroComprobante.TabIndex = 27
         Me.txtNroComprobante.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -469,10 +471,10 @@ Public Class frmComprobanteNuevo
         '
         'colImporteNeto
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle11.Format = "C2"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle11
         Me.colImporteNeto.HeaderText = "Importe Neto"
         Me.colImporteNeto.Name = "colImporteNeto"
         '
@@ -499,11 +501,11 @@ Public Class frmComprobanteNuevo
         'colSubtotal
         '
         Me.colSubtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.colSubtotal.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.BackColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle12.Format = "C2"
+        DataGridViewCellStyle12.NullValue = Nothing
+        Me.colSubtotal.DefaultCellStyle = DataGridViewCellStyle12
         Me.colSubtotal.FillWeight = 10.15228!
         Me.colSubtotal.HeaderText = "SUBTOTAL"
         Me.colSubtotal.Name = "colSubtotal"
@@ -653,7 +655,7 @@ Public Class frmComprobanteNuevo
 
     Public ReadOnly Property EsFacturaElectronica() As Boolean
         Get
-            Return cmbNroTerminal.SelectedItem IsNot Nothing AndAlso CType(cmbNroTerminal.SelectedItem, String).EndsWith(Constants.TERMINAL_AFIP) AndAlso Me.cmbTipoComprobante.SelectedValue IsNot Nothing AndAlso Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion AndAlso Me.cmbSubTipo.SelectedItem IsNot Nothing
+            Return Me.cmbTipoComprobante.SelectedValue IsNot Nothing AndAlso Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion
         End Get
     End Property
 
@@ -700,7 +702,7 @@ Public Class frmComprobanteNuevo
         'notaCredito o notaDébito
         If Me.Comprobante IsNot Nothing Then
             If Me.Comprobante.Factura IsNot Nothing Then
-                If Me.cmbTipoComprobante.SelectedValue <> 3 And Me.cmbTipoComprobante.SelectedValue <> 4 Then
+                If Me.cmbTipoComprobante.SelectedValue <> TComprobante.NotaDeDebito And Me.cmbTipoComprobante.SelectedValue <> TComprobante.NotaDeCredito Then
                     MsgBox("No puede crearse este tipo de comprobante", MsgBoxStyle.OkOnly, "Tipo de comprobante Invalido")
                     Validar = False
                 End If
@@ -746,20 +748,19 @@ Public Class frmComprobanteNuevo
     Private Sub CargarComprobante(ByVal p_com As Comprobante)
         'Tenemos que diferenciar que si el tipo de comprobante es una liquidación, 
         'algunos valores se setean vacios
-        If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() <> "LIQUIDACION" Then
+        If Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion Then
             p_com.Responsable = Me.cmbResponsable.Text
             p_com.Gravado = Me.cmbIVA.SelectedItem
             p_com.SubTipo = Me.cmbSubTipo.SelectedItem.ToString
         End If
         p_com.TipoComprobante = cmbTipoComprobante.SelectedItem
         p_com.NroComprobante = Convert.ToInt32(Me.txtNroComprobante.Text)
-        p_com.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
         p_com.NombreCliente = Me.txtNombre.Text
         p_com.DomicilioCliente = Me.txtDomicilio.Text
         p_com.DocumentoCliente.NroDocumento = Me.txtNroIdentificacionCliente.Text
         p_com.DocumentoCliente.idTipoDocumento = Me.cmbTipoDocumento.SelectedValue
         p_com.DocumentoCliente.Descripcion = Me.cmbTipoDocumento.DisplayMember
-        If (Me.cmbGravadoPaciente.Visible = True) Then
+        If Me.cmbGravadoPaciente.Visible Then
             p_com.GravadoPaciente = Me.cmbGravadoPaciente.SelectedItem
         End If
         p_com.CondicionFiscal = Me.cmbCondicionFiscal.Text
@@ -794,8 +795,8 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub cargarComboGravado()
-        Me.cmbIVA.DataSource = gravados
         Me.cmbIVA.DisplayMember = "descripcion"
+        Me.cmbIVA.DataSource = gravados
     End Sub
 
     Private Sub CargarComboTipoIdentificacionCliente()
@@ -818,11 +819,7 @@ Public Class frmComprobanteNuevo
             'Next
         Catch ex As Exception
         Finally
-
         End Try
-
-
-
     End Sub
     Private Sub CargarComboCondicionFiscal()
         'cmbCondicionFiscal.Items.Add("Seleccione..")
@@ -843,11 +840,12 @@ Public Class frmComprobanteNuevo
 
     Private Sub teclaPresionada(ByVal e As System.Windows.Forms.KeyEventArgs)
         If e.KeyCode = Keys.Delete Then
-            If (Me.dgvLineas.CurrentRow.Selected = True) Then
+            If Me.dgvLineas.CurrentRow.Selected Then
                 Me.dgvLineas.ClearSelection()
             End If
         End If
     End Sub
+
     Private Sub calcularUltimoNro()
         Dim c As New CatalogoDeComprobantes
 
@@ -863,7 +861,7 @@ Public Class frmComprobanteNuevo
         Else
             If Me.cmbResponsable.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
                 Dim terminal As Integer
-                If Int32.TryParse(cmbNroTerminal.SelectedItem, terminal) Then
+                If Int32.TryParse(txtNroTerminal.Text, terminal) Then
                     ultimoNumero = c.getUltimoNro(Me.cmbTipoComprobante.SelectedValue, Me.cmbResponsable.SelectedItem, Me.cmbSubTipo.SelectedItem, terminal)
                 End If
             End If
@@ -873,6 +871,7 @@ Public Class frmComprobanteNuevo
         End If
         c = Nothing
     End Sub
+
     Private Sub calcularImportesEnLineasDataGrid()
         'Mostramos la suma de los subtotales de las lineas
         Dim suma As Decimal = 0
@@ -941,7 +940,7 @@ Public Class frmComprobanteNuevo
         Me.cargarComboGravado()
 
 
-        cmbNroTerminal.SelectedIndex = 0
+        txtNroTerminal.Text = String.Empty
 
         Me.cmbGravadoPaciente.Visible = False
         Me.lblPacienteGravado.Visible = False
@@ -997,25 +996,30 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub cmbTipoComprobante_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipoComprobante.SelectedIndexChanged
-        If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() = "LIQUIDACION" Then
-            Me.cmbCondicionFiscal.Enabled = False
-            Me.cmbIVA.Enabled = False
-            Me.cmbResponsable.Enabled = False
-            Me.cmbSubTipo.Enabled = False
-            Me.cmbNroTerminal.Enabled = False
-        Else
-            Me.cmbCondicionFiscal.Enabled = True
-            Me.cmbIVA.Enabled = True
-            Me.cmbResponsable.Enabled = True
-            Me.cmbNroTerminal.Enabled = True
-            Me.cmbSubTipo.Enabled = True
+        Dim estado As Boolean = Me.EsFacturaElectronica
+
+        If Not estado Then
+            Me.cmbIVA.SelectedIndex = 0
+            Me.cmbResponsable.SelectedIndex = 0
+            Me.cmbSubTipo.SelectedIndex = -1
+            Me.cmbSubTipo.Text = "Seleccione sub-tipo"
         End If
+
+        Me.cmbResponsable.Enabled = estado
+        Me.cmbIVA.Enabled = estado
+        Me.cmbSubTipo.Enabled = estado
+
+        Me.cmbCondicionFiscal.Enabled = estado
+        Me.txtNroTerminal.Enabled = estado
+
         'Ahora traemos el nro de comprobante que tendrían que ingresar en el txtNroComprobante
         Me.calcularUltimoNro()
         NotifyPropertyChanged("EsFacturaElectronica")
     End Sub
 
     Private Sub cmbResponsable_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbResponsable.SelectedIndexChanged
+        Dim puntoVenta As Integer = Comprobante.GetPVFromResponsable(Me.cmbResponsable.Text)
+        Me.txtNroTerminal.Text = IIf(puntoVenta > 0, puntoVenta.ToString("D4"), String.Empty)
         Me.calcularUltimoNro()
     End Sub
 
@@ -1028,10 +1032,6 @@ Public Class frmComprobanteNuevo
         calcularImportesEnLineasDataGrid()
     End Sub
 
-    Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        Me.calcularUltimoNro()
-        NotifyPropertyChanged("EsFacturaElectronica")
-    End Sub
 #End Region
 
 #Region "DATAGRID EVENTS"

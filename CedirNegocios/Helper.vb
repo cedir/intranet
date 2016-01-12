@@ -41,9 +41,9 @@ Public Class Helper
         Return dr.Item(0)
     End Function
 
-    Public Shared Function EsComprobanteElectronico(ByVal tipoComprobanteId As Int32, ByVal nroTerminal As String) As Boolean
+    Public Shared Function EsComprobanteElectronico(ByVal tipoComprobanteId As Int32) As Boolean
         'TODO: quitar la constante
-        Return tipoComprobanteId <> TComprobante.Liquidacion And nroTerminal = Constants.TERMINAL_AFIP
+        Return tipoComprobanteId <> TComprobante.Liquidacion
     End Function
 
     Public Function existeId(ByVal nombreTabla As String, ByVal condicion As String) As Boolean

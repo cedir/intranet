@@ -81,7 +81,7 @@ Public Class NuevaPresentacion
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents PacienteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EstudioToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents cmbNroTerminal As System.Windows.Forms.ComboBox
+    Friend WithEvents txtNroTerminal As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -102,7 +102,7 @@ Public Class NuevaPresentacion
         Me.btnAgregar = New System.Windows.Forms.Button
         Me.btnGuardar = New System.Windows.Forms.Button
         Me.grpComprobante = New System.Windows.Forms.GroupBox
-        Me.cmbNroTerminal = New System.Windows.Forms.ComboBox
+        Me.txtNroTerminal = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
         Me.cmbSubTipo = New System.Windows.Forms.ComboBox
         Me.cmbGravado = New System.Windows.Forms.ComboBox
@@ -139,9 +139,9 @@ Public Class NuevaPresentacion
         '
         'cmbObraSocial
         '
-        Me.cmbObraSocial.Location = New System.Drawing.Point(19, 18)
+        Me.cmbObraSocial.Location = New System.Drawing.Point(16, 16)
         Me.cmbObraSocial.Name = "cmbObraSocial"
-        Me.cmbObraSocial.Size = New System.Drawing.Size(413, 24)
+        Me.cmbObraSocial.Size = New System.Drawing.Size(344, 21)
         Me.cmbObraSocial.TabIndex = 0
         Me.cmbObraSocial.Text = "Seleccione una Obra Social.."
         '
@@ -151,92 +151,92 @@ Public Class NuevaPresentacion
         Me.DataGrid1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.DataGrid1.DataMember = ""
         Me.DataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.DataGrid1.Location = New System.Drawing.Point(0, 9)
+        Me.DataGrid1.Location = New System.Drawing.Point(0, 8)
         Me.DataGrid1.Name = "DataGrid1"
-        Me.DataGrid1.Size = New System.Drawing.Size(994, 231)
+        Me.DataGrid1.Size = New System.Drawing.Size(828, 200)
         Me.DataGrid1.TabIndex = 1
         '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PacienteToolStripMenuItem, Me.EstudioToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 52)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(120, 48)
         '
         'PacienteToolStripMenuItem
         '
         Me.PacienteToolStripMenuItem.Name = "PacienteToolStripMenuItem"
-        Me.PacienteToolStripMenuItem.Size = New System.Drawing.Size(134, 24)
+        Me.PacienteToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
         Me.PacienteToolStripMenuItem.Text = "Paciente"
         '
         'EstudioToolStripMenuItem
         '
         Me.EstudioToolStripMenuItem.Name = "EstudioToolStripMenuItem"
-        Me.EstudioToolStripMenuItem.Size = New System.Drawing.Size(134, 24)
+        Me.EstudioToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
         Me.EstudioToolStripMenuItem.Text = "Estudio"
         '
         'btnFacturar
         '
-        Me.btnFacturar.Location = New System.Drawing.Point(29, 535)
+        Me.btnFacturar.Location = New System.Drawing.Point(24, 464)
         Me.btnFacturar.Name = "btnFacturar"
-        Me.btnFacturar.Size = New System.Drawing.Size(86, 28)
+        Me.btnFacturar.Size = New System.Drawing.Size(72, 24)
         Me.btnFacturar.TabIndex = 2
         Me.btnFacturar.Text = "Finalizar"
         '
         'lblTotal
         '
-        Me.lblTotal.Location = New System.Drawing.Point(19, 144)
+        Me.lblTotal.Location = New System.Drawing.Point(16, 125)
         Me.lblTotal.Name = "lblTotal"
-        Me.lblTotal.Size = New System.Drawing.Size(183, 28)
+        Me.lblTotal.Size = New System.Drawing.Size(152, 24)
         Me.lblTotal.TabIndex = 3
         Me.lblTotal.Text = "Total: $ "
         '
         'btnQuitarItem
         '
-        Me.btnQuitarItem.Location = New System.Drawing.Point(8, 28)
+        Me.btnQuitarItem.Location = New System.Drawing.Point(7, 24)
         Me.btnQuitarItem.Name = "btnQuitarItem"
-        Me.btnQuitarItem.Size = New System.Drawing.Size(125, 27)
+        Me.btnQuitarItem.Size = New System.Drawing.Size(104, 24)
         Me.btnQuitarItem.TabIndex = 4
         Me.btnQuitarItem.Text = "Quitar"
         '
         'btnMedicacion
         '
-        Me.btnMedicacion.Location = New System.Drawing.Point(8, 62)
+        Me.btnMedicacion.Location = New System.Drawing.Point(7, 54)
         Me.btnMedicacion.Name = "btnMedicacion"
-        Me.btnMedicacion.Size = New System.Drawing.Size(125, 27)
+        Me.btnMedicacion.Size = New System.Drawing.Size(104, 23)
         Me.btnMedicacion.TabIndex = 5
         Me.btnMedicacion.Text = "Medicación"
         '
         'lblImporteGravado
         '
         Me.lblImporteGravado.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lblImporteGravado.Location = New System.Drawing.Point(19, 83)
+        Me.lblImporteGravado.Location = New System.Drawing.Point(16, 72)
         Me.lblImporteGravado.Name = "lblImporteGravado"
-        Me.lblImporteGravado.Size = New System.Drawing.Size(183, 27)
+        Me.lblImporteGravado.Size = New System.Drawing.Size(152, 23)
         Me.lblImporteGravado.TabIndex = 7
         Me.lblImporteGravado.Text = "Gravado: $"
         '
         'lbltotalEstudios
         '
         Me.lbltotalEstudios.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lbltotalEstudios.Location = New System.Drawing.Point(19, 28)
+        Me.lbltotalEstudios.Location = New System.Drawing.Point(16, 24)
         Me.lbltotalEstudios.Name = "lbltotalEstudios"
-        Me.lbltotalEstudios.Size = New System.Drawing.Size(173, 26)
+        Me.lbltotalEstudios.Size = New System.Drawing.Size(144, 23)
         Me.lbltotalEstudios.TabIndex = 8
         Me.lbltotalEstudios.Text = "Estudios: $"
         '
         'lblGravado
         '
-        Me.lblGravado.Location = New System.Drawing.Point(13, 127)
+        Me.lblGravado.Location = New System.Drawing.Point(11, 110)
         Me.lblGravado.Name = "lblGravado"
-        Me.lblGravado.Size = New System.Drawing.Size(95, 15)
+        Me.lblGravado.Size = New System.Drawing.Size(79, 13)
         Me.lblGravado.TabIndex = 10
         Me.lblGravado.Text = "% Gravado :"
         '
         'btnImprimir
         '
-        Me.btnImprimir.Location = New System.Drawing.Point(240, 535)
+        Me.btnImprimir.Location = New System.Drawing.Point(200, 464)
         Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(77, 27)
+        Me.btnImprimir.Size = New System.Drawing.Size(64, 23)
         Me.btnImprimir.TabIndex = 12
         Me.btnImprimir.Text = "Imprimir"
         '
@@ -245,32 +245,32 @@ Public Class NuevaPresentacion
         Me.GroupBox1.Controls.Add(Me.lblTotal)
         Me.GroupBox1.Controls.Add(Me.lblImporteGravado)
         Me.GroupBox1.Controls.Add(Me.lbltotalEstudios)
-        Me.GroupBox1.Location = New System.Drawing.Point(691, 351)
+        Me.GroupBox1.Location = New System.Drawing.Point(576, 304)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(211, 175)
+        Me.GroupBox1.Size = New System.Drawing.Size(176, 152)
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Importes Totales"
         '
         'btnAgregar
         '
-        Me.btnAgregar.Location = New System.Drawing.Point(461, 18)
+        Me.btnAgregar.Location = New System.Drawing.Point(384, 16)
         Me.btnAgregar.Name = "btnAgregar"
-        Me.btnAgregar.Size = New System.Drawing.Size(90, 27)
+        Me.btnAgregar.Size = New System.Drawing.Size(75, 23)
         Me.btnAgregar.TabIndex = 17
         Me.btnAgregar.Text = "Agregar"
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(134, 535)
+        Me.btnGuardar.Location = New System.Drawing.Point(112, 464)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(90, 27)
+        Me.btnGuardar.Size = New System.Drawing.Size(75, 23)
         Me.btnGuardar.TabIndex = 18
         Me.btnGuardar.Text = "Guardar"
         '
         'grpComprobante
         '
-        Me.grpComprobante.Controls.Add(Me.cmbNroTerminal)
+        Me.grpComprobante.Controls.Add(Me.txtNroTerminal)
         Me.grpComprobante.Controls.Add(Me.Label1)
         Me.grpComprobante.Controls.Add(Me.cmbSubTipo)
         Me.grpComprobante.Controls.Add(Me.cmbGravado)
@@ -282,27 +282,27 @@ Public Class NuevaPresentacion
         Me.grpComprobante.Controls.Add(Me.cmbTipoComprobante)
         Me.grpComprobante.Controls.Add(Me.lblGravado)
         Me.grpComprobante.Controls.Add(Me.cmbResponsableComprobante)
-        Me.grpComprobante.Location = New System.Drawing.Point(305, 351)
+        Me.grpComprobante.Location = New System.Drawing.Point(254, 304)
         Me.grpComprobante.Name = "grpComprobante"
-        Me.grpComprobante.Size = New System.Drawing.Size(379, 174)
+        Me.grpComprobante.Size = New System.Drawing.Size(316, 151)
         Me.grpComprobante.TabIndex = 21
         Me.grpComprobante.TabStop = False
         Me.grpComprobante.Text = "Comprobante"
         '
-        'cmbNroTerminal
+        'txtNroTerminal
         '
-        Me.cmbNroTerminal.Items.AddRange(New Object() {"0001", "0090", "0091"})
-        Me.cmbNroTerminal.Location = New System.Drawing.Point(130, 20)
-        Me.cmbNroTerminal.Name = "cmbNroTerminal"
-        Me.cmbNroTerminal.Size = New System.Drawing.Size(85, 24)
-        Me.cmbNroTerminal.TabIndex = 36
+        Me.txtNroTerminal.Location = New System.Drawing.Point(108, 17)
+        Me.txtNroTerminal.Name = "txtNroTerminal"
+        Me.txtNroTerminal.ReadOnly = True
+        Me.txtNroTerminal.Size = New System.Drawing.Size(71, 20)
+        Me.txtNroTerminal.TabIndex = 36
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(263, 53)
+        Me.Label1.Location = New System.Drawing.Point(219, 46)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(61, 17)
+        Me.Label1.Size = New System.Drawing.Size(46, 13)
         Me.Label1.TabIndex = 35
         Me.Label1.Text = "Sub-tipo"
         '
@@ -310,84 +310,84 @@ Public Class NuevaPresentacion
         '
         Me.cmbSubTipo.FormattingEnabled = True
         Me.cmbSubTipo.Items.AddRange(New Object() {"A", "B"})
-        Me.cmbSubTipo.Location = New System.Drawing.Point(322, 50)
+        Me.cmbSubTipo.Location = New System.Drawing.Point(268, 43)
         Me.cmbSubTipo.Name = "cmbSubTipo"
-        Me.cmbSubTipo.Size = New System.Drawing.Size(45, 24)
+        Me.cmbSubTipo.Size = New System.Drawing.Size(38, 21)
         Me.cmbSubTipo.TabIndex = 34
         '
         'cmbGravado
         '
         Me.cmbGravado.FormattingEnabled = True
-        Me.cmbGravado.Location = New System.Drawing.Point(236, 123)
+        Me.cmbGravado.Location = New System.Drawing.Point(197, 107)
         Me.cmbGravado.Name = "cmbGravado"
-        Me.cmbGravado.Size = New System.Drawing.Size(131, 24)
+        Me.cmbGravado.Size = New System.Drawing.Size(109, 21)
         Me.cmbGravado.TabIndex = 33
         Me.cmbGravado.Text = "Seleccione..."
         '
         'lblGuion
         '
         Me.lblGuion.AutoSize = True
-        Me.lblGuion.Location = New System.Drawing.Point(222, 23)
+        Me.lblGuion.Location = New System.Drawing.Point(185, 20)
         Me.lblGuion.Name = "lblGuion"
-        Me.lblGuion.Size = New System.Drawing.Size(13, 17)
+        Me.lblGuion.Size = New System.Drawing.Size(10, 13)
         Me.lblGuion.TabIndex = 32
         Me.lblGuion.Text = "-"
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(14, 23)
+        Me.Label5.Location = New System.Drawing.Point(12, 20)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(60, 19)
+        Me.Label5.Size = New System.Drawing.Size(50, 16)
         Me.Label5.TabIndex = 27
         Me.Label5.Text = "Número :"
         '
         'txtNroComprobante
         '
-        Me.txtNroComprobante.Location = New System.Drawing.Point(241, 20)
+        Me.txtNroComprobante.Location = New System.Drawing.Point(201, 17)
         Me.txtNroComprobante.Name = "txtNroComprobante"
         Me.txtNroComprobante.ReadOnly = True
-        Me.txtNroComprobante.Size = New System.Drawing.Size(126, 22)
+        Me.txtNroComprobante.Size = New System.Drawing.Size(105, 20)
         Me.txtNroComprobante.TabIndex = 26
         Me.txtNroComprobante.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(13, 52)
+        Me.Label6.Location = New System.Drawing.Point(11, 45)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(95, 16)
+        Me.Label6.Size = New System.Drawing.Size(79, 14)
         Me.Label6.TabIndex = 25
         Me.Label6.Text = "Comprobante:"
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(13, 91)
+        Me.Label4.Location = New System.Drawing.Point(11, 79)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(95, 19)
+        Me.Label4.Size = New System.Drawing.Size(79, 16)
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Responsable: "
         '
         'cmbTipoComprobante
         '
         Me.cmbTipoComprobante.Items.AddRange(New Object() {""})
-        Me.cmbTipoComprobante.Location = New System.Drawing.Point(130, 50)
+        Me.cmbTipoComprobante.Location = New System.Drawing.Point(108, 43)
         Me.cmbTipoComprobante.Name = "cmbTipoComprobante"
-        Me.cmbTipoComprobante.Size = New System.Drawing.Size(130, 24)
+        Me.cmbTipoComprobante.Size = New System.Drawing.Size(109, 21)
         Me.cmbTipoComprobante.TabIndex = 12
         Me.cmbTipoComprobante.Text = "Seleccione.."
         '
         'cmbResponsableComprobante
         '
-        Me.cmbResponsableComprobante.Location = New System.Drawing.Point(236, 88)
+        Me.cmbResponsableComprobante.Location = New System.Drawing.Point(197, 76)
         Me.cmbResponsableComprobante.Name = "cmbResponsableComprobante"
-        Me.cmbResponsableComprobante.Size = New System.Drawing.Size(131, 24)
+        Me.cmbResponsableComprobante.Size = New System.Drawing.Size(109, 21)
         Me.cmbResponsableComprobante.TabIndex = 23
         Me.cmbResponsableComprobante.Text = "Seleccione..."
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(731, 18)
+        Me.Label3.Location = New System.Drawing.Point(609, 16)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(48, 27)
+        Me.Label3.Size = New System.Drawing.Size(40, 23)
         Me.Label3.TabIndex = 22
         Me.Label3.Text = "Fecha:"
         '
@@ -395,18 +395,18 @@ Public Class NuevaPresentacion
         '
         Me.TabControl1.Controls.Add(Me.TabEstudios)
         Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Location = New System.Drawing.Point(10, 55)
+        Me.TabControl1.Location = New System.Drawing.Point(8, 48)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1006, 287)
+        Me.TabControl1.Size = New System.Drawing.Size(839, 248)
         Me.TabControl1.TabIndex = 24
         '
         'TabEstudios
         '
         Me.TabEstudios.Controls.Add(Me.DataGrid1)
-        Me.TabEstudios.Location = New System.Drawing.Point(4, 25)
+        Me.TabEstudios.Location = New System.Drawing.Point(4, 22)
         Me.TabEstudios.Name = "TabEstudios"
-        Me.TabEstudios.Size = New System.Drawing.Size(998, 258)
+        Me.TabEstudios.Size = New System.Drawing.Size(831, 222)
         Me.TabEstudios.TabIndex = 0
         Me.TabEstudios.Text = "Estudios"
         Me.TabEstudios.UseVisualStyleBackColor = True
@@ -416,45 +416,45 @@ Public Class NuevaPresentacion
         Me.TabPage1.Controls.Add(Me.Label8)
         Me.TabPage1.Controls.Add(Me.txtOSObservaciones)
         Me.TabPage1.Controls.Add(Me.btnVerAranceles)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(998, 258)
+        Me.TabPage1.Size = New System.Drawing.Size(831, 222)
         Me.TabPage1.TabIndex = 2
         Me.TabPage1.Text = "Ayuda"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'Label8
         '
-        Me.Label8.Location = New System.Drawing.Point(326, 46)
+        Me.Label8.Location = New System.Drawing.Point(272, 40)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(96, 19)
+        Me.Label8.Size = New System.Drawing.Size(80, 16)
         Me.Label8.TabIndex = 3
         Me.Label8.Text = "Observaciones"
         '
         'txtOSObservaciones
         '
-        Me.txtOSObservaciones.Location = New System.Drawing.Point(10, 74)
+        Me.txtOSObservaciones.Location = New System.Drawing.Point(8, 64)
         Me.txtOSObservaciones.Multiline = True
         Me.txtOSObservaciones.Name = "txtOSObservaciones"
         Me.txtOSObservaciones.ReadOnly = True
         Me.txtOSObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtOSObservaciones.Size = New System.Drawing.Size(720, 111)
+        Me.txtOSObservaciones.Size = New System.Drawing.Size(600, 96)
         Me.txtOSObservaciones.TabIndex = 2
         '
         'btnVerAranceles
         '
-        Me.btnVerAranceles.Location = New System.Drawing.Point(19, 28)
+        Me.btnVerAranceles.Location = New System.Drawing.Point(16, 24)
         Me.btnVerAranceles.Name = "btnVerAranceles"
-        Me.btnVerAranceles.Size = New System.Drawing.Size(90, 26)
+        Me.btnVerAranceles.Size = New System.Drawing.Size(75, 23)
         Me.btnVerAranceles.TabIndex = 1
         Me.btnVerAranceles.Text = "Aranceles"
         '
         'DateTimePicker1
         '
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(788, 15)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(657, 13)
         Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(106, 22)
+        Me.DateTimePicker1.Size = New System.Drawing.Size(88, 20)
         Me.DateTimePicker1.TabIndex = 25
         '
         'GroupBox3
@@ -462,55 +462,55 @@ Public Class NuevaPresentacion
         Me.GroupBox3.Controls.Add(Me.btnAnest)
         Me.GroupBox3.Controls.Add(Me.btnQuitarItem)
         Me.GroupBox3.Controls.Add(Me.btnMedicacion)
-        Me.GroupBox3.Location = New System.Drawing.Point(38, 351)
+        Me.GroupBox3.Location = New System.Drawing.Point(32, 304)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(146, 127)
+        Me.GroupBox3.Size = New System.Drawing.Size(121, 110)
         Me.GroupBox3.TabIndex = 26
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Con el item seleccionado"
         '
         'btnAnest
         '
-        Me.btnAnest.Location = New System.Drawing.Point(8, 96)
+        Me.btnAnest.Location = New System.Drawing.Point(7, 83)
         Me.btnAnest.Name = "btnAnest"
-        Me.btnAnest.Size = New System.Drawing.Size(125, 26)
+        Me.btnAnest.Size = New System.Drawing.Size(104, 23)
         Me.btnAnest.TabIndex = 6
         Me.btnAnest.Text = "Anestesia" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'lblObraSocial
         '
-        Me.lblObraSocial.Location = New System.Drawing.Point(19, 18)
+        Me.lblObraSocial.Location = New System.Drawing.Point(16, 16)
         Me.lblObraSocial.Name = "lblObraSocial"
-        Me.lblObraSocial.Size = New System.Drawing.Size(394, 28)
+        Me.lblObraSocial.Size = New System.Drawing.Size(328, 24)
         Me.lblObraSocial.TabIndex = 27
         Me.lblObraSocial.Text = "nombre de obra social"
         '
         'btnCerrar
         '
-        Me.btnCerrar.Location = New System.Drawing.Point(346, 535)
+        Me.btnCerrar.Location = New System.Drawing.Point(288, 464)
         Me.btnCerrar.Name = "btnCerrar"
-        Me.btnCerrar.Size = New System.Drawing.Size(90, 27)
+        Me.btnCerrar.Size = New System.Drawing.Size(75, 23)
         Me.btnCerrar.TabIndex = 28
         Me.btnCerrar.Text = "Cerrar"
         '
         'Label7
         '
-        Me.Label7.Location = New System.Drawing.Point(67, 481)
+        Me.Label7.Location = New System.Drawing.Point(56, 417)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(173, 19)
+        Me.Label7.Size = New System.Drawing.Size(144, 16)
         Me.Label7.TabIndex = 38
         Me.Label7.Text = "Período de la Presentación"
         '
         'txtPeriodoPresentacion
         '
-        Me.txtPeriodoPresentacion.Location = New System.Drawing.Point(38, 500)
+        Me.txtPeriodoPresentacion.Location = New System.Drawing.Point(32, 433)
         Me.txtPeriodoPresentacion.Name = "txtPeriodoPresentacion"
-        Me.txtPeriodoPresentacion.Size = New System.Drawing.Size(221, 22)
+        Me.txtPeriodoPresentacion.Size = New System.Drawing.Size(184, 20)
         Me.txtPeriodoPresentacion.TabIndex = 37
         '
         'NuevaPresentacion
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1059, 591)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.txtPeriodoPresentacion)
@@ -575,11 +575,14 @@ Public Class NuevaPresentacion
 
     Dim gravados As New List(Of Gravado)
     Dim tiposComprobante As New List(Of TipoComprobante)
+    Dim catComprobante As New CatalogoDeTiposComprobante
 
 #End Region
 
     Private Sub NuevaPresentacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         hayUnaFacturacionInstanciada = True
+
+        tiposComprobante = catComprobante.getTiposComprobantePresentacion()
 
         Dim clNumero As DataColumn = New DataColumn("Nro", Type.GetType("System.String"))
         Dim clNumeroOrden As DataColumn = New DataColumn("Orden", Type.GetType("System.String"))
@@ -694,8 +697,6 @@ Public Class NuevaPresentacion
         DataGrid1.TableStyles.Add(ts1)
 
 
-
-
         'cargamos el combo gravados
         Me.cargarComboGravado()
         'cargamos el combo tipo de comprobante
@@ -708,7 +709,7 @@ Public Class NuevaPresentacion
         lblObraSocial.Visible = False
         cmbObraSocial.Visible = False
 
-        cmbNroTerminal.SelectedIndex = 0
+        txtNroTerminal.Text = String.Empty
 
         If esAltaPresentacion Then
             Me.Text = "Nueva Presentación"
@@ -767,19 +768,13 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cargarComboTipoComprobante()
-        Dim catTipo As New CatalogoDeTiposComprobante
-        Dim cTipos As New List(Of TipoComprobante)
-        cTipos = catTipo.getTiposComprobante()
-        Me.cmbTipoComprobante.Items.Clear()
-
-        For Each t As TipoComprobante In cTipos
-            If t.Id = TComprobante.Factura Or t.Id = TComprobante.Liquidacion Then
-                Me.cmbTipoComprobante.Items.Add(t.Descripcion)
-                tiposComprobante.Add(t)
-            End If
-        Next
-        catTipo = Nothing
-        cTipos = Nothing
+        Try
+            Me.cmbTipoComprobante.ValueMember = "Id"
+            Me.cmbTipoComprobante.DisplayMember = "Descripcion"
+            Me.cmbTipoComprobante.DataSource = New BindingSource(tiposComprobante, Nothing)
+        Catch ex As Exception
+        Finally
+        End Try
     End Sub
 
     Private Sub cmbObraSocial_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbObraSocial.SelectedIndexChanged
@@ -1088,9 +1083,7 @@ Public Class NuevaPresentacion
         lblTotal.Text = "Total: $ " & Str(Decimal.Round(total, 2, MidpointRounding.AwayFromZero))
     End Sub
     Private Sub cmbResponsableFactura_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbResponsableComprobante.SelectedIndexChanged
-
         calcularUltimoNro()
-
     End Sub
 
     Private Function validateData() As Boolean
@@ -1193,28 +1186,18 @@ Public Class NuevaPresentacion
     End Sub
 
     Private Sub cmbTipoComprobante_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipoComprobante.SelectedIndexChanged
-        If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper = "LIQUIDACION" Then
-            Me.cmbSubTipo.Enabled = False
-            Me.cmbGravado.Enabled = False
-            Me.cmbResponsableComprobante.Enabled = False
-            Me.cmbNroTerminal.Visible = False
-            'Me.txtNroTerminal.Visible = False
-            Me.lblGuion.Visible = False
-            Me.txtNroComprobante.Location = New Point(108, 17)
-            Me.txtNroComprobante.Width = 200
-            Me.cmbGravado.SelectedIndex = 0 'iva 0%
-            Me.setTotalesLabels()
+        Dim noEsLiquidacion As Boolean = Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion
 
-        Else
-            Me.cmbResponsableComprobante.Enabled = True
-            Me.cmbSubTipo.Enabled = True
-            Me.cmbGravado.Enabled = True
-            ' Me.txtNroTerminal.Visible = True
-            Me.cmbNroTerminal.Visible = True
-            Me.lblGuion.Visible = True
-            Me.txtNroComprobante.Location = New Point(201, 17)
-            Me.txtNroComprobante.Width = 105
+        Me.cmbSubTipo.Enabled = noEsLiquidacion
+        Me.cmbGravado.Enabled = noEsLiquidacion
+        Me.cmbResponsableComprobante.Enabled = noEsLiquidacion
+
+        If Not noEsLiquidacion Then
+            Me.cmbResponsableComprobante.SelectedIndex = 0
+            Me.cmbSubTipo.SelectedIndex = -1
+            Me.cmbGravado.SelectedIndex = 0 'iva 0%
         End If
+
         Me.setTotalesLabels()
         Me.calcularUltimoNro()
     End Sub
@@ -1256,11 +1239,10 @@ Public Class NuevaPresentacion
 
                 If Me.validarDatosComprobante Then
 
-                    'Este metodo crea tipo de comprobante, por medio del manager. (TipoComprobante = Electronico o no)
-                    cPresentacion.crearTipoComprobante(Me.cmbNroTerminal.SelectedItem)
-                    cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.cmbNroTerminal.SelectedItem)
+                    cPresentacion.comprobante = New Comprobante
+                    cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.txtNroTerminal.Text)
 
-                    cPresentacion.comprobante.TipoComprobante = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex)
+                    cPresentacion.comprobante.TipoComprobante = Me.cmbTipoComprobante.SelectedItem
                     'tenemos que vaciar los campos que no correspondan si es una liquidacion
                     'Tenemos en cuenta que si no es un alta, la liquidacion ya existe y mantenemos la misma
 
@@ -1447,28 +1429,37 @@ Public Class NuevaPresentacion
 
     Private Sub calcularUltimoNro()
         'A priori borramos
+        Me.txtNroTerminal.Text = String.Empty
         Me.txtNroComprobante.Text = String.Empty
 
         If Me.cmbTipoComprobante.SelectedIndex <> -1 Then
             Dim c As New CatalogoDeComprobantes
+            Dim puntoVenta As New Nullable(Of Integer)
             Dim ultimoNumero As New Nullable(Of Integer)
-            Dim tipoComprobante As Integer = Me.tiposComprobante(Me.cmbTipoComprobante.SelectedIndex).Id
+            Dim tipoComprobante As Integer = Me.cmbTipoComprobante.SelectedValue
 
             If tipoComprobante = TComprobante.Liquidacion Then
                 ultimoNumero = c.getUltimoNro(tipoComprobante)
             Else
                 If Me.cmbResponsableComprobante.SelectedIndex > 0 And Me.cmbSubTipo.SelectedIndex <> -1 And Me.cmbTipoComprobante.SelectedIndex <> -1 Then
-                    Dim terminal As Integer
-                    If Int32.TryParse(cmbNroTerminal.SelectedItem, terminal) Then
+                    Dim terminal As Integer = Comprobante.GetPVFromResponsable(Me.cmbResponsableComprobante.Text)
+                    If terminal <> 0 Then
+                        puntoVenta = terminal
                         ultimoNumero = c.getUltimoNro(tipoComprobante, Me.cmbResponsableComprobante.SelectedItem, Me.cmbSubTipo.SelectedItem, terminal)
                     End If
                 End If
             End If
+
+            If puntoVenta.HasValue Then
+                Me.txtNroTerminal.Text = puntoVenta.Value.ToString()
+            End If
+
             If ultimoNumero.HasValue Then
                 Me.txtNroComprobante.Text = (ultimoNumero.Value + 1).ToString()
             End If
             c = Nothing
         End If
+
     End Sub
 
     Private Sub DescripcionAnestesia()
@@ -1872,12 +1863,9 @@ Public Class NuevaPresentacion
         e.Graphics.DrawString("Esta factura contiene honorarios por cuenta y orden de médicos.", leyendaFont, Brushes.Black, drawRect)
 
         e.HasMorePages = False
-
-
     End Sub
+
 #End Region
-
-
 
     Private Sub cmbSubTipo_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbSubTipo.SelectedIndexChanged
         calcularUltimoNro()
@@ -1905,12 +1893,7 @@ Public Class NuevaPresentacion
         Next
         'borro la ultima coma
         concat = concat.Remove(concat.Length - 2)
-
         Return concat
-
-    End Function
-    Private Function obtenerDescripcionMaterialEspecifico() As String
-
     End Function
 
     Private Sub btnAnest_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAnest.Click
@@ -1945,17 +1928,13 @@ Public Class NuevaPresentacion
                     Me.DataGrid1.Item(i, 11) = total(i)
                 End If
             Next
-
         Catch ex As Exception
         Finally
             arr = Nothing
             estudios = Nothing
             calcu = Nothing
             MessageBox.Show("Los valores de la columna de anestesia son sugeridos." + vbCrLf + "Se sugiere realizar una comprobación.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         End Try
-
-
     End Sub
 
     Private Sub PacienteToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PacienteToolStripMenuItem.Click
@@ -1965,8 +1944,6 @@ Public Class NuevaPresentacion
         f.currentPaciente = est.paciente
         f.esAltaPaciente = False
         f.Show()
-
-
     End Sub
 
     Private Sub EstudioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EstudioToolStripMenuItem.Click
@@ -1975,11 +1952,6 @@ Public Class NuevaPresentacion
         Dim f As New NuevoEstudio(est)
         '  f.Parent = Me.Parent
         f.Show()
-
-    End Sub
-
-    Private Sub cmbNroTerminal_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbNroTerminal.SelectedIndexChanged
-        Me.calcularUltimoNro()
     End Sub
 
     Private Sub NuevaPresentacion_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles MyBase.KeyPress

@@ -16,6 +16,8 @@ Public Class ClienteFE
     Dim fecaeReq As wsfe.FECAERequest
     Dim fecaeResponse As wsfe.FECAEResponse
 
+    Public Const CUR_ARS As String = "PES"
+
     Public Function iniciar(ByVal responsable As String) As Boolean
         'Llamamos al servicio de autenticacion de afip LoginCMS
 
@@ -51,7 +53,8 @@ Public Class ClienteFE
 
     End Sub
 
-    Private Function GetCUITFromResponsable(ByVal responsable As String) As String
+    Shared Function GetCUITFromResponsable(ByVal responsable As String) As String
+        responsable = responsable.ToLower
         'TODO: pasar a base de datos?
         If responsable = "cedir" Then
             Return "30709300152"
@@ -59,6 +62,17 @@ Public Class ClienteFE
             Return "20118070659"
         End If
         Return String.Empty
+    End Function
+
+    Shared Function GetPVFromResponsable(ByVal responsable As String) As Integer
+        responsable = responsable.ToLower
+        'TODO: pasar a base de datos?
+        If responsable = "cedir" Then
+            Return 91
+        ElseIf responsable = "brunetti" Then
+            Return 3
+        End If
+        Return 0
     End Function
 
     Private Sub inicializarCombos()
@@ -235,7 +249,7 @@ Public Class ClienteFE
         objFECAEDetRequest.FchServDesde = dict.Item("FchServDesde")
         objFECAEDetRequest.FchServHasta = dict.Item("FchServHasta")
         objFECAEDetRequest.FchVtoPago = dict.Item("FchVtoPago")
-        objFECAEDetRequest.MonId = "PES"
+        objFECAEDetRequest.MonId = CUR_ARS
         objFECAEDetRequest.MonCotiz = 1.0
 
         objFECAEDetRequest.Iva = New wsfe.AlicIva(lineas.Count - 1) {}
