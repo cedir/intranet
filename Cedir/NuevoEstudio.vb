@@ -1209,7 +1209,7 @@ Public Class NuevoEstudio
                 Exit Sub
             End If
 
-            objWord = New Word.Application()
+            objWord = Nothing 'New Word.Application()
             objTempDoc = objWord.Documents.Add
             objWord.Visible = False
 

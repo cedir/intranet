@@ -40,7 +40,7 @@ Imports Microsoft.VisualBasic
     '''<param name="argUrlWsaa">URL del WSAA</param> 
     '''<param name="argRutaCertX509Firmante">Ruta del certificado X509 (con clave privada) usado para firmar</param> 
     '''<remarks></remarks> 
-    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String) As String
+    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String, ByVal password As String) As String
         Dim cmsFirmadoBase64 As String
         Dim loginTicketResponse As String
 
@@ -79,7 +79,7 @@ Imports Microsoft.VisualBasic
         ' PASO 2: Firmo el Login Ticket Request 
         Try
 
-            Dim certFirmante As X509Certificate = CertificadosX509Lib.ObtieneCertificadoDesdeArchivo(argRutaCertX509Firmante)
+            Dim certFirmante As X509Certificate = CertificadosX509Lib.ObtieneCertificadoDesdeArchivo(argRutaCertX509Firmante, password)
             ' Convierto el login ticket request a bytes, para firmar 
             Dim EncodedMsg As Encoding = Encoding.UTF8
             Dim msgBytes As Byte() = EncodedMsg.GetBytes(XmlLoginTicketRequest.OuterXml)

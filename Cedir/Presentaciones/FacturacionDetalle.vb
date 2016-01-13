@@ -646,20 +646,25 @@ Public Class FacturacionDetalle
         If hayUnaFacturacionInstanciada Then
             MsgBox("Ya hay una ventana Nueva Facturación abierta. Ciérrela y vuelva a intentarlo.", MsgBoxStyle.Information, "No se puede abrir la ventana Nueva Facturación")
         Else
-
             'si el comprobante es una liquidacion, no lo anulamos, lo mantenemos para la misma presentacion
             If cPresentacion.comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
-                Dim r As DialogResult = MessageBox.Show("Al abrir la presentación se anulará el comprobante asociado" + vbCrLf + "Esta seguro de continuar?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                Dim r As DialogResult = MessageBox.Show("Al abrir la presentación se generará una Nota de Crédito que anule la Factura asociada." + vbCrLf + "Esta seguro de continuar?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
                 If r = Windows.Forms.DialogResult.Yes Then
-                    'Debemos anular el comprobante que estaba asociado a esa presentacion
-                    'ya que ahora se creará uno nuevo
-                    cPresentacion.comprobante.cambiarEstado("ANULADO")
+                    'generamos una nota de crédito que anule la factura
+                    Dim result As Dictionary(Of String, String) = cPresentacion.GenerarNotaDeCredito()
+                    If Not Helper.IsSuccess(result) Then
+                        MessageBox.Show(Helper.GetMessage(result), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    Else
+                        MessageBox.Show(Helper.GetMessage(result), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
                     'Seteamos en null el campo idComprobante en la tabla facturacion
                     cPresentacion.anularComprobante()
                 Else
                     Exit Sub
                 End If
             End If
+
             Dim frm As New NuevaPresentacion(cPresentacion.idPresentacion)
             frm.MdiParent = Me.Parent.Parent
             frm.Show()

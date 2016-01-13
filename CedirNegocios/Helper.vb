@@ -33,6 +33,10 @@ Public Class Helper
         Return r
     End Function
 
+    Shared Function Result(ByVal value As Boolean, ByVal message As String) As Dictionary(Of String, String)
+        Return Result(New Dictionary(Of String, String), value, message)
+    End Function
+
     Public Function obtenerUltimoNro(ByVal tabla As String, ByVal campo As String) As Integer
         Dim da As New Consultas
         Dim dr As NpgsqlDataReader

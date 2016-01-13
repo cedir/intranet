@@ -40,7 +40,7 @@ Public Class ClienteFE
     ''' <remarks></remarks>
     Private Sub InicializarAutenticador(ByVal responsable As String)
         If lt.ExpirationTime <= DateTime.Now Then
-            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", String.Format(My.Settings.rutaClaveCertificadoFE, responsable))
+            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", GetKeyLocationFromResponsable(responsable), GetPasswordFromResponsable(responsable))
         End If
     End Sub
 
@@ -74,6 +74,24 @@ Public Class ClienteFE
         End If
         Return 0
     End Function
+
+    Shared Function GetPasswordFromResponsable(ByVal responsable As String) As String
+        responsable = responsable.ToLower
+        'TODO: pasar a base de datos?
+        If responsable = "cedir" Then
+            Return String.Empty
+        ElseIf responsable = "brunetti" Then
+            Return "endocapsula"
+        End If
+        Return String.Empty
+    End Function
+
+    Shared Function GetKeyLocationFromResponsable(ByVal responsable As String) As String
+        responsable = responsable.ToLower
+        'TODO: pasar a base de datos?
+        Return String.Format(My.Settings.rutaClaveCertificadoFE, responsable)
+    End Function
+
 
     Private Sub inicializarCombos()
 

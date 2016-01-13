@@ -368,6 +368,7 @@ Public Class Comprobante
             arr = Nothing
         End Try
     End Function
+
     Public Sub cambiarEstado(ByVal estado As String)
         Dim cDatos As New Nuevo
         Dim arr As New ArrayList
@@ -382,6 +383,7 @@ Public Class Comprobante
             Me.Estado = estado
         End Try
     End Sub
+
     Public Sub setGravado()
         Dim com As String = """"
         Dim cDatos As New Consultas
@@ -404,6 +406,7 @@ Public Class Comprobante
             dr = Nothing
         End Try
     End Sub
+
     'Public Function doesExist() As Boolean
     '    Dim com As String = """"
     '    Dim cDatos As New Consultas
@@ -428,6 +431,7 @@ Public Class Comprobante
     '    End Try
 
     'End Function
+
     Public Sub getFactura(ByVal idFactura As Int32)
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -493,6 +497,7 @@ Public Class Comprobante
         Me.Factura = oComprobante
 
     End Sub
+
     Public Sub updateTotalCobrado()
         Dim com As String = """"
         Dim oComprobante As New Comprobante
@@ -506,6 +511,45 @@ Public Class Comprobante
         cDatos = Nothing
 
     End Sub
+
+    Public Function GenerarNotaDeCredito() As Comprobante
+        If Me.TipoComprobante IsNot Nothing AndAlso Me.TipoComprobante.Id = TComprobante.Factura Then
+            Dim result As New Comprobante
+
+            result.CondicionFiscal = Me.CondicionFiscal
+
+            result.DocumentoCliente.NroDocumento = Me.DocumentoCliente.NroDocumento
+            result.DocumentoCliente.idTipoDocumento = 80
+            result.DocumentoCliente.Descripcion = "CUIT"
+
+            result.DomicilioCliente = Me.DomicilioCliente
+            result.Estado = "NO COBRADO"
+            result.Factura = Me
+            result.FechaEmision = Date.Today
+            result.Gravado = Me.Gravado
+            result.GravadoPaciente = Me.GravadoPaciente
+
+            ' Agregamos una línea que 
+            Dim linea As New LineaDeComprobante
+            linea.Concepto = String.Format("AJUSTA FACTURA {0} No {1:D4}-{2:D8} SEGÚN DEBITO APLICADO", Me.SubTipo, Me.NroTerminal, Me.NroComprobante)
+            linea.Comprobante = result
+            linea.Subtotal = Me.TotalFacturado
+            linea.importeNeto = Math.Round((Me.TotalFacturado * 100) / (100 + Me.Gravado.porcentaje), 2)
+            linea.ImporteIVA = linea.Subtotal - linea.importeNeto
+            result.LineasDeComprobante.Add(linea)
+
+            result.NombreCliente = Me.NombreCliente
+            result.Responsable = Me.Responsable
+
+            result.TipoComprobante.Id = TComprobante.NotaDeCredito
+            result.SubTipo = Me.SubTipo
+
+            result.TotalFacturado = Me.TotalFacturado
+
+            Return result
+        End If
+        Return Nothing
+    End Function
 
     Shared Function GetPVFromResponsable(ByVal responsable As String) As Integer
         Return ClienteFE.GetPVFromResponsable(responsable)
