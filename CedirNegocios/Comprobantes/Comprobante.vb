@@ -243,6 +243,14 @@ Public Class Comprobante
         f2 = help.convertDate(Me.FechaRecepcion)
         Dim com As String = """"
 
+        If Me.TotalFacturado < Constants.MIN_FACT Then
+            Return Helper.Result(result, False, "El importe facturado es inferior al mínimo.")
+        End If
+
+        If Me.LineasDeComprobante.Count = 0 Then
+            Return Helper.Result(result, False, "El comprobante no posee líneas de detalle.")
+        End If
+
         Try
             Dim resp As String
 

@@ -308,8 +308,7 @@ Public Class frmABMMovimientoCaja
     End Sub
 
     Private Function validarMonto(ByVal text As String) As Boolean
-        Dim h As New Helper
-        validarMonto = h.validaNumero(text)
+        validarMonto = Helper.ValidaNumero(text)
     End Function
 
     Public Sub reload()

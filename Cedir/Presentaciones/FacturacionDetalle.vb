@@ -515,7 +515,7 @@ Public Class FacturacionDetalle
 
         cmbResponsableComprobante.Items.Add("Seleccionar..")
         cmbResponsableComprobante.Items.Add("Cedir")
-        cmbResponsableComprobante.Items.Add("Dr Brunetti")
+        cmbResponsableComprobante.Items.Add("Brunetti")
 
         Me.mostrarDatosComprobante()
 
@@ -1088,7 +1088,7 @@ Public Class FacturacionDetalle
         Select Case cPresentacion.comprobante.Responsable.ToUpper
             Case "CEDIR"
                 cmbResponsableComprobante.SelectedIndex = 1
-            Case "DR BRUNETTI"
+            Case "BRUNETTI"
                 cmbResponsableComprobante.SelectedIndex = 2
         End Select
 

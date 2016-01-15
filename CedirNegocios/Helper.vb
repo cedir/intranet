@@ -91,11 +91,11 @@ Public Class Helper
         Return arrMeses
     End Function
 
+    Shared objRegExp As New Regex("(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)")
 
     'VALIDA numeros ingresados, pudiendo contener decimales
-    Public Function validaNumero(ByVal exp As String) As Boolean
-        Dim objRegExp As New Regex("(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)")
-        Return objRegExp.IsMatch(exp)
+    Public Shared Function ValidaNumero(ByVal exp As String) As Boolean
+        Return exp IsNot Nothing AndAlso objRegExp.IsMatch(exp)
     End Function
 
 
@@ -145,6 +145,32 @@ Public Class Helper
 
         Return sb.ToString()
 
+
+    End Function
+
+    Public Shared Function GetDecimal(ByRef valor As Object) As Decimal
+        If valor Is Nothing Then
+            Return 0D
+        Else
+            Return Math.Round(Convert.ToDecimal(valor), 2, MidpointRounding.AwayFromZero)
+        End If
+
+    End Function
+
+    Public Shared Function GetString(ByRef valor As Object) As String
+        If valor Is Nothing Then
+            Return String.Empty
+        Else
+            Return Convert.ToString(valor)
+        End If
+    End Function
+
+    Public Shared Function GetInteger(ByRef valor As Object) As Integer
+        If valor Is Nothing Then
+            Return 0
+        Else
+            Return Convert.ToInt32(valor)
+        End If
 
     End Function
 
