@@ -707,6 +707,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Claves\brunetti.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Claves\cedir.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

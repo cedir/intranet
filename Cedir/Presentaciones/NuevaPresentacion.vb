@@ -1127,7 +1127,7 @@ Public Class NuevaPresentacion
 
             'Si el comprobante no es una liquidación no hay que validar que haya completado los demas
             'campos
-            If Me.cmbTipoComprobante.SelectedItem.ToString.ToUpper() <> "LIQUIDACION" Then
+            If Me.cmbTipoComprobante.SelectedItem.Id <> TComprobante.Liquidacion Then
 
                 'el combo fue seteado en selected=0 ("seleccione...")
                 If Me.cmbResponsableComprobante.SelectedIndex = 0 Then
@@ -1240,15 +1240,14 @@ Public Class NuevaPresentacion
                 If Me.validarDatosComprobante Then
 
                     cPresentacion.comprobante = New Comprobante
-                    cPresentacion.comprobante.NroTerminal = Convert.ToInt32(Me.txtNroTerminal.Text)
 
                     cPresentacion.comprobante.TipoComprobante = Me.cmbTipoComprobante.SelectedItem
                     'tenemos que vaciar los campos que no correspondan si es una liquidacion
                     'Tenemos en cuenta que si no es un alta, la liquidacion ya existe y mantenemos la misma
 
                     If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
-                        cPresentacion.comprobante.Responsable = ""
-                        cPresentacion.comprobante.SubTipo = ""
+                        cPresentacion.comprobante.Responsable = String.Empty
+                        cPresentacion.comprobante.SubTipo = String.Empty
                         cPresentacion.comprobante.Gravado = Nothing
                     Else
                         'Si no es liquidación, dejo los datos que ya estaban seteados 

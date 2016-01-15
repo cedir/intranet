@@ -628,19 +628,23 @@ Public Class frmComprobanteNuevo
 
 #Region "CABEZA"
     Public Sub CargarObjeto(ByVal p_os As ObraSocial)
-        Me.txtNombre.Text = p_os.ObraSocial
-        Me.txtNroIdentificacionCliente.Text = p_os.nroCuit
-        Me.txtDomicilio.Text = p_os.direccion & " - " & p_os.localidad & " - " & "(CP:" & p_os.CodigoPostal.ToString() & ")"
-        Me.cmbCondicionFiscal.Text = p_os.CondicionFiscal
-        NotifyPropertyChanged("ObraSocial")
+        If p_os IsNot Nothing Then
+            Me.txtNombre.Text = p_os.ObraSocial
+            Me.txtNroIdentificacionCliente.Text = p_os.nroCuit
+            Me.txtDomicilio.Text = p_os.direccion & " - " & p_os.localidad & " - " & "(CP:" & p_os.CodigoPostal.ToString() & ")"
+            Me.cmbCondicionFiscal.Text = p_os.CondicionFiscal
+            NotifyPropertyChanged("ObraSocial")
+        End If
     End Sub
     'Sobrecargamos el metodo para que pueda ser llamado sin importar el objeto enviado (paciente u obra social)
     Public Sub CargarObjeto(ByVal p_pac As Paciente)
-        Me.txtNombre.Text = p_pac.nombreCompleto
-        Me.txtDomicilio.Text = p_pac.direccion
-        Me.cmbCondicionFiscal.Text = ""
-        Me.cmbCondicionFiscal.SelectedIndex = 0
-        NotifyPropertyChanged("Persona")
+        If p_pac IsNot Nothing Then
+            Me.txtNombre.Text = p_pac.nombreCompleto
+            Me.txtDomicilio.Text = p_pac.direccion
+            Me.cmbCondicionFiscal.Text = ""
+            Me.cmbCondicionFiscal.SelectedIndex = 0
+            NotifyPropertyChanged("Persona")
+        End If
     End Sub
 #End Region
 
@@ -728,12 +732,13 @@ Public Class frmComprobanteNuevo
         For Each row As DataGridViewRow In Me.dgvLineas.Rows
             If row.IsNewRow Then Continue For
             Dim linea As New LineaDeComprobante
-            linea.importeNeto = Convert.ToDecimal(row.Cells("colImporteNeto").Value)
-            linea.Concepto = row.Cells("colConcepto").Value.ToString
-            linea.ImporteIVA = row.Cells("colImporteIVA").Value.ToString
-            Dim subtotal As Decimal = Convert.ToDecimal((row.Cells("colSubtotal").Value.ToString.Trim))
-            linea.Subtotal = Format(subtotal, "#########0.00")
-            lineas.Add(linea)
+            linea.Concepto = Helper.GetString(row.Cells("colConcepto").Value)
+            linea.importeNeto = Helper.GetDecimal(row.Cells("colImporteNeto").Value)
+            linea.ImporteIVA = Helper.GetDecimal(row.Cells("colImporteIVA").Value)
+            linea.Subtotal = Helper.GetDecimal(row.Cells("colSubtotal").Value)
+            If linea.Subtotal >= Constants.MIN_FACT Then
+                lineas.Add(linea)
+            End If
         Next
         Return lineas
     End Function
@@ -875,19 +880,20 @@ Public Class frmComprobanteNuevo
     Private Sub calcularImportesEnLineasDataGrid()
         'Mostramos la suma de los subtotales de las lineas
         Dim suma As Decimal = 0
-        For Each row As DataGridViewRow In Me.dgvLineas.Rows
-            '        row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * Convert.ToDecimal(row.Cells("colPorcIVA").Value) / 100)).ToString()
-            '        row.Cells("colSubtotal").Value = Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)
-            If row.Cells("colImporteNeto").Value <> "" Then
-                Dim h As New Helper
-                If h.validaNumero(row.Cells("colImporteNeto").Value.ToString) Then
 
-                    row.Cells("colImporteIVA").Value = (Convert.ToDecimal(row.Cells("colImporteNeto").Value * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100).ToString("F2")
-                    row.Cells("colSubtotal").Value = (Convert.ToDecimal(row.Cells("colImporteIVA").Value) + Convert.ToDecimal(row.Cells("colImporteNeto").Value)).ToString("F2")
-                    suma = suma + Convert.ToDecimal(row.Cells("colSubtotal").Value)
-                Else : lineaValida = False
-                End If
-                h = Nothing
+        For Each row As DataGridViewRow In Me.dgvLineas.Rows
+            If Helper.ValidaNumero(row.Cells("colImporteNeto").Value) Then
+                Dim importeNeto As Decimal = Helper.GetDecimal(row.Cells("colImporteNeto").Value)
+                Dim importeIVA As Decimal = (importeNeto * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100
+                row.Cells("colImporteNeto").Value = importeNeto.ToString("F2")
+                row.Cells("colImporteIVA").Value = importeIVA.ToString("F2")
+                row.Cells("colSubtotal").Value = (importeNeto + importeIVA).ToString("F2")
+                suma = suma + importeNeto + importeIVA
+            Else
+                row.Cells("colImporteNeto").Value = String.Empty
+                row.Cells("colImporteIVA").Value = String.Empty
+                row.Cells("colSubtotal").Value = String.Empty
+                lineaValida = False
             End If
         Next
         Me.lblTotalSuma.Text = suma.ToString("C2")
@@ -1040,15 +1046,12 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub dgvLineas_CellFormatting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvLineas.CellFormatting
-        If Me.dgvLineas.Rows.Count > 0 Then
-            Me.btnQuitar.Visible = True
-        Else
-            Me.btnQuitar.Visible = False
-        End If
-        Dim h As New Helper
+
+        Me.btnQuitar.Visible = Me.dgvLineas.Rows.Count > 0
+
         If e.ColumnIndex = Me.dgvLineas.Columns("colSubtotal").Index AndAlso Not (e.Value Is Nothing) Then
             With Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal")
-                If Not h.validaNumero(e.Value.ToString) Then
+                If Not Helper.ValidaNumero(e.Value.ToString) Then
                     .ToolTipText = "ingrese números válidos por favor"
                     Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").ErrorText = "Los caracteres ingresados no son numeros validos"
                     lineaValida = False
@@ -1057,8 +1060,6 @@ Public Class frmComprobanteNuevo
                 End If
             End With
         End If
-
-        h = Nothing
     End Sub
 
     Private Sub dgvLineas_CellValidated(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellValidated
