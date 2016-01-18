@@ -56,11 +56,11 @@ Public Module CertificadosX509Lib
     ''' <param name="argArchivo">Ruta del certificado a leer.</param> 
     '''<returns>Un objeto certificado X509</returns> 
     ''' <remarks></remarks> 
-    Public Function ObtieneCertificadoDesdeArchivo(ByVal argArchivo As String) As X509Certificate2
+    Public Function ObtieneCertificadoDesdeArchivo(ByVal argArchivo As String, ByVal password As String) As X509Certificate2
 
         Dim objCert As X509Certificate2 = New X509Certificate2()
         Try
-            objCert.Import(Microsoft.VisualBasic.FileIO.FileSystem.ReadAllBytes(argArchivo), "", X509KeyStorageFlags.DefaultKeySet)
+            objCert.Import(Microsoft.VisualBasic.FileIO.FileSystem.ReadAllBytes(argArchivo), password, X509KeyStorageFlags.DefaultKeySet)
             Return objCert
         Catch excepcionAlImportarCertificado As Exception
             Throw New Exception("argArchivo=" + argArchivo + " excepcion=" + excepcionAlImportarCertificado.Message + " " + excepcionAlImportarCertificado.StackTrace)

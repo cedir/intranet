@@ -368,9 +368,19 @@ Public Class Presentacion
 
     Public Sub anularComprobante() 'este metodo anula el comprobante al abrir la presentacion
         Dim cDatos As New Nuevo
-        Dim resp As String = cDatos.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+        Dim resp As String = cDatos.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL, " & com & "pagado" & com & " = " & "2", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
         cDatos = Nothing
     End Sub
+
+    Public Function GenerarNotaDeCredito() As Dictionary(Of String, String)
+        If Me.comprobante IsNot Nothing Then
+            Dim nota As Comprobante = Me.comprobante.GenerarNotaDeCredito()
+            If nota IsNot Nothing Then
+                Return nota.crear()
+            End If
+        End If
+        Return Helper.Result(False, "Error al generar la Nota de Crédito que anula la Factura de la Presentación.")
+    End Function
 
     Public Function calcularComprobanteTotalCobrado() As Decimal
         'este metodo lo utilizo cuando hago un cobro de presentacion.

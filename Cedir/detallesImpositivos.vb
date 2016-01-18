@@ -408,8 +408,7 @@ Public Class detallesImpositivos
     End Function
 
     Private Sub btnAplicarArancelAnestesia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAplicarArancelAnestesia.Click
-        Dim h As New Helper
-        If (h.validaNumero(Me.txtImporteArancelAnestesia.Text)) Then
+        If (Helper.ValidaNumero(Me.txtImporteArancelAnestesia.Text)) Then
             Me.currentEstudio.ArancelAnestesia = Convert.ToDecimal(Me.txtImporteArancelAnestesia.Text)
             Dim resp As String = Me.currentEstudio.guardarArancelAnestesia()
             If resp = "ok" Then
