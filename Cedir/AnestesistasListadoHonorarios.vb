@@ -21,7 +21,10 @@ Public Class AnestesistasListadoHonorarios
 
 #Region "Eventos del formulario"
     Private Sub AnestesistaListado1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.cmbAno.SelectedIndex = 1
+        For index As Integer = 0 To 10
+            cmbAno.Items.Add(CStr(Today.Year - index))
+        Next
+        Me.cmbAno.SelectedIndex = 0
         Me.cmbMeses.SelectedIndex = 0
         Me.cargarComboAnestesistas()
         sMedicoAnestesista = arrAnestesistas(cmbAnestesistas.SelectedIndex)

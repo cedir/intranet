@@ -374,13 +374,9 @@ Public Class InformeMensualComprobantes
 
         cmbMeses.SelectedIndex = 0
 
-        cmbAno.Items.Add("2010")
-        cmbAno.Items.Add("2011")
-        cmbAno.Items.Add("2012")
-        cmbAno.Items.Add("2013")
-        cmbAno.Items.Add("2014")
-        cmbAno.Items.Add("2015")
-
+        For index As Integer = 0 To 10
+            cmbAno.Items.Add(CStr(Today.Year - index))
+        Next
 
         cmbAno.SelectedItem = CStr(Today.Year)
 

@@ -592,20 +592,10 @@ Public Class PresentacionAMRAltaModificacion
 
         'cargamos el combo año
         cmbAno.Items.Add("Año")
-        cmbAno.Items.Add("2007")
-        cmbAno.Items.Add("2008")
-        cmbAno.Items.Add("2009")
-        cmbAno.Items.Add("2010")
-        cmbAno.Items.Add("2011")
-        cmbAno.Items.Add("2012")
-        cmbAno.Items.Add("2013")
-        cmbAno.Items.Add("2014")
-        cmbAno.Items.Add("2015")
-        cmbAno.Items.Add("2016")
-        cmbAno.SelectedItem = CStr(Today.Year)
 
-
-
+        For index As Integer = 0 To 10
+            cmbAno.Items.Add(CStr(Today.Year - index))
+        Next
 
     End Sub
 

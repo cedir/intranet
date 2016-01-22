@@ -471,12 +471,9 @@ Public Class BuscarPresentacion
 
     Private Sub cargarComboAño()
         cmbAnio.Items.Insert(0, "Seleccione año...")
-        cmbAnio.Items.Add("2010")
-        cmbAnio.Items.Add("2011")
-        cmbAnio.Items.Add("2012")
-        cmbAnio.Items.Add("2013")
-        cmbAnio.Items.Add("2014")
-        cmbAnio.Items.Add("2015")
+        For index As Integer = 0 To 10
+            cmbAnio.Items.Add(CStr(Today.Year - index))
+        Next
         cmbAnio.SelectedIndex = 0
     End Sub
 
