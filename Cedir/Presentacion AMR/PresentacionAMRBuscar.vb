@@ -122,7 +122,6 @@ Public Class PresentacionAMRBuscar
         'cmbAno
         '
         Me.cmbAno.FormattingEnabled = True
-        Me.cmbAno.Items.AddRange(New Object() {"2011", "2012", "2013", "2014", "2015", "2016"})
         Me.cmbAno.Location = New System.Drawing.Point(298, 19)
         Me.cmbAno.Name = "cmbAno"
         Me.cmbAno.Size = New System.Drawing.Size(76, 21)
@@ -203,7 +202,9 @@ Public Class PresentacionAMRBuscar
     Dim cHelp As New Helper
     Dim arrObrasSociales As New ArrayList
     Private Sub FacturacionAMRListar_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
+        For index As Integer = 0 To 10
+            cmbAno.Items.Add(CStr(Today.Year - index))
+        Next
     End Sub
     Private Sub cargar()
         Dim catPresentaciones As New CatalogoDePresentaciones

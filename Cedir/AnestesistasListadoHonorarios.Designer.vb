@@ -149,7 +149,6 @@ Partial Class AnestesistasListadoHonorarios
         '
         'cmbAno
         '
-        Me.cmbAno.Items.AddRange(New Object() {"2011", "2012", "2013", "2014", "2015"})
         Me.cmbAno.Location = New System.Drawing.Point(328, 16)
         Me.cmbAno.Name = "cmbAno"
         Me.cmbAno.Size = New System.Drawing.Size(80, 21)
