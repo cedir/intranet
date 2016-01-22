@@ -995,6 +995,14 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub btnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimir.Click
+        If Comprobante Is Nothing OrElse Comprobante.TipoComprobante Is Nothing Then
+            MessageBox.Show("El comprobante no está generado." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Exit Sub
+        End If
+        If Comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
+            MessageBox.Show("Solamente se pueden imprimir liquidaciones." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Exit Sub
+        End If
         Dim f As New rptViewer
         Me.AddOwnedForm(f)
         f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, Me.cmbGravadoPaciente.Visible)

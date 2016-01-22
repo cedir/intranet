@@ -1296,13 +1296,13 @@ Public Class NuevaPresentacion
                                 prepareImprimirDetalle()
                             End If
                             'Imprimir Comprobante si es una factura
-                            If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
-                                r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
-                                If r = 6 Then
-                                    'prepareImprimirFactura()
-                                    Me.imprimirComprobante()
-                                End If
-                            End If
+                            'If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
+                            '    r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
+                            '    If r = 6 Then
+                            '        'prepareImprimirFactura()
+                            '       Me.imprimirComprobante()
+                            '    End If
+                            'End If
 
                             MsgBox("La presentación se ha creado con éxito")
                             btnFacturar.Enabled = False

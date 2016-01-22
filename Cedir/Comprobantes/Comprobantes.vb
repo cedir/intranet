@@ -143,17 +143,21 @@ Public Class Comprobantes
 
 
     Private Sub btnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimir.Click
-        If Comprobante.Estado.ToUpper <> "ANULADO" Then
-            Dim f As New rptViewer
-            Me.AddOwnedForm(f)
-            Dim espac As Boolean = True
-            If Me.txtPacienteGravado.Text = "" Then
-                espac = False
+        If Comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
+            If Comprobante.Estado.ToUpper <> "ANULADO" Then
+                Dim f As New rptViewer
+                Me.AddOwnedForm(f)
+                Dim espac As Boolean = True
+                If Me.txtPacienteGravado.Text = "" Then
+                    espac = False
+                End If
+                f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, espac)
+                f.ShowDialog()
+            Else
+                MessageBox.Show("Está intentando imprimir un comprobante anulado." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
-            f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, espac)
-            f.ShowDialog()
         Else
-            MessageBox.Show("Está intentando imprimir un comprobante anulado." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Solamente se pueden imprimir liquidaciones." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
     End Sub
 
