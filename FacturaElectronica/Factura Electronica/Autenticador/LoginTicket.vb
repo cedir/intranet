@@ -16,7 +16,7 @@ Imports Microsoft.VisualBasic
     ' Momento en que fue generado el requerimiento 
     Public GenerationTime As DateTime
     ' Momento en el que exoira la solicitud 
-    Public ExpirationTime As DateTimeOffset
+    Public ExpirationTime As DateTime
     ' Firma de seguridad recibida en la respuesta 
     Public Sign As String
     ' Token de seguridad recibido en la respuesta 
