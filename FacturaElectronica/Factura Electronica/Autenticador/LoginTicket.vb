@@ -16,9 +16,7 @@ Imports Microsoft.VisualBasic
     ' Momento en que fue generado el requerimiento 
     Public GenerationTime As DateTime
     ' Momento en el que exoira la solicitud 
-    Public ExpirationTime As DateTime
-    ' Identificacion del WSN para el cual se solicita el TA 
-    Public Service As String
+    Public ExpirationTime As DateTimeOffset
     ' Firma de seguridad recibida en la respuesta 
     Public Sign As String
     ' Token de seguridad recibido en la respuesta 
@@ -37,10 +35,9 @@ Imports Microsoft.VisualBasic
     ''' Construye un Login Ticket obtenido del WSAA 
     '''</summary> 
     '''<param name="argServicio">Servicio al que se desea acceder</param> 
-    '''<param name="argUrlWsaa">URL del WSAA</param> 
     '''<param name="argRutaCertX509Firmante">Ruta del certificado X509 (con clave privada) usado para firmar</param> 
     '''<remarks></remarks> 
-    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argUrlWsaa As String, ByVal argRutaCertX509Firmante As String, ByVal password As String) As String
+    Public Function ObtenerLoginTicketResponse(ByVal argServicio As String, ByVal argRutaCertX509Firmante As String, ByVal password As String) As String
         Dim cmsFirmadoBase64 As String
         Dim loginTicketResponse As String
 
@@ -67,8 +64,6 @@ Imports Microsoft.VisualBasic
             xmlNodoExpirationTime.InnerText = DateTime.Now.AddMinutes(+10).ToString("s")
             xmlNodoUniqueId.InnerText = CStr(_globalUniqueID)
             xmlNodoService.InnerText = argServicio
-            Me.Service = argServicio
-
 
 
         Catch excepcionAlGenerarLoginTicketRequest As Exception
