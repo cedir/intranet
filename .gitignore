@@ -4,7 +4,8 @@
 *.suo
 
 #Directories
-/singleton
+Singleton/bin
+Singleton/obj
 Cedir/bin
 Cedir/obj
 CedirDataAccess/bin
@@ -21,3 +22,4 @@ obj/
 *.resx
 *.config
 FacturaElectronica/My Proyect/
+Singleton/My Project/

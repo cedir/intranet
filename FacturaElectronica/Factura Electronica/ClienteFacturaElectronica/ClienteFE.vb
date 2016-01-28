@@ -40,7 +40,7 @@ Public Class ClienteFE
     ''' <remarks></remarks>
     Private Sub InicializarAutenticador(ByVal responsable As String)
         If lt.ExpirationTime <= DateTime.Now Then
-            lt.ObtenerLoginTicketResponse("wsfe", "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?wsdl", GetKeyLocationFromResponsable(responsable), GetPasswordFromResponsable(responsable))
+            lt.ObtenerLoginTicketResponse("wsfe", GetKeyLocationFromResponsable(responsable), GetPasswordFromResponsable(responsable))
         End If
     End Sub
 
