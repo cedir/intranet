@@ -330,7 +330,6 @@ Partial Class Comprobantes
         '
         'btnAnular
         '
-        Me.btnAnular.Enabled = False
         Me.btnAnular.Location = New System.Drawing.Point(245, 533)
         Me.btnAnular.Name = "btnAnular"
         Me.btnAnular.Size = New System.Drawing.Size(75, 23)

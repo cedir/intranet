@@ -84,8 +84,8 @@ Public Class frmComprobanteNuevo
     Friend WithEvents lblNroComprobante As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnImprimir = New System.Windows.Forms.Button
         Me.btnCerrar = New System.Windows.Forms.Button
         Me.Label5 = New System.Windows.Forms.Label
@@ -141,11 +141,12 @@ Public Class frmComprobanteNuevo
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(1026, 696)
+        Me.btnImprimir.Location = New System.Drawing.Point(946, 696)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(75, 21)
         Me.btnImprimir.TabIndex = 10
         Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.Visible = False
         '
         'btnCerrar
         '
@@ -471,10 +472,10 @@ Public Class frmComprobanteNuevo
         '
         'colImporteNeto
         '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle11.Format = "C2"
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.colImporteNeto.DefaultCellStyle = DataGridViewCellStyle1
         Me.colImporteNeto.HeaderText = "Importe Neto"
         Me.colImporteNeto.Name = "colImporteNeto"
         '
@@ -501,11 +502,11 @@ Public Class frmComprobanteNuevo
         'colSubtotal
         '
         Me.colSubtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle12.BackColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle12.Format = "C2"
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.colSubtotal.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colSubtotal.DefaultCellStyle = DataGridViewCellStyle2
         Me.colSubtotal.FillWeight = 10.15228!
         Me.colSubtotal.HeaderText = "SUBTOTAL"
         Me.colSubtotal.Name = "colSubtotal"
@@ -514,7 +515,7 @@ Public Class frmComprobanteNuevo
         'btnAceptar
         '
         Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAceptar.Location = New System.Drawing.Point(945, 696)
+        Me.btnAceptar.Location = New System.Drawing.Point(1027, 696)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(75, 21)
         Me.btnAceptar.TabIndex = 24
@@ -914,19 +915,19 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
-        If (Me.Validar() = True) Then
-            If (Me.CrearComprobante()) Then
+        If Me.Validar() Then
+            If Me.CrearComprobante() Then
                 Me.dgvLineas.Enabled = False
-                Dim resp As DialogResult
-                resp = MessageBox.Show("¿Desea imprimir el comprobante?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If resp = Windows.Forms.DialogResult.Yes Then
-                    Me.btnImprimir.PerformClick()
+                Me.btnImprimir.Visible = (Me.Comprobante.TipoComprobante.Id = TComprobante.Liquidacion)
+                If Me.btnImprimir.Visible Then
+                    Dim resp As DialogResult = MessageBox.Show("¿Desea imprimir el comprobante?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If resp = Windows.Forms.DialogResult.Yes Then
+                        Me.btnImprimir.PerformClick()
+                    End If
                 End If
             End If
             Me.Close()
-
-        Else : MsgBox("El comprobante no ha sido cargado", MsgBoxStyle.Exclamation, " Atención ")
-
+        'Else : MsgBox("El comprobante no ha sido cargado", MsgBoxStyle.Exclamation, " Atención ")
         End If 'fin validar
 
     End Sub
