@@ -18,9 +18,7 @@ Public Class Comprobantes
 #Region "EVENTOS FORM"
 
     Private Sub Comprobantes_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
         Me.cargarCabezera()
-
     End Sub
 
     Private Sub btnAnular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAnular.Click
@@ -75,11 +73,15 @@ Public Class Comprobantes
             Me.txtSubtipo.Text = ""
             Me.txtNroTerminal.Visible = False
             Me.lblGuion.Visible = False
+            Me.btnImprimir.Visible = True
+            Me.btnAnular.Visible = Comprobante.Estado <> "ANULADO"
 
         Else
             Me.txtGravado.Text = Comprobante.Gravado.descripcion
             Me.txtResponsable.Text = Comprobante.Responsable
             Me.txtSubtipo.Text = Comprobante.SubTipo
+            Me.btnImprimir.Visible = False
+            Me.btnAnular.Visible = False
         End If
 
         Me.txtNombre.Text = Comprobante.NombreCliente
@@ -90,10 +92,7 @@ Public Class Comprobantes
         Me.txtCondicionFiscal.Text = Comprobante.CondicionFiscal
         Me.txtPacienteGravado.Text = Comprobante.GravadoPaciente
         Me.lblEstado.Text = Comprobante.Estado
-        If Comprobante.Estado <> "ANULADO" Then
-            Me.btnAnular.Visible = True
-        Else : Me.btnAnular.Visible = False
-        End If
+
         Me.lblTotalDecimal.Text = Format(Comprobante.TotalFacturado, "#########0.00")
         Me.cargarLineas(Comprobante)
 
