@@ -98,6 +98,10 @@ Public Class Helper
         Return exp IsNot Nothing AndAlso objRegExp.IsMatch(exp)
     End Function
 
+    Public Shared Function IsNullOrWhitespace(ByRef exp As String) As Boolean
+        Return exp Is Nothing OrElse String.IsNullOrEmpty(exp.Trim())
+    End Function
+
 
     'FUNCION PARA CHECKEAR VALORES NULOS DE UN DATAREADER
     Private Function CheckNullDR(Of T)(ByVal checkValue As Object) As T

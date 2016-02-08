@@ -560,6 +560,7 @@ Public Class frmComprobanteNuevo
         'btnQuitar
         '
         Me.btnQuitar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnQuitar.Enabled = False
         Me.btnQuitar.Location = New System.Drawing.Point(30, 696)
         Me.btnQuitar.Name = "btnQuitar"
         Me.btnQuitar.Size = New System.Drawing.Size(83, 21)
@@ -649,7 +650,7 @@ Public Class frmComprobanteNuevo
     End Sub
 #End Region
 
-    Dim lineaValida As Boolean 'Bandera para validar lineas del datagridview
+    Dim todasLineasValidas As Boolean 'Bandera para validar lineas del datagridview
     Dim identificacion As New List(Of TipoIdentificacionClienteAFIP)
     Dim gravados As List(Of Gravado)
     Dim tiposComprobante As List(Of TipoComprobante)
@@ -674,33 +675,24 @@ Public Class frmComprobanteNuevo
     End Property
 
     Private Function Validar() As Boolean
-
-        Validar = True
-
         'Validamos que hayan datos en la cabecera
         If (Me.txtDomicilio.Text = "" Or Me.txtNombre.Text() = "" Or Me.txtNroComprobante.Text() = "" Or Me.dgvLineas.RowCount = 0) Then
             MsgBox("Por favor, llene los campos vacios del formulario", MsgBoxStyle.Exclamation, "Datos faltantes")
-            Validar = False
+            Return False
         End If
 
-        If Me.cmbTipoComprobante.SelectedValue <> 2 Then
+        If Me.cmbTipoComprobante.SelectedValue <> TComprobante.Liquidacion Then
             'Validamos que los combos esten seleccionados
             If (Me.cmbCondicionFiscal.Text = "" Or Me.cmbResponsable.SelectedIndex = -1 Or Me.cmbSubTipo.SelectedIndex = -1 Or Me.cmbTipoComprobante.SelectedIndex = -1) Then
                 MsgBox("No ha seleccionado detalles del comprobante, por favor hagalo", MsgBoxStyle.Exclamation, "Datos faltantes")
-                Validar = False
+                Return False
             End If
-        End If
-
-        'Validamos que entren datos validos en la columna de subtotal
-        If Not lineaValida Then
-            MsgBox("Lineas de comprobante invalidas", MsgBoxStyle.OkOnly, "Linea de comprobante invalida")
-            Validar = False
         End If
 
         'Validamos que entren datos validos en la columna de subtotal
         If Me.EsFacturaElectronica And Me.cmbTipoDocumento.SelectedValue Is Nothing Then
             MsgBox("Es necesario que seleccione un Tipo de Documento.", MsgBoxStyle.OkOnly, "Factura Electrónica")
-            Validar = False
+            Return False
         End If
 
         'si el comprobante posee una factura, tengo que validar que el tipo de comprobante sea
@@ -709,10 +701,19 @@ Public Class frmComprobanteNuevo
             If Me.Comprobante.Factura IsNot Nothing Then
                 If Me.cmbTipoComprobante.SelectedValue <> TComprobante.NotaDeDebito And Me.cmbTipoComprobante.SelectedValue <> TComprobante.NotaDeCredito Then
                     MsgBox("No puede crearse este tipo de comprobante", MsgBoxStyle.OkOnly, "Tipo de comprobante Invalido")
-                    Validar = False
+                    Return False
                 End If
             End If
         End If
+
+        'Validamos que entren datos validos en la columna de subtotal
+        calcularImportesYValidarDataGrid()
+        If Not todasLineasValidas Then
+            MsgBox("Lineas de comprobante invalidas", MsgBoxStyle.OkOnly, "Linea de comprobante invalida")
+            Return False
+        End If
+
+        Return True
     End Function
     Private Function CrearComprobante() As Boolean
         If Me.Comprobante Is Nothing Then
@@ -878,25 +879,60 @@ Public Class frmComprobanteNuevo
         c = Nothing
     End Sub
 
-    Private Sub calcularImportesEnLineasDataGrid()
+    Private Function calcularImportesEnLinea(ByRef row As DataGridViewRow) As Decimal
+        If Helper.ValidaNumero(row.Cells("colImporteNeto").Value) Then
+            Dim importeNeto As Decimal = Helper.GetDecimal(row.Cells("colImporteNeto").Value)
+            Dim importeIVA As Decimal = (importeNeto * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100
+            Dim subTotal As Decimal = importeNeto + importeIVA
+
+            row.Cells("colImporteNeto").Value = importeNeto.ToString("F2")
+            row.Cells("colImporteIVA").Value = importeIVA.ToString("F2")
+            row.Cells("colSubtotal").Value = subTotal.ToString("F2")
+
+            Return subTotal
+        Else
+            row.Cells("colImporteNeto").Value = String.Empty
+            row.Cells("colImporteIVA").Value = String.Empty
+            row.Cells("colSubtotal").Value = String.Empty
+            Return 0
+        End If
+    End Function
+
+    Private Function validarLinea(ByRef row As DataGridViewRow) As Boolean
+        validarLinea = True
+        If Not row.IsNewRow Then
+            If Helper.IsNullOrWhitespace(row.Cells("colConcepto").Value) Then
+                row.Cells("colConcepto").ErrorText = "Concepto inválido"
+                validarLinea = False
+            Else
+                row.Cells("colConcepto").ErrorText = Nothing
+            End If
+
+            If Helper.ValidaNumero(row.Cells("colImporteNeto").Value) Then
+                row.Cells("colImporteNeto").ErrorText = Nothing
+            Else
+                row.Cells("colImporteNeto").ErrorText = "Concepto inválido"
+                validarLinea = False
+            End If
+        End If
+    End Function
+
+    Private Sub calcularImportesYValidarDataGrid()
         'Mostramos la suma de los subtotales de las lineas
         Dim suma As Decimal = 0
+        todasLineasValidas = Me.dgvLineas.Rows.Count > 1
 
         For Each row As DataGridViewRow In Me.dgvLineas.Rows
-            If Helper.ValidaNumero(row.Cells("colImporteNeto").Value) Then
-                Dim importeNeto As Decimal = Helper.GetDecimal(row.Cells("colImporteNeto").Value)
-                Dim importeIVA As Decimal = (importeNeto * CType(Me.cmbIVA.SelectedItem, Gravado).porcentaje) / 100
-                row.Cells("colImporteNeto").Value = importeNeto.ToString("F2")
-                row.Cells("colImporteIVA").Value = importeIVA.ToString("F2")
-                row.Cells("colSubtotal").Value = (importeNeto + importeIVA).ToString("F2")
-                suma = suma + importeNeto + importeIVA
+            suma += calcularImportesEnLinea(row)
+            If validarLinea(row) Then
+                row.ErrorText = Nothing
             Else
-                row.Cells("colImporteNeto").Value = String.Empty
-                row.Cells("colImporteIVA").Value = String.Empty
-                row.Cells("colSubtotal").Value = String.Empty
-                lineaValida = False
+                row.ErrorText = "Verifique los valores ingresados"
+                todasLineasValidas = False
             End If
         Next
+
+        Me.btnQuitar.Enabled = Me.dgvLineas.Rows.Count > 1 AndAlso Me.dgvLineas.CurrentRow IsNot Nothing AndAlso Not Me.dgvLineas.CurrentRow.IsNewRow
         Me.lblTotalSuma.Text = suma.ToString("C2")
     End Sub
 
@@ -927,7 +963,6 @@ Public Class frmComprobanteNuevo
                 End If
             End If
             Me.Close()
-        'Else : MsgBox("El comprobante no ha sido cargado", MsgBoxStyle.Exclamation, " Atención ")
         End If 'fin validar
 
     End Sub
@@ -1044,41 +1079,14 @@ Public Class frmComprobanteNuevo
     End Sub
 
     Private Sub cmbIVA_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbIVA.SelectedIndexChanged
-        calcularImportesEnLineasDataGrid()
+        calcularImportesYValidarDataGrid()
     End Sub
 
 #End Region
 
 #Region "DATAGRID EVENTS"
-    Private Sub dgvLineas_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellEndEdit
-        Me.dgvLineas.Rows(e.RowIndex).ErrorText = String.Empty
-    End Sub
-
-    Private Sub dgvLineas_CellFormatting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvLineas.CellFormatting
-
-        Me.btnQuitar.Visible = Me.dgvLineas.Rows.Count > 0
-
-        If e.ColumnIndex = Me.dgvLineas.Columns("colSubtotal").Index AndAlso Not (e.Value Is Nothing) Then
-            With Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal")
-                If Not Helper.ValidaNumero(e.Value.ToString) Then
-                    .ToolTipText = "ingrese números válidos por favor"
-                    Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").ErrorText = "Los caracteres ingresados no son numeros validos"
-                    lineaValida = False
-                Else : Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").ErrorText = Nothing
-                    .ToolTipText = Nothing
-                End If
-            End With
-        End If
-    End Sub
-
-    Private Sub dgvLineas_CellValidated(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellValidated
-        Me.dgvLineas.Rows(e.RowIndex).ErrorText = String.Empty
-        lineaValida = True
-    End Sub
 
     Private Sub dgvLineas_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles dgvLineas.KeyPress
-
-
 
         ' obtener indice de la columna  
         Dim columna As Integer = Me.dgvLineas.CurrentCell.ColumnIndex
@@ -1098,26 +1106,8 @@ Public Class frmComprobanteNuevo
         End If
     End Sub
 
-    Private Sub dgvLineas_RowEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.RowEnter
-        Me.dgvLineas.Rows(e.RowIndex).ErrorText = "Complete todos los datos requeridos"
-    End Sub
-
     Private Sub dgvLineas_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles dgvLineas.CurrentCellChanged
-        Me.calcularImportesEnLineasDataGrid()
-    End Sub
-
-    Private Sub dgvLineas_CellLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvLineas.CellLeave
-
-        If Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").Value Is Nothing AndAlso Me.dgvLineas.Rows(e.RowIndex).Cells("colSubtotal").Value IsNot Nothing Then
-            With Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto")
-                .ToolTipText = "INGRESE UN CONCEPTO"
-                Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ErrorText = "Concepto invalido"
-                lineaValida = False
-            End With
-        Else : Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ErrorText = Nothing
-            Me.dgvLineas.Rows(e.RowIndex).Cells("colConcepto").ToolTipText = Nothing
-        End If
-
+        Me.calcularImportesYValidarDataGrid()
     End Sub
 
 #End Region
