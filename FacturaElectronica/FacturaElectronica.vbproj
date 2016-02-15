@@ -64,6 +64,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings.vb" />
     <Compile Include="Web References\ar.gov.afip.wsaahomo\Reference.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -175,7 +176,7 @@
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>FacturaElectronica_ar_gov_afip_wsaahomo_LoginCMSService</CachedSettingsPropName>
+      <CachedSettingsPropName>LoginService</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="https://wswhomo.afip.gov.ar/wsfev1/service.asmx%3fWSDL">
       <UrlBehavior>Dynamic</UrlBehavior>
@@ -186,7 +187,7 @@
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>FacturaElectronica_ar_gov_afip_wswhomo_Service</CachedSettingsPropName>
+      <CachedSettingsPropName>FEService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

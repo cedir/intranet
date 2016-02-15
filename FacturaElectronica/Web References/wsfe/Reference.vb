@@ -80,7 +80,7 @@ Namespace wsfe
         '''<remarks/>
         Public Sub New()
             MyBase.New
-            Me.Url = Global.FacturaElectronica.My.MySettings.Default.FacturaElectronica_ar_gov_afip_wswhomo_Service
+            Me.Url = Global.FacturaElectronica.My.MySettings.Default.FEService
             If (Me.IsLocalFileSystemWebService(Me.Url) = true) Then
                 Me.UseDefaultCredentials = true
                 Me.useDefaultCredentialsSetExplicitly = false

@@ -45,51 +45,41 @@ Public Class ClienteFE
     End Sub
 
     Private Sub inicializarServicio(ByVal responsable As String)
-
         aut = New wsfe.FEAuthRequest()
         aut.Cuit = GetCUITFromResponsable(responsable)
         aut.Sign = lt.Sign
         aut.Token = lt.Token
-
     End Sub
 
     Shared Function GetCUITFromResponsable(ByVal responsable As String) As String
-        responsable = responsable.ToLower
-        'TODO: pasar a base de datos?
-        If responsable = "cedir" Then
-            Return "30709300152"
-        ElseIf responsable = "brunetti" Then
-            Return "20118070659"
-        End If
-        Return String.Empty
+        Try
+            Dim config = CType(My.Settings(responsable.ToLower), Global.System.Collections.Specialized.StringCollection)
+            Return config.Item(0)
+        Catch
+            Return String.Empty
+        End Try
     End Function
 
     Shared Function GetPVFromResponsable(ByVal responsable As String) As Integer
-        responsable = responsable.ToLower
-        'TODO: pasar a base de datos?
-        If responsable = "cedir" Then
-            Return 91
-        ElseIf responsable = "brunetti" Then
-            Return 3
-        End If
-        Return 0
+        Try
+            Dim config = CType(My.Settings(responsable.ToLower), Global.System.Collections.Specialized.StringCollection)
+            Return config.Item(1)
+        Catch
+            Return 0
+        End Try
     End Function
 
     Shared Function GetPasswordFromResponsable(ByVal responsable As String) As String
-        responsable = responsable.ToLower
-        'TODO: pasar a base de datos?
-        If responsable = "cedir" Then
+        Try
+            Dim config = CType(My.Settings(responsable.ToLower), Global.System.Collections.Specialized.StringCollection)
+            Return config.Item(2)
+        Catch
             Return String.Empty
-        ElseIf responsable = "brunetti" Then
-            Return "endocapsula"
-        End If
-        Return String.Empty
+        End Try
     End Function
 
     Shared Function GetKeyLocationFromResponsable(ByVal responsable As String) As String
-        responsable = responsable.ToLower
-        'TODO: pasar a base de datos?
-        Return String.Format(My.Settings.rutaClaveCertificadoFE, responsable)
+        Return String.Format(My.Settings.rutaClaveCertificadoFE, responsable.ToLower)
     End Function
 
 
