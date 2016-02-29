@@ -38,7 +38,7 @@ Namespace ar.gov.afip.wsaahomo
         '''<remarks/>
         Public Sub New()
             MyBase.New
-            Me.Url = Global.FacturaElectronica.My.MySettings.Default.FacturaElectronica_ar_gov_afip_wsaahomo_LoginCMSService
+            Me.Url = Global.FacturaElectronica.My.MySettings.Default.LoginService
             If (Me.IsLocalFileSystemWebService(Me.Url) = true) Then
                 Me.UseDefaultCredentials = true
                 Me.useDefaultCredentialsSetExplicitly = false

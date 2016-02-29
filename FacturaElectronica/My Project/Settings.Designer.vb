@@ -56,30 +56,44 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.WebServiceUrl),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://wsaahomo.afip.gov.ar/ws/services/LoginCms")>  _
-        Public ReadOnly Property FacturaElectronica_ar_gov_afip_wsaahomo_LoginCMSService() As String
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.WebServiceUrl)>  _
+        Public ReadOnly Property LoginService() As String
             Get
-                Return CType(Me("FacturaElectronica_ar_gov_afip_wsaahomo_LoginCMSService"),String)
+                Return CType(Me("LoginService"),String)
             End Get
         End Property
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.WebServiceUrl),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://wswhomo.afip.gov.ar/wsfev1/service.asmx")>  _
-        Public ReadOnly Property FacturaElectronica_ar_gov_afip_wswhomo_Service() As String
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.WebServiceUrl)>  _
+        Public ReadOnly Property FEService() As String
             Get
-                Return CType(Me("FacturaElectronica_ar_gov_afip_wswhomo_Service"),String)
+                Return CType(Me("FEService"),String)
             End Get
         End Property
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Claves\{0}.pfx")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public ReadOnly Property rutaClaveCertificadoFE() As String
             Get
                 Return CType(Me("rutaClaveCertificadoFE"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public ReadOnly Property brunetti() As Global.System.Collections.Specialized.StringCollection
+            Get
+                Return CType(Me("brunetti"),Global.System.Collections.Specialized.StringCollection)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public ReadOnly Property cedir() As Global.System.Collections.Specialized.StringCollection
+            Get
+                Return CType(Me("cedir"),Global.System.Collections.Specialized.StringCollection)
             End Get
         End Property
     End Class
