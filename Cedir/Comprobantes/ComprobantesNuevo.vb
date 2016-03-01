@@ -230,9 +230,9 @@ Public Class frmComprobanteNuevo
         '
         'btnPaciente
         '
-        Me.btnPaciente.Location = New System.Drawing.Point(501, 82)
+        Me.btnPaciente.Location = New System.Drawing.Point(512, 67)
         Me.btnPaciente.Name = "btnPaciente"
-        Me.btnPaciente.Size = New System.Drawing.Size(88, 23)
+        Me.btnPaciente.Size = New System.Drawing.Size(77, 23)
         Me.btnPaciente.TabIndex = 9
         Me.btnPaciente.Text = "Paciente"
         Me.btnPaciente.UseVisualStyleBackColor = True
@@ -242,7 +242,7 @@ Public Class frmComprobanteNuevo
         Me.txtNroIdentificacionCliente.Location = New System.Drawing.Point(114, 69)
         Me.txtNroIdentificacionCliente.Multiline = True
         Me.txtNroIdentificacionCliente.Name = "txtNroIdentificacionCliente"
-        Me.txtNroIdentificacionCliente.Size = New System.Drawing.Size(381, 36)
+        Me.txtNroIdentificacionCliente.Size = New System.Drawing.Size(392, 20)
         Me.txtNroIdentificacionCliente.TabIndex = 8
         Me.ToolTip1.SetToolTip(Me.txtNroIdentificacionCliente, "Cuando ingrese un paciente, por favor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ingrese:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OBRA SOCIAL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & """Afiliado nro"" + NR" & _
                 "O AFILIADO" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "----------------------------------------" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Cuando ingrese obra social" & _
@@ -252,14 +252,14 @@ Public Class frmComprobanteNuevo
         '
         Me.txtDomicilio.Location = New System.Drawing.Point(114, 43)
         Me.txtDomicilio.Name = "txtDomicilio"
-        Me.txtDomicilio.Size = New System.Drawing.Size(558, 20)
+        Me.txtDomicilio.Size = New System.Drawing.Size(556, 20)
         Me.txtDomicilio.TabIndex = 7
         '
         'btnObraSocial
         '
-        Me.btnObraSocial.Location = New System.Drawing.Point(595, 82)
+        Me.btnObraSocial.Location = New System.Drawing.Point(595, 68)
         Me.btnObraSocial.Name = "btnObraSocial"
-        Me.btnObraSocial.Size = New System.Drawing.Size(88, 23)
+        Me.btnObraSocial.Size = New System.Drawing.Size(77, 23)
         Me.btnObraSocial.TabIndex = 6
         Me.btnObraSocial.Text = "Obra Social"
         '
@@ -282,9 +282,9 @@ Public Class frmComprobanteNuevo
         '
         Me.Label8.Location = New System.Drawing.Point(10, 71)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(99, 32)
+        Me.Label8.Size = New System.Drawing.Size(99, 20)
         Me.Label8.TabIndex = 3
-        Me.Label8.Text = "[Nro de Cuit | OS+Afiliado nro]:"
+        Me.Label8.Text = "DNI/CUIT:"
         '
         'Label7
         '
@@ -617,14 +617,10 @@ Public Class frmComprobanteNuevo
             End If
         ElseIf args.PropertyName = "ObraSocial" Then
             Me.cmbCondicionFiscal.Enabled = False
-            If Me.EsFacturaElectronica Then
-                Me.cmbTipoDocumento.SelectedValue = "80" 'CUIT
-            End If
+            Me.cmbTipoDocumento.SelectedValue = 80 'CUIT
         ElseIf args.PropertyName = "Persona" Then
             Me.cmbCondicionFiscal.Enabled = False
-            If Me.EsFacturaElectronica Then
-                Me.cmbTipoDocumento.SelectedValue = "4" 'DNI
-            End If
+            Me.cmbTipoDocumento.SelectedValue = 4 'DNI
         End If
     End Sub
 
@@ -643,6 +639,7 @@ Public Class frmComprobanteNuevo
         If p_pac IsNot Nothing Then
             Me.txtNombre.Text = p_pac.nombreCompleto
             Me.txtDomicilio.Text = p_pac.direccion
+            Me.txtNroIdentificacionCliente.Text = p_pac.dni
             Me.cmbCondicionFiscal.Text = ""
             Me.cmbCondicionFiscal.SelectedIndex = 0
             NotifyPropertyChanged("Persona")
@@ -692,6 +689,12 @@ Public Class frmComprobanteNuevo
         'Validamos que entren datos validos en la columna de subtotal
         If Me.EsFacturaElectronica And Me.cmbTipoDocumento.SelectedValue Is Nothing Then
             MsgBox("Es necesario que seleccione un Tipo de Documento.", MsgBoxStyle.OkOnly, "Factura Electrónica")
+            Return False
+        End If
+
+        'Validamos que el DNI tenga máximo 8 digitos
+        If Me.cmbTipoDocumento.SelectedValue IsNot Nothing AndAlso Me.cmbTipoDocumento.SelectedValue = 4 AndAlso Me.txtNroIdentificacionCliente.Text.Length > 8 Then
+            MsgBox("Número de DNI inválido.", MsgBoxStyle.OkOnly, "Factura Electrónica")
             Return False
         End If
 
@@ -808,9 +811,13 @@ Public Class frmComprobanteNuevo
 
     Private Sub CargarComboTipoIdentificacionCliente()
         Try
+            Dim oldValue As Object = cmbTipoDocumento.SelectedValue
             cmbTipoDocumento.ValueMember = "idAFIP"
             cmbTipoDocumento.DisplayMember = "descripcion"
             cmbTipoDocumento.DataSource = New BindingSource(identificacion, Nothing)
+            If oldValue IsNot Nothing Then
+                cmbTipoDocumento.SelectedValue = oldValue
+            End If
         Catch ex As Exception
             MessageBox.Show("No se han cargado los tipos de documento del cliente", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
