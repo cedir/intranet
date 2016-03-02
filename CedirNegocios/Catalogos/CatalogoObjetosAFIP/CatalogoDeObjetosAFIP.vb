@@ -44,11 +44,13 @@ Public Class CatalogoDeObjetosAFIP
 
         Dim dr As NpgsqlDataReader = cDatos.Tabla("cedirData", "AFIP_TipoDeIdentificacionCliente", " order by " & com & "id" & com)
         While dr.Read()
-            cTipoIdentificacionCliente = New TipoIdentificacionClienteAFIP
-            cTipoIdentificacionCliente.id = dr.Item("id")
-            cTipoIdentificacionCliente.descripcion = dr.Item("descripcion")
-            cTipoIdentificacionCliente.idAFIP = Convert.ToInt32(dr.Item("idAFIP"))
-            listTipos.Add(cTipoIdentificacionCliente)
+            If dr.Item("descripcion") <> "CUIL" Then
+                cTipoIdentificacionCliente = New TipoIdentificacionClienteAFIP
+                cTipoIdentificacionCliente.id = dr.Item("id")
+                cTipoIdentificacionCliente.descripcion = dr.Item("descripcion")
+                cTipoIdentificacionCliente.idAFIP = Convert.ToInt32(dr.Item("idAFIP"))
+                listTipos.Add(cTipoIdentificacionCliente)
+            End If
         End While
         Return listTipos
 
