@@ -531,7 +531,7 @@ Public Class Comprobante
             result.DocumentoCliente.Descripcion = "CUIT"
 
             result.DomicilioCliente = Me.DomicilioCliente
-            result.Estado = "NO COBRADO"
+            result.Estado = "COBRADO"
             result.Factura = Me
             result.FechaEmision = Date.Today
             result.Gravado = Me.Gravado

@@ -368,7 +368,8 @@ Public Class Presentacion
 
     Public Sub anularComprobante() 'este metodo anula el comprobante al abrir la presentacion
         Dim cDatos As New Nuevo
-        Dim resp As String = cDatos.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL, " & com & "pagado" & com & " = " & "2", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+        cDatos.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL, " & com & "pagado" & com & " = " & "2", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+        cDatos.update(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "estado" & com & " = " & "'COBRADO'", " where " & com & "id" & com & " = " & Me.comprobante.IdComprobante)
         cDatos = Nothing
     End Sub
 
