@@ -11,7 +11,8 @@ Public Class Comprobante
     Private m_nombreCliente As String
     Private m_domicilioCliente As String
     Private m_documentoCliente As DocumentoCliente
-    Dim _cae As String = ""
+    Private m_cae As String
+    Private m_vencimientoCAE As Date
 
     Private m_condicionFiscal As String
     Private m_responsable As String
@@ -34,10 +35,19 @@ Public Class Comprobante
 #Region "PROPIEDADES"
     Public Property CAE() As String
         Get
-            Return _cae
+            Return m_cae
         End Get
         Set(ByVal value As String)
-            _cae = value
+            m_cae = value
+        End Set
+    End Property
+
+    Public Property VencimientoCAE() As Date
+        Get
+            Return m_vencimientoCAE
+        End Get
+        Set(ByVal value As Date)
+            m_vencimientoCAE = value
         End Set
     End Property
 
@@ -237,10 +247,10 @@ Public Class Comprobante
         Dim arr As New ArrayList
         Dim help As New Helper
         'Convertimos las fechas a string y al formato YYYY MM DD
-        Dim f1 As String
-        Dim f2 As String
+        Dim f1, f2, f3 As String
         f1 = help.convertDate(Me.FechaEmision)
         f2 = help.convertDate(Me.FechaRecepcion)
+
         Dim com As String = """"
 
         If Me.TotalFacturado < Constants.MIN_FACT Then
@@ -303,12 +313,15 @@ Public Class Comprobante
                 "', '" & Me.CondicionFiscal & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & _
                 Me.Estado & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.GravadoPaciente & "'")
             Else
+
+                f3 = help.convertDate(Me.VencimientoCAE)
+
                 If ((Me.TipoComprobante.Id = TComprobante.NotaDeCredito Or Me.TipoComprobante.Id = TComprobante.NotaDeDebito) And (Me.Factura IsNot Nothing)) Then
                     'si es asi, insertamos tambien la factura que corresponda, ya que es Nota de Debito, o Credito
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'")
+                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
                 Else
                     'de otra manera, insertamos vacio en el campo idFactura de la tabla
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "'" & ", '" & CAE & "'")
+                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
                 End If
 
             End If

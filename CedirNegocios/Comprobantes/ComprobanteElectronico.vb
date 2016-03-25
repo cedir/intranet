@@ -76,6 +76,7 @@ Public Class ComprobanteElectronico
 
         'seteamos nuestro CAE recuperado, antes de realizar el insert en base de datos
         comprobante.CAE = response("CAE")
+        comprobante.VencimientoCAE = ClienteFE.ParseDate(response("CAEFchVto"))
 
         mensajeResultado += "Resultado....: " & Helper.GetMessage(response) & vbCrLf
         mensajeResultado += "Nro de CAE ..: " & comprobante.CAE & vbCrLf

@@ -198,13 +198,15 @@ Public Class ClienteFE
                     If detResponse.Resultado = "R" Then  'R significa error.
                         'If detResponse.Observaciones IsNot Nothing Then
                         result("success") = False
-                        For Each o As wsfe.Obs In detResponse.Observaciones
-                            message &= o.Code & ": " & o.Msg & " - "
-                        Next
-                        'End If
+                        If detResponse.Observaciones IsNot Nothing Then
+                            For Each o As wsfe.Obs In detResponse.Observaciones
+                                message &= o.Code & ": " & o.Msg & " - "
+                            Next
+                        End If
                     Else
                         result("success") = True
                         result.Add("CAE", detResponse.CAE)
+                        result.Add("CAEFchVto", detResponse.CAEFchVto)
                     End If
                     result("message") = message
                 Next
@@ -219,6 +221,10 @@ Public Class ClienteFE
 
     Shared Function FormatDate(ByVal value As DateTime) As String
         Return value.ToString("yyyyMMdd")
+    End Function
+
+    Shared Function ParseDate(ByVal value As String) As Date
+        Return Date.ParseExact(value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture)
     End Function
 
     Public Sub New(ByVal cuenta As String)
