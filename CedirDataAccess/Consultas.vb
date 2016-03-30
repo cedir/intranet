@@ -322,7 +322,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         Dim stringSelect As String = "select c.id, c.""nroComprobante"", c.""nroTerminal"", c.""nombreCliente"", c.""domicilioCliente"", c.""nroCuit"" " & _
         " , c.""condicionFiscal"", c.responsable, c.gravado, t.""tipoComprobante"", t.id as idTipo, c.""fechaEmision"", c.""fechaRecepcion"" " & _
         ",c.""idFactura"",g.""descripcionGravado"" " & _
-        " , c.estado, c.""subTipo"", c.""totalFacturado"", c.""totalCobrado"", c.""gravadoPaciente"", g.""porcentajeGravado"" from " & com & _
+        " , c.estado, c.""subTipo"", c.""totalFacturado"", c.""totalCobrado"", c.""gravadoPaciente"", c.""CAE"", c.""vencimientoCAE"", g.""porcentajeGravado"" from " & com & _
         "cedirData" & com & "." & com & "tblComprobantes" & com & " as c " & _
         " left join " & com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & " as t on c." & com & "idTipoComprobante" & com & " = t." & com & "id" & com & _
         " left join " & com & "cedirData" & com & "." & com & "tblGravado" & com & " as g on c." & com & "gravado" & com & _

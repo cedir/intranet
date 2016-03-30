@@ -166,7 +166,7 @@ Public Class Presentacion
 
         'Si el comprobante es una factura, la leyenda cambia
         'Datos comunes tanto a Facturas B como Facturas A
-        lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & " según detalle adjunto"
+        lineaComprobante.Concepto = "Facturación correspondiente al mes  " & Me.periodo & vbCrLf & "según detalle adjunto"
         lineaComprobante.importeNeto = Format(totalImporteNetoLineaDeFacturacion, "########0.00")
         If Me.comprobante.Gravado IsNot Nothing Then
             lineaComprobante.ImporteIVA = (totalImporteNetoLineaDeFacturacion * Me.comprobante.Gravado.porcentaje) / 100

@@ -83,6 +83,11 @@ Public Class CatalogoDeComprobantes
                 oComprobante.NombreCliente = Convert.ToString(dr("nombreCliente"))
                 oComprobante.DomicilioCliente = Convert.ToString(dr("domicilioCliente"))
 
+                If dr("CAE") Is DBNull.Value Then
+                    oComprobante.CAE = String.Empty
+                Else
+                    oComprobante.CAE = dr("CAE")
+                End If
 
                 If dr("nroCuit") Is DBNull.Value Then
                     oComprobante.DocumentoCliente.NroDocumento = ""
