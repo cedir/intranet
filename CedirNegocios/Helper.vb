@@ -179,7 +179,7 @@ Public Class Helper
     End Function
 
     Public Shared Sub ImprimirWeb(ByRef cae As String)
-        Process.Start(String.Format("http://www.cedirsalud.com.ar/comprobante/imprimir/{0}/", cae))
+        Process.Start(String.Format("http://{0}/comprobante/imprimir/{1}/", Global.CedirNegocios.My.Settings.WebPrintHost, cae))
     End Sub
 
 End Class

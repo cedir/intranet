@@ -172,6 +172,11 @@
     <Compile Include="LineaPagoAnestesista.vb" />
     <Compile Include="Movimiento.vb" />
     <Compile Include="MovimientoStock.vb" />
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="PagoAnestesista.vb" />
     <Compile Include="Presentacion.vb">
       <SubType>Code</SubType>
@@ -241,8 +246,15 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="managers\" />
-    <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
