@@ -131,9 +131,9 @@ Public Class MovimientoDeCaja
         f1 = help.convertDate(Me.Fecha)
 
         'insertamos el movimiento
-        Dim resp As String = cDatos.insert(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & ", " & com & _
-                                           "monto" & com & ", " & com & "fecha" & com & ", " & com & "hora" & com & ", " & com & "idTipoDeMovimiento" & com & _
-                                           ", " & com & "estado" & com & ", " & com & "montoAcumulado" & com, " E'" & Me.Concepto & "', '" & Me.Monto & "', '" & f1 & "' , '" & Me.Hora & "' , " & _
+        Dim resp As String = cDatos.insert(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & ", " & com &
+                                           "monto" & com & ", " & com & "fecha" & com & ", " & com & "hora" & com & ", " & com & "idTipoDeMovimiento" & com &
+                                           ", " & com & "estado" & com & ", " & com & "montoAcumulado" & com, " E'" & Me.Concepto & "', '" & Me.Monto & "', '" & f1 & "' , '" & Me.Hora & "' , " &
                                            Me.TipoDeMovimiento.id & " , " & Me.Estado & " , " & Me.MontoAcumulado)
 
 
@@ -143,12 +143,12 @@ Public Class MovimientoDeCaja
 
         'insertamos, si corresponde, el id Del medico 
         If Me.Medico IsNot Nothing Then
-            cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "idMedico" & com & _
+            cDatos.update(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "idMedico" & com &
                           " = " & Me.Medico.idMedico, " where " & com & "id" & com & " = " & Id)
         End If
         'insertamos, si corresponde, el id del estudio asociado
         If Me.Estudio IsNot Nothing Then
-            cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "nroEstudio" & com & " = " & _
+            cDatos.update(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "nroEstudio" & com & " = " &
                           Me.Estudio.nroEstudio, " where " & com & "id" & com & " = " & Id) ' ATENCION!!! ERROR
         End If
 
@@ -159,14 +159,14 @@ Public Class MovimientoDeCaja
         Dim cDatos As New Nuevo
         Dim resp As String
         If Me.Medico IsNot Nothing Then
-            resp = cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," & _
-                                                    com & "idTipoDeMovimiento" & com & " = " & Me.TipoDeMovimiento.id & ", " & com & "estado" & com & " = " & Me.Estado & " ," & com & "idMedico" & com & _
+            resp = cDatos.update(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," &
+                                                    com & "idTipoDeMovimiento" & com & " = " & Me.TipoDeMovimiento.id & ", " & com & "estado" & com & " = " & Me.Estado & " ," & com & "idMedico" & com &
                                      " = " & Me.Medico.idMedico, " where " & com & "id" & com & " = " & Id)
         Else
-            'resp = cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," & _
+            'resp = cDatos.update(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," & _
             '                                                    com & "idTipoDeMovimiento" & com & " = " & Me.TipoDeMovimiento.id & ", " & com & "estado" & com & " = " & Me.Estado, " where " & com & "id" & com & " = " & Id)
-            resp = cDatos.update(com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," & _
-                                                              com & "idTipoDeMovimiento" & com & " = " & Me.TipoDeMovimiento.id & ", " & com & "estado" & com & " = " & Me.Estado & " ," & com & "idMedico" & com & _
+            resp = cDatos.update(com & "public" & com & "." & com & "tblCajaMovimientos" & com, com & "concepto" & com & " = " & " E'" & Me.Concepto & "' ," &
+                                                              com & "idTipoDeMovimiento" & com & " = " & Me.TipoDeMovimiento.id & ", " & com & "estado" & com & " = " & Me.Estado & " ," & com & "idMedico" & com &
                                                " = NULL", " where " & com & "id" & com & " = " & Id)
         End If
         'modificamos el movimiento

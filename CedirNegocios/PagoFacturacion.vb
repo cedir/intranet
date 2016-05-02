@@ -62,9 +62,9 @@ Public Class PagoFacturacion
         Dim upd As New Nuevo
         Dim resp As String
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "pagado" & com & " = 1, " & com & "total" & com & " = '" & Me.importe & "'", " where " & com & "idFacturacion" & com & " = " & idFacturacion)
+        resp = upd.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "pagado" & com & " = 1, " & com & "total" & com & " = '" & Me.importe & "'", " where " & com & "idFacturacion" & com & " = " & idFacturacion)
         If resp = "ok" Then
-            resp = upd.insert(com & "cedirData" & com & "." & com & "tblPagoFacturacion" & com, com & "idFacturacion" & com & ", " & com & "fechaPagoFact" & com & ", " & com & "importePago" & com & ", " & com & "nroRecivo" & com & ", " & com & "gastoAdministrativo" & com, idFacturacion & ", '" & Today.Year & "-" & Today.Month & "-" & Today.Day & "', '" & Me.importe & "', " & "'" & Me.nroDeRecibo & "', '" & Me.gastoAdministrativo & "'")
+            resp = upd.insert(com & "public" & com & "." & com & "tblPagoFacturacion" & com, com & "idFacturacion" & com & ", " & com & "fechaPagoFact" & com & ", " & com & "importePago" & com & ", " & com & "nroRecivo" & com & ", " & com & "gastoAdministrativo" & com, idFacturacion & ", '" & Today.Year & "-" & Today.Month & "-" & Today.Day & "', '" & Me.importe & "', " & "'" & Me.nroDeRecibo & "', '" & Me.gastoAdministrativo & "'")
         End If
 
         Return resp

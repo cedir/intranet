@@ -110,7 +110,7 @@ Public Class PresentacionAMR
     Private Function _insertarLinea(ByVal item As AMRAsociacion) As Boolean
         Dim altas As New Nuevo
         Dim resp As String
-        resp = altas.insert(com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "idFacturacion" & com & ", " & com & "idPresentacionAMR" & com & ", " & com & "nroRemito" & com, item.Presentacion.idPresentacion & ", " & item.PresentacionAMR.id & ", " & item.nroRemito)
+        resp = altas.insert(com & "public" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "idFacturacion" & com & ", " & com & "idPresentacionAMR" & com & ", " & com & "nroRemito" & com, item.Presentacion.idPresentacion & ", " & item.PresentacionAMR.id & ", " & item.nroRemito)
         'si hay algun error al cargar las presentaciones, no hago el update
         If resp <> "ok" Then
             Return False
@@ -124,7 +124,7 @@ Public Class PresentacionAMR
     '    Dim resp As String
     '    'si no hay error al guardar las lineas, guardamos la asociaicon
     '    For Each a As AMRAsociacion In Me.asociacion
-    '        resp = altas.insert(com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "idFacturacion" & com & ", " & com & "idPresentacionAMR" & com & ", " & com & "nroRemito" & com, a.Presentacion.idPresentacion & ", " & a.PresentacionAMR.id & ", " & a.nroRemito)
+    '        resp = altas.insert(com & "public" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "idFacturacion" & com & ", " & com & "idPresentacionAMR" & com & ", " & com & "nroRemito" & com, a.Presentacion.idPresentacion & ", " & a.PresentacionAMR.id & ", " & a.nroRemito)
     '        'si hay algun error al cargar las presentaciones, no hago el update
     '        If resp <> "ok" Then
     '            Return False
@@ -220,7 +220,7 @@ Public Class PresentacionAMR
     '    Dim altas As New Nuevo
 
     '    Dim fechaModificacion As String = Today.Year & "-" & Today.Month & "-" & Today.Day
-    '    resp = altas.update(com & "cedirData" & com & "." & com & "tblPresentacionAMR" & com, com & "ano" & com & " = " & Me.ano & ", " & com & "mes" & com & " = " & Me.mes & ", " & com & "quincena" & com & " = " & Me.quincena, " where " & com & "id" & com & " = " & Me.id)
+    '    resp = altas.update(com & "public" & com & "." & com & "tblPresentacionAMR" & com, com & "ano" & com & " = " & Me.ano & ", " & com & "mes" & com & " = " & Me.mes & ", " & com & "quincena" & com & " = " & Me.quincena, " where " & com & "id" & com & " = " & Me.id)
 
     '    If resp = "ok" Then
     '        'Ahora vamos a limpiar la tabla y despues agregamos las lineas 
@@ -335,9 +335,9 @@ Public Class PresentacionAMR
         Dim resp As String
         Dim altas As New Nuevo
         Try
-            resp = altas.update(com & "cedirData" & com & "." & com & "tblPresentacionAMR" & com, com & "ano" & com & " = " & Me.ano & ", " & com & "mes" & com & " = " & Me.mes & ", " & com & "quincena" & com & " = " & Me.quincena, " where " & com & "id" & com & " = " & Me.id)
+            resp = altas.update(com & "public" & com & "." & com & "tblPresentacionAMR" & com, com & "ano" & com & " = " & Me.ano & ", " & com & "mes" & com & " = " & Me.mes & ", " & com & "quincena" & com & " = " & Me.quincena, " where " & com & "id" & com & " = " & Me.id)
             For Each item As AMRAsociacion In Me.asociacion
-                resp = altas.update(com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "nroRemito" & com & " = " & item.nroRemito, " where " & com & "idPresentacionAMR" & com & " = " & item.PresentacionAMR.id & " and " & com & "idFacturacion" & com & " = " & item.Presentacion.idPresentacion)
+                resp = altas.update(com & "public" & com & "." & com & "tblPresentacion_PresentacionAMR" & com, com & "nroRemito" & com & " = " & item.nroRemito, " where " & com & "idPresentacionAMR" & com & " = " & item.PresentacionAMR.id & " and " & com & "idFacturacion" & com & " = " & item.Presentacion.idPresentacion)
             Next
             Return "ok"
         Catch ex As Exception

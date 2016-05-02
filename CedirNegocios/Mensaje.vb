@@ -82,7 +82,7 @@ Public Class Mensaje
     Public Sub update(ByVal msg As Mensaje)
         Dim com As String = """"
         Dim cDatos As New Nuevo
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblMensajes" & com
+        Dim tabla As String = com & "public" & com & "." & com & "tblMensajes" & com
         Dim campo As String = com & "estado" & com & " = " & msg.estado
         Dim filtro As String = " where " & com & "idMensaje" & com & " = " & msg.idMensaje
 

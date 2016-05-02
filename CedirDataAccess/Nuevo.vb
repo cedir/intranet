@@ -34,7 +34,7 @@ Public Class Nuevo
 
     Public Function nuevoPaciente(ByVal dni As Integer, ByVal nombres As String, ByVal apellido As String, ByVal fechaNacimiento As Date, ByVal direccion As String, ByVal tel As String, ByVal sexo As String, ByVal nroAfiliado As String, Optional ByVal mail As String = Nothing) As Int32
 
-        Dim cmd As New NpgsqlCommand("insert into " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " (" & com & "dni" & com & ", " & com & "nombres" & com & ", " & com & "apellido" & com & "," & com & "fechaNacimiento" & com & "," & com & "direccion" & com & ", " & com & "tel" & com & "," & com & "sexo" & com & "," & com & "nroAfiliado" & com & " ," & com & "e_mail" & com & ") values (@dni, @nombres, @apellido, @fechaNacimiento, @direccion, @tel, @sexo, @nroAfiliado , @mail)", cn)
+        Dim cmd As New NpgsqlCommand("insert into " & com & "public" & com & "." & com & "tblPacientes" & com & " (" & com & "dni" & com & ", " & com & "nombres" & com & ", " & com & "apellido" & com & "," & com & "fechaNacimiento" & com & "," & com & "direccion" & com & ", " & com & "tel" & com & "," & com & "sexo" & com & "," & com & "nroAfiliado" & com & " ," & com & "e_mail" & com & ") values (@dni, @nombres, @apellido, @fechaNacimiento, @direccion, @tel, @sexo, @nroAfiliado , @mail)", cn)
         Try
             cmd.Parameters.Add(New NpgsqlParameter("@dni", DbType.Int32))
             cmd.Parameters("@dni").Value = dni
@@ -83,7 +83,7 @@ Public Class Nuevo
         End Try
     End Function
 
-   
+
 
     Public Function nuevoEstudio(ByVal publicId As String, ByVal idPaciente As Integer, ByVal idPractica As Integer, ByVal motivoEstudio As String, ByVal informe As String, ByVal IdMedicoActuante As Integer, ByVal IdMedicoSolicitante As Integer, ByVal IdObraSocial As Integer, ByVal fecha As Date, ByVal nroDeOrden As String, ByVal idAnestesista As Integer, ByVal enlaceVideo As String) As String
 
@@ -92,9 +92,9 @@ Public Class Nuevo
         Dim stringInsert2 As String
         Dim stringInsert3 As String
 
-        stringInsert1 = "insert into " & com & "cedirData" & com & "." & com & "tblEstudios" & com & "(" & com & "publicID" & com & ", " & com & "idPaciente" & com & "," & com & "fechaEstudio" & com & "," & com & "idEstudio" & com & "," & com & "motivoEstudio" & com & "," & com & "informe" & com & "," & com & "enlaceVideo" & com & ") values (@publicID,@idPaciente,@fechaEstudio,@idEstudio,@motivoEstudio,@informe, @enlaceVideo) "
-        stringInsert2 = "insert into " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & "(" & com & "idMedicoActuante" & com & "," & com & "idObraSocial" & com & "," & com & "idMedicoSolicitante" & com & ", " & com & "idFacturacion" & com & ", " & com & "nroDeOrden" & com & ", " & com & "idAnestesista" & com & ") values (@IdMedicoActuante,@IdObraSocial,@IdMedicoSolicitante,0,@nroDeOrden,@idAnestesista)"
-        stringInsert3 = "insert into " & com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com & "(" & com & "importeEstudio" & com & "," & com & "importeMedicacion" & com & ", " & com & "diferenciaPaciente" & com & "," & com & "pagoContraFactura" & com & ", " & com & "pension" & com & ", " & com & "importePagoMedico" & com & ", " & com & "importePagoMedicoSol" & com & ")  values(0, 0, 0, 0, 0, 0, 0)"
+        stringInsert1 = "insert into " & com & "public" & com & "." & com & "tblEstudios" & com & "(" & com & "publicID" & com & ", " & com & "idPaciente" & com & "," & com & "fechaEstudio" & com & "," & com & "idEstudio" & com & "," & com & "motivoEstudio" & com & "," & com & "informe" & com & "," & com & "enlaceVideo" & com & ") values (@publicID,@idPaciente,@fechaEstudio,@idEstudio,@motivoEstudio,@informe, @enlaceVideo) "
+        stringInsert2 = "insert into " & com & "public" & com & "." & com & "tblDetalleEstudio" & com & "(" & com & "idMedicoActuante" & com & "," & com & "idObraSocial" & com & "," & com & "idMedicoSolicitante" & com & ", " & com & "idFacturacion" & com & ", " & com & "nroDeOrden" & com & ", " & com & "idAnestesista" & com & ") values (@IdMedicoActuante,@IdObraSocial,@IdMedicoSolicitante,0,@nroDeOrden,@idAnestesista)"
+        stringInsert3 = "insert into " & com & "public" & com & "." & com & "tblPagoCobroEstudio" & com & "(" & com & "importeEstudio" & com & "," & com & "importeMedicacion" & com & ", " & com & "diferenciaPaciente" & com & "," & com & "pagoContraFactura" & com & ", " & com & "pension" & com & ", " & com & "importePagoMedico" & com & ", " & com & "importePagoMedicoSol" & com & ")  values(0, 0, 0, 0, 0, 0, 0)"
 
         Dim cmd As New NpgsqlCommand(stringInsert1 + ";" + stringInsert2 + ";" + stringInsert3, cn)
         Try
@@ -139,7 +139,7 @@ Public Class Nuevo
             cmd.ExecuteNonQuery() 'Al modificar esto, revisar código btnAnunciar en Turnos
 
             Return "ok"
-        
+
         Catch ex As Exception
             Throw New Exception
         End Try
@@ -154,9 +154,9 @@ Public Class Nuevo
         Try
             cmd.CommandType = CommandType.Text
 
-            str = "delete from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
-            str1 = "delete from " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
-            str2 = "delete from " & com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
+            str = "delete from " & com & "public" & com & "." & com & "tblEstudios" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
+            str1 = "delete from " & com & "public" & com & "." & com & "tblDetalleEstudio" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
+            str2 = "delete from " & com & "public" & com & "." & com & "tblPagoCobroEstudio" & com & " where " & com & "nroEstudio" & com & " = " & nroEstudio
 
             cmd.CommandText = str + ";" + str1 + ";" + str2
             cmd.Connection = cn
@@ -194,16 +194,16 @@ Public Class Nuevo
                 cmd.Parameters.Add(New NpgsqlParameter("@idComprobante", DbType.Int32))
                 cmd.Parameters("@idComprobante").Value = idComprobante
 
-                cmd.CommandText = "insert into " & com & "cedirData" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "idComprobante" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @idComprobante, @pagado, @periodo)"
+                cmd.CommandText = "insert into " & com & "public" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "idComprobante" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @idComprobante, @pagado, @periodo)"
 
             Else
                 'si el campo viene vacio, no agrego el parametro
-                cmd.CommandText = "insert into " & com & "cedirData" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @pagado, @periodo)"
+                cmd.CommandText = "insert into " & com & "public" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @pagado, @periodo)"
             End If
-            'Dim cmd As New NpgsqlCommand("insert into " & com & "cedirData" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "idComprobante" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @idComprobante, @pagado, @periodo)", cn)
+            'Dim cmd As New NpgsqlCommand("insert into " & com & "public" & com & "." & com & "tblFacturacion" & com & " (" & com & "idObraSocial" & com & ", " & com & "fechaFacturacion" & com & ", " & com & "idComprobante" & com & ", " & com & "pagado" & com & ", " & com & "periodo" & com & " ) values (@idObraSocial, @fechaFacturacion, @idComprobante, @pagado, @periodo)", cn)
 
             Dim idFacturacion As Int64
-            Dim cmd2 As New NpgsqlCommand("select max(" & com & "idFacturacion" & com & ") from " & com & "cedirData" & com & "." & com & "tblFacturacion" & com, cn)
+            Dim cmd2 As New NpgsqlCommand("select max(" & com & "idFacturacion" & com & ") from " & com & "public" & com & "." & com & "tblFacturacion" & com, cn)
             cmd.Connection = cn
             cmd.ExecuteNonQuery()
             idFacturacion = CInt(cmd2.ExecuteScalar)
@@ -214,9 +214,9 @@ Public Class Nuevo
     End Function
 
     Public Function nuevaFacturacionAMR(ByVal ano As Integer, ByVal mes As Integer, ByVal quincena As Integer) As Int64
-        Dim cmd As New NpgsqlCommand("insert into " & com & "cedirData" & com & "." & com & "tblPresentacionAMR" & com & " (" & com & "ano" & com & ", " & com & "mes" & com & ", " & com & "quincena" & com & " ) values (@ano, @mes, @quincena)", cn)
+        Dim cmd As New NpgsqlCommand("insert into " & com & "public" & com & "." & com & "tblPresentacionAMR" & com & " (" & com & "ano" & com & ", " & com & "mes" & com & ", " & com & "quincena" & com & " ) values (@ano, @mes, @quincena)", cn)
         Dim id As Int64
-        Dim cmd2 As New NpgsqlCommand("select max(" & com & "id" & com & ") from " & com & "cedirData" & com & "." & com & "tblPresentacionAMR" & com, cn)
+        Dim cmd2 As New NpgsqlCommand("select max(" & com & "id" & com & ") from " & com & "public" & com & "." & com & "tblPresentacionAMR" & com, cn)
         Try
             cmd.Parameters.Add(New NpgsqlParameter("@ano", DbType.Int16))
             cmd.Parameters("@ano").Value = ano
@@ -259,7 +259,7 @@ Public Class Nuevo
 
 
     Public Function delete(ByVal tabla As String, ByVal condicion As String) As String
-        Dim cmd As New NpgsqlCommand("delete from " & com & "cedirData" & com & "." & com & tabla & com & " where " & condicion, cn)
+        Dim cmd As New NpgsqlCommand("delete from " & com & "public" & com & "." & com & tabla & com & " where " & condicion, cn)
         Try
             cmd.CommandType = CommandType.Text
             cmd.ExecuteNonQuery()
@@ -271,7 +271,7 @@ Public Class Nuevo
     End Function
 
     Public Function selectMAX(ByVal tableName As String, ByVal idColumnName As String, Optional ByVal filtro As String = "") As Integer
-        Dim cmd As New NpgsqlCommand("select max(" & com & idColumnName & com & ") from " & com & "cedirData" & com & "." & com & tableName & com & filtro, cn)
+        Dim cmd As New NpgsqlCommand("select max(" & com & idColumnName & com & ") from " & com & "public" & com & "." & com & tableName & com & filtro, cn)
         Try
             Dim id As Integer
             Dim OBJ As Object = cmd.ExecuteScalar
@@ -313,10 +313,10 @@ Public Class Nuevo
 
         'WALTER: OBSERVAR ESTE CODIGO COMO MEJORA LA SINTAXIS, SIN TENER QUE HACER USO ABUSIVO DE LA VARIABLE COMM "" ,
         ' Y SOLO LA USAMOS PARA HACER REFERENCIAS EN LOS NOMBRES DE LAS TABLAS
-        Dim cmd As New NpgsqlCommand("update " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " set " & _
-        "dni = :dni, nombres = :nombres, direccion = :direccion, tel = :tel, sexo = :sexo, e_mail = :mail, apellido = :apellido, " & _
-        com & "fechaNacimiento" & com & " = :fechaNacimiento, " & _
-        com & "nroAfiliado" & com & " = :nroAfiliado" & _
+        Dim cmd As New NpgsqlCommand("update " & com & "public" & com & "." & com & "tblPacientes" & com & " set " &
+        "dni = :dni, nombres = :nombres, direccion = :direccion, tel = :tel, sexo = :sexo, e_mail = :mail, apellido = :apellido, " &
+        com & "fechaNacimiento" & com & " = :fechaNacimiento, " &
+        com & "nroAfiliado" & com & " = :nroAfiliado" &
         " where id = " & idPaciente & ";", cn)
 
 

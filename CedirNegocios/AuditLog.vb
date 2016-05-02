@@ -71,7 +71,7 @@ Public Class AuditLog
         Dim com As String = """"
         Dim upd As New Nuevo
         Dim currentDate As String = CStr(Now.Date) & " " & CStr(Now.TimeOfDay.Hours) & ":" & CStr(Now.TimeOfDay.Minutes)
-        Dim resp As String = upd.insert(com & "cedirData" & com & "." & com & "AuditUserActionsLog" & com, com & "userId" & com & ", " & com & "userActionId" & com & ", " & com & "objectTypeId" & com & ", " & com & "objectId" & com & ", " & com & "dateTime" & com & ", " & com & "observacion" & com, Me.usuario.id & ", " & Me.userActionId & ", " & Me.objectTypeId & ", " & Me.objectId & ", '" & currentDate & "', '" & Me.observacion & "'")
+        Dim resp As String = upd.insert(com & "public" & com & "." & com & "AuditUserActionsLog" & com, com & "userId" & com & ", " & com & "userActionId" & com & ", " & com & "objectTypeId" & com & ", " & com & "objectId" & com & ", " & com & "dateTime" & com & ", " & com & "observacion" & com, Me.usuario.id & ", " & Me.userActionId & ", " & Me.objectTypeId & ", " & Me.objectId & ", '" & currentDate & "', '" & Me.observacion & "'")
         Return resp
     End Function
 

@@ -189,7 +189,7 @@ Public Class LineaPagoMedico
             '  updQuery &= ", " & com & "fechaCobro" & com & " = '" & cFecha & "'"
         End If
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, updQuery, " where " & com & "nroEstudio" & com & " = " & Me.estudio.nroEstudio)
+        resp = upd.update(com & "public" & com & "." & com & "tblPagoCobroEstudio" & com, updQuery, " where " & com & "nroEstudio" & com & " = " & Me.estudio.nroEstudio)
 
 
         Return resp

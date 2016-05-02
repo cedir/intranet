@@ -36,7 +36,7 @@ Public Class Practica
         Dim resp As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim com As String = """"
-        resp = upd.insert(com & "cedirData" & com & "." & com & "AlmacenEstudios" & com, com & "estudio" & com & ", " & com & "porcentajeMedico" & com & ", " & com & "codigoMedico" & com & ", " & com & "abreviatura" & com & ", " & com & "codigoMedicoOSDE" & com, "'" & Me.Estudio & "', " & 0 & ", '" & Me.codigoMedico & "'" & ", '" & Me.abreviatura & "'" & ", '" & Me.codigoMedicoOSDE & "'")
+        resp = upd.insert(com & "public" & com & "." & com & "AlmacenEstudios" & com, com & "estudio" & com & ", " & com & "porcentajeMedico" & com & ", " & com & "codigoMedico" & com & ", " & com & "abreviatura" & com & ", " & com & "codigoMedicoOSDE" & com, "'" & Me.Estudio & "', " & 0 & ", '" & Me.codigoMedico & "'" & ", '" & Me.abreviatura & "'" & ", '" & Me.codigoMedicoOSDE & "'")
 
         Return resp
 
@@ -46,7 +46,7 @@ Public Class Practica
         Dim resp As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim com As String = """"
-        resp = upd.update(com & "cedirData" & com & "." & com & "AlmacenEstudios" & com, com & "estudio" & com & " = '" & Me.Estudio & "', " & com & "codigoMedico" & com & " = '" & Me.codigoMedico & "'" & ", " & com & "abreviatura" & com & " = '" & Me.abreviatura & "'" & ", " & com & "codigoMedicoOSDE" & com & " = '" & Me.codigoMedicoOSDE & "'", " where " & com & "idEstudio" & com & " = " & Me.idEstudio)
+        resp = upd.update(com & "public" & com & "." & com & "AlmacenEstudios" & com, com & "estudio" & com & " = '" & Me.Estudio & "', " & com & "codigoMedico" & com & " = '" & Me.codigoMedico & "'" & ", " & com & "abreviatura" & com & " = '" & Me.abreviatura & "'" & ", " & com & "codigoMedicoOSDE" & com & " = '" & Me.codigoMedicoOSDE & "'", " where " & com & "idEstudio" & com & " = " & Me.idEstudio)
 
         Return resp
     End Function

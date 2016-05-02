@@ -144,7 +144,7 @@ Public Class Presentacion
             _guardarLineas()
             'Acordarse que en tblPresentacion se guarda total=totalFacturado
             'No pasa lo mismo con el comprobante,(totalFacturado en comprobante incluye el iva)
-            Dim resp As String = altas.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "total" & com & " = '" & Me.total & "', " & com & "totalFacturado" & com & " = '" & Me.total & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+            Dim resp As String = altas.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "total" & com & " = '" & Me.total & "', " & com & "totalFacturado" & com & " = '" & Me.total & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
             Return "ok"
         End If
 
@@ -191,7 +191,7 @@ Public Class Presentacion
         Dim cDatos As New Nuevo
         Dim com As String = """"
 
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblFacturacion" & com
+        Dim tabla As String = com & "public" & com & "." & com & "tblFacturacion" & com
         Dim campos As String = com & "idComprobante" & com & " = " & Me.comprobante.IdComprobante
         Dim filtro As String = " where idFacturacion = " & Me.idPresentacion
         cDatos.update(tabla, campos, filtro)
@@ -208,9 +208,9 @@ Public Class Presentacion
 
         'Tenemos que diferenciar si se finaliza la presentacion, para pasar como parametro el idComprobante.
         If finalizaPresentacion = False Then
-            resp = altas.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "fechaFacturacion" & com & " = '" & fecha & "', " & com & "pagado" & com & " = " & Me.pagado & ", " & com & "periodo" & com & " = '" & Me.periodo & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+            resp = altas.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "fechaFacturacion" & com & " = '" & fecha & "', " & com & "pagado" & com & " = " & Me.pagado & ", " & com & "periodo" & com & " = '" & Me.periodo & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
         Else
-            resp = altas.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "fechaFacturacion" & com & " = '" & fecha & "', " & com & "pagado" & com & " = " & Me.pagado & ", " & com & "periodo" & com & " = '" & Me.periodo & "', " & com & "idComprobante" & com & " = " & Me.comprobante.IdComprobante, " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+            resp = altas.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "fechaFacturacion" & com & " = '" & fecha & "', " & com & "pagado" & com & " = " & Me.pagado & ", " & com & "periodo" & com & " = '" & Me.periodo & "', " & com & "idComprobante" & com & " = " & Me.comprobante.IdComprobante, " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
         End If
 
 
@@ -218,7 +218,7 @@ Public Class Presentacion
             If guardarLineas Then
                 _guardarLineas()
                 'Guardar total
-                resp = altas.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "total" & com & " = '" & Me.total & "', " & com & "totalFacturado" & com & " = '" & Me.total & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+                resp = altas.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "total" & com & " = '" & Me.total & "', " & com & "totalFacturado" & com & " = '" & Me.total & "'", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
             End If
             Return "ok"
         Else
@@ -295,7 +295,7 @@ Public Class Presentacion
             cLinea = lineasDeFacturacionDeEstudios(i)
             Dim importeEstudioCobrado As Single = cLinea.objeto.importeEstudioCobrado
             Dim importeMedicacionCobrado As Single = cLinea.objeto.importeCobradoMedicacion
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "fechaCobro" & com & " = '" & cFecha & "', " & com & "importeEstudioCobrado" & com & " = '" & importeEstudioCobrado & "', " & com & "importeMedicacionCobrado" & com & " = '" & importeMedicacionCobrado & "', " & com & "importeCobradoPension" & com & " = '" & cLinea.objeto.importeCobradoPension & "', " & com & "importeCobradoArancelAnestesia" & com & " = '" & cLinea.objeto.importeCobradoArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & cLinea.objeto.nroEstudio)
+            resp = upd.update(com & "public" & com & "." & com & "tblPagoCobroEstudio" & com, com & "fechaCobro" & com & " = '" & cFecha & "', " & com & "importeEstudioCobrado" & com & " = '" & importeEstudioCobrado & "', " & com & "importeMedicacionCobrado" & com & " = '" & importeMedicacionCobrado & "', " & com & "importeCobradoPension" & com & " = '" & cLinea.objeto.importeCobradoPension & "', " & com & "importeCobradoArancelAnestesia" & com & " = '" & cLinea.objeto.importeCobradoArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & cLinea.objeto.nroEstudio)
 
             importeTotal += importeEstudioCobrado + cLinea.objeto.importeCobradoPension + importeMedicacionCobrado + cLinea.objeto.importeCobradoArancelAnestesia
         Next
@@ -322,7 +322,7 @@ Public Class Presentacion
                 Dim pagosFacturacion As New ArrayList
                 Dim drPagos As NpgsqlDataReader
                 Dim cPago As PagoFacturacion
-                drPagos = da.EjecutarSelect("select " & com & "idPagoFact" & com & ", " & com & "idFacturacion" & com & ", " & com & "fechaPagoFact" & com & ", " & com & "nroRecivo" & com & ", " & com & "importePago" & com & ", " & com & "gastoAdministrativo" & com & " from " & com & "cedirData" & com & "." & com & "tblPagoFacturacion" & com & " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+                drPagos = da.EjecutarSelect("select " & com & "idPagoFact" & com & ", " & com & "idFacturacion" & com & ", " & com & "fechaPagoFact" & com & ", " & com & "nroRecivo" & com & ", " & com & "importePago" & com & ", " & com & "gastoAdministrativo" & com & " from " & com & "public" & com & "." & com & "tblPagoFacturacion" & com & " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
                 While drPagos.Read()
                     cPago = New PagoFacturacion
                     cPago.id = drPagos.Item(0)
@@ -368,8 +368,8 @@ Public Class Presentacion
 
     Public Sub anularComprobante() 'este metodo anula el comprobante al abrir la presentacion
         Dim cDatos As New Nuevo
-        cDatos.update(com & "cedirData" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL, " & com & "pagado" & com & " = " & "2", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
-        cDatos.update(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "estado" & com & " = " & "'COBRADO'", " where " & com & "id" & com & " = " & Me.comprobante.IdComprobante)
+        cDatos.update(com & "public" & com & "." & com & "tblFacturacion" & com, com & "idComprobante" & com & " = " & "NULL, " & com & "pagado" & com & " = " & "2", " where " & com & "idFacturacion" & com & " = " & Me.idPresentacion)
+        cDatos.update(com & "public" & com & "." & com & "tblComprobantes" & com, com & "estado" & com & " = " & "'COBRADO'", " where " & com & "id" & com & " = " & Me.comprobante.IdComprobante)
         cDatos = Nothing
     End Sub
 

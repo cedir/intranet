@@ -23,7 +23,7 @@ Public Class CatalogoDeGravados
         getGravadosAll = New List(Of Gravado)
 
         Try
-            Dim query As String = "select * from " & com & "cedirData" & com & "." & com & "tblGravado" & com
+            Dim query As String = "select * from " & com & "public" & com & "." & com & "tblGravado" & com
             dr = cDatos.EjecutarSelect(query)
             While (dr.Read)
                 Dim g As New Gravado

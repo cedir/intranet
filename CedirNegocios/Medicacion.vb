@@ -50,9 +50,9 @@ Public Class Medicacion
         Dim resp As String
         Dim com As String = """"
         If Me.estado = "noEstaEnEstudio" Then
-            resp = upd.insert(com & "cedirData" & com & "." & com & "tblMedicacion" & com, com & "importe" & com & ", " & com & "idMedicamento" & com & ", " & com & "nroEstudio" & com, "'" & Me.importe & "', '" & Me.medicamento.idMedicamento & "'" & ", '" & Me.nroEstudio & "'")
+            resp = upd.insert(com & "public" & com & "." & com & "tblMedicacion" & com, com & "importe" & com & ", " & com & "idMedicamento" & com & ", " & com & "nroEstudio" & com, "'" & Me.importe & "', '" & Me.medicamento.idMedicamento & "'" & ", '" & Me.nroEstudio & "'")
         ElseIf Me.estado = "estaEnEstudio" Then
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblMedicacion" & com, com & "importe" & com & " = '" & Me.importe & "'", " where " & com & "idMedicacion" & com & " = " & Me.idMedicacion)
+            resp = upd.update(com & "public" & com & "." & com & "tblMedicacion" & com, com & "importe" & com & " = '" & Me.importe & "'", " where " & com & "idMedicacion" & com & " = " & Me.idMedicacion)
         End If
 
         Return resp

@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="LoginService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">https://wsaahomo.afip.gov.ar/ws/services/LoginCms</Value>
     </Setting>
     <Setting Name="FEService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">https://wswhomo.afip.gov.ar/wsfev1/service.asmx</Value>
     </Setting>
     <Setting Name="rutaClaveCertificadoFE" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />

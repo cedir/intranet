@@ -41,7 +41,7 @@ Public Class Complejidad
 
     Public Function modificar(ByVal c As Complejidad) As String
         Dim cDatos As New CedirDataAccess.Nuevo
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblComplejidades" & com
+        Dim tabla As String = com & "public" & com & "." & com & "tblComplejidades" & com
         Dim campos As String = com & "importe" & com & " = " & c.importe
         Dim condicion As String = " where " & com & "id" & com & " = " & c.id
         Return cDatos.update(tabla, campos, condicion)
