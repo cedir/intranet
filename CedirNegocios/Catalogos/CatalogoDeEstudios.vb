@@ -330,7 +330,11 @@ Public Class CatalogoDeEstudios
             vEstudio.medicoActuante.idMedico = drEstudios.Item("idMedicoActuante")
             vEstudio.medicoSolicitante.idMedico = drEstudios.Item("idMedicoSolicitante")
             vEstudio.nroOrden = drEstudios.Item("nroDeOrden")
-            vEstudio.VideoEstudio.enlaceMega = drEstudios.Item("enlaceVideo")
+
+            If drEstudios.Item("enlaceVideo") IsNot DBNull.Value Then
+                vEstudio.VideoEstudio.enlaceMega = drEstudios.Item("enlaceVideo")
+            End If
+
             vEstudio.idFacturacion = drEstudios.Item("idFacturacion")
 
             'ESTA ES LA FECHA DE tblPagoCobroEstudio

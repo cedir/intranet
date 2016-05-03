@@ -295,7 +295,7 @@ Public Class Presentacion
             cLinea = lineasDeFacturacionDeEstudios(i)
             Dim importeEstudioCobrado As Single = cLinea.objeto.importeEstudioCobrado
             Dim importeMedicacionCobrado As Single = cLinea.objeto.importeCobradoMedicacion
-            resp = upd.update(com & "public" & com & "." & com & "tblPagoCobroEstudio" & com, com & "fechaCobro" & com & " = '" & cFecha & "', " & com & "importeEstudioCobrado" & com & " = '" & importeEstudioCobrado & "', " & com & "importeMedicacionCobrado" & com & " = '" & importeMedicacionCobrado & "', " & com & "importeCobradoPension" & com & " = '" & cLinea.objeto.importeCobradoPension & "', " & com & "importeCobradoArancelAnestesia" & com & " = '" & cLinea.objeto.importeCobradoArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & cLinea.objeto.nroEstudio)
+            resp = upd.update("""tblEstudios""", """fechaCobro"" = '" & cFecha & "', ""importeEstudioCobrado"" = '" & importeEstudioCobrado & "', ""importeMedicacionCobrado"" = '" & importeMedicacionCobrado & "', ""importeCobradoPension"" = '" & cLinea.objeto.importeCobradoPension & "', ""importeCobradoArancelAnestesia"" = '" & cLinea.objeto.importeCobradoArancelAnestesia & "'", " where ""nroEstudio"" = " & cLinea.objeto.nroEstudio)
 
             importeTotal += importeEstudioCobrado + cLinea.objeto.importeCobradoPension + importeMedicacionCobrado + cLinea.objeto.importeCobradoArancelAnestesia
         Next

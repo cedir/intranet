@@ -165,16 +165,15 @@ Public Class LineaPagoMedico
     End Function
 
     Public Function guardar(ByVal nroPago As Integer) As String
-        Dim com As String = """"
         Dim upd As New Nuevo
-        Dim resp As String
 
-        Dim uptString1 As String = com & "importePagoMedico" & com & " = " & Me.importe & ", " & com & "porcentajeIVAPagoMedicoActuante" & com & " = " & Me.porcentajeIVAPagoMedicoActuante & " ,  " & com & "nroPagoMedicoAct" & com & " = " & nroPago
-        Dim uptString2 As String = com & "importePagoMedicoSol" & com & " = " & "'" & Me.importe & "',  " & com & "nroPagoMedicoSol" & com & " = " & nroPago
+        Dim uptString1 As String = """importePagoMedico"" = " & Me.importe & ", ""porcentajeIVAPagoMedicoActuante"" = " & Me.porcentajeIVAPagoMedicoActuante & " ,  ""nroPagoMedicoAct"" = " & nroPago
+        Dim uptString2 As String = """importePagoMedicoSol"" = " & "'" & Me.importe & "',  ""nroPagoMedicoSol"" = " & nroPago
 
-        Dim updQuery As String
+        Dim updQuery As String = String.Empty
+
         If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Then
-            updQuery = uptString1 & " , " & com & "importePagoMedicoSol" & com & " = 0,  " & com & "nroPagoMedicoSol" & com & " = " & nroPago
+            updQuery = uptString1 & " , ""importePagoMedicoSol"" = 0,  ""nroPagoMedicoSol"" = " & nroPago
         ElseIf Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
             updQuery = uptString1
         ElseIf Me.estudio.getCondicionMedico(idMedico) = "solicitante" Then
@@ -186,13 +185,10 @@ Public Class LineaPagoMedico
         If Me.estudio.esPagoContraFactura = 1 Then
             'NO VAMOS A modificar la fecha de cobro, ya que es la del momento de
             'hacer el PCF. ESTO HAY que probarlo.
-            '  updQuery &= ", " & com & "fechaCobro" & com & " = '" & cFecha & "'"
+            '  updQuery &= ", ""fechaCobro"" = '" & cFecha & "'"
         End If
 
-        resp = upd.update(com & "public" & com & "." & com & "tblPagoCobroEstudio" & com, updQuery, " where " & com & "nroEstudio" & com & " = " & Me.estudio.nroEstudio)
-
-
-        Return resp
+        Return upd.update("""tblEstudios""", updQuery, " where ""nroEstudio"" = " & Me.estudio.nroEstudio)
     End Function
 
 End Class
