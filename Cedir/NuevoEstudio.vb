@@ -5,9 +5,8 @@ Imports System.Windows.Forms
 Imports System.Drawing
 Imports System.IO
 Imports System.Text.RegularExpressions
-Imports Microsoft.Office.Core
-Imports Microsoft.Office
-Imports Microsoft.Office.Interop
+Imports System.Windows.Input
+Imports System.Globalization
 'Este formulario da de alta un estudio, pero tambien si el estudio ya ha sido creado, 
 'carga los valores con los datos ya ingresados y permite modificarlos
 'Pero como saber si se esta por crear un estudio o modificar uno????
@@ -20,9 +19,7 @@ Public Class NuevoEstudio
     Dim saveChanges As Boolean = False
     Dim defaultInforme As String
     Dim defaultMotivo As String
-    Friend WithEvents btnOrtografia As System.Windows.Forms.Button
-    Friend WithEvents btnGramatica As System.Windows.Forms.Button
-    Friend WithEvents TxtInforme As System.Windows.Forms.TextBox
+    Friend WithEvents TxtInforme As System.Windows.Controls.TextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txtLink As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
@@ -31,6 +28,7 @@ Public Class NuevoEstudio
     Friend WithEvents btnLink As System.Windows.Forms.Button
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents lblPublicID As System.Windows.Forms.Label
+    Friend WithEvents TxtInformeHost As Integration.ElementHost
     Dim pAddFromSelectedEstudio As Boolean = False
 
 #Region " Constructor"
@@ -40,17 +38,20 @@ Public Class NuevoEstudio
 
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
+        CustomInitialization()
 
         'Agregar cualquier inicialización después de la llamada a InitializeComponent()
         currentEst = es
         defaultInforme = currentEst.informe
         defaultMotivo = currentEst.motivoEstudio
     End Sub
+
     Public Sub New(ByVal es As Estudio, ByVal addFromSelectedEstudio As Boolean)
         MyBase.New()
 
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
+        CustomInitialization()
 
         'Agregar cualquier inicialización después de la llamada a InitializeComponent()
         currentEst = es
@@ -58,6 +59,14 @@ Public Class NuevoEstudio
         defaultMotivo = currentEst.motivoEstudio
         pAddFromSelectedEstudio = addFromSelectedEstudio
 
+    End Sub
+
+    Private Sub CustomInitialization()
+        InputLanguageManager.SetInputLanguage(Me.TxtInforme, CultureInfo.CreateSpecificCulture("es-AR"))
+        Me.TxtInforme.SpellCheck.IsEnabled = True
+        Me.TxtInforme.AcceptsReturn = True
+        Me.TxtInforme.TextWrapping = Windows.TextWrapping.Wrap
+        Me.TxtInforme.VerticalScrollBarVisibility = Windows.Controls.ScrollBarVisibility.Visible
     End Sub
 
 
@@ -111,46 +120,45 @@ Public Class NuevoEstudio
     Friend WithEvents btnColangioNormal As System.Windows.Forms.Button
     Friend WithEvents btnColangioConCalclulo As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.lblDni = New System.Windows.Forms.Label
-        Me.TxtMotivo = New System.Windows.Forms.TextBox
-        Me.cmbEstudio = New System.Windows.Forms.ComboBox
-        Me.cmbObraSocial = New System.Windows.Forms.ComboBox
-        Me.cmbMedicoAct = New System.Windows.Forms.ComboBox
-        Me.cmbMedicoSol = New System.Windows.Forms.ComboBox
-        Me.lblNombre = New System.Windows.Forms.Label
-        Me.btnAceptar = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.btnCerrar = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.btnImprimir = New System.Windows.Forms.Button
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.btnFotos = New System.Windows.Forms.Button
-        Me.txtNroOrden = New System.Windows.Forms.TextBox
-        Me.lblFecha = New System.Windows.Forms.Label
-        Me.cmbAnestesistas = New System.Windows.Forms.ComboBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.dtpFechaEstudio = New System.Windows.Forms.DateTimePicker
-        Me.btnAltaNormal = New System.Windows.Forms.Button
-        Me.btnGastritis = New System.Windows.Forms.Button
-        Me.btnColonoNormal = New System.Windows.Forms.Button
-        Me.btnAgregarPolipectomia = New System.Windows.Forms.Button
-        Me.btnColangioNormal = New System.Windows.Forms.Button
-        Me.btnColangioConCalclulo = New System.Windows.Forms.Button
-        Me.btnOrtografia = New System.Windows.Forms.Button
-        Me.btnGramatica = New System.Windows.Forms.Button
-        Me.TxtInforme = New System.Windows.Forms.TextBox
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.txtLink = New System.Windows.Forms.TextBox
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.btnLink = New System.Windows.Forms.Button
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.lblPublicID = New System.Windows.Forms.Label
+        Me.lblDni = New System.Windows.Forms.Label()
+        Me.TxtMotivo = New System.Windows.Forms.TextBox()
+        Me.cmbEstudio = New System.Windows.Forms.ComboBox()
+        Me.cmbObraSocial = New System.Windows.Forms.ComboBox()
+        Me.cmbMedicoAct = New System.Windows.Forms.ComboBox()
+        Me.cmbMedicoSol = New System.Windows.Forms.ComboBox()
+        Me.lblNombre = New System.Windows.Forms.Label()
+        Me.btnAceptar = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.btnCerrar = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.btnImprimir = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.btnFotos = New System.Windows.Forms.Button()
+        Me.txtNroOrden = New System.Windows.Forms.TextBox()
+        Me.lblFecha = New System.Windows.Forms.Label()
+        Me.cmbAnestesistas = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.dtpFechaEstudio = New System.Windows.Forms.DateTimePicker()
+        Me.btnAltaNormal = New System.Windows.Forms.Button()
+        Me.btnGastritis = New System.Windows.Forms.Button()
+        Me.btnColonoNormal = New System.Windows.Forms.Button()
+        Me.btnAgregarPolipectomia = New System.Windows.Forms.Button()
+        Me.btnColangioNormal = New System.Windows.Forms.Button()
+        Me.btnColangioConCalclulo = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.lblPublicID = New System.Windows.Forms.Label()
+        Me.txtLink = New System.Windows.Forms.TextBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.TxtInformeHost = New System.Windows.Forms.Integration.ElementHost()
+        Me.TxtInforme = New System.Windows.Controls.TextBox()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.btnLink = New System.Windows.Forms.Button()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -403,37 +411,6 @@ Public Class NuevoEstudio
         Me.btnColangioConCalclulo.TabStop = False
         Me.btnColangioConCalclulo.Text = "Colangio con Cálculo"
         '
-        'btnOrtografia
-        '
-        Me.btnOrtografia.Location = New System.Drawing.Point(654, 126)
-        Me.btnOrtografia.Name = "btnOrtografia"
-        Me.btnOrtografia.Size = New System.Drawing.Size(112, 23)
-        Me.btnOrtografia.TabIndex = 40
-        Me.btnOrtografia.TabStop = False
-        Me.btnOrtografia.Text = "Revisar ortografía"
-        Me.btnOrtografia.UseVisualStyleBackColor = True
-        Me.btnOrtografia.Visible = False
-        '
-        'btnGramatica
-        '
-        Me.btnGramatica.Location = New System.Drawing.Point(654, 155)
-        Me.btnGramatica.Name = "btnGramatica"
-        Me.btnGramatica.Size = New System.Drawing.Size(112, 23)
-        Me.btnGramatica.TabIndex = 41
-        Me.btnGramatica.TabStop = False
-        Me.btnGramatica.Text = "Revisar gramatica"
-        Me.btnGramatica.UseVisualStyleBackColor = True
-        Me.btnGramatica.Visible = False
-        '
-        'TxtInforme
-        '
-        Me.TxtInforme.Location = New System.Drawing.Point(144, 93)
-        Me.TxtInforme.Multiline = True
-        Me.TxtInforme.Name = "TxtInforme"
-        Me.TxtInforme.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtInforme.Size = New System.Drawing.Size(496, 110)
-        Me.TxtInforme.TabIndex = 6
-        '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.lblPublicID)
@@ -447,6 +424,15 @@ Public Class NuevoEstudio
         Me.GroupBox1.TabIndex = 42
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Datos del paciente"
+        '
+        'lblPublicID
+        '
+        Me.lblPublicID.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPublicID.Location = New System.Drawing.Point(10, 64)
+        Me.lblPublicID.Name = "lblPublicID"
+        Me.lblPublicID.Size = New System.Drawing.Size(384, 16)
+        Me.lblPublicID.TabIndex = 35
+        Me.lblPublicID.Text = "Public ID .................:   "
         '
         'txtLink
         '
@@ -477,16 +463,14 @@ Public Class NuevoEstudio
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.TxtInformeHost)
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.btnColonoNormal)
         Me.GroupBox3.Controls.Add(Me.btnGastritis)
         Me.GroupBox3.Controls.Add(Me.btnAltaNormal)
-        Me.GroupBox3.Controls.Add(Me.btnGramatica)
         Me.GroupBox3.Controls.Add(Me.Label6)
-        Me.GroupBox3.Controls.Add(Me.btnOrtografia)
         Me.GroupBox3.Controls.Add(Me.TxtMotivo)
         Me.GroupBox3.Controls.Add(Me.btnColangioConCalclulo)
-        Me.GroupBox3.Controls.Add(Me.TxtInforme)
         Me.GroupBox3.Controls.Add(Me.btnColangioNormal)
         Me.GroupBox3.Controls.Add(Me.btnAgregarPolipectomia)
         Me.GroupBox3.Location = New System.Drawing.Point(9, 225)
@@ -495,6 +479,16 @@ Public Class NuevoEstudio
         Me.GroupBox3.TabIndex = 45
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Detalle"
+
+        '
+        'TxtInformeHost
+        '
+        Me.TxtInformeHost.Location = New System.Drawing.Point(144, 93)
+        Me.TxtInformeHost.Name = "TxtInformeHost"
+        Me.TxtInformeHost.Size = New System.Drawing.Size(496, 110)
+        Me.TxtInformeHost.TabIndex = 6
+        Me.TxtInformeHost.Text = "TxtInformeHost"
+        Me.TxtInformeHost.Child = Me.TxtInforme
         '
         'GroupBox4
         '
@@ -527,15 +521,6 @@ Public Class NuevoEstudio
         Me.GroupBox5.Size = New System.Drawing.Size(343, 53)
         Me.GroupBox5.TabIndex = 47
         Me.GroupBox5.TabStop = False
-        '
-        'lblPublicID
-        '
-        Me.lblPublicID.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPublicID.Location = New System.Drawing.Point(10, 64)
-        Me.lblPublicID.Name = "lblPublicID"
-        Me.lblPublicID.Size = New System.Drawing.Size(384, 16)
-        Me.lblPublicID.TabIndex = 35
-        Me.lblPublicID.Text = "Public ID .................:   "
         '
         'NuevoEstudio
         '
@@ -858,7 +843,7 @@ Public Class NuevoEstudio
         Const CurrentX As Integer = 50
 
         Dim color As New Color
-        Dim myPen As New System.Drawing.Pen(color.Black)
+        Dim myPen As New System.Drawing.Pen(Color.Black)
         myPen.Alignment = Drawing2D.PenAlignment.Center
         myPen.Width = 1
 
@@ -945,7 +930,7 @@ Public Class NuevoEstudio
 
         Dim objImage As Image
         Dim objCallback As System.Drawing.Image.GetThumbnailImageAbort = New System.Drawing.Image.GetThumbnailImageAbort(AddressOf ThumbnailCallback)
-        objImage = objImage.FromFile("c:\Fotos\" & currentEst.codigoImagen & "1.jpg")
+        objImage = Image.FromFile("c:\Fotos\" & currentEst.codigoImagen & "1.jpg")
         objImage = objImage.GetThumbnailImage(100, 100, objCallback, IntPtr.Zero)
 
 
@@ -1043,17 +1028,17 @@ Public Class NuevoEstudio
             cmbEstudio.Enabled = False
             dtpFechaEstudio.Enabled = False
             txtNroOrden.Enabled = False
-            Me.TxtInforme.Enabled = True
+            Me.TxtInforme.IsEnabled = True
             Me.TxtMotivo.Enabled = True
         End If
 
     End Sub
 
     Private Sub btnAltaNormal_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAltaNormal.Click
-        Dim informe As String = "ESOFAGO. Normal , cardias a 37 cm de la arcada dentaria superior, No se evidencia reflujo gastro esofágico , hernia hiatal , ni esofagitis por reflujo." & vbCrLf & _
-        "ESTOMAGO: Mucosa de características normales. Por retroflexión se observa el techo gástrico con un buen cierre cardial." & vbCrLf & _
-        "PILORO: Permeable" & vbCrLf & _
-        "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf & _
+        Dim informe As String = "ESOFAGO. Normal , cardias a 37 cm de la arcada dentaria superior, No se evidencia reflujo gastro esofágico , hernia hiatal , ni esofagitis por reflujo." & vbCrLf &
+        "ESTOMAGO: Mucosa de características normales. Por retroflexión se observa el techo gástrico con un buen cierre cardial." & vbCrLf &
+        "PILORO: Permeable" & vbCrLf &
+        "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf &
         "CONCLUSION DIAGNOSTICA: ESOFAGO GASTRO DUODENO DE CARACTERISTICAS NORMALES." & vbCrLf
 
         If TxtInforme.Text <> "" Then
@@ -1067,10 +1052,10 @@ Public Class NuevoEstudio
     End Sub
 
     Private Sub btnGastritis_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGastritis.Click
-        Dim informe As String = "ESOFAGO. Normal , cardias a 37 cm de la arcada dentaria superior," & vbCrLf & _
-        "ESTOMAGO: Mucosa antral difusamente congestiva eritematosa a predominio pre pilórico." & vbCrLf & _
-        "PILORO: Permeable" & vbCrLf & _
-        "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf & _
+        Dim informe As String = "ESOFAGO. Normal , cardias a 37 cm de la arcada dentaria superior," & vbCrLf &
+        "ESTOMAGO: Mucosa antral difusamente congestiva eritematosa a predominio pre pilórico." & vbCrLf &
+        "PILORO: Permeable" & vbCrLf &
+        "BULBO DUODENAL Y SEGUNDA PORCION DUODENAL . Normales." & vbCrLf &
         "CONCLUSION DIAGNOSTICA: GASTRITIS SUPERFICIAL NO EROSIVA DE ANTRO GASTRICO." & vbCrLf
 
 
@@ -1086,9 +1071,9 @@ Public Class NuevoEstudio
     End Sub
 
     Private Sub btnColonoNormal_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnColonoNormal.Click
-        Dim informe As String = "Ampolla rectal sin lesión mucosa." & vbCrLf & _
-        "Se franquea el ángulo recto sigmoides observando el colon sigmoides de características normales ." & vbCrLf & _
-        "Se progresa por el colon descendente hasta franquear el ángulo esplénico observando el colon transverso , ángulo hepático y colon ascendente sin evidenciar lesión mucosa." & vbCrLf & _
+        Dim informe As String = "Ampolla rectal sin lesión mucosa." & vbCrLf &
+        "Se franquea el ángulo recto sigmoides observando el colon sigmoides de características normales ." & vbCrLf &
+        "Se progresa por el colon descendente hasta franquear el ángulo esplénico observando el colon transverso , ángulo hepático y colon ascendente sin evidenciar lesión mucosa." & vbCrLf &
         "CONCLUSION DIAGNOSTICA: AMPOLLA RECTAL Y MARCO COLONICO VISUALIZADO HASTA CIEGO  DE CARACTERISTICAS NORMALES." & vbCrLf
 
 
@@ -1139,11 +1124,11 @@ Public Class NuevoEstudio
     End Sub
 
     Private Sub btnColangioNormal_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnColangioNormal.Click
-        Dim informe As String = "En segunda porción duodenal , se visualiza la Ampolla de Vater de características normales." & vbCrLf & _
-        "Se canula sin dificultad observando la vía bilair intra hepática de calibre normal." & vbCrLf & _
-        "La vía biliar extra hepática presenta tanto el conducto hepático como el colédoco de aspecto y calibre normal." & vbCrLf & _
-        "No se observan imágenes radiolucidas en su interior y el drenaje de la sustancia de contraste se realiza en tiempo aceptable. " & vbCrLf & _
-        "Buena tolerancia al procedimiento." & vbCrLf & _
+        Dim informe As String = "En segunda porción duodenal , se visualiza la Ampolla de Vater de características normales." & vbCrLf &
+        "Se canula sin dificultad observando la vía bilair intra hepática de calibre normal." & vbCrLf &
+        "La vía biliar extra hepática presenta tanto el conducto hepático como el colédoco de aspecto y calibre normal." & vbCrLf &
+        "No se observan imágenes radiolucidas en su interior y el drenaje de la sustancia de contraste se realiza en tiempo aceptable. " & vbCrLf &
+        "Buena tolerancia al procedimiento." & vbCrLf &
         "Las imágenes radioscópicas son digitalizadas e impresas en papel , acompañando el presente informe." & vbCrLf
 
         If TxtInforme.Text <> "" Then
@@ -1157,11 +1142,11 @@ Public Class NuevoEstudio
     End Sub
 
     Private Sub btnColangioConCalclulo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnColangioConCalclulo.Click
-        Dim informe As String = "En segunda porción duodenal se visualiza la Ampolla de Vater de características normales." & vbCrLf & _
-        "Se canula sin dificultad observando la vía bilar intra hepática de calibre conservado." & vbCrLf & _
-        "La vía biiliar extra hepática se observa dilatada de aproximadamente 20 mm en promedio con una imagen radiolúcida en su interior con limites netos que podría corresponder a un lito coledociano." & vbCrLf & _
-        "Se realiza papilotomía ámplia y con canastilla de dormia se extrae un lito con las características descriptas en al imagen radiológica." & vbCrLf & _
-        "Buena tolerancia al procedimiento." & vbCrLf & _
+        Dim informe As String = "En segunda porción duodenal se visualiza la Ampolla de Vater de características normales." & vbCrLf &
+        "Se canula sin dificultad observando la vía bilar intra hepática de calibre conservado." & vbCrLf &
+        "La vía biiliar extra hepática se observa dilatada de aproximadamente 20 mm en promedio con una imagen radiolúcida en su interior con limites netos que podría corresponder a un lito coledociano." & vbCrLf &
+        "Se realiza papilotomía ámplia y con canastilla de dormia se extrae un lito con las características descriptas en al imagen radiológica." & vbCrLf &
+        "Buena tolerancia al procedimiento." & vbCrLf &
         "Las imágenes radioscópicas son digitalizadas e impresas en papel que acompañan al presente informe. " & vbCrLf
 
         If TxtInforme.Text <> "" Then
@@ -1174,109 +1159,11 @@ Public Class NuevoEstudio
         End If
     End Sub
 
-    Private Sub TxtInforme_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtInforme.KeyPress
-        Me.btnOrtografia.Visible = True
-        Me.btnGramatica.Visible = True
-    End Sub
-
-    Private Sub TxtInforme_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtInforme.Leave
-        If Me.TxtInforme.Text = "" Then
-            Me.btnOrtografia.Visible = False
-            Me.btnGramatica.Visible = False
-        Else
-            Me.btnOrtografia.Visible = True
-            Me.btnGramatica.Visible = True
-        End If
-    End Sub
-
-    Private Sub btnOrtografia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOrtografia.Click
-        SpellOrGrammarCheck(True)
-    End Sub
-    Private Sub SpellOrGrammarCheck(ByVal blnSpellOnly As Boolean)
-
-        Try
-            ' Create Word and temporary document objects.
-            Dim objWord As Object
-            Dim objTempDoc As Object
-            ' Declare an IDataObject to hold the data returned from the 
-            ' clipboard.
-            Dim iData As IDataObject
-            Dim shell As New Shell32.Shell
-            shell.MinimizeAll()
-
-            ' If there is no data to spell check, then exit sub here.
-            If Me.TxtInforme.Text = "" Then
-                Exit Sub
-            End If
-
-            objWord = New Word.Application()
-            objTempDoc = objWord.Documents.Add
-            objWord.Visible = False
-
-            ' Position Word off the screen...this keeps Word invisible 
-            ' throughout.
-            objWord.WindowState = 0
-            objWord.Top = -10
-
-
-            ' Copy the contents of the textbox to the clipboard
-            Clipboard.SetDataObject(TxtInforme.Text)
-
-            ' With the temporary document, perform either a spell check or a 
-            ' complete
-            ' grammar check, based on user selection.
-            With objTempDoc
-                .Content.Paste()
-                .Activate()
-                If blnSpellOnly Then
-                    .CheckSpelling()
-                Else
-                    .CheckGrammar()
-                End If
-                ' After user has made changes, use the clipboard to
-                ' transfer the contents back to the text box
-                .Content.Copy()
-                iData = Clipboard.GetDataObject
-                If iData.GetDataPresent(DataFormats.Text) Then
-                    TxtInforme.Text = CType(iData.GetData(DataFormats.Text), _
-                        String)
-                End If
-                .Saved = True
-                .Close()
-            End With
-
-            objWord.Quit()
-            objWord = Nothing
-            MessageBox.Show("Control ortográfico completo.", _
-                "Corrector ortográfico", MessageBoxButtons.OK, _
-                MessageBoxIcon.Information)
-
-            shell.UndoMinimizeALL()
-            Me.Focus()
-            Me.WindowState = FormWindowState.Normal
-
-
-        Catch Excep As Exception
-            MessageBox.Show("Ha ocurrido un error.", "Corrector ortográfico")
-
-        End Try
-
-    End Sub
-
-    Private Sub btnGramatica_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGramatica.Click
-        SpellOrGrammarCheck(False)
-    End Sub
-
     Private Sub btnPrueba_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim linecount As Integer = 0
         linecount = Len(TxtInforme.Text) - Len(Replace(TxtInforme.Text, vbCrLf, vbCr))
         MessageBox.Show(linecount.ToString())
     End Sub
-
-    Private Sub TxtInforme_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtInforme.TextChanged
-
-    End Sub
-
 
 
     Private Sub NuevoEstudio_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
