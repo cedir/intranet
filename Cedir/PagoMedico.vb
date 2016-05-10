@@ -490,8 +490,13 @@ Public Class PagoMedico
             If est.esPagoContraFactura = 1 Then
                 banderaPCF = "*" 'Es pago contra factura
                 If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante")) Then
-
                     porcentaje = 100 - cLinea.getPorcentaje()
+
+                    ' Agregado 09/05/2016: https://trello.com/c/n7vfBp98
+                    If est.esEcografia And (est.obraSocial.idObraSocial = PARTICULAR_ESPECIAL Or est.obraSocial.idObraSocial = PARTICULAR) Then
+                        porcentaje = 0
+                    End If
+
                     If (est.practica.idEstudio = VIDEOENDOSCOPIA_BAJA_TERAPEUTICA Or est.practica.idEstudio = VIDEOENDOSCOPIA_ALTA_TERAPEUTICA Or est.practica.idEstudio = 118 Or est.practica.idEstudio = 121) And (est.obraSocial.idObraSocial = OSDE Or est.obraSocial.idObraSocial = OSDE_CEDIR) Then
                         pagoDelCorrespondiente = ((importeEstudio - cLinea.getDescuentoPorPolipectomiaOSDE) * porcentaje / 100) + cLinea.getDescuentoPorPolipectomiaOSDE
                     Else

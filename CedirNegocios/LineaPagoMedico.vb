@@ -6,7 +6,7 @@ Public Class LineaPagoMedico
     Private m_importe As Single
     Private m_gastosAdministrativos As Decimal
     Private m_porcentajeIVAPagoMedicoActuante As Decimal
-    Const descuentoPorPolipectomiaOSDE As Decimal = 70
+    Const descuentoPorPolipectomiaOSDE As Decimal = 0 'pedido Mariana, email 07/05/2016
     Const descuentoPorPolipectomiaMaterialFacturable As Decimal = 0
     Public idMedico As Integer
 
@@ -65,8 +65,6 @@ Public Class LineaPagoMedico
         Dim cEstudio As Estudio = Me.estudio
         Dim descuentoPorPolipectomia As Decimal = Me.getDescuentoPolipectomiaSegunObraSocial()
 
-
-
         Dim descuentoColangios As Decimal = 0
         ' si la practica es alguna de las siguientes, se realiza un dto de 2000 pesos, A PARTIR DEL 09/04/2013
         If cEstudio.practica.idEstudio = 13 Or cEstudio.practica.idEstudio = 14 Or cEstudio.practica.idEstudio = 34 Then
@@ -101,8 +99,8 @@ Public Class LineaPagoMedico
                 Case cEstudio.obraSocial.idObraSocial = 3 OrElse cEstudio.obraSocial.idObraSocial = 79
                     'OS OSDE Y OS OSDE(CEDIR)
                     Return Me.getDescuentoPorPolipectomiaOSDE
-                Case cEstudio.obraSocial.idObraSocial = 25 OrElse cEstudio.obraSocial.idObraSocial = 5 OrElse cEstudio.obraSocial.idObraSocial = 46
-                    'OS UNR aca y galeno
+                Case cEstudio.obraSocial.idObraSocial = 25 OrElse cEstudio.obraSocial.idObraSocial = 5 OrElse cEstudio.obraSocial.idObraSocial = 46 OrElse cEstudio.obraSocial.idObraSocial = 19
+                    'OS UNR, ACA Salud, GALENO y OSPAC
                     Return Me.getDescuentoPorPolipectomiaMaterialFacturableDirecto
                 Case Else
                     Return 300.0
