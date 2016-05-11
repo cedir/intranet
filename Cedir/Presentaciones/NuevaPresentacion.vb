@@ -1300,7 +1300,7 @@ Public Class NuevaPresentacion
                                 r = MsgBox("Se va a imprimir el comprobante " & cPresentacion.comprobante.TipoComprobante.Descripcion & " de Cedir, presione Aceptar cuando este listo.", MsgBoxStyle.YesNo, "Imprimir Comprobante")
                                 If r = 6 Then
                                     'prepareImprimirFactura()
-                                    Helper.ImprimirWeb(cPresentacion.comprobante.CAE)
+                                    Helper.ImprimirWeb(cPresentacion.comprobante.CAE, True) 'Desde acá siempre imprime leyenda
                                 End If
                             End If
 

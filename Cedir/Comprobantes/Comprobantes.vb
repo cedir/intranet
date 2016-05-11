@@ -151,7 +151,7 @@ Public Class Comprobantes
                 f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, espac)
                 f.ShowDialog()
             Else
-                Helper.ImprimirWeb(Comprobante.CAE)
+                Helper.ImprimirWeb(Comprobante.CAE, chkLeyenda.Checked)
             End If
         Else
             MessageBox.Show("Está intentando imprimir un comprobante anulado." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)

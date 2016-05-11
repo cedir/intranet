@@ -1043,7 +1043,7 @@ Public Class frmComprobanteNuevo
             Exit Sub
         End If
         If Comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
-            Helper.ImprimirWeb(Comprobante.CAE)
+            Helper.ImprimirWeb(Comprobante.CAE, chkLeyenda.Checked)
             Exit Sub
         End If
         Dim f As New rptViewer

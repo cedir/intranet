@@ -178,8 +178,8 @@ Public Class Helper
 
     End Function
 
-    Public Shared Sub ImprimirWeb(ByRef cae As String)
-        Process.Start(String.Format("http://{0}/comprobante/imprimir/{1}/", Global.CedirNegocios.My.Settings.WebPrintHost, cae))
+    Public Shared Sub ImprimirWeb(ByRef cae As String, ByVal imprimeLeyenda As Boolean)
+        Process.Start(String.Format("http://{0}/comprobante/imprimir/{1}/{2}", Global.CedirNegocios.My.Settings.WebPrintHost, cae, IIf(imprimeLeyenda, "?leyenda", String.Empty)))
     End Sub
 
 End Class
