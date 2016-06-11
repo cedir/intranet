@@ -118,7 +118,7 @@ Public Class Presentacion
     Public Function inicilizarFacturacion() As String
         'inicializa los arreglos - obtiene estudios disponibles para facturar . la facturacion es temporal todavia.
         total = 0
-        loadEstudios("where " & com & "idFacturacion" & com & " = 0 and det." & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " and pce." & com & "pagoContraFactura" & com & " = " & 0 & " and det." & com & "esPagoContraFactura" & com & " = " & 0, "noEstaEnFacturacion")
+        loadEstudios("where " & com & "idFacturacion" & com & " = 0 and est." & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " and est." & com & "pagoContraFactura" & com & " = " & 0 & " and est." & com & "esPagoContraFactura" & com & " = " & 0, "noEstaEnFacturacion")
         Return "ok"
     End Function
 

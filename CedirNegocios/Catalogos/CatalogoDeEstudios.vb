@@ -200,7 +200,7 @@ Public Class CatalogoDeEstudios
         End If
 
         If consulta <> "" Then
-            consulta = consulta & " and  pce." & com & "fechaCobro" & com & " <> null "
+            consulta = consulta & " and  est." & com & "fechaCobro" & com & " <> null "
         End If
 
 
