@@ -448,6 +448,7 @@ Public Class InformeMensualComprobantes
                     Else
                         'si el comprobante esta anulado o no cobrado
                         dr("TotalCobrado") = 0
+                        dr("TotalFacturado") = 0.0
                         dr("Neto") = 0.0
                         dr("IVA") = 0.0
                         dr("Honorarios") = 0.0
