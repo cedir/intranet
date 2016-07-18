@@ -121,7 +121,7 @@ Public Class CatalogoDePresentaciones
         End If
 
         'quitar estudios de la facturacion
-        resp = daNuevo.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idFacturacion" & com & " = 0 ", " where " & com & "idFacturacion" & com & " = " & id)
+        resp = daNuevo.update("""tblEstudios""", """idFacturacion"" = 0 ", " where ""idFacturacion"" = " & id)
 
         'quitar consultas
         If resp = "ok" Then

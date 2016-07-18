@@ -60,18 +60,18 @@ Public Class LineaDeFacturacion
         Select Case objeto.GetType.ToString
             Case "CedirNegocios.Estudio"
                 Dim resp As String
-                resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "nroDeOrden" & com & " = '" & objeto.nroOrden & "', " & com & "idFacturacion" & com & " = " & idFacturacion, " where " & com & "nroEstudio" & com & " = " & objeto.nroEstudio)
-                resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "importeEstudio" & com & " = " & importe & ", " & com & "diferenciaPaciente" & com & " = " & diferenciaPaciente & ", " & com & "pension" & com & " = " & pension & ", " & com & "arancelAnestesia" & com & " = " & objeto.ArancelAnestesia & ", " & com & "importeMedicacion" & com & " = " & objeto.importeMedicacion, " where " & com & "nroEstudio" & com & " = " & objeto.nroEstudio)
+                resp = upd.update("""tblEstudios""", """nroDeOrden"" = '" & objeto.nroOrden & "', ""idFacturacion"" = " & idFacturacion, " where ""nroEstudio"" = " & objeto.nroEstudio)
+                resp = upd.update("""tblEstudios""", """importeEstudio"" = " & importe & ", ""diferenciaPaciente"" = " & diferenciaPaciente & ", ""pension"" = " & pension & ", ""arancelAnestesia"" = " & objeto.ArancelAnestesia & ", ""importeMedicacion"" = " & objeto.importeMedicacion, " where ""nroEstudio"" = " & objeto.nroEstudio)
                 Return resp
             Case "CedirNegocios.Consulta"
                 Dim resp As String
                 If estado = "estaEnFacturacion" Then
                     'actualizar importe
-                    resp = upd.update(com & "cedirData" & com & "." & com & "Facturaciones-Consultas" & com, com & "importe" & com & " = " & Me.importe, " where " & com & "idFacturacion" & com & " = " & idFacturacion & " and " & com & "idConsulta" & com & " = " & objeto.id)
+                    resp = upd.update(com & "public" & com & "." & com & "Facturaciones-Consultas" & com, com & "importe" & com & " = " & Me.importe, " where " & com & "idFacturacion" & com & " = " & idFacturacion & " and " & com & "idConsulta" & com & " = " & objeto.id)
                     Return resp
                 ElseIf estado = "noEstaEnFacturacion" Then
                     'insertar linea de consulta
-                    resp = upd.insert(com & "cedirData" & com & "." & com & "Facturaciones-Consultas" & com, com & "idFacturacion" & com & ", " & com & "idConsulta" & com & ", " & com & "importe" & com, idFacturacion & ", " & objeto.id & ", " & Me.importe)
+                    resp = upd.insert(com & "public" & com & "." & com & "Facturaciones-Consultas" & com, com & "idFacturacion" & com & ", " & com & "idConsulta" & com & ", " & com & "importe" & com, idFacturacion & ", " & objeto.id & ", " & Me.importe)
                     Return resp
                 End If
 

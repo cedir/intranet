@@ -66,7 +66,7 @@ Public Class ObraSocial
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
         Dim com As String = """"
-        resp = upd.insert(com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com, com & "obraSocial" & com & ", " & com & "direccion" & com & ", " & com & "telefono" & com & ", " & com & "localidad" & com & ", " & com & "codigoPostal" & com & ", " & com & "condicionFiscal" & com & ", " & com & "nroCuit" & com & ", " & com & "observaciones" & com & ", " & com & "sePresentaPorAMR" & com & ", " & com & "sePresentaPorARA" & com, "'" & Me.ObraSocial & "', '" & Me.direccion & "', '" & Me.tel & "', '" & Me.localidad & "', " & Me.CodigoPostal & ", '" & Me.CondicionFiscal & "', '" & Me.nroCuit & "'" & ", '', " & Me.sePresentaPorAMR & ", " & Me.sePresentaPorARA)
+        resp = upd.insert(com & "public" & com & "." & com & "AlmacenObraSocial" & com, com & "obraSocial" & com & ", " & com & "direccion" & com & ", " & com & "telefono" & com & ", " & com & "localidad" & com & ", " & com & "codigoPostal" & com & ", " & com & "condicionFiscal" & com & ", " & com & "nroCuit" & com & ", " & com & "observaciones" & com & ", " & com & "sePresentaPorAMR" & com & ", " & com & "sePresentaPorARA" & com, "'" & Me.ObraSocial & "', '" & Me.direccion & "', '" & Me.tel & "', '" & Me.localidad & "', " & Me.CodigoPostal & ", '" & Me.CondicionFiscal & "', '" & Me.nroCuit & "'" & ", '', " & Me.sePresentaPorAMR & ", " & Me.sePresentaPorARA)
 
         Return resp
 
@@ -75,7 +75,7 @@ Public Class ObraSocial
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
         Dim com As String = """"
-        resp = upd.update(com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com, com & "obraSocial" & com & " = '" & Me.ObraSocial & "', " & com & "direccion" & com & " = '" & Me.direccion & "', " & com & "telefono" & com & " = '" & Me.tel & "', " & com & "localidad" & com & " = '" & Me.localidad & "', " & com & "codigoPostal" & com & " = " & Me.CodigoPostal & ", " & com & "condicionFiscal" & com & " = '" & Me.CondicionFiscal & "', " & com & "nroCuit" & com & " = '" & Me.nroCuit & "', " & com & "sePresentaPorAMR" & com & " = '" & Me.sePresentaPorAMR & "', " & com & "sePresentaPorARA" & com & " = '" & Me.sePresentaPorARA & "' ", " where " & com & "idObraSocial" & com & " = " & idObraSocial)
+        resp = upd.update(com & "public" & com & "." & com & "AlmacenObraSocial" & com, com & "obraSocial" & com & " = '" & Me.ObraSocial & "', " & com & "direccion" & com & " = '" & Me.direccion & "', " & com & "telefono" & com & " = '" & Me.tel & "', " & com & "localidad" & com & " = '" & Me.localidad & "', " & com & "codigoPostal" & com & " = " & Me.CodigoPostal & ", " & com & "condicionFiscal" & com & " = '" & Me.CondicionFiscal & "', " & com & "nroCuit" & com & " = '" & Me.nroCuit & "', " & com & "sePresentaPorAMR" & com & " = '" & Me.sePresentaPorAMR & "', " & com & "sePresentaPorARA" & com & " = '" & Me.sePresentaPorARA & "' ", " where " & com & "idObraSocial" & com & " = " & idObraSocial)
         Return resp
     End Function
 
@@ -84,7 +84,7 @@ Public Class ObraSocial
         Dim com As String = """"
         Dim resp As String
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com, com & "observaciones" & com & " = '" & Me.observaciones & "'", " where " & com & "idObraSocial" & com & " = " & Me.idObraSocial)
+        resp = upd.update(com & "public" & com & "." & com & "AlmacenObraSocial" & com, com & "observaciones" & com & " = '" & Me.observaciones & "'", " where " & com & "idObraSocial" & com & " = " & Me.idObraSocial)
         Return resp
     End Function
 
@@ -93,7 +93,7 @@ Public Class ObraSocial
         Dim com As String = """"
         Dim resp As String
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com, com & "valorAproximadoPension" & com & " = " & Me.valorAproximadoDePension, " where " & com & "idObraSocial" & com & " = " & Me.idObraSocial)
+        resp = upd.update(com & "public" & com & "." & com & "AlmacenObraSocial" & com, com & "valorAproximadoPension" & com & " = " & Me.valorAproximadoDePension, " where " & com & "idObraSocial" & com & " = " & Me.idObraSocial)
         Return resp
     End Function
     Public Function getAranaceles() As ArrayList

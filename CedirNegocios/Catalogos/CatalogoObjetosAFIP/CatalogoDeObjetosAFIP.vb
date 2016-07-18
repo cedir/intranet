@@ -9,7 +9,7 @@ Public Class CatalogoDeObjetosAFIP
         Dim listTipos As New List(Of TipoDeComprobanteAFIP)
         Dim cTipoComprobante As TipoDeComprobanteAFIP
 
-        Dim dr As NpgsqlDataReader = cDatos.Tabla("cedirData", "AFIP_TipoDeComprobantes", " order by " & com & "id" & com)
+        Dim dr As NpgsqlDataReader = cDatos.Tabla("public", "AFIP_TipoDeComprobantes", " order by " & com & "id" & com)
         While dr.Read()
             cTipoComprobante = New TipoDeComprobanteAFIP
             cTipoComprobante.Id = dr.Item("id")
@@ -25,7 +25,7 @@ Public Class CatalogoDeObjetosAFIP
         Dim cDatos As New Consultas
         Dim listTipos As New List(Of TipoDeGravadoAFIP)
         Dim cTipoGravadoAFIP As TipoDeGravadoAFIP
-        Dim dr As NpgsqlDataReader = cDatos.Tabla("cedirData", "AFIP_Gravados", " order by " & com & "id" & com)
+        Dim dr As NpgsqlDataReader = cDatos.Tabla("public", "AFIP_Gravados", " order by " & com & "id" & com)
         While dr.Read()
             cTipoGravadoAFIP = New TipoDeGravadoAFIP
             cTipoGravadoAFIP.id = dr.Item("id")
@@ -42,7 +42,7 @@ Public Class CatalogoDeObjetosAFIP
         Dim listTipos As New List(Of TipoIdentificacionClienteAFIP)
         Dim cTipoIdentificacionCliente As TipoIdentificacionClienteAFIP
 
-        Dim dr As NpgsqlDataReader = cDatos.Tabla("cedirData", "AFIP_TipoDeIdentificacionCliente", " order by " & com & "id" & com)
+        Dim dr As NpgsqlDataReader = cDatos.Tabla("public", "AFIP_TipoDeIdentificacionCliente", " order by " & com & "id" & com)
         While dr.Read()
             If dr.Item("descripcion") <> "CUIL" Then
                 cTipoIdentificacionCliente = New TipoIdentificacionClienteAFIP

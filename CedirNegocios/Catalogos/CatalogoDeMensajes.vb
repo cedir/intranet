@@ -57,7 +57,7 @@ Public Class CatalogoDeMensajes
             mensaje.emisor = cUsuario
             'tenemos que hacer un insert por cada destinatario
             For Each usr As Usuario In mensaje.destinatarios
-                resp = nuevo.insert(com & "cedirData" & com & "." & com & "tblMensajes" & com, com & "mensaje" & com & ", " & com & "estado" & com & ", " & com & "fecha" & com & ", " & com & "hora" & com & ", " & com & "idEmisor" & com & ", " & com & "idReceptor" & com, "'" & mensaje.mensaje & "', " & 0 & ", '" & mensaje.fecha & "', '" & mensaje.hora & "', " & mensaje.emisor.id & ", " & usr.id)
+                resp = nuevo.insert(com & "public" & com & "." & com & "tblMensajes" & com, com & "mensaje" & com & ", " & com & "estado" & com & ", " & com & "fecha" & com & ", " & com & "hora" & com & ", " & com & "idEmisor" & com & ", " & com & "idReceptor" & com, "'" & mensaje.mensaje & "', " & 0 & ", '" & mensaje.fecha & "', '" & mensaje.hora & "', " & mensaje.emisor.id & ", " & usr.id)
             Next
             Return resp
 

@@ -66,7 +66,7 @@ Public Class CalculadorHonorariosComprobantes
                     Dim lineaPago As New LineaPagoMedico
                     lineaPago.estudio = estudio
                     lineaPago.idMedico = estudio.medicoActuante.idMedico
-                    Dim percToMed As Decimal = lineaPago.getPorcentaje()
+                    Dim percToMed As Decimal = lineaPago.getPorcentaje().Medico
                     Dim dtoPoliColangio As Decimal = lineaPago.getDescuentos()
                     'NOTA: actualmente se esta aplicando refacturacion a presentaciones, pero hay que analizar como 
                     'lo estan haciendo, ya que quedan monto de estudio =0

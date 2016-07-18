@@ -358,33 +358,26 @@ Public Class Estudio
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fechaEstudio)
         fechaOptimizada = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblEstudios" & com, com & "idEstudio" & com & " = " & Me.practica.idEstudio & " , " & com & "motivoEstudio" & com & " = " & "'" & Me.motivoEstudio & "'" & " , " & com & "informe" & com & " = " & "'" & Me.informe & "'" & " , " & com & "fechaEstudio" & com & " = " & "'" & fechaOptimizada & "'" & " , " & com & "enlaceVideo" & com & " = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "'", " where" & com & "nroEstudio" & com & " = " & Me.nroEstudio)
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "idMedicoActuante" & com & " = " & Me.medicoActuante.idMedico & " , " & com & "idMedicoSolicitante" & com & " = " & Me.medicoSolicitante.idMedico & " , " & com & "idObraSocial" & com & " = " & Me.obraSocial.idObraSocial & " , " & com & "nroDeOrden" & com & " = " & "'" & Me.nroOrden & "', " & com & "idAnestesista" & com & " = " & Me.Anestesista.idMedico, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        resp = upd.update("""tblEstudios""", """idEstudio"" = " & Me.practica.idEstudio & ", ""motivoEstudio"" = " & "'" & Me.motivoEstudio & "'" & " , ""informe"" = " & "'" & Me.informe & "'" & " , ""fechaEstudio"" = " & "'" & fechaOptimizada & "'" & " , ""enlaceVideo"" = " & "'" & Me.VideoEstudio.enlaceMega.Trim() & "', " & """idMedicoActuante"" = " & Me.medicoActuante.idMedico & " , ""idMedicoSolicitante"" = " & Me.medicoSolicitante.idMedico & " , ""idObraSocial"" = " & Me.obraSocial.idObraSocial & " , ""nroDeOrden"" = " & "'" & Me.nroOrden & "', ""idAnestesista"" = " & Me.Anestesista.idMedico, " where ""nroEstudio"" = " & Me.nroEstudio)
 
         Return resp
 
     End Function
     Public Function actualizarImportes() As String
         Dim upd As New CedirDataAccess.Nuevo
-        Dim resp As String
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "diferenciaPaciente" & com & " = " & "'" & Me.DiferenciaPaciente & "'" & ", " & com & "pension" & com & " = '" & Me.pension & "'", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
-        Return resp
+        Return upd.update("""tblEstudios""", """diferenciaPaciente"" = " & "'" & Me.DiferenciaPaciente & "'" & ", ""pension"" = '" & Me.pension & "'", " where ""nroEstudio"" = " & Me.nroEstudio)
     End Function
     Public Function setPagoContraFactura() As String
         Dim upd As New CedirDataAccess.Nuevo
-        Dim resp As String
-
-
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com, com & "esPagoContraFactura" & com & " = " & "'" & Me.esPagoContraFactura & "'", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        Dim resp As String = upd.update("""tblEstudios""", """esPagoContraFactura"" = " & "'" & Me.esPagoContraFactura & "'", " where ""nroEstudio"" = " & Me.nroEstudio)
         'ahora seteo el importe del pago contra factura  y  la fecha de cobro
         If Me.fechaCobro = Nothing Then
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "pagoContraFactura" & com & " = " & Me.PagoContraFactura & ", " & com & "fechaCobro" & com & " = null ", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+            resp = upd.update("""tblEstudios""", """pagoContraFactura"" = " & Me.PagoContraFactura & ", ""fechaCobro"" = null ", " where ""nroEstudio"" = " & Me.nroEstudio)
         Else
             'seteamos la fecha del pago a hoy. El importe cobrado coincide con 
             'el importe de PCF
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "pagoContraFactura" & com & " = " & Me.PagoContraFactura & ", " & com & "fechaCobro" & com & " = '" & Me.fechaCobro.ToString.Remove(10) & "'" & ", " & com & "importeEstudioCobrado" & com & " =  " & Me.PagoContraFactura, " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+            resp = upd.update("""tblEstudios""", """pagoContraFactura"" = " & Me.PagoContraFactura & ", ""fechaCobro"" = '" & Me.fechaCobro.ToString.Remove(10) & "'" & ", ""importeEstudioCobrado"" =  " & Me.PagoContraFactura, " where ""nroEstudio"" = " & Me.nroEstudio)
         End If
-
         Return resp
     End Function
     Public Sub cargarMedicacion()
@@ -439,18 +432,18 @@ Public Class Estudio
     Public Function guardarArancelAnestesia() As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String = "ok"
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "arancelAnestesia" & com & " = " & "'" & Me.ArancelAnestesia & "'", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        resp = upd.update("""tblEstudios""", """arancelAnestesia"" = " & "'" & Me.ArancelAnestesia & "'", " where ""nroEstudio"" = " & Me.nroEstudio)
         Return resp
     End Function
     Public Function borrarMedicacion() As String
         'Elina toda la medicacion de un estudio
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
-        resp = upd.delete("tblMedicacion", com & "nroEstudio" & com & " = " & Me.nroEstudio)
+        resp = upd.delete("tblMedicacion", com & "nroEstudio"" = " & Me.nroEstudio)
         'Actualizar importeMedicacion del estudio
         If resp = "ok" Then
             Me.arrMedicacion.Clear()
-            'upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "importeMedicacion" & com & " = 0", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+            'upd.update("""tblEstudios""", """importeMedicacion"" = 0", " where ""nroEstudio"" = " & Me.nroEstudio)
         End If
         Return resp
     End Function
@@ -475,12 +468,12 @@ Public Class Estudio
         Dim resp As String = "ok"
 
         If cLineaMedicamento.estado = "estaEnEstudio" Then
-            resp = upd.delete("tblMedicacion", com & "nroEstudio" & com & " = " & Me.nroEstudio & " and " & com & "idMedicamento" & com & " = " & cLineaMedicamento.medicamento.idMedicamento)
+            resp = upd.delete("tblMedicacion", com & "nroEstudio"" = " & Me.nroEstudio & " and ""idMedicamento"" = " & cLineaMedicamento.medicamento.idMedicamento)
             If resp = "ok" Then
                 'guardar total?? NO
                 arrMedicacion.RemoveAt(nroLinea)
                 'Dim importeMed As Single = Me.getTotalMedicacion
-                'resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, com & "importeMedicacion" & com & " = " & "'" & importeMed & "'", " where " & com & "nroEstudio" & com & " = " & Me.nroEstudio)
+                'resp = upd.update("""tblEstudios""", """importeMedicacion"" = " & "'" & importeMed & "'", " where ""nroEstudio"" = " & Me.nroEstudio)
             End If
 
         ElseIf cLineaMedicamento.estado = "noEstaEnEstudio" Then
@@ -512,7 +505,7 @@ Public Class Estudio
     End Function
     Public Function esEcografia() As Boolean
         'id de las practicas ecograficas
-        Dim arr() As Integer = {55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 82, 83, 84, 89, 90, 99, 100, 101, 103, 108, 109, 114, 115, 117, 123, 126, 127}
+        Dim arr() As Integer = {55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 82, 83, 84, 89, 90, 99, 100, 101, 103, 108, 109, 114, 115, 117, 123, 126, 127, 134, 135, 141, 142, 154, 164}
         If Array.BinarySearch(arr, Me.practica.idEstudio) < 0 Then
             Return False
         End If

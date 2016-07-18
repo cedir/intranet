@@ -70,7 +70,7 @@ Public Class Medicamento
         If Me.descripcion = "" Then
             resp = "Debe ingresar una descripción"
         Else
-            resp = upd.insert(com & "cedirData" & com & "." & com & "tblMedicamentos" & com, com & "descripcionMedicamento" & com & ", " & com & "importeMedicamento" & com & ", " & com & "tipo" & com & ", " & com & "codigoMedicoOSDE" & com, "'" & Me.descripcion & "', '" & Me.importe & "', '" & Me.tipo & "', '" & Me.codigoMedicoOSDE & "'")
+            resp = upd.insert(com & "public" & com & "." & com & "tblMedicamentos" & com, com & "descripcionMedicamento" & com & ", " & com & "importeMedicamento" & com & ", " & com & "tipo" & com & ", " & com & "codigoMedicoOSDE" & com, "'" & Me.descripcion & "', '" & Me.importe & "', '" & Me.tipo & "', '" & Me.codigoMedicoOSDE & "'")
         End If
         Return resp
 
@@ -82,7 +82,7 @@ Public Class Medicamento
         If Me.descripcion = "" Then
             resp = "Debe ingresar una descripción"
         Else
-            resp = upd.update(com & "cedirData" & com & "." & com & "tblMedicamentos" & com, com & "descripcionMedicamento" & com & " = '" & Me.descripcion & "', " & com & "importeMedicamento" & com & " = '" & Me.importe & "', " & com & "tipo" & com & " = '" & Me.tipo & "', " & com & "codigoMedicoOSDE" & com & " = '" & Me.codigoMedicoOSDE & "'", " where " & com & "idMedicamento" & com & " = " & Me.idMedicamento)
+            resp = upd.update(com & "public" & com & "." & com & "tblMedicamentos" & com, com & "descripcionMedicamento" & com & " = '" & Me.descripcion & "', " & com & "importeMedicamento" & com & " = '" & Me.importe & "', " & com & "tipo" & com & " = '" & Me.tipo & "', " & com & "codigoMedicoOSDE" & com & " = '" & Me.codigoMedicoOSDE & "'", " where " & com & "idMedicamento" & com & " = " & Me.idMedicamento)
         End If
         Return resp
     End Function
@@ -91,7 +91,7 @@ Public Class Medicamento
         Dim upd As New CedirDataAccess.Nuevo
         Dim com As String = """"
         Try
-            upd.update(com & "cedirData" & com & "." & com & "tblMedicamentos" & com, com & "stock" & com & " = " & stock, " where " & com & "idMedicamento" & com & " = " & Me.idMedicamento)
+            upd.update(com & "public" & com & "." & com & "tblMedicamentos" & com, com & "stock" & com & " = " & stock, " where " & com & "idMedicamento" & com & " = " & Me.idMedicamento)
             Return "ok"
         Catch ex As Exception
             Return (ex.Message)

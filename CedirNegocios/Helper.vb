@@ -40,7 +40,7 @@ Public Class Helper
     Public Function obtenerUltimoNro(ByVal tabla As String, ByVal campo As String) As Integer
         Dim da As New Consultas
         Dim dr As NpgsqlDataReader
-        dr = da.EjecutarSelect("select max(" & com & campo & com & ") from " & com & "cedirData" & com & "." & com & tabla & com)
+        dr = da.EjecutarSelect("select max(" & com & campo & com & ") from " & com & "public" & com & "." & com & tabla & com)
         dr.Read()
         Return dr.Item(0)
     End Function
@@ -177,5 +177,9 @@ Public Class Helper
         End If
 
     End Function
+
+    Public Shared Sub ImprimirWeb(ByRef cae As String, ByVal imprimeLeyenda As Boolean)
+        Process.Start(String.Format("http://{0}/comprobante/imprimir/{1}/{2}", Global.CedirNegocios.My.Settings.WebPrintHost, cae, IIf(imprimeLeyenda, "?leyenda", String.Empty)))
+    End Sub
 
 End Class

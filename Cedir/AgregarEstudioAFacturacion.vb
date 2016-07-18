@@ -183,11 +183,8 @@ Public Class AgregarEstudioAFacturacion
         cargarEstudios()
     End Sub
     Sub cargarEstudios()
-
-
-
         Dim cEstudio As Estudio
-        arrObjects = cCatalogoDeEstudios.traerEstudiosArancelados("where " & com & "idFacturacion" & com & " = 0 and det." & com & "idObraSocial" & com & " = " & cObraSocial.idObraSocial & " and det." & com & "esPagoContraFactura" & com & " = " & 0)
+        arrObjects = cCatalogoDeEstudios.traerEstudiosArancelados("where " & com & "idFacturacion" & com & " = 0 and est." & com & "idObraSocial" & com & " = " & cObraSocial.idObraSocial & " and est." & com & "esPagoContraFactura" & com & " = " & 0)
         myTable.Clear()
 
         If arrObjects.Count = 0 Then
@@ -211,7 +208,7 @@ Public Class AgregarEstudioAFacturacion
         DataGrid1.DataSource = myTable
     End Sub
 
-    
+
     Private Sub btnNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnNuevo.Click
         'If esAgregarConsulta Then
         '    Dim frm As New ABMConsultas(cObraSocial.ObraSocial)

@@ -200,7 +200,7 @@ Public Class CatalogoDeEstudios
         End If
 
         If consulta <> "" Then
-            consulta = consulta & " and  pce." & com & "fechaCobro" & com & " <> null "
+            consulta = consulta & " and  est." & com & "fechaCobro" & com & " <> null "
         End If
 
 
@@ -267,7 +267,7 @@ Public Class CatalogoDeEstudios
         Dim da As New Consultas
         Dim dr As NpgsqlDataReader
         Try
-            dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "cedirData" & com & "." & com & "tblEstudios" & com)
+            dr = da.EjecutarSelect("select max(" & com & "nroEstudio" & com & ") from " & com & "public" & com & "." & com & "tblEstudios" & com)
             dr.Read()
             Return dr.Item(0)
         Finally
@@ -304,10 +304,10 @@ Public Class CatalogoDeEstudios
         resp = upd.delete("tblConsultas", com & "id" & com & " = " & idConsulta)
         Return resp
     End Function
-    
+
     Public Function obtenerUltimoNroConsulta() As Integer
         Dim dr As NpgsqlDataReader
-        dr = da.EjecutarSelect("select max(" & com & "id" & com & ") from " & com & "cedirData" & com & "." & com & "tblConsultas" & com)
+        dr = da.EjecutarSelect("select max(" & com & "id" & com & ") from " & com & "public" & com & "." & com & "tblConsultas" & com)
         dr.Read()
         Return dr.Item(0)
     End Function
@@ -330,7 +330,11 @@ Public Class CatalogoDeEstudios
             vEstudio.medicoActuante.idMedico = drEstudios.Item("idMedicoActuante")
             vEstudio.medicoSolicitante.idMedico = drEstudios.Item("idMedicoSolicitante")
             vEstudio.nroOrden = drEstudios.Item("nroDeOrden")
-            vEstudio.VideoEstudio.enlaceMega = drEstudios.Item("enlaceVideo")
+
+            If drEstudios.Item("enlaceVideo") IsNot DBNull.Value Then
+                vEstudio.VideoEstudio.enlaceMega = drEstudios.Item("enlaceVideo")
+            End If
+
             vEstudio.idFacturacion = drEstudios.Item("idFacturacion")
 
             'ESTA ES LA FECHA DE tblPagoCobroEstudio

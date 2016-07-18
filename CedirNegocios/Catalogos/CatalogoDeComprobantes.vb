@@ -83,6 +83,11 @@ Public Class CatalogoDeComprobantes
                 oComprobante.NombreCliente = Convert.ToString(dr("nombreCliente"))
                 oComprobante.DomicilioCliente = Convert.ToString(dr("domicilioCliente"))
 
+                If dr("CAE") Is DBNull.Value Then
+                    oComprobante.CAE = String.Empty
+                Else
+                    oComprobante.CAE = dr("CAE")
+                End If
 
                 If dr("nroCuit") Is DBNull.Value Then
                     oComprobante.DocumentoCliente.NroDocumento = ""
@@ -167,28 +172,28 @@ Public Class CatalogoDeComprobantes
         Try
 
             Dim filtro As String
-            filtro = " left join " & com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & " as t on " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " = t.id "
+            filtro = " left join " & com & "public" & com & "." & com & "tblComprobantesTipo" & com & " as t on " & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " = t.id "
             Dim filtro1 As String
-            filtro1 = " WHERE UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "responsable" & com & ") = '" & responsable.ToUpper() & "' and UPPER(" & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "subTipo" & com & ") = '" & subtipo.ToUpper() & "'"
+            filtro1 = " WHERE UPPER(" & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "responsable" & com & ") = '" & responsable.ToUpper() & "' and UPPER(" & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "subTipo" & com & ") = '" & subtipo.ToUpper() & "'"
             Dim filtro3 As String
-            filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(1,3,4)"
+            filtro3 = " AND " & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(1,3,4)"
 
             If nroTerminal = 90 Then
-                filtro3 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in( " & idTipo & " )"
+                filtro3 = " AND " & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in( " & idTipo & " )"
             End If
 
             Dim filtro4 As String
-            filtro4 = " AND " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "nroTerminal" & com & " = " & nroTerminal
+            filtro4 = " AND " & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "nroTerminal" & com & " = " & nroTerminal
 
             Dim filtroTotal As String
 
             If idTipo <> 2 Then 'No es liquidacion
                 filtroTotal = filtro & filtro1 & filtro3 & filtro4
-            Else : filtroTotal = filtro & " where " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(2)"
+            Else : filtroTotal = filtro & " where " & com & "public" & com & "." & com & "tblComprobantes" & com & "." & com & "idTipoComprobante" & com & " in(2)"
 
             End If
 
-            Return cDatos.selectMAX("tblComprobantes", "cedirData" & com & "." & com & "tblComprobantes" & com & "." & com & "nroComprobante", filtroTotal)
+            Return cDatos.selectMAX("tblComprobantes", "public" & com & "." & com & "tblComprobantes" & com & "." & com & "nroComprobante", filtroTotal)
 
 
         Catch ex As Exception

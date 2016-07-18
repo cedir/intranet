@@ -1,11 +1,48 @@
 Imports CedirDataAccess
-Imports Npgsql
+Imports System.Linq
+
+Public Class PorcentajeMedico
+    Public Sub New(pMedico As Single, pCedir As Single)
+        Me.Medico = pMedico
+        Me.Cedir = pCedir
+    End Sub
+
+    Private pMedico As Single
+    Public Property Medico() As Single
+        Get
+            Return pMedico
+        End Get
+        Set(ByVal value As Single)
+            pMedico = value
+        End Set
+    End Property
+
+    Private pCedir As Single
+    Public Property Cedir() As Single
+        Get
+            Return pCedir
+        End Get
+        Set(ByVal value As Single)
+            pCedir = value
+        End Set
+    End Property
+
+    Public Function GetEfectivo() As Single
+        If Me.Cedir = 100 Then
+            Return 0
+        Else
+            Return (Me.Medico * 100) / (100 - Me.Cedir)
+        End If
+    End Function
+End Class
+
+
 Public Class LineaPagoMedico
     Private m_estudio As estudio
     Private m_importe As Single
     Private m_gastosAdministrativos As Decimal
     Private m_porcentajeIVAPagoMedicoActuante As Decimal
-    Const descuentoPorPolipectomiaOSDE As Decimal = 70
+    Const descuentoPorPolipectomiaOSDE As Decimal = 0 'pedido Mariana, email 07/05/2016
     Const descuentoPorPolipectomiaMaterialFacturable As Decimal = 0
     Public idMedico As Integer
 
@@ -64,8 +101,6 @@ Public Class LineaPagoMedico
         Dim cEstudio As Estudio = Me.estudio
         Dim descuentoPorPolipectomia As Decimal = Me.getDescuentoPolipectomiaSegunObraSocial()
 
-
-
         Dim descuentoColangios As Decimal = 0
         ' si la practica es alguna de las siguientes, se realiza un dto de 2000 pesos, A PARTIR DEL 09/04/2013
         If cEstudio.practica.idEstudio = 13 Or cEstudio.practica.idEstudio = 14 Or cEstudio.practica.idEstudio = 34 Then
@@ -97,14 +132,14 @@ Public Class LineaPagoMedico
         Else
 
             Select Case True
-                Case cEstudio.obraSocial.idObraSocial = 3 Or cEstudio.obraSocial.idObraSocial = 79
+                Case cEstudio.obraSocial.idObraSocial = 3 OrElse cEstudio.obraSocial.idObraSocial = 79
                     'OS OSDE Y OS OSDE(CEDIR)
                     Return Me.getDescuentoPorPolipectomiaOSDE
-                Case cEstudio.obraSocial.idObraSocial = 25 Or cEstudio.obraSocial.idObraSocial = 5 Or cEstudio.obraSocial.idObraSocial = 46
-                    'OS UNR aca y galeno
+                Case cEstudio.obraSocial.idObraSocial = 25 OrElse cEstudio.obraSocial.idObraSocial = 5 OrElse cEstudio.obraSocial.idObraSocial = 46 OrElse cEstudio.obraSocial.idObraSocial = 19
+                    'OS UNR, ACA Salud, GALENO y OSPAC
                     Return Me.getDescuentoPorPolipectomiaMaterialFacturableDirecto
                 Case Else
-                    Return 200.0
+                    Return 300.0
             End Select
 
         End If
@@ -112,69 +147,76 @@ Public Class LineaPagoMedico
     End Function
 
 
-    Public Function getPorcentaje() As Single
-        Const ID_OBRA_SOCIAL_GALENO As Integer = 46
-        Const CONSULTA As Integer = 20
-        Const ELECTRO As Integer = 46
+    Public Function getPorcentaje() As PorcentajeMedico
+        'Const ID_OBRA_SOCIAL_GALENO As Integer = 46
+        'Const CONSULTA As Integer = 20
+        'Const ELECTRO As Integer = 46
 
-        Const PORCENTAJE_CONSULTA As Decimal = 100
-        Const PORCENTAJE_ECOGRAFIA_ACTUANTE As Decimal = 70
-        Const PORCENTAJE_ECOGRAFIA_SOLICITANTE As Decimal = 15
-        Const PORCENTAJE_LABORATORIO_ACTUANTE As Decimal = 70
-        Const PORCENTAJE_LABORATORIO_SOLICITANTE As Decimal = 10
-        Const PORCENTAJE_LIGADURA_HEMORROIDES As Decimal = 60
-        Const PORCENTAJE_PRACTICA_ESPECIAL As Decimal = 75
+        Const PORC_CONSULTA As Decimal = 100
 
+        Const PORC_ACTUANTE_ECOGRAFIA As Decimal = 70
+        Const PORC_SOLICITANTE_ECOGRAFIA As Decimal = 15
+        Const PORC_CEDIR_ECOGRAFIA As Decimal = 15
+
+        Const PORC_ACTUANTE_LABORATORIO As Decimal = 70
+        Const PORC_SOLICITANTE_LABORATORIO As Decimal = 10
+        Const PORC_CEDIR_LABORATORIO As Decimal = 20
+
+        Const PORC_ACTUANTE_LIGADURA_HEMORROIDES As Decimal = 50
+        Const PORC_SOLICITANTE_LIGADURA_HEMORROIDES As Decimal = 0
+        Const PORC_CEDIR_LIGADURA_HEMORROIDES As Decimal = 50
+
+        Const PORC_ACTUANTE_PRACTICA_ESPECIAL As Decimal = 75
+        Const PORC_SOLICITANTE_PRACTICA_ESPECIAL As Decimal = 0
+        Const PORC_CEDIR_PRACTICA_ESPECIAL As Decimal = 25
+
+
+        Const PORC_ACTUANTE As Decimal = 80
+        Const PORC_SOLICITANTE As Decimal = 0
+        Const PORC_CEDIR As Decimal = 20
+
+        Const COMB_MED_ACT_BRUNETTI As Integer = 2
+        Dim COMB_MED_SOL_AL_50_PORC() As Integer = {578}
+        Dim COMB_MED_SOL_AL_40_PORC() As Integer = {585, 529, 78, 89}
 
         If Me.estudio.practica.idEstudio = 20 Then
             'Si el estudio es una consulta, la retencion es del 0%
-            Return PORCENTAJE_CONSULTA
+            Return New PorcentajeMedico(PORC_CONSULTA, 0)
         End If
+
+        Dim EsActuante As Boolean = Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" OrElse Me.estudio.getCondicionMedico(idMedico) = "actuante"
 
         'if por tipo de estudio
         If Me.estudio.esEcografia Then
-            If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Or Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
-                Return PORCENTAJE_ECOGRAFIA_ACTUANTE
-            End If
-            Return PORCENTAJE_ECOGRAFIA_SOLICITANTE
+            Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE_ECOGRAFIA, PORC_SOLICITANTE_ECOGRAFIA), PORC_CEDIR_ECOGRAFIA)
         ElseIf Me.estudio.esLaboratorio Then
-            If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Or Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
-                Return PORCENTAJE_LABORATORIO_ACTUANTE
-            End If
-            Return PORCENTAJE_LABORATORIO_SOLICITANTE
+            Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE_LABORATORIO, PORC_SOLICITANTE_LABORATORIO), PORC_CEDIR_LABORATORIO)
         ElseIf Me.estudio.esLigaduraDeHemorroides() Then
-            If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Or Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
-                Return PORCENTAJE_LIGADURA_HEMORROIDES
-            End If
+            Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE_LIGADURA_HEMORROIDES, PORC_SOLICITANTE_LIGADURA_HEMORROIDES), PORC_CEDIR_LIGADURA_HEMORROIDES)
         ElseIf Me.estudio.esPracticaEspecial() Then
-            If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Or Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
-                Return PORCENTAJE_PRACTICA_ESPECIAL
-            End If
+            Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE_PRACTICA_ESPECIAL, PORC_SOLICITANTE_PRACTICA_ESPECIAL), PORC_CEDIR_PRACTICA_ESPECIAL)
         Else
-            'Caso mas comun - estudios endoscopicos
-            Dim porcentajeConNLA As Single = 80 ' 85
-            Dim porcentajeSoloSolicitante As Single = 0
-
-            If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Or Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
-                Return porcentajeConNLA
-            ElseIf Me.estudio.getCondicionMedico(idMedico) = "solicitante" Then
-                Return porcentajeSoloSolicitante
+            If Me.estudio.medicoActuante.idMedico = COMB_MED_ACT_BRUNETTI Then
+                If COMB_MED_SOL_AL_40_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
+                    Return New PorcentajeMedico(IIf(EsActuante, 0.6 * PORC_ACTUANTE, 0.4 * PORC_ACTUANTE), PORC_CEDIR)
+                ElseIf COMB_MED_SOL_AL_50_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
+                    Return New PorcentajeMedico(IIf(EsActuante, 0.5 * PORC_ACTUANTE, 0.5 * PORC_ACTUANTE), PORC_CEDIR)
+                End If
             End If
+            Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE, PORC_SOLICITANTE), PORC_CEDIR)
         End If
-
     End Function
 
     Public Function guardar(ByVal nroPago As Integer) As String
-        Dim com As String = """"
         Dim upd As New Nuevo
-        Dim resp As String
 
-        Dim uptString1 As String = com & "importePagoMedico" & com & " = " & Me.importe & ", " & com & "porcentajeIVAPagoMedicoActuante" & com & " = " & Me.porcentajeIVAPagoMedicoActuante & " ,  " & com & "nroPagoMedicoAct" & com & " = " & nroPago
-        Dim uptString2 As String = com & "importePagoMedicoSol" & com & " = " & "'" & Me.importe & "',  " & com & "nroPagoMedicoSol" & com & " = " & nroPago
+        Dim uptString1 As String = """importePagoMedico"" = " & Me.importe & ", ""porcentajeIVAPagoMedicoActuante"" = " & Me.porcentajeIVAPagoMedicoActuante & " ,  ""nroPagoMedicoAct"" = " & nroPago
+        Dim uptString2 As String = """importePagoMedicoSol"" = " & "'" & Me.importe & "',  ""nroPagoMedicoSol"" = " & nroPago
 
-        Dim updQuery As String
+        Dim updQuery As String = String.Empty
+
         If Me.estudio.getCondicionMedico(idMedico) = "actuante-solicitante" Then
-            updQuery = uptString1 & " , " & com & "importePagoMedicoSol" & com & " = 0,  " & com & "nroPagoMedicoSol" & com & " = " & nroPago
+            updQuery = uptString1 & " , ""importePagoMedicoSol"" = 0,  ""nroPagoMedicoSol"" = " & nroPago
         ElseIf Me.estudio.getCondicionMedico(idMedico) = "actuante" Then
             updQuery = uptString1
         ElseIf Me.estudio.getCondicionMedico(idMedico) = "solicitante" Then
@@ -186,13 +228,10 @@ Public Class LineaPagoMedico
         If Me.estudio.esPagoContraFactura = 1 Then
             'NO VAMOS A modificar la fecha de cobro, ya que es la del momento de
             'hacer el PCF. ESTO HAY que probarlo.
-            '  updQuery &= ", " & com & "fechaCobro" & com & " = '" & cFecha & "'"
+            '  updQuery &= ", ""fechaCobro"" = '" & cFecha & "'"
         End If
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com, updQuery, " where " & com & "nroEstudio" & com & " = " & Me.estudio.nroEstudio)
-
-
-        Return resp
+        Return upd.update("""tblEstudios""", updQuery, " where ""nroEstudio"" = " & Me.estudio.nroEstudio)
     End Function
 
 End Class

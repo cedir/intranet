@@ -35,7 +35,7 @@ Public Class Arancel
         Dim partesFecha As String() = r.Split(Me.fecha)
         Dim fechaOptimizada As String = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
 
-        resp = upd.update(com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "Precio" & com & " = " & "'" & Me.precio & "', " & com & "fecha" & com & " = " & "'" & fechaOptimizada & "' ", " where " & com & "idEstudio" & com & " = " & Me.practica.idEstudio & " and " & com & "idObraSocial" & com & " = " & obraSocial.idObraSocial)
+        resp = upd.update(com & "public" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "Precio" & com & " = " & "'" & Me.precio & "', " & com & "fecha" & com & " = " & "'" & fechaOptimizada & "' ", " where " & com & "idEstudio" & com & " = " & Me.practica.idEstudio & " and " & com & "idObraSocial" & com & " = " & obraSocial.idObraSocial)
         Return resp
     End Function
 
@@ -46,7 +46,7 @@ Public Class Arancel
         Dim r As New System.Text.RegularExpressions.Regex("(/)")
         Dim partesFecha As String() = r.Split(Me.fecha)
         Dim fechaOptimizada As String = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
-        resp = upd.insert(com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "idEstudio" & com & ", " & com & "idObraSocial" & com & ", " & com & "Precio" & com & ", " & com & "fecha" & com & "  ", "'" & Me.practica.idEstudio & "', '" & obraSocial.idObraSocial & "', '" & Me.precio & "', '" & fechaOptimizada & "' ")
+        resp = upd.insert(com & "public" & com & "." & com & "AlmacenPreciosEstOS" & com, com & "idEstudio" & com & ", " & com & "idObraSocial" & com & ", " & com & "Precio" & com & ", " & com & "fecha" & com & "  ", "'" & Me.practica.idEstudio & "', '" & obraSocial.idObraSocial & "', '" & Me.precio & "', '" & fechaOptimizada & "' ")
         Return resp
     End Function
 

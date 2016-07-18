@@ -50,9 +50,9 @@ Public Class MovimientoStockMedicamento
 
 
         'insertamos el movimiento
-        Dim resp As String = cDatos.insert(com & "cedirData" & com & "." & com & "tblMovimientosDeMedicamentos" & com, com & _
-        "fecha" & com & ", " & com & "cantidad" & com & ", " & com & "descripcion" & com & ", " & com & "idMedicamento" & com & ", " & com & "hora" & _
-        com, " '" & Me.Fecha & _
+        Dim resp As String = cDatos.insert(com & "public" & com & "." & com & "tblMovimientosDeMedicamentos" & com, com &
+        "fecha" & com & ", " & com & "cantidad" & com & ", " & com & "descripcion" & com & ", " & com & "idMedicamento" & com & ", " & com & "hora" &
+        com, " '" & Me.Fecha &
         "', " & Me.cantidad & ", '" & Me.descripcion & "', " & Me.medicamento.idMedicamento & " , '" & Me.Hora & "' ")
 
         'ahora obtenemos el id creado por la DB para luego insertarlo en el log

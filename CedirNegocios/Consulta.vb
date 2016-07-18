@@ -18,10 +18,10 @@ Public Class Consulta
         Dim fechaOptimizada As String = partesFecha(4) & "-" & partesFecha(2) & "-" & partesFecha(0)
         If paciente.dni = 0 Then
             'Cantidad
-            resp = upd.insert(com & "cedirData" & com & "." & com & "tblConsultas" & com, com & "idObraSocial" & com & ", " & com & "fecha" & com & ", " & com & "cantidad" & com & ", " & com & "nroDeOrden" & com, Me.obraSocial.idObraSocial & ", '" & fechaOptimizada & "'" & ", " & Me.cantidad & ", '" & Me.nroDeOrden & "'")
+            resp = upd.insert(com & "public" & com & "." & com & "tblConsultas" & com, com & "idObraSocial" & com & ", " & com & "fecha" & com & ", " & com & "cantidad" & com & ", " & com & "nroDeOrden" & com, Me.obraSocial.idObraSocial & ", '" & fechaOptimizada & "'" & ", " & Me.cantidad & ", '" & Me.nroDeOrden & "'")
         Else
             'Paciente
-            resp = upd.insert(com & "cedirData" & com & "." & com & "tblConsultas" & com, com & "idObraSocial" & com & ", " & com & "fecha" & com & ", " & com & "dniPaciente" & com & ", " & com & "nroDeOrden" & com, Me.obraSocial.idObraSocial & ", '" & fechaOptimizada & "', " & Me.paciente.dni & ", '" & Me.nroDeOrden & "'")
+            resp = upd.insert(com & "public" & com & "." & com & "tblConsultas" & com, com & "idObraSocial" & com & ", " & com & "fecha" & com & ", " & com & "dniPaciente" & com & ", " & com & "nroDeOrden" & com, Me.obraSocial.idObraSocial & ", '" & fechaOptimizada & "', " & Me.paciente.dni & ", '" & Me.nroDeOrden & "'")
         End If
 
         Return resp

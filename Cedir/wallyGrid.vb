@@ -205,12 +205,12 @@ Public Class wallyGrid
     End Sub
 
 
-    Public Function imprimir(ByVal rowsCount As Integer, ByVal cantTotalGridColumns As Integer)
+    Public Sub imprimir(ByVal rowsCount As Integer, ByVal cantTotalGridColumns As Integer)
         Me.cantGridColumns = cantTotalGridColumns
         Me.cantidadRegistros = rowsCount
         Me.cantidadRegistrosRestantes = Me.cantidadRegistros
         Call PrintSalesReport()
-    End Function
+    End Sub
 
     Private Function getCoulmnIndexes() As Integer()
         'el UBound devuelve el maximo indice del arreglo, que no es la cantidad de elementos

@@ -177,6 +177,10 @@ Public Class ClienteFE
             comprobante.Iva(0).Importe += Convert.ToDecimal(lineas(i).Item("Importe"))
         Next
 
+        'Rodendea para evitar el incidente reportado el 13/05/2016 por email
+        comprobante.Iva(0).BaseImp = Math.Round(comprobante.Iva(0).BaseImp, 2, MidpointRounding.AwayFromZero)
+        comprobante.Iva(0).Importe = Math.Round(comprobante.Iva(0).Importe, 2, MidpointRounding.AwayFromZero)
+
         request.FeDetReq = New wsfe.FECAEDetRequest() {comprobante}
 
         Dim result As New Dictionary(Of String, String)

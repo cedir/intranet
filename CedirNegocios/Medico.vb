@@ -103,8 +103,8 @@ Public Class Medico
     Public Function crear() As String
         Dim upd As New CedirDataAccess.Nuevo
         Dim resp As String
-        resp = upd.insert(com & "cedirData" & com & "." & com & "tblMedicosAct" & com, com & "nombreMedicoAct" & com & ", " & com & "apellidoMedicoAct" & com & ", " & com & "nroMatricula" & com & ", " & com & "direccionMedico" & com & ", " & com & "localidadMedico" & com & ", " & com & "telMedico" & com & ", " & com & "mail" & com & ", " & com & "responsabilidadFiscal" & com & ", " & com & "claveFiscal" & com, "'" & Me.nombre & "', " & "'" & Me.apellido & "', " & "'" & Me.nroMatricula & "', " & "'" & Me.direccion & "', " & "'" & Me.localidad & "', " & "'" & Me.telefono & "', " & "'" & Me.mail & "', '" & Me.responsabilidadFiscal & "', '" & Me.claveFiscal & "' ")
-        resp = upd.insert(com & "cedirData" & com & "." & com & "tblMedicosSol" & com, com & "nombreMedicoSol" & com & ", " & com & "apellidoMedicoSol" & com & ", " & com & "nroMatricula" & com & ", " & com & "direccionMedico" & com & ", " & com & "localidadMedico" & com & ", " & com & "telMedico" & com & ", " & com & "mail" & com & ", " & com & "responsabilidadFiscal" & com & ", " & com & "claveFiscal" & com, "'" & Me.nombre & "', " & "'" & Me.apellido & "', " & "'" & Me.nroMatricula & "', " & "'" & Me.direccion & "', " & "'" & Me.localidad & "', " & "'" & Me.telefono & "', " & "'" & Me.mail & "', '" & Me.responsabilidadFiscal & "', '" & Me.claveFiscal & "' ")
+        resp = upd.insert(com & "public" & com & "." & com & "tblMedicosAct" & com, com & "nombreMedicoAct" & com & ", " & com & "apellidoMedicoAct" & com & ", " & com & "nroMatricula" & com & ", " & com & "direccionMedico" & com & ", " & com & "localidadMedico" & com & ", " & com & "telMedico" & com & ", " & com & "mail" & com & ", " & com & "responsabilidadFiscal" & com & ", " & com & "claveFiscal" & com, "'" & Me.nombre & "', " & "'" & Me.apellido & "', " & "'" & Me.nroMatricula & "', " & "'" & Me.direccion & "', " & "'" & Me.localidad & "', " & "'" & Me.telefono & "', " & "'" & Me.mail & "', '" & Me.responsabilidadFiscal & "', '" & Me.claveFiscal & "' ")
+        resp = upd.insert(com & "public" & com & "." & com & "tblMedicosSol" & com, com & "nombreMedicoSol" & com & ", " & com & "apellidoMedicoSol" & com & ", " & com & "nroMatricula" & com & ", " & com & "direccionMedico" & com & ", " & com & "localidadMedico" & com & ", " & com & "telMedico" & com & ", " & com & "mail" & com & ", " & com & "responsabilidadFiscal" & com & ", " & com & "claveFiscal" & com, "'" & Me.nombre & "', " & "'" & Me.apellido & "', " & "'" & Me.nroMatricula & "', " & "'" & Me.direccion & "', " & "'" & Me.localidad & "', " & "'" & Me.telefono & "', " & "'" & Me.mail & "', '" & Me.responsabilidadFiscal & "', '" & Me.claveFiscal & "' ")
 
         Return resp
 
@@ -114,8 +114,8 @@ Public Class Medico
         Dim resp As String
         Dim uptString As String = com & "nombreMedicoAct" & com & " = " & "'" & Me.nombre & "', " & com & "apellidoMedicoAct" & com & " = " & "'" & Me.apellido & "', " & com & "nroMatricula" & com & " = " & "'" & Me.nroMatricula & "'," & com & "direccionMedico" & com & " = " & "'" & Me.direccion & "', " & com & "localidadMedico" & com & " = " & "'" & Me.localidad & "', " & com & "telMedico" & com & " = " & "'" & Me.telefono & "', " & com & "mail" & com & " = " & "'" & Me.mail & "', " & com & "responsabilidadFiscal" & com & " = '" & Me.responsabilidadFiscal & "' , " & com & "claveFiscal" & com & " = '" & Me.claveFiscal & "' "
         Dim uptString1 As String = com & "nombreMedicoSol" & com & " = " & "'" & Me.nombre & "', " & com & "apellidoMedicoSol" & com & " = " & "'" & Me.apellido & "', " & com & "nroMatricula" & com & " = " & "'" & Me.nroMatricula & "'," & com & "direccionMedico" & com & " = " & "'" & Me.direccion & "', " & com & "localidadMedico" & com & " = " & "'" & Me.localidad & "', " & com & "telMedico" & com & " = " & "'" & Me.telefono & "', " & com & "mail" & com & " = " & "'" & Me.mail & "', " & com & "responsabilidadFiscal" & com & " = '" & Me.responsabilidadFiscal & "' , " & com & "claveFiscal" & com & " = '" & Me.claveFiscal & "' "
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblMedicosAct" & com, uptString, " where " & com & "idMedicoAct" & com & " = " & Me.idMedico)
-        resp = upd.update(com & "cedirData" & com & "." & com & "tblMedicosSol" & com, uptString1, " where " & com & "idMedicoSol" & com & " = " & Me.idMedico)
+        resp = upd.update(com & "public" & com & "." & com & "tblMedicosAct" & com, uptString, " where " & com & "idMedicoAct" & com & " = " & Me.idMedico)
+        resp = upd.update(com & "public" & com & "." & com & "tblMedicosSol" & com, uptString1, " where " & com & "idMedicoSol" & com & " = " & Me.idMedico)
         Return resp
 
     End Function
@@ -144,7 +144,7 @@ Public Class Medico
             'Ultimos pagos
             condicion &= " and " & com & "fechaPago" & com & " >= (current_date - 45)"
         End If
-        drPagos = da.EjecutarSelect(" select " & com & "nroPago" & com & ", " & com & "fechaPago" & com & ", " & com & "observacionPago" & com & ", " & com & "idMedico" & com & " from " & com & "cedirData" & com & "." & com & "tblPagosMedicos" & com & " where " & com & "idMedico" & com & " = " & Me.idMedico & condicion)
+        drPagos = da.EjecutarSelect(" select " & com & "nroPago" & com & ", " & com & "fechaPago" & com & ", " & com & "observacionPago" & com & ", " & com & "idMedico" & com & " from " & com & "public" & com & "." & com & "tblPagosMedicos" & com & " where " & com & "idMedico" & com & " = " & Me.idMedico & condicion)
         While drPagos.Read()
             currentPago = New PagoMedico
             currentPago.nroPago = drPagos.Item(0)

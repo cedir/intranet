@@ -21,7 +21,7 @@ Public Class Consultas
     Public Function Tabla(ByVal NombreTabla As String) As NpgsqlDataReader
         Try
             Dim com As String = """"
-            Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com, myConnection)
+            Dim myCommand As New NpgsqlCommand("select * from ""public""." & com & NombreTabla & com, myConnection)
             myCommand.CommandType = CommandType.Text
 
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
@@ -32,7 +32,7 @@ Public Class Consultas
     End Function
     Public Function Tabla(ByVal NombreTabla As String, ByVal condicion As String) As NpgsqlDataReader
         Dim com As String = """"
-        Dim myCommand As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & NombreTabla & com & condicion, myConnection)
+        Dim myCommand As New NpgsqlCommand("select * from ""public""." & com & NombreTabla & com & condicion, myConnection)
         myCommand.CommandType = CommandType.Text
         Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
         Return myDataReader
@@ -59,7 +59,7 @@ Public Class Consultas
     End Function
     Public Function selectMax(ByVal tabla As String, ByVal columna As String) As NpgsqlDataReader
         Try
-            Dim query As String = "select * from " & com & "cedirData" & com & "." & com & tabla & com & " WHERE " & com & columna & com & "= (SELECT max(" & columna & ") FROM" & com & "cedirData" & com & "." & com & tabla & com & ")"
+            Dim query As String = "select * from ""public""." & com & tabla & com & " WHERE " & com & columna & com & "= (SELECT max(" & columna & ") FROM""public""." & com & tabla & com & ")"
             Dim myCommand As New NpgsqlCommand(query, myConnection)
             myCommand.CommandType = CommandType.Text
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
@@ -70,46 +70,91 @@ Public Class Consultas
     End Function
 
     Public Function traerEstudios(ByVal condicion As String, Optional ByVal filtro As String = "") As NpgsqlDataReader
-        Dim StringPuto As String = "select est." & com & "nroEstudio" & com & ", alos.*, " & com & "fechaEstudio" & com & "," & _
-        com & "motivoEstudio" & com & "," & com & "informe" & com & "," & " det." & com & "idObraSocial" & com & _
-        ",  " & com & "publicID" & com & _
-        " ,det." & com & "idMedicoActuante" & com & ",det." & com & "idMedicoSolicitante" & com & ", " & com & _
-        "enlaceVideo" & com & "," & com & _
-        "nroDeOrden" & com & "," & com & "lugar" & com & "," & com & _
-        "idFacturacion" & com & ", " & com & "idAnestesista" & com & "," & com & "fechaCobro" & com & "," & com & _
-        "importeEstudio" & com & "," & com & "importeMedicacion" & com & "," & com & "pagoContraFactura" & com & _
-        "," & com & "diferenciaPaciente" & com & "," & com & "nroPagoMedicoAct" & com & "," & com & _
-        "pension" & com & ", " & com & "importePagoMedico" & com & ", " & com & "porcentajeIVAPagoMedicoActuante" & _
-        com & "," & com & "nroPagoMedicoSol" & com & ", " & com & "importePagoMedicoSol" & com & "," & com & _
-        "estudio" & com & "," & com & "codigoMedico" & com & "," & com & "dni" & com & "," & com & "idPaciente" & com & "," & com & "e_mail" & _
-        com & "," & com & "fechaNacimiento" & com & "," & com & "nombres" & com & "," & com & "apellido" & com & "," & _
-        com & "sexo" & com & "," & com & "nroAfiliado" & com & "," & com & "tel" & com & ", p." & com & _
-        "direccion" & com & " as " & com & "direPaciente" & com & " , " & com & "nombreMedicoAct" & com & ", med." & com & "nroMatricula" & com & "," & com & _
-        "medAnestesista" & com & "." & com & "nombreMedicoAn" & com & " , " & com & "medAnestesista" & com & "." & com & "apellidoMedicoAn" & com & ", " & com & "medAnestesista" & com & "." & com & "nroMatricula" & com & _
-        ", " & com & "apellidoMedicoAct" & com & "," & com & "nombreMedicoSol" & com & "," & com & "apellidoMedicoSol" & com & "," & com & "obraSocial" & com & ", " & com & "Precio" & com & ", " & com & "esPagoContraFactura" & com & ", est." & com & "idEstudio" & com & ", " & com & "sePresentaPorAMR" & com & ", " & com & "sePresentaPorARA" & com & ", pce." & com & "arancelAnestesia" & com & ", pce." & com & "importeCobradoPension" & com & ", pce." & com & "importeEstudioCobrado" & com & ", pce." & com & "importeCobradoArancelAnestesia" & com & ", pce." & com & "importeMedicacionCobrado" & com & ", ale." & com & "abreviatura" & com & ", ale." & com & "codigoMedicoOSDE" & com & " from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " as est "
-
-        Dim inners As String = " inner join " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & _
-        " as det on est." & com & "nroEstudio" & com & " = det." & com & "nroEstudio" & com & " inner join " & com & _
-        "cedirData" & com & "." & com & "tblPagoCobroEstudio" & com & " as pce on est." & com & "nroEstudio" & com & _
-        " = pce." & com & "nroEstudio" & com & " inner join " & com & "cedirData" & com & "." & com & _
-        "AlmacenEstudios" & com & " as ale on  est." & com & "idEstudio" & com & " = ale." & com & "idEstudio" & com & _
-        " inner join " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " as p on est." & com & "idPaciente" & _
-        com & " = p." & com & "id" & com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosAct" & _
-        com & " as med on det." & com & "idMedicoActuante" & com & " = med." & com & "idMedicoAct" & com & " inner join " & _
-com & "cedirData" & com & "." & com & "tblMedicosAnestesistas" & com & " as " & com & "medAnestesista" & com & " on det." & com & "idAnestesista" & com & " = " & com & "medAnestesista" & com & "." & com & "idMedicoAn" & _
-com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & com & " as meds on det." & com & "idMedicoSolicitante" & _
-        com & " = meds." & com & "idMedicoSol" & com & " inner join " & com & "cedirData" & com & "." & _
-        com & "AlmacenObraSocial" & com & " as alos on det." & com & "idObraSocial" & com & " = alos." & com & "idObraSocial" & _
-        com & " left join " & com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com & " as eo on est." & _
-        com & "idEstudio" & com & " = eo." & com & "idEstudio" & com & " and det." & com & "idObraSocial" & com & " = eo." & _
-        com & "idObraSocial" & com
+        Dim StringPuto As String = "
+            select
+                est.""nroEstudio"",
+                alos.*,
+                ""fechaEstudio"",
+                ""motivoEstudio"",
+                ""informe"",
+                est.""idObraSocial"",
+                ""publicID"",
+                est.""idMedicoActuante"",
+                est.""idMedicoSolicitante"",
+                ""enlaceVideo"",
+                ""nroDeOrden"",
+                ""lugar"",
+                ""idFacturacion"",
+                ""idAnestesista"",
+                ""fechaCobro"",
+                ""importeEstudio"",
+                ""importeMedicacion"",
+                ""pagoContraFactura"",
+                ""diferenciaPaciente"",
+                ""nroPagoMedicoAct"",
+                ""pension"",
+                ""importePagoMedico"",
+                ""porcentajeIVAPagoMedicoActuante"",
+                ""nroPagoMedicoSol"",
+                ""importePagoMedicoSol"",
+                ""estudio"",
+                ""codigoMedico"",
+                ""dni"",
+                ""idPaciente"",
+                ""e_mail"",
+                ""fechaNacimiento"",
+                ""nombres"",
+                ""apellido"",
+                ""sexo"",
+                ""nroAfiliado"",
+                ""tel"",
+                p.""direccion"" as ""direPaciente"",
+                ""nombreMedicoAct"",
+                med.""nroMatricula"",
+                meda.""nombreMedicoAn"",
+                meda.""apellidoMedicoAn"",
+                meda.""nroMatricula"",
+                ""apellidoMedicoAct"",
+                ""nombreMedicoSol"",
+                ""apellidoMedicoSol"",
+                ""obraSocial"",
+                ""Precio"",
+                ""esPagoContraFactura"",
+                est.""idEstudio"",
+                ""sePresentaPorAMR"",
+                ""sePresentaPorARA"",
+                est.""arancelAnestesia"",
+                est.""importeCobradoPension"",
+                est.""importeEstudioCobrado"",
+                est.""importeCobradoArancelAnestesia"",
+                est.""importeMedicacionCobrado"",
+                ale.""abreviatura"",
+                ale.""codigoMedicoOSDE""
+            from ""public"".""tblEstudios"" as est
+        "
+        Dim inners As String = "
+            inner join ""public"".""AlmacenEstudios"" as ale
+                on  est.""idEstudio"" = ale.""idEstudio""
+            inner join ""public"".""tblPacientes"" as p
+                on est.""idPaciente"" = p.""id""
+            inner join ""public"".""tblMedicosAct"" as med
+                on est.""idMedicoActuante"" = med.""idMedicoAct""
+            inner join ""public"".""tblMedicosAnestesistas"" as meda
+                on est.""idAnestesista"" = meda.""idMedicoAn""
+            inner join ""public"".""tblMedicosSol"" as meds
+                on est.""idMedicoSolicitante"" = meds.""idMedicoSol""
+            inner join ""public"".""AlmacenObraSocial"" as alos
+                on est.""idObraSocial"" = alos.""idObraSocial""
+            left join ""public"".""AlmacenPreciosEstOS"" as eo
+                on est.""idEstudio"" = eo.""idEstudio"" 
+                and est.""idObraSocial"" = eo.""idObraSocial"""
 
         Dim order As String = ""
 
         If filtro = "paciente" Then
-            order = " order by " & com & "fechaEstudio" & com & ", p." & com & "apellido" & com & ", p." & com & "nombres" & com & " ASC "
+            order = " order by ""fechaEstudio"", p.""apellido"", p.""nombres"" ASC "
         Else
-            order = " order by est." & com & "fechaEstudio" & com & ", p." & com & "id" & com & " ASC "
+            order = " order by est.""fechaEstudio"", p.""id"" ASC "
         End If
 
 
@@ -131,20 +176,19 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function TraerEstudiosYMovimientosDeCaja(ByVal condicion As String) As NpgsqlDataReader
-        Dim selec As String = "select est.*,det.*, alos.*,cm.*, ctm.*,p.*, cm.id as " & com & "idMov" & com & ", cm." & com & "nroEstudio" & com & " as " & com & "nroEstudioMovimiento" & com & ",ales.*, medAct.*  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " as est "
-        Dim inner As String = " inner join " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & " as det on est." & com & "nroEstudio" & com & " = det." & com & "nroEstudio" & com
-        Dim inner0 As String = " inner join " & com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com & " as alos on det." & com & "idObraSocial" & com & " = alos." & com & "idObraSocial" & com
-        Dim inner1 As String = " inner join " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " as p on est." & com & "idPaciente" & com & " = p." & com & "id" & com
-        Dim inner2 As String = " inner join " & com & "cedirData" & com & "." & com & "AlmacenEstudios" & com & " as ales on est." & com & "idEstudio" & com & " = ales." & com & "idEstudio" & com
-        Dim inner3 As String = " inner join " & com & "cedirData" & com & "." & com & "tblMedicosAct" & com & " as medAct on det." & com & "idMedicoActuante" & com & " = medAct." & com & "idMedicoAct" & com
+        Dim selec As String = "select est.*,est.*, alos.*,cm.*, ctm.*,p.*, cm.id as ""idMov"", cm.""nroEstudio"" as ""nroEstudioMovimiento"",ales.*, medAct.*  from ""public"".""tblEstudios"" as est "
+        Dim inner0 As String = " inner join ""public"".""AlmacenObraSocial"" as alos on est.""idObraSocial"" = alos.""idObraSocial" & com
+        Dim inner1 As String = " inner join ""public"".""tblPacientes"" as p on est.""idPaciente"" = p.""id" & com
+        Dim inner2 As String = " inner join ""public"".""AlmacenEstudios"" as ales on est.""idEstudio"" = ales.""idEstudio" & com
+        Dim inner3 As String = " inner join ""public"".""tblMedicosAct"" as medAct on est.""idMedicoActuante"" = medAct.""idMedicoAct" & com
 
-        Dim left As String = " left join " & com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com & " as cm on est." & com & "nroEstudio" & com & " = cm." & com & "nroEstudio" & com
-        Dim left1 As String = " left join " & com & "cedirData" & com & "." & com & "tblCajaTipoDeMovimientos" & com & " as ctm on cm." & com & "idTipoDeMovimiento" & com & " = ctm." & com & "id" & com
+        Dim left As String = " left join ""public"".""tblCajaMovimientos"" as cm on est.""nroEstudio"" = cm.""nroEstudio" & com
+        Dim left1 As String = " left join ""public"".""tblCajaTipoDeMovimientos"" as ctm on cm.""idTipoDeMovimiento"" = ctm.""id" & com
 
 
         Try
             myCommand.CommandType = CommandType.Text
-            myCommand.CommandText = selec & inner & inner0 & inner1 & inner2 & inner3 & left & left1 & condicion & " order by " & com & "fechaEstudio" & com & ", p." & com & "apellido" & com
+            myCommand.CommandText = selec & inner0 & inner1 & inner2 & inner3 & left & left1 & condicion & " order by ""fechaEstudio"", p.""apellido" & com
             myCommand.Connection = myConnection
             myCommand.ExecuteNonQuery()
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
@@ -157,12 +201,12 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function getArancelesByObraSocial(ByVal idObraSocial As Integer, ByVal idPractica As Integer) As NpgsqlDataReader
-        Dim stringSelect As String = "select ae." & com & "idEstudio" & com & ", ae." & com & "estudio" & com & ", " & com & "ae" & com & "." & com & "codigoMedico" & com & ", " & com & "ap" & com & "." & com & "Precio" & com & ", ap." & com & "fecha" & com & " from " & com & "cedirData" & com & "." & com & "AlmacenPreciosEstOS" & com & " as " & com & "ap" & com
-        Dim inners As String = " inner join " & com & "cedirData" & com & "." & com & "AlmacenEstudios" & com & " as ae on ae." & com & "idEstudio" & com & " = ap." & com & "idEstudio" & com
-        Dim condicion As String = " where ap." & com & "idObraSocial" & com & " = " & idObraSocial
-        Dim postCondicion As String = " order by " & com & "estudio" & com
+        Dim stringSelect As String = "select ae.""idEstudio"", ae.""estudio"", ""ae"".""codigoMedico"", ""ap"".""Precio"", ap.""fecha"" from ""public"".""AlmacenPreciosEstOS"" as ""ap" & com
+        Dim inners As String = " inner join ""public"".""AlmacenEstudios"" as ae on ae.""idEstudio"" = ap.""idEstudio" & com
+        Dim condicion As String = " where ap.""idObraSocial"" = " & idObraSocial
+        Dim postCondicion As String = " order by ""estudio" & com
         If idPractica <> 0 Then
-            condicion &= " and ap." & com & "idEstudio" & com & " = " & idPractica
+            condicion &= " and ap.""idEstudio"" = " & idPractica
         End If
 
         Try
@@ -182,38 +226,38 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
     Public Function getPresentaciones(ByVal filtro As String, ByVal orderBy As String) As NpgsqlDataReader
         'ordenar por obra social, dentro de obra social por fecha
-        Dim stringSelect As String = "select f." & com & "idFacturacion" & com & ", os." & com & "obraSocial" & com & ", f." & com & _
-        "fechaFacturacion" & com & ", c.*, f." & com & "pagado" & com & ", ti." & com & "id" & com & _
-        " as idComprobanteTipo, ti." & _
-        com & "tipoComprobante" & com & ", g." & com & "id" & com & " as idGravado, g." & com & _
-        "descripcionGravado" & com & ", g." & com & "porcentajeGravado" & com & ", os." & com & _
-        "idObraSocial" & com & ", os." & com & "direccion" & com & ", os." & com & "telefono" & _
-        com & ", os." & com & "localidad" & com & ", os." & com & "codigoPostal" & com & ", os." & com & _
-        "condicionFiscal" & com & " as osCondicionFiscal, os." & com & "nroCuit" & com & " as cuitOS, os." & _
-        com & "observaciones" & com & ", f." & com & "periodo" & com & ", f." & com & "total" & com & ", os." & _
-        com & "sePresentaPorAMR" & com & ", os." & com & "sePresentaPorARA" & com & ", f." & com & "totalFacturado" & _
-        com & "as totalFacturadoPresentacion," & com & "idComprobante" & com & " from " & com & "cedirData" & _
-        com & "." & com & "tblFacturacion" & com & " as f "
-        Dim inners As String = " inner join " & com & "cedirData" & com & "." & com & _
-        "AlmacenObraSocial" & com & " as os on f." & com & "idObraSocial" & com & " = os." & com & _
-        "idObraSocial" & com & " left join " & com & "cedirData" & com & "." & com & "tblComprobantes" & _
-        com & " as c on f." & com & "idComprobante" & com & " = c." & com & "id" & com & " left join " & _
-        com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & "as ti on c." & com & _
-        "idTipoComprobante" & com & " = ti." & com & "id" & com & " left join " & com & "cedirData" & com & _
-        "." & com & "tblGravado" & com & " as g on g." & com & "id" & com & "= c." & com & "gravado" & com & _
-        " left join " & com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com & _
-        "as tPresPresAMR on f." & com & "idFacturacion" & com & " = tPresPresAMR." & com & "idFacturacion" & com
+        Dim stringSelect As String = "select f.""idFacturacion"", os.""obraSocial"", f." & com &
+        "fechaFacturacion"", c.*, f.""pagado"", ti.""id" & com &
+        " as idComprobanteTipo, ti." &
+        com & "tipoComprobante"", g.""id"" as idGravado, g." & com &
+        "descripcionGravado"", g.""porcentajeGravado"", os." & com &
+        "idObraSocial"", os.""direccion"", os.""telefono" &
+        com & ", os.""localidad"", os.""codigoPostal"", os." & com &
+        "condicionFiscal"" as osCondicionFiscal, os.""nroCuit"" as cuitOS, os." &
+        com & "observaciones"", f.""periodo"", f.""total"", os." &
+        com & "sePresentaPorAMR"", os.""sePresentaPorARA"", f.""totalFacturado" &
+        com & "as totalFacturadoPresentacion,""idComprobante"" from ""public" &
+        com & ".""tblFacturacion"" as f "
+        Dim inners As String = " inner join ""public""." & com &
+        "AlmacenObraSocial"" as os on f.""idObraSocial"" = os." & com &
+        "idObraSocial"" left join ""public"".""tblComprobantes" &
+        com & " as c on f.""idComprobante"" = c.""id"" left join " &
+        com & "public"".""tblComprobantesTipo""as ti on c." & com &
+        "idTipoComprobante"" = ti.""id"" left join ""public" & com &
+        ".""tblGravado"" as g on g.""id""= c.""gravado" & com &
+        " left join ""public"".""tblPresentacion_PresentacionAMR" & com &
+        "as tPresPresAMR on f.""idFacturacion"" = tPresPresAMR.""idFacturacion" & com
 
 
         If orderBy = "" Then
-            orderBy = " os." & com & "obraSocial" & com & ", " & com & "fechaFacturacion" & com
+            orderBy = " os.""obraSocial"", ""fechaFacturacion" & com
         End If
 
         Dim cCondicion As String
         If filtro <> "" Then
             cCondicion = filtro
         Else
-            cCondicion = " where " & com & "pagado" & com & " = 0"
+            cCondicion = " where ""pagado"" = 0"
         End If
         Try
             myCommand.CommandType = CommandType.Text
@@ -233,8 +277,8 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
     Public Function getLineasFacturcionAMR(ByVal filtro As String) As NpgsqlDataReader
         Dim inners As String
-        Dim stringSelect As String = "select f." & com & "idFacturacion" & com & ", fa." & com & "idPresentacionAMR" & com & ", fa." & com & "nroRemito" & com & " from " & com & "cedirData" & com & "." & com & "tblPresentacion_PresentacionAMR" & com & " as fa "
-        inners &= " inner join " & com & "cedirData" & com & "." & com & "tblFacturacion" & com & " as f on fa." & com & "idFacturacion" & com & " = f." & com & "idFacturacion" & com
+        Dim stringSelect As String = "select f.""idFacturacion"", fa.""idPresentacionAMR"", fa.""nroRemito"" from ""public"".""tblPresentacion_PresentacionAMR"" as fa "
+        inners &= " inner join ""public"".""tblFacturacion"" as f on fa.""idFacturacion"" = f.""idFacturacion" & com
 
         Dim cCondicion As String = filtro
 
@@ -252,10 +296,10 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function getMedicacionEstudio(ByVal nroEstudio As Int64) As NpgsqlDataReader
-        Dim stringSelect As String = "select  med." & com & "idMedicacion" & com & ", med." & com & "importe" & com & ", med." & com & "nroEstudio" & com & ", medic." & com & "idMedicamento" & com & ", medic." & com & "descripcionMedicamento" & com & ", medic." & com & "importeMedicamento" & com & ", medic." & com & "tipo" & com & ", medic." & com & "codigoMedicoOSDE" & com & " from " & com & "cedirData" & com & "." & com & "tblMedicacion" & com & " as med "
-        Dim inners As String = " inner join " & com & "cedirData" & com & "." & com & "tblMedicamentos" & com & " as medic on med." & com & "idMedicamento" & com & " = medic." & com & "idMedicamento" & com
+        Dim stringSelect As String = "select  med.""idMedicacion"", med.""importe"", med.""nroEstudio"", medic.""idMedicamento"", medic.""descripcionMedicamento"", medic.""importeMedicamento"", medic.""tipo"", medic.""codigoMedicoOSDE"" from ""public"".""tblMedicacion"" as med "
+        Dim inners As String = " inner join ""public"".""tblMedicamentos"" as medic on med.""idMedicamento"" = medic.""idMedicamento" & com
 
-        Dim cCondicion As String = " where " & com & "nroEstudio" & com & " = " & nroEstudio
+        Dim cCondicion As String = " where ""nroEstudio"" = " & nroEstudio
 
         Try
             Dim myCommand2 As New NpgsqlCommand
@@ -275,10 +319,10 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function getGruposUsuario(ByVal idUsuario As Integer) As NpgsqlDataReader
-        Dim stringSelect As String = "select  g." & com & "id" & com & ", g." & com & "nombre" & com & " from " & com & "webData" & com & "." & com & "gruposUsuarios" & com & " as g "
-        Dim inners As String = " inner join " & com & "webData" & com & "." & com & "usuarios_grupos" & com & " as usr_grp on g." & com & "id" & com & " = usr_grp." & com & "idGrupo" & com & " inner join " & com & "webData" & com & "." & com & "tblUsuarios" & com & " as u on usr_grp." & com & "idGrupo" & com & " = u." & com & "idUsuario" & com
+        Dim stringSelect As String = "select  g.""id"", g.""nombre"" from ""webData"".""gruposUsuarios"" as g "
+        Dim inners As String = " inner join ""webData"".""usuarios_grupos"" as usr_grp on g.""id"" = usr_grp.""idGrupo"" inner join ""webData"".""tblUsuarios"" as u on usr_grp.""idGrupo"" = u.""idUsuario" & com
 
-        Dim cCondicion As String = " where usr_grp." & com & "idUsuario" & com & " = " & idUsuario
+        Dim cCondicion As String = " where usr_grp.""idUsuario"" = " & idUsuario
 
         Try
             myCommand.CommandType = CommandType.Text
@@ -298,7 +342,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     'Traemos todos los tipos de comprobantes 
     Public Function getComprobantesTipos(Optional ByVal filtro As String = "") As NpgsqlDataReader
 
-        Dim stringSelect As String = "select ct.* from " & com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & " as ct "
+        Dim stringSelect As String = "select ct.* from ""public"".""tblComprobantesTipo"" as ct "
         Try
 
             myCommand.CommandType = CommandType.Text
@@ -319,14 +363,14 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     Public Function getComprobantes(ByVal filtro As String, Optional ByVal orderBy As String = "") As NpgsqlDataReader
         'este metodo se invoca desde Comprobantes-buscar
 
-        Dim stringSelect As String = "select c.id, c.""nroComprobante"", c.""nroTerminal"", c.""nombreCliente"", c.""domicilioCliente"", c.""nroCuit"" " & _
-        " , c.""condicionFiscal"", c.responsable, c.gravado, t.""tipoComprobante"", t.id as idTipo, c.""fechaEmision"", c.""fechaRecepcion"" " & _
-        ",c.""idFactura"",g.""descripcionGravado"" " & _
-        " , c.estado, c.""subTipo"", c.""totalFacturado"", c.""totalCobrado"", c.""gravadoPaciente"", g.""porcentajeGravado"" from " & com & _
-        "cedirData" & com & "." & com & "tblComprobantes" & com & " as c " & _
-        " left join " & com & "cedirData" & com & "." & com & "tblComprobantesTipo" & com & " as t on c." & com & "idTipoComprobante" & com & " = t." & com & "id" & com & _
-        " left join " & com & "cedirData" & com & "." & com & "tblGravado" & com & " as g on c." & com & "gravado" & com & _
-        " = g." & com & "id" & com & _
+        Dim stringSelect As String = "select c.id, c.""nroComprobante"", c.""nroTerminal"", c.""nombreCliente"", c.""domicilioCliente"", c.""nroCuit"" " &
+        " , c.""condicionFiscal"", c.responsable, c.gravado, t.""tipoComprobante"", t.id as idTipo, c.""fechaEmision"", c.""fechaRecepcion"" " &
+        ",c.""idFactura"",g.""descripcionGravado"" " &
+        " , c.estado, c.""subTipo"", c.""totalFacturado"", c.""totalCobrado"", c.""gravadoPaciente"", c.""CAE"", c.""vencimientoCAE"", g.""porcentajeGravado"" from " & com &
+        "public"".""tblComprobantes"" as c " &
+        " left join ""public"".""tblComprobantesTipo"" as t on c.""idTipoComprobante"" = t.""id" & com &
+        " left join ""public"".""tblGravado"" as g on c.""gravado" & com &
+        " = g.""id" & com &
         " "
 
 
@@ -359,7 +403,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function getAll(ByVal tabla As String, Optional ByVal filtro As String = "", Optional ByVal order As String = "") As NpgsqlDataReader
-        Dim stringSel As String = "select * from " & com & "cedirData" & com & "." & com & tabla & com
+        Dim stringSel As String = "select * from ""public""." & com & tabla & com
         Dim cCondicion As String
 
         If filtro <> "" Then
@@ -386,7 +430,6 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         Dim from As String
         Dim inner0 As String
         Dim left1 As String
-        Dim left2 As String
         Dim left3 As String
         Dim left4 As String
         Dim left5 As String
@@ -394,26 +437,25 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         Dim left7 As String
         Dim left8 As String
 
-        stringSelect = "select cm.*, cm." & com & "id" & com & " as " & com & "idMov" & com & ", u.*, ctm.*,est.*,alos.*, p.*, aes." & com & "estudio" & com & ",  aes." & com & "abreviatura" & com & "  , medAct.* "
-        from = " from " & com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com & " as cm "
-        inner0 = " inner join " & com & "cedirData" & com & "." & com & "tblCajaTipoDeMovimientos" & com & " as ctm on cm." & com & "idTipoDeMovimiento" & com & " = ctm." & com & "id" & com
+        stringSelect = "select cm.*, cm.""id"" as ""idMov"", u.*, ctm.*,est.*,alos.*, p.*, aes.""estudio"",  aes.""abreviatura""  , medAct.* "
+        from = " from ""public"".""tblCajaMovimientos"" as cm "
+        inner0 = " inner join ""public"".""tblCajaTipoDeMovimientos"" as ctm on cm.""idTipoDeMovimiento"" = ctm.""id" & com
 
-        left1 = " left join " & com & "cedirData" & com & "." & com & "tblEstudios" & com & " as est on est." & com & "nroEstudio" & com & " = cm." & com & "nroEstudio" & com
-        left2 = " left join " & com & "cedirData" & com & "." & com & "tblDetalleEstudio" & com & " as det on est." & com & "nroEstudio" & com & " = det." & com & "nroEstudio" & com
-        left3 = " left join " & com & "cedirData" & com & "." & com & "AlmacenEstudios" & com & " as aes on est." & com & "idEstudio" & com & " = aes." & com & "idEstudio" & com
-        left4 = " left join " & com & "cedirData" & com & "." & com & "tblPacientes" & com & " as p on est." & com & "idPaciente" & com & " = p." & com & "id" & com
-        left5 = " left join " & com & "cedirData" & com & "." & com & "AlmacenObraSocial" & com & " as alos on det." & com & "idObraSocial" & com & " = alos." & com & "idObraSocial" & com
-        left6 = " left join " & com & "cedirData" & com & "." & com & "AuditUserActionsLog" & com & " as aua on cm." & com & "id" & com & " = aua." & com & "objectId" & com & "  and aua." & com & "userActionId" & com & " =1 and aua." & com & "objectTypeId" & com & " =2"
-        left7 = " left join " & com & "webData" & com & "." & com & "tblUsuarios" & com & " as u on aua." & com & "userId" & com & " = u." & com & "idUsuario" & com
-        left8 = " left join " & com & "cedirData" & com & "." & com & "tblMedicosAct" & com & " as medAct on cm." & com & "idMedico" & com & " = medAct." & com & "idMedicoAct" & com
+        left1 = " left join ""public"".""tblEstudios"" as est on est.""nroEstudio"" = cm.""nroEstudio" & com
+        left3 = " left join ""public"".""AlmacenEstudios"" as aes on est.""idEstudio"" = aes.""idEstudio" & com
+        left4 = " left join ""public"".""tblPacientes"" as p on est.""idPaciente"" = p.""id" & com
+        left5 = " left join ""public"".""AlmacenObraSocial"" as alos on est.""idObraSocial"" = alos.""idObraSocial" & com
+        left6 = " left join ""public"".""AuditUserActionsLog"" as aua on cm.""id"" = aua.""objectId""  and aua.""userActionId"" =1 and aua.""objectTypeId"" =2"
+        left7 = " left join ""webData"".""tblUsuarios"" as u on aua.""userId"" = u.""idUsuario" & com
+        left8 = " left join ""public"".""tblMedicosAct"" as medAct on cm.""idMedico"" = medAct.""idMedicoAct" & com
 
-        
+
         'ordeno por fecha
-        Dim order As String = " order by cm." & com & "id" & com & ", cm." & com & "fecha" & com & ", cm." & com & "hora" & com
+        Dim order As String = " order by cm.""id"", cm.""fecha"", cm.""hora" & com
 
         Try
             myCommand.CommandType = CommandType.Text
-            myCommand.CommandText = stringSelect & from & inner0 & left1 & left2 & left3 & left4 & left5 & left6 & left7 & left8 & filtro & order
+            myCommand.CommandText = stringSelect & from & inner0 & left1 & left3 & left4 & left5 & left6 & left7 & left8 & filtro & order
             myCommand.Connection = myConnection
 
             Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
@@ -426,8 +468,8 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 
     Public Function selectMaxMovmiento() As NpgsqlDataReader
-        Dim cmd As New NpgsqlCommand("select * from " & com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com & _
-                                     " where id= (SELECT MAX(id) FROM " & com & "cedirData" & com & "." & com & "tblCajaMovimientos" & com & ")")
+        Dim cmd As New NpgsqlCommand("select * from ""public"".""tblCajaMovimientos" & com &
+                                     " where id= (SELECT MAX(id) FROM ""public"".""tblCajaMovimientos"")")
         Try
             cmd.Connection = myConnection
             Return cmd.ExecuteReader()
@@ -437,7 +479,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     End Function
 #End Region
 
-    
+
 
     Public Function getMovimientosStockAll(ByVal filtro As String) As NpgsqlDataReader
         Dim stringSelect As String
@@ -448,10 +490,10 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
 
         stringSelect = "select * "
-        inner1 = " from " & com & "cedirData" & com & "." & com & "tblMovimientosDeMedicamentos" & com & " as sm "
-        inner2 = " INNER join " & com & "cedirData" & com & "." & com & "tblMedicamentos" & com & " as med on sm." & com & "idMedicamento" & com & " = med." & com & "idMedicamento" & com
-        inner3 = " left join " & com & "cedirData" & com & "." & com & "AuditUserActionsLog" & com & " as aua on sm." & com & "id" & com & " = aua." & com & "objectId" & com & "  and aua." & com & "userActionId" & com & " =1 and aua." & com & "objectTypeId" & com & " =4"
-        inner4 = " left join " & com & "webData" & com & "." & com & "tblUsuarios" & com & " as u on aua." & com & "userId" & com & " = u." & com & "idUsuario" & com
+        inner1 = " from ""public"".""tblMovimientosDeMedicamentos"" as sm "
+        inner2 = " INNER join ""public"".""tblMedicamentos"" as med on sm.""idMedicamento"" = med.""idMedicamento" & com
+        inner3 = " left join ""public"".""AuditUserActionsLog"" as aua on sm.""id"" = aua.""objectId""  and aua.""userActionId"" =1 and aua.""objectTypeId"" =4"
+        inner4 = " left join ""webData"".""tblUsuarios"" as u on aua.""userId"" = u.""idUsuario" & com
 
         Dim cCondicion As String
         If filtro <> "" Then
@@ -460,7 +502,7 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
             cCondicion = ""
         End If
         'ordeno por fecha
-        Dim order As String = " order by sm." & com & "fecha" & com & " ,sm." & com & "id" & com
+        Dim order As String = " order by sm.""fecha"" ,sm.""id" & com
 
         Try
             myCommand.CommandType = CommandType.Text
@@ -478,9 +520,9 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
 
 
     Public Function getAuditLogs(ByVal filtro As String) As NpgsqlDataReader
-        Dim stringSelect As String = " select log.*, a.*, u.* from " & com & "cedirData" & com & "." & com & "AuditUserActionsLog" & com & " as log "
-        Dim inners As String = " left join " & com & "cedirData" & com & "." & com & "AuditUserActions" & com & " as a on log." & com & "userActionId" & com & " = a." & com & "id" & com
-        Dim inner2 As String = " left join " & com & "webData" & com & "." & com & "tblUsuarios" & com & " as u on log." & com & "userId" & com & " = u." & com & "idUsuario" & com
+        Dim stringSelect As String = " select log.*, a.*, u.* from ""public"".""AuditUserActionsLog"" as log "
+        Dim inners As String = " left join ""public"".""AuditUserActions"" as a on log.""userActionId"" = a.""id" & com
+        Dim inner2 As String = " left join ""webData"".""tblUsuarios"" as u on log.""userId"" = u.""idUsuario" & com
 
         Dim concondicion As String = ""
         Dim cCondicion As String
@@ -510,9 +552,9 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         Dim order As String = ""
         Dim drMedicos As NpgsqlDataReader
         stringSelect = "select medicos.*"
-        from = " from " & com & "cedirData" & com & "." & com & "tblMedicosAct" & com & " as medicos "
-        'leftJoin = " left join " & com & "cedirData" & com & "." & com & "tblGravado" & com & " as gravado on medicos." & com & "idGravado" & com & " = gravado." & com & "id" & com
-        order = " order by medicos." & com & "apellidoMedicoAct" & com & ""
+        from = " from ""public"".""tblMedicosAct"" as medicos "
+        'leftJoin = " left join ""public"".""tblGravado"" as gravado on medicos.""idGravado"" = gravado.""id" & com
+        order = " order by medicos.""apellidoMedicoAct"""
         Try
             myCommand.CommandType = CommandType.Text
             myCommand.CommandText = stringSelect & from & order
@@ -529,8 +571,8 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
     Public Function existeEstudioNuevoPublicID(ByVal posiblePublicID As String) As Integer
 
         Dim com As String = """"
-        Dim cmd As New NpgsqlCommand("select COUNT(*)  from " & com & "cedirData" & com & "." & com & "tblEstudios" & com & _
-        " where " & com & "publicID" & com & "  = '" & posiblePublicID & "' ", myConnection)
+        Dim cmd As New NpgsqlCommand("select COUNT(*)  from ""public"".""tblEstudios" & com &
+        " where ""publicID""  = '" & posiblePublicID & "' ", myConnection)
         Try
             Return cmd.ExecuteScalar()
         Catch ex As Exception
@@ -540,13 +582,13 @@ com & " inner join " & com & "cedirData" & com & "." & com & "tblMedicosSol" & c
         End Try
     End Function
 
-    
+
 
     '--------------------------------General Function----------------------------------------
 
     Public Function selectSum(ByVal tableName As String, ByVal idColumnName As String, Optional ByVal filtro As String = "") As Decimal
 
-        Dim cmd As New NpgsqlCommand("select sum(" & com & idColumnName & com & ") from " & com & "cedirData" & com & "." & com & tableName & com & filtro, myConnection)
+        Dim cmd As New NpgsqlCommand("select sum(" & com & idColumnName & com & ") from ""public""." & com & tableName & com & filtro, myConnection)
         Try
             Dim o As Object = cmd.ExecuteScalar
             If o IsNot DBNull.Value Then

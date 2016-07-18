@@ -302,15 +302,15 @@ Public Class Comprobante
                 Me.SubTipo = ""
                 Me.Responsable = ""
                 'insertamos la liquidacion en db
-                resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & _
-                "nroComprobante" & com & ", " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & _
-                com & ", " & com & "domicilioCliente" & _
-                com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & _
-                "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & _
-                com & ", " & com & "estado" & com & ", " & com & "totalFacturado" & com & ", " & com & _
-                "totalCobrado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" & _
-                Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & _
-                "', '" & Me.CondicionFiscal & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & _
+                resp = cDatos.insert(com & "public" & com & "." & com & "tblComprobantes" & com, com &
+                "nroComprobante" & com & ", " & com & "nroTerminal" & com & ", " & com & "nombreCliente" &
+                com & ", " & com & "domicilioCliente" &
+                com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com &
+                "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" &
+                com & ", " & com & "estado" & com & ", " & com & "totalFacturado" & com & ", " & com &
+                "totalCobrado" & com & ", " & com & "gravadoPaciente" & com, "'" & Me.NroComprobante & "', '" &
+                Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento &
+                "', '" & Me.CondicionFiscal & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" &
                 Me.Estado & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.GravadoPaciente & "'")
             Else
 
@@ -318,10 +318,10 @@ Public Class Comprobante
 
                 If ((Me.TipoComprobante.Id = TComprobante.NotaDeCredito Or Me.TipoComprobante.Id = TComprobante.NotaDeDebito) And (Me.Factura IsNot Nothing)) Then
                     'si es asi, insertamos tambien la factura que corresponda, ya que es Nota de Debito, o Credito
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
+                    resp = cDatos.insert(com & "public" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "idFactura" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.Factura.IdComprobante & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
                 Else
                     'de otra manera, insertamos vacio en el campo idFactura de la tabla
-                    resp = cDatos.insert(com & "cedirData" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
+                    resp = cDatos.insert(com & "public" & com & "." & com & "tblComprobantes" & com, com & "nroComprobante" & com & " , " & com & "nroTerminal" & com & ", " & com & "nombreCliente" & com & ", " & com & "domicilioCliente" & com & ", " & com & "nroCuit" & com & ", " & com & "condicionFiscal" & com & ", " & com & "responsable" & com & ", " & com & "idTipoComprobante" & com & ", " & com & "fechaEmision" & com & ", " & com & "fechaRecepcion" & com & ", " & com & "estado" & com & ", " & com & "subTipo" & com & ", " & com & "totalFacturado" & com & ", " & com & "totalCobrado" & com & ", " & com & "gravado" & com & ", " & com & "gravadoPaciente" & com & ", " & com & "CAE" & com & ", " & com & "vencimientoCAE" & com, "'" & Me.NroComprobante & "', '" & Me.NroTerminal & "', '" & Me.NombreCliente & "', '" & Me.DomicilioCliente & "', '" & Me.DocumentoCliente.NroDocumento & "', '" & Me.CondicionFiscal & "', '" & Me.Responsable & "', '" & Me.TipoComprobante.Id & "', '" & f1 & "', '" & f2 & "', '" & Me.Estado & "', '" & Me.SubTipo & "', '" & Me.TotalFacturado & "', '" & Me.TotalCobrado & "', '" & Me.Gravado.id & "', '" & Me.GravadoPaciente & "', '" & CAE & "', '" & f3 & "'")
                 End If
 
             End If
@@ -411,7 +411,7 @@ Public Class Comprobante
         Dim dr As NpgsqlDataReader
 
         Try
-            Dim query As String = "select * from " & com & "cedirData" & com & "." & com & "tblGravado" & com & " as g where g." & com & "id" & com & " = " & Me.Gravado.id
+            Dim query As String = "select * from " & com & "public" & com & "." & com & "tblGravado" & com & " as g where g." & com & "id" & com & " = " & Me.Gravado.id
             dr = cDatos.EjecutarSelect(query)
             While (dr.Read)
                 Dim g As New Gravado
@@ -435,9 +435,9 @@ Public Class Comprobante
     '    Dim query As String
     '    Try
     '        If Me.TipoComprobante.Id = 2 Then
-    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
+    '            query = "select c." & com & "id" & com & " from " & com & "public" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id
     '        Else
-    '            query = "select c." & com & "id" & com & " from " & com & "cedirData" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
+    '            query = "select c." & com & "id" & com & " from " & com & "public" & com & "." & com & "tblComprobantes" & com & " as c where c." & com & "nroComprobante" & com & " = " & Me.NroComprobante & " and " & com & "idTipoComprobante" & com & " = " & Me.TipoComprobante.Id & " and " & com & "responsable" & com & " = '" & Me.Responsable & "' and " & com & "subTipo" & com & " = '" & Me.SubTipo & "'" & "' and " & com & "nroTerminal" & com & " = '" & Me.NroTerminal & "'"
     '        End If
 
     '        dr = cDatos.EjecutarSelect(query)
@@ -524,7 +524,7 @@ Public Class Comprobante
         Dim oComprobante As New Comprobante
         Dim cDatos As New Nuevo
 
-        Dim tabla As String = com & "cedirData" & com & "." & com & "tblComprobantes" & com
+        Dim tabla As String = com & "public" & com & "." & com & "tblComprobantes" & com
         Dim campos As String = com & "totalCobrado" & com & " = " & Me.TotalCobrado
         Dim filtro As String = " where id = " & Me.IdComprobante
         cDatos.update(tabla, campos, filtro)

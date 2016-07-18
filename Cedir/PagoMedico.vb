@@ -364,9 +364,11 @@ Public Class PagoMedico
         Dim clFechaEstudio As New DataColumn("Fecha", Type.GetType("System.String"))
         Dim clFechaCobro As New DataColumn("Fecha Cobro", Type.GetType("System.DateTime"))
         Dim clImporteEstudio As New DataColumn("Importe", Type.GetType("System.String"))
+        Dim clImporteNetoEstudio As New DataColumn("ImporteNeto", Type.GetType("System.String"))
         Dim clImporteRealCobrado As New DataColumn("Cobrado", Type.GetType("System.String"))
         Dim clPagoMedAct As New DataColumn("Pago", Type.GetType("System.String"))
         Dim clPorcentajeRetencionCedir As New DataColumn("%RetencionCedir", Type.GetType("System.String"))
+        Dim clPorcentajeMedico As New DataColumn("%Medico", Type.GetType("System.String"))
         Dim clPorcentajeGastosAd As New DataColumn("G.A.", Type.GetType("System.String"))
         Dim clMontoDelEstudioIVA105 As New DataColumn("MontoIVA10.5Estudio", Type.GetType("System.String"))
         Dim clMontoDelEstudioIVA21 As New DataColumn("MontoIVA21Estudio", Type.GetType("System.String"))
@@ -382,8 +384,10 @@ Public Class PagoMedico
         myTable.Columns.Add(clImporteRealCobrado)
         myTable.Columns.Add(clFechaCobro)
         myTable.Columns.Add(clPorcentajeGastosAd)
-        myTable.Columns.Add(clImporteEstudio)
         myTable.Columns.Add(clPorcentajeRetencionCedir)
+        myTable.Columns.Add(clImporteEstudio)
+        myTable.Columns.Add(clImporteNetoEstudio)
+        myTable.Columns.Add(clPorcentajeMedico)
         myTable.Columns.Add(clPagoMedAct)
         myTable.Columns.Add(clMontoDelEstudioIVA105)
         myTable.Columns.Add(clMontoDelEstudioIVA21)
@@ -403,7 +407,9 @@ Public Class PagoMedico
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 65, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("G.A.", "G.A.", 50, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Importe", "Importe", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%RetencionCedir", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%Cedir", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("ImporteNeto", "Neto", 50, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%Medico", "%Medico", 70, 70, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Pago", "Pago", 50, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
@@ -484,18 +490,23 @@ Public Class PagoMedico
             cLinea.gastosAdministrativos = cCal.getGastosAdministrativos(cLinea.estudio)
             Dim importeEstudio As Decimal = cCal.getImporteLineaPago(cLinea)
 
-            Dim porcentaje As Single
+            Dim porcentaje As New PorcentajeMedico(0, 100)
             Dim pagoDelCorrespondiente As Single
 
             If est.esPagoContraFactura = 1 Then
                 banderaPCF = "*" 'Es pago contra factura
                 If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante")) Then
+                    porcentaje = cLinea.getPorcentaje()
 
-                    porcentaje = 100 - cLinea.getPorcentaje()
+                    ' Agregado 09/05/2016: https://trello.com/c/n7vfBp98
+                    If est.esEcografia And (est.obraSocial.idObraSocial = PARTICULAR_ESPECIAL Or est.obraSocial.idObraSocial = PARTICULAR) Then
+                        porcentaje.Medico = 0
+                    End If
+
                     If (est.practica.idEstudio = VIDEOENDOSCOPIA_BAJA_TERAPEUTICA Or est.practica.idEstudio = VIDEOENDOSCOPIA_ALTA_TERAPEUTICA Or est.practica.idEstudio = 118 Or est.practica.idEstudio = 121) And (est.obraSocial.idObraSocial = OSDE Or est.obraSocial.idObraSocial = OSDE_CEDIR) Then
-                        pagoDelCorrespondiente = ((importeEstudio - cLinea.getDescuentoPorPolipectomiaOSDE) * porcentaje / 100) + cLinea.getDescuentoPorPolipectomiaOSDE
+                        pagoDelCorrespondiente = ((importeEstudio - cLinea.getDescuentoPorPolipectomiaOSDE) * porcentaje.Medico / 100) + cLinea.getDescuentoPorPolipectomiaOSDE
                     Else
-                        pagoDelCorrespondiente = importeEstudio * porcentaje / 100
+                        pagoDelCorrespondiente = importeEstudio * porcentaje.Medico / 100
                     End If
                     pagoDelCorrespondiente = pagoDelCorrespondiente * (-1)
                 End If
@@ -514,14 +525,14 @@ Public Class PagoMedico
 
                 If (est.getCondicionMedico(currentMedico.idMedico) = "solicitante") Then
                     porcentaje = cLinea.getPorcentaje()
-                    pagoDelCorrespondiente = importeEstudio * porcentaje / 100
+                    pagoDelCorrespondiente = importeEstudio * porcentaje.Medico / 100
                 End If
 
                 NewRow("Cobrado") = est.PagoContraFactura
             Else
                 banderaPCF = "" 'NO es pago contra factura
                 porcentaje = cLinea.getPorcentaje() 'obtengo el porcentaje que le corresponde al medico
-                pagoDelCorrespondiente = importeEstudio * porcentaje / 100
+                pagoDelCorrespondiente = importeEstudio * porcentaje.Medico / 100
 
                 'Si es Conuslta, ElectroCardograma y solo para enjuto 
                 'If ((est.practica.idEstudio = CONSULTA Or est.practica.idEstudio = ELECTROCARDEOGRAMA) And currentMedico.idMedico = DRENJUTO) Then
@@ -556,16 +567,18 @@ Public Class PagoMedico
 
             NewRow("Paciente") = banderaPCF & est.paciente.nombreCompleto
             NewRow("Fecha") = est.fechaEstudio
-            NewRow("Importe") = Math.Round(importeEstudio, 2)
+            NewRow("Importe") = String.Format("{0:f2}", importeEstudio)
+            NewRow("ImporteNeto") = String.Format("{0:f2}", (importeEstudio * (100 - porcentaje.Cedir)) / 100)
             NewRow("Fecha Cobro") = est.fechaCobro
             NewRow("Obra Social") = est.obraSocial.ObraSocial
             NewRow("Práctica") = est.practica.Estudio
             NewRow("Actuante") = est.medicoActuante.nombreCompleto
             NewRow("Solicitante") = est.medicoSolicitante.nombreCompleto
-            NewRow("%RetencionCedir") = CStr(porcentaje) & "%"
-            NewRow("G.A.") = CStr(cLinea.gastosAdministrativos) & "%"
-            NewRow("Pago") = Math.Round(pagoDelCorrespondiente, 2)
-            NewRow("Total") = Math.Round(pagoDelCorrespondiente + IVASobreImportePagoAlMedico, 2)
+            NewRow("%RetencionCedir") = String.Format("{0}%", porcentaje.Cedir)
+            NewRow("%Medico") = String.Format("{0}% ({1:0.##}%)", porcentaje.Medico, porcentaje.GetEfectivo)
+            NewRow("G.A.") = String.Format("{0}%", cLinea.gastosAdministrativos)
+            NewRow("Pago") = String.Format("{0:f2}", pagoDelCorrespondiente)
+            NewRow("Total") = String.Format("{0:f2}", pagoDelCorrespondiente + IVASobreImportePagoAlMedico)
             myTable.Rows.Add(NewRow)
 
             If banderaPCF <> "" Then

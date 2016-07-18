@@ -141,7 +141,7 @@ Public Class frmComprobanteNuevo
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(946, 696)
+        Me.btnImprimir.Location = New System.Drawing.Point(946, 695)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(75, 21)
         Me.btnImprimir.TabIndex = 10
@@ -151,7 +151,7 @@ Public Class frmComprobanteNuevo
         'btnCerrar
         '
         Me.btnCerrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCerrar.Location = New System.Drawing.Point(1108, 696)
+        Me.btnCerrar.Location = New System.Drawing.Point(1108, 695)
         Me.btnCerrar.Name = "btnCerrar"
         Me.btnCerrar.Size = New System.Drawing.Size(63, 21)
         Me.btnCerrar.TabIndex = 11
@@ -183,7 +183,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.txtNombre)
-        Me.GroupBox1.Location = New System.Drawing.Point(24, 69)
+        Me.GroupBox1.Location = New System.Drawing.Point(24, 68)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(1162, 214)
         Me.GroupBox1.TabIndex = 18
@@ -351,7 +351,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.cmbTipoComprobante)
         Me.GroupBox2.Controls.Add(Me.lblNroComprobante)
-        Me.GroupBox2.Location = New System.Drawing.Point(27, 289)
+        Me.GroupBox2.Location = New System.Drawing.Point(27, 288)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(1159, 107)
         Me.GroupBox2.TabIndex = 22
@@ -441,7 +441,7 @@ Public Class frmComprobanteNuevo
         Me.GroupBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox3.Controls.Add(Me.dgvLineas)
-        Me.GroupBox3.Location = New System.Drawing.Point(27, 402)
+        Me.GroupBox3.Location = New System.Drawing.Point(27, 401)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(1159, 169)
         Me.GroupBox3.TabIndex = 23
@@ -515,7 +515,7 @@ Public Class frmComprobanteNuevo
         'btnAceptar
         '
         Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAceptar.Location = New System.Drawing.Point(1027, 696)
+        Me.btnAceptar.Location = New System.Drawing.Point(1027, 695)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(75, 21)
         Me.btnAceptar.TabIndex = 24
@@ -526,7 +526,7 @@ Public Class frmComprobanteNuevo
         '
         Me.lblTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTotal.AutoSize = True
-        Me.lblTotal.Location = New System.Drawing.Point(985, 638)
+        Me.lblTotal.Location = New System.Drawing.Point(985, 637)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(114, 13)
         Me.lblTotal.TabIndex = 25
@@ -545,7 +545,7 @@ Public Class frmComprobanteNuevo
         '
         Me.chkLeyenda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkLeyenda.AutoSize = True
-        Me.chkLeyenda.Location = New System.Drawing.Point(30, 669)
+        Me.chkLeyenda.Location = New System.Drawing.Point(30, 668)
         Me.chkLeyenda.Name = "chkLeyenda"
         Me.chkLeyenda.Size = New System.Drawing.Size(144, 17)
         Me.chkLeyenda.TabIndex = 27
@@ -561,7 +561,7 @@ Public Class frmComprobanteNuevo
         '
         Me.btnQuitar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnQuitar.Enabled = False
-        Me.btnQuitar.Location = New System.Drawing.Point(30, 696)
+        Me.btnQuitar.Location = New System.Drawing.Point(30, 695)
         Me.btnQuitar.Name = "btnQuitar"
         Me.btnQuitar.Size = New System.Drawing.Size(83, 21)
         Me.btnQuitar.TabIndex = 28
@@ -571,7 +571,7 @@ Public Class frmComprobanteNuevo
         'frmComprobanteNuevo
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(1219, 742)
+        Me.ClientSize = New System.Drawing.Size(1219, 741)
         Me.Controls.Add(Me.btnQuitar)
         Me.Controls.Add(Me.chkLeyenda)
         Me.Controls.Add(Me.lblTotalSuma)
@@ -961,7 +961,7 @@ Public Class frmComprobanteNuevo
         If Me.Validar() Then
             If Me.CrearComprobante() Then
                 Me.dgvLineas.Enabled = False
-                Me.btnImprimir.Visible = (Me.Comprobante.TipoComprobante.Id = TComprobante.Liquidacion)
+                Me.btnImprimir.Visible = True
                 If Me.btnImprimir.Visible Then
                     Dim resp As DialogResult = MessageBox.Show("¿Desea imprimir el comprobante?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If resp = Windows.Forms.DialogResult.Yes Then
@@ -1043,7 +1043,7 @@ Public Class frmComprobanteNuevo
             Exit Sub
         End If
         If Comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
-            MessageBox.Show("Solamente se pueden imprimir liquidaciones." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Helper.ImprimirWeb(Comprobante.CAE, chkLeyenda.Checked)
             Exit Sub
         End If
         Dim f As New rptViewer

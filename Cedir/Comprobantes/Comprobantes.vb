@@ -73,17 +73,15 @@ Public Class Comprobantes
             Me.txtSubtipo.Text = ""
             Me.txtNroTerminal.Visible = False
             Me.lblGuion.Visible = False
-            Me.btnImprimir.Visible = True
             Me.btnAnular.Visible = Comprobante.Estado <> "ANULADO"
-
         Else
             Me.txtGravado.Text = Comprobante.Gravado.descripcion
             Me.txtResponsable.Text = Comprobante.Responsable
             Me.txtSubtipo.Text = Comprobante.SubTipo
-            Me.btnImprimir.Visible = False
             Me.btnAnular.Visible = False
         End If
 
+        Me.btnImprimir.Visible = True
         Me.txtNombre.Text = Comprobante.NombreCliente
         Me.txtNroComprobante.Text = Comprobante.NroComprobante.ToString()
         Me.txtNroTerminal.Text = Comprobante.NroTerminal.ToString()
@@ -143,14 +141,18 @@ Public Class Comprobantes
 
     Private Sub btnImprimir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImprimir.Click
         If Comprobante.Estado.ToUpper <> "ANULADO" Then
-            Dim f As New rptViewer
-            Me.AddOwnedForm(f)
-            Dim espac As Boolean = True
-            If Me.txtPacienteGravado.Text = "" Then
-                espac = False
+            If Comprobante.TipoComprobante.Id = TComprobante.Liquidacion Then
+                Dim f As New rptViewer
+                Me.AddOwnedForm(f)
+                Dim espac As Boolean = True
+                If Me.txtPacienteGravado.Text = "" Then
+                    espac = False
+                End If
+                f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, espac)
+                f.ShowDialog()
+            Else
+                Helper.ImprimirWeb(Comprobante.CAE, chkLeyenda.Checked)
             End If
-            f.cargarDsComprobantes(Comprobante, Me.chkLeyenda.Checked, espac)
-            f.ShowDialog()
         Else
             MessageBox.Show("Está intentando imprimir un comprobante anulado." & vbCrLf & "Impresión cancelada", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If

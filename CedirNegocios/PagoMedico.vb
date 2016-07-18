@@ -100,7 +100,7 @@ Public Class PagoMedico
         Dim resp As String
         Dim nroPago As Integer = help.obtenerUltimoNro("tblPagosMedicos", "nroPago")
         nroPago += 1
-        resp = upd.insert(com & "cedirData" & com & "." & com & "tblPagosMedicos" & com, com & "nroPago" & com & ", " & com & "fechaPago" & com & ", " & com & "idMedico" & com & ", " & com & "observacionPago" & com, nroPago & ", '" & fecha & "', " & Me.medico.idMedico & ", '" & Me.observacion & "'")
+        resp = upd.insert(com & "public" & com & "." & com & "tblPagosMedicos" & com, com & "nroPago" & com & ", " & com & "fechaPago" & com & ", " & com & "idMedico" & com & ", " & com & "observacionPago" & com, nroPago & ", '" & fecha & "', " & Me.medico.idMedico & ", '" & Me.observacion & "'")
         If resp = "ok" Then
             Dim cLinea As LineaPagoMedico
             For i As Integer = 0 To Me.arrLineasDePago.Count - 1

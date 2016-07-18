@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports NCalc
 
 Public Class CalculadorHonorariosAnestesistas
     Implements ICalculadorHonorarios
@@ -97,11 +98,6 @@ Public Class CalculadorHonorariosAnestesistas
         Next
     End Function
 
-
-
-
-
-
     ''' <summary>
     ''' Este metodo devuelve el importe actual de los estudios que son pagados
     ''' de modo particular
@@ -144,12 +140,8 @@ Public Class CalculadorHonorariosAnestesistas
         formula = formula.Replace("c5", colComplejidades(4).importe.ToString())
         formula = formula.Replace("c6", colComplejidades(5).importe.ToString())
 
-
-        Dim sc As New MSScriptControl.ScriptControl()
-        sc.Language = "VBScript"
-        suma = Convert.ToDecimal(sc.Eval(formula))
-
-        Return suma
+        Dim expr As New Expression(formula)
+        Return expr.Evaluate()
     End Function
 
 End Class
