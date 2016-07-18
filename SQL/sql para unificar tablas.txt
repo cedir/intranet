@@ -1,0 +1,135 @@
+-- Table: "tblEstudios"
+DROP TABLE "tblEstudiosTemporary";
+
+CREATE TEMPORARY TABLE "tblEstudiosTemporary"
+(
+"nroEstudio" bigint NOT NULL DEFAULT nextval(('tblEstudios_nroEstudio_seq'::text)::regclass),
+"idPaciente" integer NOT NULL,
+"fechaEstudio" date,
+"idEstudio" integer NOT NULL,
+"motivoEstudio" character varying,
+informe character varying,
+"enlaceVideo" character varying(256) DEFAULT ''::character varying,
+"publicID" character varying(100) DEFAULT ''::character varying,
+
+"idMedicoActuante" integer NOT NULL,
+"idObraSocial" integer NOT NULL,
+"idMedicoSolicitante" integer NOT NULL,
+"idFacturacion" bigint NOT NULL,
+"nroDeOrden" character varying,
+"lugar" character varying,
+"idAnestesista" integer,
+"esPagoContraFactura" smallint DEFAULT 0,
+
+"fechaCobro" date,
+"importeEstudio" real,
+"importeMedicacion" real,
+"pagoContraFactura" real,
+"diferenciaPaciente" real,
+pension real,
+"importePagoMedico" real,
+"importePagoMedicoSol" real,
+"nroPagoMedicoAct" bigint,
+"nroPagoMedicoSol" bigint,
+
+"importeCobradoPension" numeric(10,2) DEFAULT 0.00,
+"importeCobradoArancelAnestesia" numeric(10,2) DEFAULT 0.00,
+"importeEstudioCobrado" numeric(10,2) DEFAULT 0.00,
+"importeMedicacionCobrado" numeric(10,2) DEFAULT 0.00,
+"arancelAnestesia" numeric(10,2) DEFAULT 0.00,
+"porcentajeIVAPagoMedicoActuante" numeric(4,2) DEFAULT 0.0
+
+)
+WITH (
+OIDS=FALSE
+);
+
+
+INSERT INTO "tblEstudiosTemporary"
+select a.*,
+
+b."idMedicoActuante",
+b."idObraSocial",
+b."idMedicoSolicitante",
+b."idFacturacion",
+b."nroDeOrden",
+b."lugar", 
+b."idAnestesista",
+b."esPagoContraFactura",
+
+c."fechaCobro",
+c."importeEstudio",
+c."importeMedicacion",
+c."pagoContraFactura",
+c."diferenciaPaciente",
+c."pension",
+c."importePagoMedico",
+c."importePagoMedicoSol",
+c."nroPagoMedicoAct",
+c."nroPagoMedicoSol",
+
+c."importeCobradoPension",
+c."importeCobradoArancelAnestesia",
+c."importeEstudioCobrado",
+c."importeMedicacionCobrado",
+c."arancelAnestesia",
+c."porcentajeIVAPagoMedicoActuante"
+
+from "cedirData"."tblEstudios" as a
+inner join "cedirData"."tblDetalleEstudio" as b on a."nroEstudio" = b."nroEstudio"
+inner join "cedirData"."tblPagoCobroEstudio" as c on a."nroEstudio" = c."nroEstudio";
+
+
+DROP TABLE "cedirData"."tblEstudios";
+
+CREATE TABLE "cedirData"."tblEstudios"
+(
+	"nroEstudio" 	bigint NOT NULL DEFAULT nextval(('tblEstudios_nroEstudio_seq'::text)::regclass),
+	"idPaciente" 	integer NOT NULL,
+	"fechaEstudio"	 date,
+	"idEstudio" 	integer NOT NULL,
+	"motivoEstudio" 	character varying,
+	informe 	character varying,
+	"enlaceVideo" character varying(256) DEFAULT ''::character varying,
+	"publicID" character varying(100) DEFAULT ''::character varying,
+	"idMedicoActuante" integer NOT NULL,
+	"idObraSocial" integer NOT NULL,
+	"idMedicoSolicitante" integer NOT NULL,
+	"idFacturacion" bigint NOT NULL,
+	"nroDeOrden" character varying,
+	"lugar" character varying,
+	"idAnestesista" integer,
+	"esPagoContraFactura" smallint DEFAULT 0,
+	"fechaCobro" date,
+	"importeEstudio" real,
+	"importeMedicacion" real,
+	"pagoContraFactura" real,
+	"diferenciaPaciente" real,
+	pension real,
+	"importePagoMedico" real,
+	"importePagoMedicoSol" real,
+	"nroPagoMedicoAct" bigint,
+	"nroPagoMedicoSol" bigint,
+	"importeCobradoPension" numeric(10,2) DEFAULT 0.00,
+	"importeCobradoArancelAnestesia" numeric(10,2) DEFAULT 0.00,
+	"importeEstudioCobrado" numeric(10,2) DEFAULT 0.00,
+	"importeMedicacionCobrado" numeric(10,2) DEFAULT 0.00,
+	"arancelAnestesia" numeric(10,2) DEFAULT 0.00,
+	"porcentajeIVAPagoMedicoActuante" numeric(4,2) DEFAULT 0.0,
+
+	CONSTRAINT tblestudios_pkey PRIMARY KEY ("nroEstudio"),
+	CONSTRAINT anestesistas FOREIGN KEY ("idAnestesista")
+	REFERENCES "cedirData"."tblMedicosAnestesistas" ("idMedicoAn") MATCH SIMPLE
+	ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+INSERT INTO "cedirData"."tblEstudios" SELECT * FROM "tblEstudiosTemporary";
+
+
+
+
+
+
+
+
