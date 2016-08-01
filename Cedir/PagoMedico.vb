@@ -497,6 +497,7 @@ Public Class PagoMedico
                 banderaPCF = "*" 'Es pago contra factura
                 If ((est.getCondicionMedico(currentMedico.idMedico) = "actuante" Or est.getCondicionMedico(currentMedico.idMedico) = "actuante-solicitante")) Then
                     porcentaje = cLinea.getPorcentaje()
+                    porcentaje.Medico = 100 - porcentaje.Medico
 
                     ' Agregado 09/05/2016: https://trello.com/c/n7vfBp98
                     If est.esEcografia And (est.obraSocial.idObraSocial = PARTICULAR_ESPECIAL Or est.obraSocial.idObraSocial = PARTICULAR) Then
@@ -607,7 +608,7 @@ Public Class PagoMedico
                 Dim cLinea As LineaPagoMedico
                 For i As Integer = 0 To cPago.getLineas.Count - 1
                     cLinea = cPago.getLineas(i)
-                    cLinea.importe = CSng(WallyGrid1.Item(i, 11)) 'columna "Pago"
+                    cLinea.importe = CSng(WallyGrid1.Item(i, 13)) 'columna "Pago"
                     Select Case True
                         Case Convert.ToDecimal(myTable.Rows(i).Item("MontoIVA10.5Estudio")) <> 0.0
                             cLinea.porcentajeIVAPagoMedicoActuante = 10.5
