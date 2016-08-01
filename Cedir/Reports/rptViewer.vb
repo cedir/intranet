@@ -462,7 +462,7 @@ Public Class rptViewer
             r("medicoSolicitante") = dt.Rows(i).Item("Solicitante").ToString()
             r("pagoFechaCobro") = dt.Rows(i).Item("Fecha Cobro").ToString.Remove(10)
             If dt.Rows(i).Item("Importe").ToString() <> "" Then
-                r("pagoImporte") = dt.Rows(i).Item("ImporteNeto").ToString()
+                r("pagoImporte") = dt.Rows(i).Item("Importe").ToString()
             Else
                 r("colImporte") = ""
             End If
@@ -531,7 +531,7 @@ Public Class rptViewer
             r("medicoSolicitante") = dt.Rows(i).Item("Solicitante").ToString()
             r("pagoFechaCobro") = dt.Rows(i).Item("Fecha Cobro").ToString.Remove(10)
             If dt.Rows(i).Item("Importe").ToString() <> "" Then
-                r("pagoImporte") = dt.Rows(i).Item("ImporteNeto").ToString()
+                r("pagoImporte") = dt.Rows(i).Item("Importe").ToString()
             Else
                 r("colImporte") = ""
             End If
