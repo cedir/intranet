@@ -398,6 +398,7 @@ Public Class InformeMensualComprobantes
                 Me.ProgressBar1.Maximum = arrComprobantes.Count - 1
                 Me.ProgressBar1.Visible = True
                 Me.ProgressBar1.Value = 0
+                'Agregado 01/08/2016: todas las cantidades expresadas se formatean a 2 dígitos https://trello.com/c/fPqXPc42
                 For Each c In arrComprobantes
                     Me.ProgressBar1.PerformStep()
 
@@ -408,7 +409,7 @@ Public Class InformeMensualComprobantes
                     dr("Estado") = c.Estado
                     dr("Fecha") = c.FechaEmision.ToString().Remove(10)
                     dr("Cliente") = c.NombreCliente.ToUpper()
-                    dr("TotalFacturado") = c.TotalFacturado
+                    dr("TotalFacturado") = Format(c.TotalFacturado, "#################0.00")
 
                     'Tenemos que diferenciar que los valores de comprobantes anulados no se muestran
                     If (c.Estado.ToUpper().Trim() <> "ANULADO") Then
@@ -416,44 +417,44 @@ Public Class InformeMensualComprobantes
                             Dim neto As Decimal = Format(c.TotalFacturado / (1 + (c.Gravado.porcentaje / 100)), "#################0.00")
                             dr("Neto") = neto
                             'el iva esta incluido en el total de la factura
-                            dr("IVA") = c.TotalFacturado - neto
+                            dr("IVA") = Format(c.TotalFacturado - neto, "#################0.00")
 
                         Else
                             'Liquidaciones cobradas
-                            dr("Neto") = 0.0
-                            dr("IVA") = 0.0
+                            dr("Neto") = Format(0.0, "#################0.00")
+                            dr("IVA") = Format(0.0, "#################0.00")
 
                         End If
 
-                        dr("TotalCobrado") = c.TotalCobrado
+                        dr("TotalCobrado") = Format(c.TotalCobrado, "#################0.00")
                         'si el comprobante es una nota de credito, los valores se muestran negativos
                         If c.TipoComprobante.Id = TComprobante.NotaDeCredito Then
-                            dr("TotalFacturado") = -dr("TotalFacturado")
-                            dr("TotalCobrado") = -dr("TotalCobrado")
-                            dr("Neto") = -dr("Neto")
-                            dr("IVA") = -dr("IVA")
+                            dr("TotalFacturado") = Format(-dr("TotalFacturado"), "#################0.00")
+                            dr("TotalCobrado") = Format(-dr("TotalCobrado"), "#################0.00")
+                            dr("Neto") = Format(-dr("Neto"), "#################0.00")
+                            dr("IVA") = Format(-dr("IVA"), "#################0.00")
                         Else
 
                         End If
 
                         _calcHonorarios.getHonorariosPresentacion(c)
-                        dr("Honorarios") = _calcHonorarios.Dict("honorario")
-                        dr("Anestesia") = _calcHonorarios.Dict("anestesia")
+                        dr("Honorarios") = Format(_calcHonorarios.Dict("honorario"), "#################0.00")
+                        dr("Anestesia") = Format(_calcHonorarios.Dict("anestesia"), "#################0.00")
                         If _calcHonorarios.Dict("importeMedicacion") <> 0.0 Then
-                            dr("TotalMedicacion") = _calcHonorarios.Dict("importeMedicacion")
+                            dr("TotalMedicacion") = Format(_calcHonorarios.Dict("importeMedicacion"), "#################0.00")
                         Else
-                            dr("TotalMedicacion") = 0.0
+                            dr("TotalMedicacion") = Format(0.0, "#################0.00")
                         End If
 
                     Else
                         'si el comprobante esta anulado o no cobrado
-                        dr("TotalCobrado") = 0
-                        dr("TotalFacturado") = 0.0
-                        dr("Neto") = 0.0
-                        dr("IVA") = 0.0
-                        dr("Honorarios") = 0.0
-                        dr("Anestesia") = 0.0
-                        dr("TotalMedicacion") = 0.0
+                        dr("TotalCobrado") = Format(0.0, "#################0.00")
+                        dr("TotalFacturado") = Format(0.0, "#################0.00")
+                        dr("Neto") = Format(0.0, "#################0.00")
+                        dr("IVA") = Format(0.0, "#################0.00")
+                        dr("Honorarios") = Format(0.0, "#################0.00")
+                        dr("Anestesia") = Format(0.0, "#################0.00")
+                        dr("TotalMedicacion") = Format(0.0, "#################0.00")
                     End If
                     myTable.Rows.Add(dr)
                     myTable.AcceptChanges()

@@ -529,6 +529,9 @@ Public Class PagoMedico
                     pagoDelCorrespondiente = importeEstudio * porcentaje.Medico / 100
                 End If
 
+                ' Agregado 01/08/2016: https://trello.com/c/onM9c3KY
+                porcentaje.Cedir = 0
+
                 NewRow("Cobrado") = est.PagoContraFactura
             Else
                 banderaPCF = "" 'NO es pago contra factura
