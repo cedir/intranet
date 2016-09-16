@@ -397,23 +397,23 @@ Public Class PagoMedico
 
         ''''''
         Dim tbl As New DataGridTableStyle
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha", "Fecha", 65, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha", "Fecha", 65, 50, String.Empty, HorizontalAlignment.Center, True))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Paciente", "Paciente", 100, 50, String.Empty, HorizontalAlignment.Center, True))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Obra Social", "Obra Social", 100, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Práctica", "Práctica", 150, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Actuante", "Actuante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Solicitante", "Solicitante", 100, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Cobrado", "Cobrado", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 65, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("G.A.", "G.A.", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Importe", "Importe", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%Cedir", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("ImporteNeto", "Neto", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%Medico", "%Medico", 70, 70, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Obra Social", "Obra Social", 100, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Práctica", "Práctica", 150, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Actuante", "Actuante", 100, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Solicitante", "Solicitante", 100, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Cobrado", "Cobrado", 50, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Fecha Cobro", "Fecha Cobro", 65, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("G.A.", "G.A.", 50, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Importe", "Importe", 50, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%RetencionCedir", "%Cedir", 50, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("ImporteNeto", "Neto", 50, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("%Medico", "%Medico", 70, 70, String.Empty, HorizontalAlignment.Center, True))
         tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Pago", "Pago", 50, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, False))
-        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 60, 50, String.Empty, HorizontalAlignment.Center, False))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA10.5Estudio", "MontoIVA10.5Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("MontoIVA21Estudio", "MontoIVA21Estudio", 70, 50, String.Empty, HorizontalAlignment.Center, True))
+        tbl.GridColumnStyles.Add(New dgrDatagridTextBoxColumn("Total", "Total", 60, 50, String.Empty, HorizontalAlignment.Center, True))
 
         tbl.MappingName = "myTable"
         tbl.BackColor = Color.LightGray
@@ -436,7 +436,7 @@ Public Class PagoMedico
         btnImprimir.Enabled = False
 
         'AddHandler myTable.RowChanged, New DataRowChangeEventHandler(AddressOf Row_Changed)
-        AddHandler myTable.ColumnChanged, New DataColumnChangeEventHandler(AddressOf Column_Changed)
+        'AddHandler myTable.ColumnChanged, New DataColumnChangeEventHandler(AddressOf Column_Changed)
     End Sub
 
     Private Sub cmbMedicoAct_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbMedicoAct.SelectedIndexChanged
@@ -456,6 +456,7 @@ Public Class PagoMedico
         total = 0
 
         'arrFacturaciones.Clear()
+        RemoveHandler myTable.ColumnChanged, AddressOf Column_Changed
 
         arrl = cPago.getLineas
         Dim banderaPCF As String = ""
@@ -592,6 +593,7 @@ Public Class PagoMedico
 
         myTable.AcceptChanges()
 
+        AddHandler myTable.ColumnChanged, AddressOf Column_Changed
 
         WallyGrid1.DataSource = myTable
         setLabelsHonorarios()
@@ -612,14 +614,16 @@ Public Class PagoMedico
                 For i As Integer = 0 To cPago.getLineas.Count - 1
                     cLinea = cPago.getLineas(i)
                     cLinea.importe = CSng(WallyGrid1.Item(i, 13)) 'columna "Pago"
-                    Select Case True
-                        Case Convert.ToDecimal(myTable.Rows(i).Item("MontoIVA10.5Estudio")) <> 0.0
-                            cLinea.porcentajeIVAPagoMedicoActuante = 10.5
-                        Case Convert.ToDecimal(myTable.Rows(i).Item("MontoIVA21Estudio")) <> 0.0
-                            cLinea.porcentajeIVAPagoMedicoActuante = 21
-                        Case Else
-                            cLinea.porcentajeIVAPagoMedicoActuante = 0.0
-                    End Select
+
+                    cLinea.porcentajeIVAPagoMedicoActuante = 0.0
+                    If currentMedico.esResponsableInscripto Then
+                        Select Case True
+                            Case Convert.ToDecimal(myTable.Rows(i).Item("MontoIVA10.5Estudio")) <> 0.0
+                                cLinea.porcentajeIVAPagoMedicoActuante = 10.5
+                            Case Convert.ToDecimal(myTable.Rows(i).Item("MontoIVA21Estudio")) <> 0.0
+                                cLinea.porcentajeIVAPagoMedicoActuante = 21
+                        End Select
+                    End If
                 Next
 
                 Dim resp As String = cPago.crearPago()
@@ -789,9 +793,17 @@ Public Class PagoMedico
     Private Sub Column_Changed(ByVal sender As Object, ByVal e As DataColumnChangeEventArgs)
         'Como la columna de Total, cambia al cambiar las otras celdas, tenemos que evitar que se tenga en cuenta su cambio
         'para el calculo de valores. Sólo nos interesa detectar el cambio en otras celdas.
-        If myTable.Rows.Count > 0 And e.Column.ColumnName = "Pago" And Not e.Row.IsNull("Total") Then
-            calcularImporteDeColumnas()
+        If e.Column.ColumnName = "Pago" Then
+            RemoveHandler myTable.ColumnChanged, AddressOf Column_Changed
+            If e.Row.IsNull("Pago") Then
+                e.Row.RejectChanges()
+            Else
+                calcularImporteDeColumnas()
+            End If
             setLabelsHonorarios()
+            AddHandler myTable.ColumnChanged, AddressOf Column_Changed
+        Else
+            e.Row.RejectChanges()
         End If
     End Sub
 

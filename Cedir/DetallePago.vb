@@ -273,7 +273,7 @@ Public Class DetallePago
                     End If
                 End If
 
-                If cLinea.estudio.medicoActuante.esResponsableInscripto() Then
+                If cLinea.estudio.medicoActuante.idMedico = cPago.medico.idMedico AndAlso cPago.medico.esResponsableInscripto() Then
                     NewRow("IVA") = Format((cLinea.importe * cLinea.porcentajeIVAPagoMedicoActuante / 100), "############0.00")
                 Else
                     NewRow("IVA") = 0.0
