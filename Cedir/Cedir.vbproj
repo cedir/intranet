@@ -43,9 +43,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Cedir Intranet</ProductName>
+    <PublisherName>Cedir</PublisherName>
+    <SuiteName>Cedir</SuiteName>
+    <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>8</ApplicationRevision>
-    <ApplicationVersion>2.8.1.%2a</ApplicationVersion>
+    <ApplicationVersion>2.8.1.8</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -782,9 +788,15 @@
     <None Include="Claves\brunetti.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Claves\brunetti.prod.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Claves\cedir.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Claves\cedir.prod.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="DataSets Reports\dsAnestesistasListado.xsc">
       <DependentUpon>dsAnestesistasListado.xsd</DependentUpon>
     </None>
