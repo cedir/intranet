@@ -290,9 +290,9 @@ Public Class Nuevo
         Using oCmd As New NpgsqlCommand("eliminarpaciente", cn)
             Dim nombre As String = ""
             oCmd.CommandType = CommandType.StoredProcedure
-            oCmd.Parameters.Add(New NpgsqlParameter("idPacienteReemplazante", NpgsqlTypes.NpgsqlDbType.Smallint))
+            oCmd.Parameters.Add(New NpgsqlParameter("idPacienteReemplazante", NpgsqlTypes.NpgsqlDbType.Integer))
             oCmd.Parameters("idPacienteReemplazante").Value = idReemplazante
-            oCmd.Parameters.Add(New NpgsqlParameter("idPacienteEliminar", NpgsqlTypes.NpgsqlDbType.Smallint))
+            oCmd.Parameters.Add(New NpgsqlParameter("idPacienteEliminar", NpgsqlTypes.NpgsqlDbType.Integer))
             oCmd.Parameters("idPacienteEliminar").Value = idAeliminar
             dr = oCmd.ExecuteReader()
             While dr.Read()
