@@ -634,7 +634,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.8.1.7 - Fecha: 03/08/2016      "
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.8.1.8 - Fecha: 16/09/2016      "
         '
         'nfyIcon
         '

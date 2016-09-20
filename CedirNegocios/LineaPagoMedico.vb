@@ -176,8 +176,10 @@ Public Class LineaPagoMedico
         Const PORC_CEDIR As Decimal = 20
 
         Const COMB_MED_ACT_BRUNETTI As Integer = 2
+        Dim COMB_MED_SOL_AL_80_PORC() As Integer = {528, 4}
         Dim COMB_MED_SOL_AL_50_PORC() As Integer = {578}
-        Dim COMB_MED_SOL_AL_40_PORC() As Integer = {585, 529, 78, 89}
+        Dim COMB_MED_SOL_AL_40_PORC() As Integer = {585, 529, 259, 78, 89}
+        Dim COMB_MED_SOL_AL_10_PORC() As Integer = {74}
 
         If Me.estudio.practica.idEstudio = 20 Then
             'Si el estudio es una consulta, la retencion es del 0%
@@ -197,10 +199,14 @@ Public Class LineaPagoMedico
             Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE_PRACTICA_ESPECIAL, PORC_SOLICITANTE_PRACTICA_ESPECIAL), PORC_CEDIR_PRACTICA_ESPECIAL)
         Else
             If Me.estudio.medicoActuante.idMedico = COMB_MED_ACT_BRUNETTI Then
-                If COMB_MED_SOL_AL_40_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
+                If COMB_MED_SOL_AL_10_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
+                    Return New PorcentajeMedico(IIf(EsActuante, 0.9 * PORC_ACTUANTE, 0.1 * PORC_ACTUANTE), PORC_CEDIR)
+                ElseIf COMB_MED_SOL_AL_40_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
                     Return New PorcentajeMedico(IIf(EsActuante, 0.6 * PORC_ACTUANTE, 0.4 * PORC_ACTUANTE), PORC_CEDIR)
                 ElseIf COMB_MED_SOL_AL_50_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
                     Return New PorcentajeMedico(IIf(EsActuante, 0.5 * PORC_ACTUANTE, 0.5 * PORC_ACTUANTE), PORC_CEDIR)
+                ElseIf COMB_MED_SOL_AL_80_PORC.Any(Function(mid) Me.estudio.medicoSolicitante.idMedico = mid) Then
+                    Return New PorcentajeMedico(IIf(EsActuante, 0.2 * PORC_ACTUANTE, 0.8 * PORC_ACTUANTE), PORC_CEDIR)
                 End If
             End If
             Return New PorcentajeMedico(IIf(EsActuante, PORC_ACTUANTE, PORC_SOLICITANTE), PORC_CEDIR)
