@@ -178,8 +178,8 @@ Public Class LineaPagoMedico
         Const COMB_MED_ACT_BRUNETTI As Integer = 2
         Dim COMB_MED_SOL_AL_80_PORC() As Integer = {528, 4}
         Dim COMB_MED_SOL_AL_50_PORC() As Integer = {578}
-        Dim COMB_MED_SOL_AL_40_PORC() As Integer = {585, 529, 259, 78, 89}
-        Dim COMB_MED_SOL_AL_10_PORC() As Integer = {74}
+        Dim COMB_MED_SOL_AL_40_PORC() As Integer = {585, 529, 78, 89}
+        Dim COMB_MED_SOL_AL_10_PORC() As Integer = {259, 74}
 
         If Me.estudio.practica.idEstudio = 20 Then
             'Si el estudio es una consulta, la retencion es del 0%
