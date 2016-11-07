@@ -659,10 +659,12 @@ Public Class FacturacionDetalle
                         MessageBox.Show(Helper.GetMessage(result), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     End If
                     'Seteamos en null el campo idComprobante en la tabla facturacion
-                    cPresentacion.anularComprobante()
+                    cPresentacion.anularComprobante("COBRADO")
                 Else
                     Exit Sub
                 End If
+            Else
+                cPresentacion.anularComprobante("ANULADO")
             End If
 
             Dim frm As New NuevaPresentacion(cPresentacion.idPresentacion)
