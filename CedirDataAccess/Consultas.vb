@@ -518,6 +518,39 @@ Public Class Consultas
 
     End Function
 
+    Public Function getAuditLogsNew(ByVal objectId As String, ByVal app As String, ByVal model As String) As NpgsqlDataReader
+        Dim stringSelect As String = "select
+                log.id
+              , a.id as idUsuario
+              , a.username as nombreUsuario
+              , log.object_id as objectId
+              , log.action_flag as userActionId
+              , ct.id as objectTypeId
+              , log.action_time as dateTime
+              , log.change_message as observacion
+            from django_admin_log as log
+            join auth_user As a On log.user_id = a.id
+            join django_content_type as ct on ct.id = log.content_type_id
+            where log.object_id = '{0}'
+              and ct.model = '{1}'
+              and ct.app_label = '{2}' 
+            order by action_time desc
+            limit 1
+        "
+
+        Try
+            myCommand.CommandType = CommandType.Text
+            myCommand.CommandText = String.Format(stringSelect, objectId, model, app)
+            myCommand.Connection = myConnection
+
+            Dim myDataReader As NpgsqlDataReader = myCommand.ExecuteReader
+
+            Return myDataReader
+        Catch ex As Exception
+            Throw New Exception(ex.ToString)
+        End Try
+    End Function
+
 
     Public Function getAuditLogs(ByVal filtro As String) As NpgsqlDataReader
         Dim stringSelect As String = " select log.*, a.*, u.* from ""public"".""AuditUserActionsLog"" as log "

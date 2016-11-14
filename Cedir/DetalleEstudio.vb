@@ -304,10 +304,16 @@ Public Class DetalleEstudio
             Dim log As AuditLog = arrLogs(0)
             lblCreateUser.Text = "Creado por: " & log.usuario.nombreUsuario
         Else
-            lblCreateUser.Text = "Creado por: desconocido"
+            arrLogs = auditCatalog.buscarNew(cEstudio.nroEstudio, "estudio", "estudio")
+            If arrLogs.Count <> 0 Then
+                Dim log As AuditLog = arrLogs(0)
+                lblCreateUser.Text = "Creado por: " & log.usuario.nombreUsuario
+            Else
+                lblCreateUser.Text = "Creado por: desconocido"
+            End If
         End If
 
-        If cEstudio.idFacturacion = 0 Then
+            If cEstudio.idFacturacion = 0 Then
             lblFacturacion.Text = "El estudio no fue presentado"
         Else
             Dim catalogoDeFacturacion As New CatalogoDePresentaciones
