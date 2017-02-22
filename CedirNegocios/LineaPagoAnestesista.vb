@@ -107,8 +107,8 @@ Public Class LineaPagoAnestesista
         Const SIMARA As Integer = 6
         Const AMECA As Integer = 108
         Const EPE As Integer = 23
-        Const PARTICULAR As Integer = 108
-        Const PARTICULAR_ESPECIAL As Integer = 108
+        Const PARTICULAR As Integer = 2
+        Const PARTICULAR_ESPECIAL As Integer = 134
 
         Select Case True
             Case estudios(0).obraSocial.sePresentaPorARA = 1 Or estudios(0).obraSocial.idObraSocial = PARTICULAR Or estudios(0).obraSocial.idObraSocial = PARTICULAR_ESPECIAL
@@ -125,7 +125,7 @@ Public Class LineaPagoAnestesista
         _importeRetencion = (_ivaImporte + _importeComplejidad) * 0.1
     End Sub
     Private Sub setImporteAPagar()
-       
+
         If sePresentaPorARA And Me.contieneEstudiosConMovimientosAsociados = False Then
             Me._importeAPagar = Me._importeRetencion * -1
         Else : sePresentaPorARA = False Or (sePresentaPorARA = True And Me.contieneEstudiosConMovimientosAsociados)
