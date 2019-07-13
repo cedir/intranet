@@ -113,13 +113,13 @@ Public Class LogIn
             cMdiForm.itemUsuariosLogIn.Enabled = False
             cMdiForm.itemUsuariosLogOut.Enabled = True
             cMdiForm.Text = "Cedir - Usuario actual :      " & cUsuario.nombreUsuario.ToUpper()
-            cMdiForm.mnuMensajeria.Enabled = True
+            'cMdiForm.mnuMensajeria.Enabled = True
 
 
             Dim sSecurity As Security = Security.GetInstance()
             sSecurity.setLoggedUser(cUsuario)
-            cMdiForm.mostrarMensajesNoLeidos()
-            cMdiForm.timerMensajeria.Start()
+            'cMdiForm.mostrarMensajesNoLeidos()
+            'cMdiForm.timerMensajeria.Start()
             Me.Close()
         End If
 
@@ -157,47 +157,47 @@ Public Class LogIn
         cMdiForm.itemMedicosMiCuenta.Enabled = True
 
         cMdiForm.itemFacturacion.Enabled = True
-        cMdiForm.itemPracticas.Enabled = True
-        cMdiForm.itemMedicacion.Enabled = True
-        cMdiForm.itemObraSocialesNueva.Enabled = True
+        'cMdiForm.itemPracticas.Enabled = True
+        'cMdiForm.itemMedicacion.Enabled = True
+        'cMdiForm.itemObraSocialesNueva.Enabled = True
 
         cMdiForm.mnuItemListadoAnestesista.Enabled = True
-        cMdiForm.mnuComplejidades.Enabled = True
+        'cMdiForm.mnuComplejidades.Enabled = True
         cMdiForm.mnuReemplazarPaciente.Enabled = True
-        cMdiForm.mnuReportes.Enabled = True
+        'cMdiForm.mnuReportes.Enabled = True
     End Sub
     Private Sub _habilitarRecepcion()
         Dim cMdiForm As Main = Me.MdiParent
         cMdiForm.mnuCaja.Enabled = True
         cMdiForm.itemComprobantes.Enabled = True
-        cMdiForm.itemEstudiosBuscar.Enabled = True
-        cMdiForm.itemEstudiosBuscarAvanzado.Enabled = True
-        cMdiForm.itemEstudiosCrearRapido.Enabled = True
+        'cMdiForm.itemEstudiosBuscar.Enabled = True
+        'cMdiForm.itemEstudiosBuscarAvanzado.Enabled = True
+        'cMdiForm.itemEstudiosCrearRapido.Enabled = True
         cMdiForm.itemMedicos.Enabled = True
         cMdiForm.itemPacientes.Enabled = True
-        cMdiForm.itemObraSociales.Enabled = True
-        cMdiForm.itemObraSocialesBuscar.Enabled = True
-        cMdiForm.itemObraSocialesNueva.Enabled = False
-        cMdiForm.itemPacientesBuscar.Enabled = True
-        cMdiForm.itemPacientesNuevo.Enabled = True
+        'cMdiForm.itemObraSociales.Enabled = True
+        'cMdiForm.itemObraSocialesBuscar.Enabled = True
+        'cMdiForm.itemObraSocialesNueva.Enabled = False
+        'cMdiForm.itemPacientesBuscar.Enabled = True
+        'cMdiForm.itemPacientesNuevo.Enabled = True
         cMdiForm.ToolBar1.Visible = True
 
-        cMdiForm.itemPracticas.Enabled = True
+        'cMdiForm.itemPracticas.Enabled = True
         cMdiForm.mnuReemplazarPaciente.Enabled = False
         _habilitarMedico()
     End Sub
     Private Sub _habilitarMedico()
         Dim cMdiForm As Main = Me.MdiParent
         cMdiForm.itemMedicosMiCuenta.Enabled = True
-        cMdiForm.itemEstudiosBuscar.Enabled = True
+        'cMdiForm.itemEstudiosBuscar.Enabled = True
         cMdiForm.itemMedicosMiCuenta.Enabled = True
     End Sub
     Private Sub _habilitarTecnicos()
         'por ahora, les damos los mismos permisos que a los medicos
         Dim cMdiForm As Main = Me.MdiParent
         _habilitarMedico()
-        cMdiForm.itemMedicacion.Enabled = True
-        cMdiForm.mnuMedicacion.Enabled = True
+        'cMdiForm.itemMedicacion.Enabled = True
+        'cMdiForm.mnuMedicacion.Enabled = True
     End Sub
     Private Sub _habilitarCommons()
         'por ahora, les damos los mismos permisos que a los medicos

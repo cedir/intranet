@@ -114,76 +114,76 @@ Public Class Main
     Friend WithEvents itemEstudiosCrearRapido As System.Windows.Forms.MenuItem
     Friend WithEvents itemAnestesitasPagos As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-        Me.ToolBar1 = New System.Windows.Forms.ToolBar
-        Me.ToolBarButton1 = New System.Windows.Forms.ToolBarButton
-        Me.Coseguro = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarButton2 = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarButton3 = New System.Windows.Forms.ToolBarButton
+        Me.ToolBar1 = New System.Windows.Forms.ToolBar()
+        Me.ToolBarButton1 = New System.Windows.Forms.ToolBarButton()
+        Me.Coseguro = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarButton2 = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarButton3 = New System.Windows.Forms.ToolBarButton()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
-        Me.MenuItem1 = New System.Windows.Forms.MenuItem
-        Me.mnuMensajeria = New System.Windows.Forms.MenuItem
-        Me.itemTarea = New System.Windows.Forms.MenuItem
-        Me.itemTareaNueva = New System.Windows.Forms.MenuItem
-        Me.itemTareaVer = New System.Windows.Forms.MenuItem
-        Me.MenuItem5 = New System.Windows.Forms.MenuItem
-        Me.itemMedicacion = New System.Windows.Forms.MenuItem
-        Me.itemMedicacionABM = New System.Windows.Forms.MenuItem
-        Me.itemPracticas = New System.Windows.Forms.MenuItem
-        Me.itemPracticasABM = New System.Windows.Forms.MenuItem
-        Me.itemUsuarios = New System.Windows.Forms.MenuItem
-        Me.itemUsuariosABM = New System.Windows.Forms.MenuItem
-        Me.itemUsuariosLogIn = New System.Windows.Forms.MenuItem
-        Me.itemUsuariosLogOut = New System.Windows.Forms.MenuItem
-        Me.itemSalir = New System.Windows.Forms.MenuItem
-        Me.itemPacientes = New System.Windows.Forms.MenuItem
-        Me.itemPacientesNuevo = New System.Windows.Forms.MenuItem
-        Me.itemPacientesBuscar = New System.Windows.Forms.MenuItem
-        Me.MenuItem12 = New System.Windows.Forms.MenuItem
-        Me.mnuReemplazarPaciente = New System.Windows.Forms.MenuItem
-        Me.itemEstudios = New System.Windows.Forms.MenuItem
-        Me.itemEstudiosDeHoy = New System.Windows.Forms.MenuItem
-        Me.itemEstudiosBuscar = New System.Windows.Forms.MenuItem
-        Me.itemEstudiosCrearRapido = New System.Windows.Forms.MenuItem
-        Me.itemEstudiosBuscarAvanzado = New System.Windows.Forms.MenuItem
-        Me.itemMedicos = New System.Windows.Forms.MenuItem
-        Me.itemMedicosABM = New System.Windows.Forms.MenuItem
-        Me.itemMedicosNuevoPago = New System.Windows.Forms.MenuItem
-        Me.itemMedicosMiCuenta = New System.Windows.Forms.MenuItem
-        Me.MenuItem2 = New System.Windows.Forms.MenuItem
-        Me.itemAnestesitasPagos = New System.Windows.Forms.MenuItem
-        Me.mnuItemListadoAnestesista = New System.Windows.Forms.MenuItem
-        Me.mnuComplejidades = New System.Windows.Forms.MenuItem
-        Me.itemObraSociales = New System.Windows.Forms.MenuItem
-        Me.itemObraSocialesNueva = New System.Windows.Forms.MenuItem
-        Me.itemObraSocialesBuscar = New System.Windows.Forms.MenuItem
-        Me.itemFacturacion = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionNueva = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionBuscar = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionInformes = New System.Windows.Forms.MenuItem
-        Me.MenuItem4 = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionConsultas = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionConsultasNueva = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionConsultasBuscar = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionAMR = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionAMRNueva = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionAMRBuscar = New System.Windows.Forms.MenuItem
-        Me.itemComprobantes = New System.Windows.Forms.MenuItem
-        Me.itemFacturacionFacturaNueva = New System.Windows.Forms.MenuItem
-        Me.mnuItemComprobantesBuscar = New System.Windows.Forms.MenuItem
-        Me.mnuMedicacion = New System.Windows.Forms.MenuItem
-        Me.mnuMedicMovimientoStock = New System.Windows.Forms.MenuItem
-        Me.mnuMedicListadoMov = New System.Windows.Forms.MenuItem
-        Me.mnuReportes = New System.Windows.Forms.MenuItem
-        Me.itemHonorariosCedir = New System.Windows.Forms.MenuItem
-        Me.MenuItem6 = New System.Windows.Forms.MenuItem
-        Me.mnuCaja = New System.Windows.Forms.MenuItem
-        Me.mnuListadoCaja = New System.Windows.Forms.MenuItem
-        Me.mnuMovimientoCaja = New System.Windows.Forms.MenuItem
-        Me.MenuItem3 = New System.Windows.Forms.MenuItem
-        Me.BarraEstado = New System.Windows.Forms.StatusBar
+        Me.MenuItem1 = New System.Windows.Forms.MenuItem()
+        Me.mnuMensajeria = New System.Windows.Forms.MenuItem()
+        Me.itemTarea = New System.Windows.Forms.MenuItem()
+        Me.itemTareaNueva = New System.Windows.Forms.MenuItem()
+        Me.itemTareaVer = New System.Windows.Forms.MenuItem()
+        Me.MenuItem5 = New System.Windows.Forms.MenuItem()
+        Me.itemMedicacion = New System.Windows.Forms.MenuItem()
+        Me.itemMedicacionABM = New System.Windows.Forms.MenuItem()
+        Me.itemPracticas = New System.Windows.Forms.MenuItem()
+        Me.itemPracticasABM = New System.Windows.Forms.MenuItem()
+        Me.itemUsuarios = New System.Windows.Forms.MenuItem()
+        Me.itemUsuariosABM = New System.Windows.Forms.MenuItem()
+        Me.itemUsuariosLogIn = New System.Windows.Forms.MenuItem()
+        Me.itemUsuariosLogOut = New System.Windows.Forms.MenuItem()
+        Me.itemSalir = New System.Windows.Forms.MenuItem()
+        Me.itemPacientes = New System.Windows.Forms.MenuItem()
+        Me.itemPacientesNuevo = New System.Windows.Forms.MenuItem()
+        Me.itemPacientesBuscar = New System.Windows.Forms.MenuItem()
+        Me.MenuItem12 = New System.Windows.Forms.MenuItem()
+        Me.mnuReemplazarPaciente = New System.Windows.Forms.MenuItem()
+        Me.itemEstudios = New System.Windows.Forms.MenuItem()
+        Me.itemEstudiosDeHoy = New System.Windows.Forms.MenuItem()
+        Me.itemEstudiosBuscar = New System.Windows.Forms.MenuItem()
+        Me.itemEstudiosCrearRapido = New System.Windows.Forms.MenuItem()
+        Me.itemEstudiosBuscarAvanzado = New System.Windows.Forms.MenuItem()
+        Me.itemMedicos = New System.Windows.Forms.MenuItem()
+        Me.itemMedicosABM = New System.Windows.Forms.MenuItem()
+        Me.itemMedicosNuevoPago = New System.Windows.Forms.MenuItem()
+        Me.itemMedicosMiCuenta = New System.Windows.Forms.MenuItem()
+        Me.MenuItem2 = New System.Windows.Forms.MenuItem()
+        Me.itemAnestesitasPagos = New System.Windows.Forms.MenuItem()
+        Me.mnuItemListadoAnestesista = New System.Windows.Forms.MenuItem()
+        Me.mnuComplejidades = New System.Windows.Forms.MenuItem()
+        Me.itemObraSociales = New System.Windows.Forms.MenuItem()
+        Me.itemObraSocialesNueva = New System.Windows.Forms.MenuItem()
+        Me.itemObraSocialesBuscar = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacion = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionNueva = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionBuscar = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionInformes = New System.Windows.Forms.MenuItem()
+        Me.MenuItem4 = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionConsultas = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionConsultasNueva = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionConsultasBuscar = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionAMR = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionAMRNueva = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionAMRBuscar = New System.Windows.Forms.MenuItem()
+        Me.itemComprobantes = New System.Windows.Forms.MenuItem()
+        Me.itemFacturacionFacturaNueva = New System.Windows.Forms.MenuItem()
+        Me.mnuItemComprobantesBuscar = New System.Windows.Forms.MenuItem()
+        Me.mnuMedicacion = New System.Windows.Forms.MenuItem()
+        Me.mnuMedicMovimientoStock = New System.Windows.Forms.MenuItem()
+        Me.mnuMedicListadoMov = New System.Windows.Forms.MenuItem()
+        Me.mnuReportes = New System.Windows.Forms.MenuItem()
+        Me.itemHonorariosCedir = New System.Windows.Forms.MenuItem()
+        Me.MenuItem6 = New System.Windows.Forms.MenuItem()
+        Me.mnuCaja = New System.Windows.Forms.MenuItem()
+        Me.mnuListadoCaja = New System.Windows.Forms.MenuItem()
+        Me.mnuMovimientoCaja = New System.Windows.Forms.MenuItem()
+        Me.MenuItem3 = New System.Windows.Forms.MenuItem()
+        Me.BarraEstado = New System.Windows.Forms.StatusBar()
         Me.nfyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.tmrTemporizador = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
@@ -398,6 +398,7 @@ Public Class Main
         '
         'itemEstudios
         '
+        Me.itemEstudios.Enabled = False
         Me.itemEstudios.Index = 2
         Me.itemEstudios.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.itemEstudiosDeHoy, Me.itemEstudiosBuscar, Me.itemEstudiosCrearRapido, Me.itemEstudiosBuscarAvanzado})
         Me.itemEstudios.Text = "Estudios"
@@ -437,6 +438,7 @@ Public Class Main
         '
         'itemMedicosABM
         '
+        Me.itemMedicosABM.Enabled = False
         Me.itemMedicosABM.Index = 0
         Me.itemMedicosABM.Text = "ABM Médicos"
         '
@@ -524,6 +526,7 @@ Public Class Main
         '
         'itemFacturacionConsultas
         '
+        Me.itemFacturacionConsultas.Enabled = False
         Me.itemFacturacionConsultas.Index = 3
         Me.itemFacturacionConsultas.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.itemFacturacionConsultasNueva, Me.itemFacturacionConsultasBuscar})
         Me.itemFacturacionConsultas.Text = "Consultas"
@@ -634,7 +637,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 2.8.1.10 - Fecha: 21/10/2016      "
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 3.0.1 - Fecha: 13/07/2019 - Local - Produccion      "
         '
         'nfyIcon
         '
@@ -677,14 +680,14 @@ Public Class Main
         End Set
     End Property
 
-    Public Property timerMensajeria() As Timer
-        Get
-            Return Me.tmrTemporizador
-        End Get
-        Set(ByVal value As Timer)
-            tmrTemporizador = value
-        End Set
-    End Property
+    'Public Property timerMensajeria() As Timer
+    '    Get
+    '        Return Me.tmrTemporizador
+    '    End Get
+    '    Set(ByVal value As Timer)
+    '        tmrTemporizador = value
+    '    End Set
+    'End Property
 
 
     Private Sub MenuItem4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles itemPacientesNuevo.Click
@@ -854,7 +857,7 @@ Public Class Main
         sSecurity.logOutUser()
         enableDefaultActions()
         Me.Text = "Cedir"
-        Me.timerMensajeria.Stop()
+        'Me.timerMensajeria.Stop()
     End Sub
 
     Private Sub enableDefaultActions()
@@ -862,7 +865,7 @@ Public Class Main
         Me.itemMedicacion.Enabled = False
         Me.itemUsuariosLogIn.Enabled = True
         Me.itemUsuariosLogOut.Enabled = False
-        Me.mnuMensajeria.Enabled = False
+        'Me.mnuMensajeria.Enabled = False
 
         Me.itemEstudiosBuscar.Enabled = False
         Me.itemEstudiosBuscarAvanzado.Enabled = False
@@ -932,11 +935,11 @@ Public Class Main
         f.Show()
     End Sub
 
-    Private Sub MenuItem4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMensajeria.Click
-        Dim f As New Mensajeria
-        f.MdiParent = Me
-        f.Show()
-    End Sub
+    'Private Sub MenuItem4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuMensajeria.Click
+    '    Dim f As New Mensajeria
+    '    f.MdiParent = Me
+    '    f.Show()
+    'End Sub
 
 
     Private Sub mnuComplejidades_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuComplejidades.Click
@@ -969,12 +972,12 @@ Public Class Main
 
     Private Sub nfyIcon_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles nfyIcon.MouseDoubleClick
         Me.nti.Visible = False
-        Me.mnuMensajeria.PerformClick()
+        'Me.mnuMensajeria.PerformClick()
     End Sub
 
 
 
-    
+
 
 
 #End Region
