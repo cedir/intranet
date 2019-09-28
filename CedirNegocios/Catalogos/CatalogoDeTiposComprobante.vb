@@ -14,7 +14,7 @@ Public Class CatalogoDeTiposComprobante
                 Dim t As New TipoComprobante
                 t.Id = dr("id")
                 t.Descripcion = dr("tipoComprobante")
-                If t.Id = TComprobante.Factura OrElse t.Id = TComprobante.Liquidacion Then
+                If t.Id = TComprobante.Factura OrElse t.Id = TComprobante.FacturaElectronica OrElse t.Id = TComprobante.Liquidacion Then
                     getTiposComprobantePresentacion.Add(t)
                 End If
             Loop

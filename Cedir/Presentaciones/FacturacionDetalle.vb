@@ -647,6 +647,13 @@ Public Class FacturacionDetalle
             MsgBox("Ya hay una ventana Nueva Facturación abierta. Ciérrela y vuelva a intentarlo.", MsgBoxStyle.Information, "No se puede abrir la ventana Nueva Facturación")
         Else
             'si el comprobante es una liquidacion, no lo anulamos, lo mantenemos para la misma presentacion
+
+            'VALIDAR QUE NO PERMITA ABRIR FACTURAS ELECTRONICAS PORQUE NO PODEMOS GENERAR Notas de credito
+            If cPresentacion.comprobante.TipoComprobante.Id = TComprobante.FacturaElectronica Then
+                MessageBox.Show("No se pueden abrir Facturas electronicas")
+                Exit Sub
+            End If
+
             If cPresentacion.comprobante.TipoComprobante.Id <> TComprobante.Liquidacion Then
                 Dim r As DialogResult = MessageBox.Show("Al abrir la presentación se generará una Nota de Crédito que anule la Factura asociada." + vbCrLf + "Esta seguro de continuar?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
                 If r = Windows.Forms.DialogResult.Yes Then
