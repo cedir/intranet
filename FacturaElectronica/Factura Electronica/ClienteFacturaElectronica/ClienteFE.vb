@@ -135,10 +135,11 @@ Public Class ClienteFE
         'IMPORTANTE: INSERTAR ULTIMO NRO DE COMPROBANTE +1 ACA!!
 
         'Información de la cabecera del comprobante o lote de comprobantes de ingreso
+        Dim tipoComprobante As Int16 = Convert.ToInt16(dict.Item("CbteTipo"))
         request.FeCabReq = New wsfe.FECAECabRequest()
         With request.FeCabReq
             .PtoVta = Convert.ToInt16(dict.Item("PtoVta"))  'punto de venta factura electronica.
-            .CbteTipo = Convert.ToInt16(dict.Item("CbteTipo")) 'tipo de comprobante
+            .CbteTipo = tipoComprobante 'tipo de comprobante
             .CantReg = 1 'cant registros del detalle = cant. lineas de comprobante
         End With
 
@@ -180,6 +181,19 @@ Public Class ClienteFE
         'Rodendea para evitar el incidente reportado el 13/05/2016 por email
         comprobante.Iva(0).BaseImp = Math.Round(comprobante.Iva(0).BaseImp, 2, MidpointRounding.AwayFromZero)
         comprobante.Iva(0).Importe = Math.Round(comprobante.Iva(0).Importe, 2, MidpointRounding.AwayFromZero)
+
+        'Tambien falta el tema de la fecha de vencimiento.
+        If tipoComprobante > 200 Then
+            'comprobante.FchVtoPago = "20191116"
+            comprobante.Opcionales = New wsfe.Opcional(0) {}
+            comprobante.Opcionales(0) = New wsfe.Opcional
+            comprobante.Opcionales(0).Id = "2101" ' el que sea CBU
+            comprobante.Opcionales(0).Valor = "0150506102000109564632"
+        End If
+
+        'comprobante.Opcionales(0) = New wsfe.Opcional
+        'comprobante.Opcionales(0).Id = "2102" ' el que sea ALIAS
+        'comprobante.Opcionales(0).Valor = "BANCO ICBC"
 
         request.FeDetReq = New wsfe.FECAEDetRequest() {comprobante}
 

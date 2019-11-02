@@ -505,7 +505,7 @@ Public Class Estudio
     End Function
     Public Function esEcografia() As Boolean
         'id de las practicas ecograficas
-        Dim arr() As Integer = {55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 82, 83, 84, 89, 90, 99, 100, 101, 103, 108, 109, 114, 115, 117, 123, 126, 127, 132, 134, 135, 136, 137, 141, 142, 144, 145, 154, 160, 164}
+        Dim arr() As Integer = {55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 82, 83, 84, 89, 90, 99, 100, 101, 103, 108, 109, 115, 117, 123, 126, 127, 132, 134, 135, 136, 137, 141, 142, 144, 145, 154, 160, 164}
         If Array.BinarySearch(arr, Me.practica.idEstudio) < 0 Then
             Return False
         End If

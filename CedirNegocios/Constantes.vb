@@ -3,6 +3,7 @@ Public Enum TComprobante As Integer
     Liquidacion = 2
     NotaDeDebito = 3
     NotaDeCredito = 4
+    FacturaElectronica = 5
 End Enum
 
 Public Class Constants

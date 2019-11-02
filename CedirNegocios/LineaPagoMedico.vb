@@ -104,7 +104,7 @@ Public Class LineaPagoMedico
         Dim descuentoColangios As Decimal = 0
         ' si la practica es alguna de las siguientes, se realiza un dto de 2000 pesos, A PARTIR DEL 09/04/2013
         If cEstudio.practica.idEstudio = 13 Or cEstudio.practica.idEstudio = 14 Or cEstudio.practica.idEstudio = 34 Then
-            descuentoColangios = 2000
+            descuentoColangios = 3500
         End If
 
         ' si la practica es alguna de las siguientes, se realiza un dto de 900 pesos, A PARTIR DEL 09/04/2013
