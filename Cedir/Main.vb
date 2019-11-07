@@ -398,13 +398,13 @@ Public Class Main
         '
         'itemEstudios
         '
-        Me.itemEstudios.Enabled = False
         Me.itemEstudios.Index = 2
         Me.itemEstudios.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.itemEstudiosDeHoy, Me.itemEstudiosBuscar, Me.itemEstudiosCrearRapido, Me.itemEstudiosBuscarAvanzado})
         Me.itemEstudios.Text = "Estudios"
         '
         'itemEstudiosDeHoy
         '
+        Me.itemEstudiosDeHoy.Enabled = False
         Me.itemEstudiosDeHoy.Index = 0
         Me.itemEstudiosDeHoy.Shortcut = System.Windows.Forms.Shortcut.CtrlH
         Me.itemEstudiosDeHoy.Text = "Estudios de hoy"
@@ -637,7 +637,7 @@ Public Class Main
         Me.BarraEstado.Name = "BarraEstado"
         Me.BarraEstado.Size = New System.Drawing.Size(978, 22)
         Me.BarraEstado.TabIndex = 5
-        Me.BarraEstado.Text = "Cedir Intranet - Versión 3.0.1 - Fecha: 13/07/2019 - Local - Staging      "
+        Me.BarraEstado.Text = "Cedir Intranet - Versión 3.prod.2 - Fecha: 07/11/2019 - Local - Prod      "
         '
         'nfyIcon
         '

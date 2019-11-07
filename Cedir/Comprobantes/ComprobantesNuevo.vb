@@ -29,6 +29,8 @@ Public Class frmComprobanteNuevo
     Friend WithEvents colSubtotal As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents FrmComprobanteNuevoBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents cmbSubTipo As System.Windows.Forms.ComboBox
+    Friend id_obra_social_seleccionada As Int16
+
 
 
 
@@ -40,7 +42,9 @@ Public Class frmComprobanteNuevo
         'El Diseñador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
-        'Agregar cualquier inicialización después de la llamada a InitializeComponent() 
+        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+        Me.id_obra_social_seleccionada = 0
+
     End Sub
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -631,6 +635,7 @@ Public Class frmComprobanteNuevo
             Me.txtNroIdentificacionCliente.Text = p_os.nroCuit
             Me.txtDomicilio.Text = p_os.direccion & " - " & p_os.localidad & " - " & "(CP:" & p_os.CodigoPostal.ToString() & ")"
             Me.cmbCondicionFiscal.Text = p_os.CondicionFiscal
+            Me.id_obra_social_seleccionada = p_os.idObraSocial
             NotifyPropertyChanged("ObraSocial")
         End If
     End Sub
@@ -778,6 +783,7 @@ Public Class frmComprobanteNuevo
         p_com.TotalFacturado = Me.CalcularSumaLineas(p_com.LineasDeComprobante)
         p_com.TotalCobrado = p_com.TotalFacturado
         p_com.Estado = "COBRADO"
+        p_com.IdObraSocial = Me.id_obra_social_seleccionada  ' se usa para establecer la fecha de vto
     End Sub
     Public Sub SetComprobante()
         'indicamos en el text del form que se esta creando un comprobante con referencia a una factura
