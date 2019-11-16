@@ -399,9 +399,9 @@ Public Class Presentacion
 
     Public Function getPorcentajeGtosAdmin() As Decimal
         If Me.obraSocial.sePresentaPorAMR Then
-            Return 22
+            Return 32
         Else
-            Return 15
+            Return 25
         End If
     End Function
 
