@@ -27,6 +27,7 @@ Public Class Comprobante
     Private m_totalCobrado As Decimal
     Private m_gravadoPaciente As String
     Private m_lineasDeComprobante As List(Of LineaDeComprobante) 'creo una coleccion de lineas(y a su vez guardo un objeto compro. en lineaComprobante)
+    Private m_id_obra_social As Integer  'necesito el saber que OS es para determinar la fecha de vto del comprobante
 
     Const c As String = "__*"
 
@@ -210,6 +211,15 @@ Public Class Comprobante
         End Get
         Set(ByVal value As String)
             m_gravadoPaciente = value.ToUpper
+        End Set
+    End Property
+
+    Public Property IdObraSocial() As Integer
+        Get
+            Return m_id_obra_social
+        End Get
+        Set(ByVal value As Integer)
+            m_id_obra_social = value
         End Set
     End Property
 

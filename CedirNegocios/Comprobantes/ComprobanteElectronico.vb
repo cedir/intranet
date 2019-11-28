@@ -139,7 +139,19 @@ Public Class ComprobanteElectronico
         'Fecha de fin del abono para el servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios).
         ' Formato yyyymmdd. FchServHasta no puede ser menor a FchServDesde
 
-        dic.Item("FchVtoPago") = ClienteFE.FormatDate(DateTime.Today.AddDays(30))
+        Dim cant_dias_vto As Int16 = 30
+        Const swiss_medical_id As Int16 = 24
+        Const sancor_id As Int16 = 178
+
+        If comprobante.TipoComprobante.Id = TComprobante.FacturaElectronica And comprobante.IdObraSocial = swiss_medical_id Then
+            cant_dias_vto = 60
+        End If
+
+        If comprobante.TipoComprobante.Id = TComprobante.FacturaElectronica And comprobante.IdObraSocial = sancor_id Then
+            cant_dias_vto = 80
+        End If
+
+        dic.Item("FchVtoPago") = ClienteFE.FormatDate(DateTime.Today.AddDays(cant_dias_vto))
         'Fecha de vencimiento del pago servicio a facturar. Dato obligatorio para concepto 2 o 3 (Servicios / Productos y Servicios). 
         'Formato yyyymmdd. Debe ser igual o posterior a la fecha del comprobante
 

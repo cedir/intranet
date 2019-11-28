@@ -165,6 +165,8 @@ Public Class LogIn
         'cMdiForm.mnuComplejidades.Enabled = True
         cMdiForm.mnuReemplazarPaciente.Enabled = True
         'cMdiForm.mnuReportes.Enabled = True
+
+        cMdiForm.itemEstudiosBuscarAvanzado.Enabled = True
     End Sub
     Private Sub _habilitarRecepcion()
         Dim cMdiForm As Main = Me.MdiParent

@@ -664,7 +664,7 @@ Public Class CobroPresentacion
                 cLinea.objeto.importeCobradoArancelAnestesia = CSng(DataGrid1.Item(i, 8))
                 i += 1
             End While
-           
+
 
             'Si bien guardamos el porcentaje correspondiente en la presentacion, esto es deditable. Entonces aca
             'vamos a tomar lo que haya puesto el usuario
@@ -690,10 +690,14 @@ Public Class CobroPresentacion
                 DataGrid2.Enabled = False
             End If
 
+            If cPresentacion.total <> cPresentacion.totalFacturado And cPresentacion.comprobante.TipoComprobante.Id = TComprobante.FacturaElectronica Then
+                MessageBox.Show("Importante: debe crear una Nota de Credito Electronica ajustando el comprobante con ID= " & cPresentacion.comprobante.IdComprobante & ". Copie ese ID y dirijase a ULI para crear la NCE")
+            End If
+
+
             'Ahora tenemos que crear una nota de debito o credito segun lo cobrado sea
             'menor o mayor al monto del comprobante asignado a la presentacion 
             'Solo creamos nc o nd para las Facturas, no las liquidaciones
-
             If cPresentacion.total <> cPresentacion.totalFacturado And cPresentacion.comprobante.TipoComprobante.Id = TComprobante.Factura Then
                 'mostramos de cuánto debe ser el monto del comprobante(variable diferencia)
                 Dim res As DialogResult = MessageBox.Show("Existe una diferencia de montos entre lo facturado y lo cobrado." & vbCrLf & "Deberá crear un comprobante correspondiente" & vbCrLf & "(ND) o (NC)", "Atención" & vbCrLf & "Diferencia de: $" & diferencia.ToString(), MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)

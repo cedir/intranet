@@ -176,6 +176,7 @@ Public Class Presentacion
 
         Me.comprobante.LineasDeComprobante.Add(lineaComprobante)
         Me.comprobante.TotalFacturado = lineaComprobante.Subtotal
+        Me.comprobante.IdObraSocial = Me.obraSocial.idObraSocial  ' solo se usa para calcular la fecha de vto
         'se devuelve una lista de objetos con la respuesta de AFIP
         result = Me.comprobante.crear()
         If Not Helper.IsSuccess(result) Then
@@ -398,9 +399,9 @@ Public Class Presentacion
 
     Public Function getPorcentajeGtosAdmin() As Decimal
         If Me.obraSocial.sePresentaPorAMR Then
-            Return 22
+            Return 32
         Else
-            Return 15
+            Return 25
         End If
     End Function
 
