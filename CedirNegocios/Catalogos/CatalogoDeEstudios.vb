@@ -14,8 +14,8 @@ Public Class CatalogoDeEstudios
     End Sub
 
     Public Function ObtenerEstudiosDeHoy() As ArrayList
-        'Return loadEstudios("where " & com & "fechaEstudio" & com & " = ' " & Today.Month & "/" & Today.Day & "/" & Today.Year & " '")
-        Return loadEstudios("where " & com & "fechaEstudio" & com & " = ' " & Today.Day & "/" & Today.Month & "/" & Today.Year & " '", "paciente")
+        Return loadEstudios("where " & com & "fechaEstudio" & com & " = ' " & Today.Month & "/" & Today.Day & "/" & Today.Year & " '")
+        'Return loadEstudios("where " & com & "fechaEstudio" & com & " = ' " & Today.Day & "/" & Today.Month & "/" & Today.Year & " '", "paciente")
     End Function
 
     Public Function TraerEstudios(Optional ByVal apePaciente As String = "", Optional ByVal nomPaciente As String = "", Optional ByVal idMedico As Integer = 0, Optional ByVal radioState As Int16 = 1, Optional ByVal fechaDesde As String = "", Optional ByVal fechaHasta As String = "", Optional ByVal practica As Practica = Nothing, Optional ByVal dni As String = "", Optional ByVal idObraSocial As Integer = 0, Optional ByVal filtro As String = "") As ArrayList
