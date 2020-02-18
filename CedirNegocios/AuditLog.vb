@@ -70,7 +70,8 @@ Public Class AuditLog
     Function create() As Object
         Dim com As String = """"
         Dim upd As New Nuevo
-        Dim currentDate As String = CStr(Now.Date) & " " & CStr(Now.TimeOfDay.Hours) & ":" & CStr(Now.TimeOfDay.Minutes)
+        Dim fecha As String = Now.Date.Month & "/" & Now.Date.Day & "/" & Now.Date.Year
+        Dim currentDate As String = fecha & " " & CStr(Now.TimeOfDay.Hours) & ":" & CStr(Now.TimeOfDay.Minutes)
         Dim resp As String = upd.insert(com & "public" & com & "." & com & "AuditUserActionsLog" & com, com & "userId" & com & ", " & com & "userActionId" & com & ", " & com & "objectTypeId" & com & ", " & com & "objectId" & com & ", " & com & "dateTime" & com & ", " & com & "observacion" & com, Me.usuario.id & ", " & Me.userActionId & ", " & Me.objectTypeId & ", " & Me.objectId & ", '" & currentDate & "', '" & Me.observacion & "'")
         Return resp
     End Function

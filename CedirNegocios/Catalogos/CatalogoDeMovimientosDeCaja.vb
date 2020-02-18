@@ -27,7 +27,9 @@ Public Class CatalogoDeMovimientosDeCaja
 
     Public Function getEstudiosAndMovimientos(ByVal fecha As Date) As List(Of Estudio)
 
-        Dim condicion As String = " where " & com & "fechaEstudio" & com & "='" & fecha.Date & "' "
+        Dim fechaDesde As String = fecha.Month.ToString() & "/" & fecha.Day.ToString() & "/" & fecha.Year.ToString()
+
+        Dim condicion As String = " where " & com & "fechaEstudio" & com & "='" & fechaDesde & "' "
 
 
         Dim da As New Consultas
@@ -286,7 +288,11 @@ Public Class CatalogoDeMovimientosDeCaja
             condicion4 = " and  true "
         End If
 
-        condicion5 = " and  cm." & com & "fecha" & com & " >= '" & p6.Date & "' and cm." & com & "fecha" & com & " <= '" & p7.Date & "'"
+        Dim fechaDesde As String = p6.Date.Month.ToString() & "/" & p6.Date.Day.ToString() & "/" & p6.Date.Year.ToString()
+        Dim fechaHasta As String = p7.Date.Month.ToString() & "/" & p7.Date.Day.ToString() & "/" & p7.Date.Year.ToString()
+
+        'condicion5 = " and  cm." & com & "fecha" & com & " >= '" & p6.Date & "' and cm." & com & "fecha" & com & " <= '" & p7.Date & "'"
+        condicion5 = " and  cm." & com & "fecha" & com & " >= '" & fechaDesde & "' and cm." & com & "fecha" & com & " <= '" & fechaHasta & "'"
 
         concatenacion = " where true  " & condicion0 & condicion1 & condicion2 & condicion3 & condicion4 & condicion5
 
